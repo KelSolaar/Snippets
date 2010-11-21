@@ -15,7 +15,6 @@ def getMVector( vector ) :
 def getMMatrix( matrix ) :
 	mMatrix = OpenMaya.MMatrix()
 	OpenMaya.MScriptUtil.createMatrixFromList( matrix, mMatrix )
-
 	return mMatrix
 
 def normalize( vector ) :
