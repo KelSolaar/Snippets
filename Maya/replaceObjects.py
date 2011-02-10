@@ -1,29 +1,29 @@
 import random
 import maya.cmds as cmds
 
-def replaceObjects( sources, targets, inPlace = False, usePivot = False, useInstances = False ) :
+def replaceObjects( sources, targets, inPlace = False, usePivot = False, useInstances = False ):
 
 	replacementObjects = []
-	for target in targets :
+	for target in targets:
 		replacementObject = cmds.duplicate( sources[random.randrange(0, len(sources))], rr = True )[0]
 		replacementObjects.append(replacementObject)
-		if inPlace :
+		if inPlace:
 			pass
-		else :
-			if usePivot :
+		else:
+			if usePivot:
 				components = ( "rx", "ry", "rz", "sx", "sy", "sz")
 				pivot = cmds.xform( target, query = True, worldSpace = True, rotatePivot = True )
-				for i, component  in enumerate( ("tx", "ty", "tz") ) :
+				for i, component  in enumerate( ("tx", "ty", "tz") ):
 					cmds.setAttr(replacementObject + "." + component, pivot[i])
-			else :
+			else:
 				components = ( "tx", "ty", "tz", "rx", "ry", "rz", "sx", "sy", "sz")
 				
-			for component in components :
+			for component in components:
 				cmds.setAttr(replacementObject + "." + component, cmds.getAttr(target + "." + component))
 
-	if not inPlace :
+	if not inPlace:
 		replacementGrp = cmds.group( em = True )
-		for replacementObject in replacementObjects :
+		for replacementObject in replacementObjects:
 			cmds.parent(replacementObject, replacementGrp)
 		cmds.rename(replacementGrp, "replacement_grp")
 
