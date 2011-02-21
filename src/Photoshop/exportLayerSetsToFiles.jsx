@@ -37,7 +37,7 @@ function exportLayerSetsToFiles()
 
 	if (app.documents.length <= 0) 
 	{
-		alert("ELtF | Error : There Is No Active Document !");
+		alert("ELtF | Error: There Is No Active Document!");
 		return;
 	}
 	try 
@@ -47,7 +47,7 @@ function exportLayerSetsToFiles()
 	} 
 	catch (e) 
 	{
-		alert("ELtF | Error : The Document Has Not Been Saved !");
+		alert("ELtF | Error: The Document Has Not Been Saved!");
 		return;
 	}
 	if (0 == exportLayerSetsToFiles_UI()) 
@@ -105,13 +105,13 @@ function exportLayerSetsToFiles_UI()
 	ui.Affixes_Group = ui.Affixes_Panel.add("group");
 	ui.Affixes_Group.orientation = 'row';
 	
-	ui.Affixes_Group.add("statictext", undefined, "Prefix :");
+	ui.Affixes_Group.add("statictext", undefined, "Prefix:");
 	ui.Prefix_EditText = ui.Affixes_Group.add("edittext", undefined, "");
 	ui.Prefix_EditText.preferredSize.width = 80;
 	var documentName = activeDocument.fullName.name;
 	ui.Prefix_EditText.text = decodeURI(documentName.substring(0, documentName.indexOf(".")));
 	
-	ui.Affixes_Group.add("statictext", undefined, "Suffix :");
+	ui.Affixes_Group.add("statictext", undefined, "Suffix:");
 	ui.Suffix_EditText = ui.Affixes_Group.add("edittext", undefined, "");
 	ui.Suffix_EditText.preferredSize.width = 80;
 	ui.Suffix_EditText.text = getSuffix();
@@ -126,7 +126,7 @@ function exportLayerSetsToFiles_UI()
 	ui.Format_Group.orientation = 'row';
 	ui.Format_Group.spacing = 56;
 	
-	ui.Format_Group.add("statictext", undefined, "File Format :");
+	ui.Format_Group.add("statictext", undefined, "File Format:");
 	ui.Tiff_RadioButton = ui.Format_Group.add("radiobutton", undefined, "Tiff");
 	ui.Tiff_RadioButton.value = true;
 	ui.Jpeg_RadioButton = ui.Format_Group.add("radiobutton", undefined, "Jpeg");
@@ -151,10 +151,10 @@ function exportLayerSetsToFiles_UI()
 				doExportLayerSetsToFile(CHANNELS_TYPES, exportFormat[0], exportFormat[1], exportFolder, ui.Prefix_EditText.text, ui.Suffix_EditText.text)
 			}
 			else 
-				alert("ELtF | Error : Export Directory Doesn't Exists !");
+				alert("ELtF | Error: Export Directory Doesn't Exists!");
 		}
 		else 
-			alert("ELtF | Error : You Need To Choose An Export Directory !");
+			alert("ELtF | Error: You Need To Choose An Export Directory!");
 		
 	}
 	
