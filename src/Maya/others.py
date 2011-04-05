@@ -21,7 +21,7 @@ cmds.artAttrPaintVertexCtx( pVtxTool, e = True, exportfilesave = "D:\\Mask.tif" 
 import maya.cmds as cmds
 
 def transfertVerticesPositions(source, targets, searchMethod=0):
-	for target in targets[1:]:
+	for target in targets:
 	    cmds.transferAttributes(source, target, transferPositions=1, sampleSpace=0, searchMethod=3)
 	    cmds.delete(target, ch=True)
 
