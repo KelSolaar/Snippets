@@ -15,3 +15,15 @@ for i in range(5):
 cmds.artAttrPaintVertexCtx( pVtxTool, e = True, exportfilesizex = 2048 )
 cmds.artAttrPaintVertexCtx( pVtxTool, e = True, exportfilesizey = 2048 )
 cmds.artAttrPaintVertexCtx( pVtxTool, e = True, exportfilesave = "D:\\Mask.tif" )
+
+
+# Multiple Targets Vertices Positions Transfert.
+import maya.cmds as cmds
+
+def transfertVerticesPositions(source, targets, searchMethod=0):
+	for target in targets[1:]:
+	    cmds.transferAttributes(source, target, transferPositions=1, sampleSpace=0, searchMethod=3)
+	    cmds.delete(target, ch=True)
+
+selection = cmds.ls(sl=True, l=True)
+transfertVerticesPositions(selection[0], selection[1:], 0)
