@@ -27,3 +27,16 @@ def transfertVerticesPositions(source, targets, searchMethod=0):
 
 selection = cmds.ls(sl=True, l=True)
 transfertVerticesPositions(selection[0], selection[1:], 0)
+
+# Shell Extrusion.
+import maya.cmds as cmds
+
+objects=cmds.ls(sl=True, l=True)
+
+__object__ = object
+for object in objects:
+    faces = cmds.polyEvaluate(object, face=True)
+    extrude = cmds.polyExtrudeFacet(object +".f[0:" + str(faces) + "]", constructionHistory=1, keepFacesTogether=1, divisions=2)
+    cmds.setAttr(extrude[0] + ".localTranslateZ", -.5)
+    borderEdges = cmds.polyListComponentConversion(object +".f[0:" + str(faces) + "]", te=True, bo=True)
+    cmds.select(borderEdges)
