@@ -28,4 +28,8 @@ def transfertVerticesPositions(source, targets, searchMethod=0):
 selection = cmds.ls(sl=True, l=True)
 transfertVerticesPositions(selection[0], selection[1:], 0)
 
+# Select Boundary Edges.
+def getBoundaryEdges(components):
+    return cmds.polyListComponentConversion(components, te=True, bo=True)
 
+cmds.select(getBoundaryEdges(cmds.ls(sl=True, l=True)))
