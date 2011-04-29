@@ -80,4 +80,4 @@ def solidify(object, height=1, divisions=2, history=True):
 	not history and cmds.delete(object, ch=True)
 
 for object in cmds.ls(sl=True, l=True):
-	solidify(cmds.ls(sl=True, l=True), height=-.5, divisions=2, history=False)
+	solidify(object, height=-.5, divisions=2, history=False)
