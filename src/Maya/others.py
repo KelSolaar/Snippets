@@ -33,3 +33,11 @@ def getBoundaryEdges(components):
     return cmds.polyListComponentConversion(components, te=True, bo=True)
 
 cmds.select(getBoundaryEdges(cmds.ls(sl=True, l=True)))
+
+import maya.cmds as cmds
+
+for object in cmds.ls(sl=True, l=True):
+	cmds.select(object)
+	cmds.polySelectConstraint(m=3, t=0x8000, sm=1)
+	hardEdges = cmds.ls(sl=True, l=True)
+	cmds.polyBevel(hardEdges, offset=0.05, offsetAsFraction=True, autoFit=False, roundness=0, segments=1, worldSpace=True, uvAssignment=False, fillNgons=True, mergeVertices=True, mergeVertexTolerance=0.00005, smoothingAngle=30, miteringAngle=180, angleTolerance=180, ch=False)
