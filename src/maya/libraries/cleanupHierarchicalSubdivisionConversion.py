@@ -23,5 +23,6 @@ def cleanupHierarchicalSubdivisionConversion(object):
 	cmds.polyDelEdge(cmds.ls(sl=True), cv=True, ch=True)
 	cmds.select(object)
 
-for object in cmds.ls(sl=True, l=True):
-	cleanupHierarchicalSubdivisionConversion(object)
+def ICleanupHierarchicalSubdivisionConversion():
+	for object in cmds.ls(sl=True, l=True):
+		cleanupHierarchicalSubdivisionConversion(object)

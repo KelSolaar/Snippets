@@ -19,8 +19,3 @@ def randomizeScales(objects, randomRange = 2):
 		cmds.setAttr(object + ".sx", cmds.getAttr(object + ".sx") + randomValue)
 		cmds.setAttr(object + ".sy", cmds.getAttr(object + ".sy") + randomValue)
 		cmds.setAttr(object + ".sz", cmds.getAttr(object + ".sz") + randomValue)
-
-objects = cmds.ls(sl = True, l = True)
-randomizeTranslations(objects, 25)
-randomizeRotations(objects, 24)
-randomizeScales(objects, 5)

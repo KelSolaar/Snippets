@@ -20,8 +20,9 @@ def renameFromClosest(sources, target, suffixe="_"):
     closest = min(normes, key=lambda item: normes[item])
     cmds.rename(target, "%s%s" % (closest.split("|")[-1], suffixe) )
 
-sources = cmds.ls(sl=True, l=True)
-targets = cmds.ls(sl=True, l=True)
+def IRenameFromClosest():
+	sources = cmds.ls(sl=True, l=True)
+	targets = cmds.ls(sl=True, l=True)
 
-for target in targets:
-    renameFromClosest(sources, target)
+	for target in targets:
+    		renameFromClosest(sources, target)

@@ -25,5 +25,6 @@ def unfoldBand(object, divisions=1, history=True):
 
 	not history and cmds.delete(object, ch=True)
 
-for object in cmds.ls(sl=True):
-	unfoldBand(object, divisions=10, history=False)
+def IUnfoldBand():
+	for object in cmds.ls(sl=True):
+		unfoldBand(object, divisions=10, history=False)

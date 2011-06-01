@@ -27,6 +27,7 @@ def replaceObjects(sources, targets, inPlace = False, usePivot = False, useInsta
 			cmds.parent(replacementObject, replacementGrp)
 		cmds.rename(replacementGrp, "replacement_grp")
 
-sources = cmds.listRelatives("sources_grp", fullPath = True)
-targets = cmds.ls(sl = True, l = True)
-replaceObjects(sources, targets, False, True, False)
+def IReplaceObjects():
+	sources = cmds.listRelatives("sources_grp", fullPath = True)
+	targets = cmds.ls(sl = True, l = True)
+	replaceObjects(sources, targets, False, True, False)

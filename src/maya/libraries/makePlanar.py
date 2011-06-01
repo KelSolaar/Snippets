@@ -63,4 +63,5 @@ def makePlanar():
 			distance = -(dot(averageNormal, position) + offset)
 			cmds.xform(vertex, r = True, t = (averageNormal[0] * distance, averageNormal[1] * distance, averageNormal[2] * distance))
 
-makePlanar()
+def IMakePlanar():
+	makePlanar()
