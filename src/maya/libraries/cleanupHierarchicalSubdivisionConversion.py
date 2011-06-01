@@ -1,7 +1,13 @@
-# Cleanup Hierarchical Subdivision Polygon Conversion.
 import maya.cmds as cmds
 
+# Cleanup Hierarchical Subdivision Polygon Conversion.
 def cleanupHierarchicalSubdivisionConversion(object):
+	'''
+	This Definition Cleans Maya Hierarchical Polygonal Conversion.
+
+	@param object : Object To Cleanup. (String)
+	'''
+
 	cmds.select(object)
 	cmds.polySelectConstraint(m=3, t=8, sz=3)
 	cmds.polySelectConstraint(dis=True)
@@ -24,5 +30,9 @@ def cleanupHierarchicalSubdivisionConversion(object):
 	cmds.select(object)
 
 def ICleanupHierarchicalSubdivisionConversion():
+	'''
+	This Definition Is The cleanupHierarchicalSubdivisionConversion Method Interface.
+	'''
+
 	for object in cmds.ls(sl=True, l=True):
 		cleanupHierarchicalSubdivisionConversion(object)

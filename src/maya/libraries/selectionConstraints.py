@@ -15,10 +15,11 @@ def selectTrianglesFaces():
 
 def ISelectTrianglesFaces():
 	selectTrianglesFaces()
+	
 # Select NSides Faces.
-def selectNsidesssFaces():
+def selectNsidesFaces():
 	cmds.polySelectConstraint(m=3, t=8, sz=3)
 	cmds.polySelectConstraint(dis=True)
 
-def ISelectNsidesssFaces():
+def ISelectNsidesFaces():
 	ISelectNsidesFaces()

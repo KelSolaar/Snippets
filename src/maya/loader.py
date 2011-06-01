@@ -29,6 +29,7 @@
 #***********************************************************************************************
 #***	External Imports
 #***********************************************************************************************
+import inspect
 import logging
 import maya.cmds as cmds
 import maya.mel as mel
@@ -274,6 +275,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.setupUi(self)
 		
 		# --- Setting Class Attributes. ---
+		self._container = container
+		
 		self._modules = None
 
 		# --- Setting Up UI. ---
@@ -281,29 +284,95 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		
 		# -- Loader Signals / Slots. ---		
 		self.connect(self.Execute_Snippet_pushButton, SIGNAL("clicked()"), self.Execute_Snippet_pushButton_OnClicked)
-		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.Methods_listWidget_ItemSelectionChanged )
-	
+		self.connect(self.Reload_Snippets_pushButton, SIGNAL("clicked()"), self.Reload_Snippets_pushButton_OnClicked)
+		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.Methods_listWidget_OnItemSelectionChanged )
+		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.Methods_listWidget_OnItemDoubleClicked )
+
+	#***************************************************************************************
+	#***	Attributes Properties
+	#***************************************************************************************
+	@property
+	def container(self):
+		'''
+		This Method Is The Property For The _container Attribute.
+
+		@return: self._container. ( QObject )
+		'''
+
+		return self._container
+
+	@container.setter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def container(self, value):
+		'''
+		This Method Is The Setter Method For The _container Attribute.
+
+		@param value: Attribute Value. ( QObject )
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Read Only!".format("container"))
+
+	@container.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def container(self):
+		'''
+		This Method Is The Deleter Method For The _container Attribute.
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("container"))
+
+	@property
+	def modules(self):
+		'''
+		This Method Is The Property For The _modules Attribute.
+
+		@return: self._modules. ( Dictionary )
+		'''
+
+		return self._modules
+
+	@modules.setter
+	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	def modules(self, value):
+		'''
+		This Method Is The Setter Method For The _modules Attribute.
+		
+		@param value: Attribute Value. ( Dictionary )
+		'''
+
+		if value:
+			assert type(value) is dict, "'{0}' Attribute: '{1}' Type Is Not 'dict'!".format("modules", value)
+		self._modules = value
+
+	@modules.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def modules(self):
+		'''
+		This Method Is The Deleter Method For The _modules Attribute.
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("modules"))
+
 	#***************************************************************************************
 	#***	Class Methods
 	#***************************************************************************************
 	@core.executionTrace
-	def initializeUI(self):
-		self.gatherLibraries()
-		self.getInterfaces()
-		for module in self._modules.values():
-			if module.interfaces:
-				for interface in module.interfaces:
-					listWidgetItem = QListWidgetItem(strings.getNiceName(self.getMethodName(interface)))
-					listWidgetItem._datas = Interface(name=interface, module=module)
-					self.Methods_listWidget.addItem(listWidgetItem)
-		self.Methods_listWidget.sortItems(Qt.AscendingOrder)
-	
-	@core.executionTrace
 	def getMethodName(self, name):
+		'''
+		This Definition Gets The Method Name From The Interface.
+		
+		@param name: Interface Name. ( String )
+		@return: Method Name. ( String )
+		'''
+
 		return "%s%s" % (name[1].lower(), name[2:])
 	
 	@core.executionTrace
 	def gatherLibraries(self):
+		'''
+		This Definition Gathers The Libraries.
+		'''
+
 		walker = Walker(LIBRARIES)
 		modules = walker.walk(filtersIn="%s$" % Constants.librariesExtension)
 		
@@ -316,33 +385,115 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	@core.executionTrace
 	def getInterfaces(self):
+		'''
+		This Definition Gets The Interfaces.
+		'''
+
 		for module in self._modules.values():
 			if module.path not in sys.path:
 				sys.path.append(module.path)
+			if module.name in sys.modules.keys():
+				del(sys.modules[module.name])
 			module.import_ = __import__(module.name)
 			interfaces = [object_ for object_ in module.import_.__dict__.keys() if re.search("^I[A-Z]\w+", object_)]
 			if interfaces:
 				module.interfaces = interfaces
+
 	@core.executionTrace
-	def Execute_Snippet_pushButton_OnClicked(self):
+	def initializeUI(self):
+		'''
+		This Definition Triggers The Methods_listWidget Widget.
+		'''
+
+		self.Methods_listWidget_setWidget()
+
+	@core.executionTrace
+	def executeSnippet(self):
+		'''
+		This Definition Triggers The Selected Snippet Execution.
+		'''
+
 		module = self.Methods_listWidget.currentItem()._datas.module
 		method = self.Methods_listWidget.currentItem()._datas.name	
-		module.import_.__dict__[method]()
+		module.import_.__dict__[method]()		
 	
 	@core.executionTrace
-	def Methods_listWidget_ItemSelectionChanged(self):
+	def Methods_listWidget_setWidget(self):
+		'''
+		This Definition Sets The Methods_listWidget Widget.
+		'''
+		
+		self.Methods_listWidget.clear()
+		self.gatherLibraries()
+		self.getInterfaces()
+		for module in self._modules.values():
+			if module.interfaces:
+				for interface in module.interfaces:
+					listWidgetItem = QListWidgetItem(strings.getNiceName(self.getMethodName(interface)))
+					listWidgetItem._datas = Interface(name=interface, module=module)
+					self.Methods_listWidget.addItem(listWidgetItem)
+		self.Methods_listWidget.sortItems(Qt.AscendingOrder)
+
+	@core.executionTrace
+	def Execute_Snippet_pushButton_OnClicked(self):
+		'''
+		This Method Is Triggered When Execute_Snippet_pushButton Is Clicked.
+		'''
+	
+		self.executeSnippet()
+
+	@core.executionTrace
+	def Reload_Snippets_pushButton_OnClicked(self):
+		'''
+		This Method Is Triggered When Reload_Snippets_pushButton Is Clicked.
+		'''
+		
+		self.Methods_listWidget_setWidget()
+
+	@core.executionTrace
+	def Methods_listWidget_OnItemSelectionChanged(self):
+		'''
+		This Method Is Triggered When Methods_listWidget Selection Has Changed.
+		'''
+
+		datas = self.Methods_listWidget.currentItem()._datas
+		method = self.getMethodName(datas.name)
+		arguments = inspect.getargspec(datas.module.import_.__dict__[method])
 		content = """
 				<h4><center>%s</center></h4>
 				<p>
 				<b>Module:</b> %s
 				<br/>
 				<b>Path:</b> %s
+				</p>
+				<p>
+				<b>Method:</b> %s
 				<br/>
 				<b>Interface:</b> %s
 				<br/>
+				<b>Arguments:</b> %s
+				<br/>
+				<b>Defaults:</b> %s
+				<br/>
+				<b>Variable Arguments:</b> %s
+				<br/>
+				<b>Keywords:</b> %s
 				</p>
-				""" % (self.getMethodName(self.Methods_listWidget.currentItem()._datas.name), self.Methods_listWidget.currentItem()._datas.module.name, self.Methods_listWidget.currentItem()._datas.module.import_.__file__, self.Methods_listWidget.currentItem()._datas.name)
+				<p>
+				<b>Documentation:</b> %s
+				</p>
+				""" % (strings.getNiceName(method), datas.module.name, datas.module.import_.__file__, method, datas.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, datas.module.import_.__dict__[method].__doc__)
 		self.Informations_textBrowser.setText(content)
+	
+	@core.executionTrace
+	def Methods_listWidget_OnItemDoubleClicked(self, listWidgetItem):
+		'''
+		This Method Is Triggered When Methods_listWidget Is Double Clicked.
+		
+		@param listWidgetItem: Selected QListWidgetItem. ( QListWidgetItem )
+		'''
+		
+		self.executeSnippet()
 
 #***********************************************************************************************
 #***	Python End

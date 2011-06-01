@@ -1,53 +1,59 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>Loader_MainWindow</class>
- <widget class="QMainWindow" name="Loader_MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="Loader_MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>541</width>
-    <height>513</height>
+    <width>480</width>
+    <height>640</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Snippets Loader</string>
   </property>
-  <widget class="QWidget" name="centralwidget" >
-   <layout class="QGridLayout" >
-    <property name="margin" >
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout">
+    <property name="margin">
      <number>9</number>
     </property>
-    <property name="spacing" >
+    <property name="spacing">
      <number>6</number>
     </property>
-    <item row="1" column="0" >
-     <widget class="QListWidget" name="Methods_listWidget" />
+    <item row="1" column="0">
+     <widget class="QListWidget" name="Methods_listWidget"/>
     </item>
-    <item row="3" column="0" >
-     <widget class="QPushButton" name="Execute_Snippet_pushButton" >
-      <property name="text" >
+    <item row="3" column="0">
+     <widget class="QPushButton" name="Execute_Snippet_pushButton">
+      <property name="text">
        <string>Execute Snippet!</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" >
-     <widget class="QLineEdit" name="Search_lineEdit" />
+    <item row="0" column="0">
+     <widget class="QLineEdit" name="Search_lineEdit"/>
     </item>
-    <item row="2" column="0" >
-     <widget class="QTextBrowser" name="Informations_textBrowser" >
-      <property name="sizePolicy" >
-       <sizepolicy>
-        <hsizetype>7</hsizetype>
-        <vsizetype>1</vsizetype>
+    <item row="2" column="0">
+     <widget class="QTextBrowser" name="Informations_textBrowser">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
      </widget>
     </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="Reload_Snippets_pushButton">
+      <property name="text">
+       <string>Reload Snippets!</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar" />
+  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

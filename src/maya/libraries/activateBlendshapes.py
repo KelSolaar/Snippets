@@ -44,11 +44,11 @@ import maya.mel as mel
 #***	Module Classes And Definitions
 #***********************************************************************************************
 
-def weightSlider_OnValueChanged():
+def weightSlider_OnValueChanged(value):
 	'''
 	This Definition Is Triggered By The 'weightSlider' Slider When Its Value Changed.
 	'''
-
+	
 	setWeight(cmds.floatSliderGrp("weight_FloatSliderGrp", query=True, value=True))
 
 def setWeight(value):
@@ -65,7 +65,7 @@ def setWeight(value):
 
 def activateBlendshapes_Window():
 	'''
-	This Definition Creates The 'Activate Blendshapes' Main Window.
+	This Definition Creates The Activate Blendshapes Main Window.
 	'''
 
 	cmds.windowPref(enableAll=False)
@@ -83,13 +83,27 @@ def activateBlendshapes_Window():
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.floatSliderGrp("weight_FloatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, value=0, changeCommand="weightSlider_OnValueChanged()" , dragCommand="weightSlider_OnValueChanged()")
+	cmds.floatSliderGrp("weight_FloatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, value=0, changeCommand=weightSlider_OnValueChanged , dragCommand=weightSlider_OnValueChanged)
 
 	cmds.separator(height=10, style="singleDash")
 
 	cmds.showWindow("activateBlendshapes_Window")
 
 	cmds.windowPref(enableAll=True)
+
+def activateBlendshapes():
+	'''
+	This Definition Launches The Activate Blendshapes Main Window.
+	'''
+
+	activateBlendshapes_Window()
+
+def IActivateBlendshapes():
+	'''
+	This Definition Is The activateBlendshapes Method Interface.
+	'''
+	
+	activateBlendshapes()
 
 #***********************************************************************************************
 #***	Python End
