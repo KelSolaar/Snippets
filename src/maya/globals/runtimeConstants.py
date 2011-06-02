@@ -35,6 +35,9 @@ class RuntimeConstants():
 	'''
 	
 	loaderUiFile = None
+	
+	librariesDirectory = None
+	resourcesDirectory = None
 
 #***********************************************************************************************
 #***	Python End

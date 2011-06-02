@@ -2,7 +2,6 @@ import random
 import maya.cmds as cmds
 
 def replaceObjects(sources, targets, inPlace = False, usePivot = False, useInstances = False):
-
 	replacementObjects = []
 	for target in targets:
 		replacementObject = cmds.duplicate(sources[random.randrange(0, len(sources))], rr = True)[0]

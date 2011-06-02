@@ -34,7 +34,11 @@ class UiConstants():
 	This Class Is The Ui Constants Class.
 	'''
 	
-	loaderUiFile = "./ui/Loader.ui"
+	loaderUiFile = "ui/Loader.ui"
+	
+	snippetsLoaderLogo = "Snippets_Loader_Logo.png"
+	searchIcon = "Search_Icon.png"
+
 #***********************************************************************************************
 #***	Python End
 #***********************************************************************************************

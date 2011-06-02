@@ -27,5 +27,5 @@ def snapObjectsOnSupport(support, objects):
 	cmds.delete(nearestPointOnMesh)
 
 def ISnapObjectsOnSupport():
-	objects = cmds.ls(sl = True, l = True)
-	snapObjectsOnSupport("ground", objects)
+	selection = cmds.ls(sl = True, l = True)
+	selection and snapObjectsOnSupport(selection[-1], selection[:-1])

@@ -17,7 +17,6 @@ def vertexPaintToolMassaging():
 	cmds.artAttrPaintVertexCtx( pVtxTool, e = True, exportfilesizey = 2048 )
 	cmds.artAttrPaintVertexCtx( pVtxTool, e = True, exportfilesave = "D:\\Mask.tif" )
 
-
 # Multiple Targets Vertices Positions Transfert.
 def transfertVerticesPositions(source, targets, searchMethod=0):
 	for target in targets:
@@ -28,13 +27,6 @@ def ITransfertVerticesPositions():
 	selection = cmds.ls(sl=True, l=True)
 	transfertVerticesPositions(selection[0], selection[1:], 0)
 
-# Select Boundary Edges.
-def getBoundaryEdges(components):
-    return cmds.polyListComponentConversion(components, te=True, bo=True)
-
-def IGetBoundaryEdges():
-	cmds.select(getBoundaryEdges(cmds.ls(sl=True, l=True)))
-
 # Toggle Selection Highlight.
 def toggleSelectionHighlight():
 	panel = cmds.getPanel(withFocus=True)
@@ -44,3 +36,11 @@ def toggleSelectionHighlight():
 		pass
 def IToggleSelectionHighlight():
 	toggleSelectionHighlight()
+
+# Set PolySplitRing Nodes Weights To 0.5.
+def polySplit05():
+	for node in cmds.ls(type = "polySplitRing"):
+		cmds.setAttr(node + ".weight", 0.5)
+
+def IPolySplit05():
+	polySplit05()

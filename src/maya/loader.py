@@ -74,7 +74,8 @@ if os.path.exists(RuntimeConstants.loaderUiFile):
 else:
 	ui.common.messageBox("Error", "Error", "'{0}' Ui File Is Not Available!" % UiConstants.loaderUiFile)
 
-LIBRARIES = os.path.join(os.path.dirname(__file__), Constants.librariesPath)
+RuntimeConstants.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
+RuntimeConstants.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
 
 #***********************************************************************************************
 #***	Module Classes And Definitions
@@ -276,8 +277,11 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		
 		# --- Setting Class Attributes. ---
 		self._container = container
-		
 		self._modules = None
+		self._Informations_textBrowser_defaultText  =  "<center><br/><br/><h4>* * *</h4>Select A Snippet To Display Related Informations!<h4>* * *</h4></center>"
+		
+		# --- Gathering Modules. ---
+		self.getModules()
 
 		# --- Setting Up UI. ---
 		self.initializeUI()
@@ -287,7 +291,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.connect(self.Reload_Snippets_pushButton, SIGNAL("clicked()"), self.Reload_Snippets_pushButton_OnClicked)
 		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.Methods_listWidget_OnItemSelectionChanged )
 		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.Methods_listWidget_OnItemDoubleClicked )
-
+		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.Search_lineEdit_OnTextChanged )
+	
 	#***************************************************************************************
 	#***	Attributes Properties
 	#***************************************************************************************
@@ -353,6 +358,36 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("modules"))
 
+	@property
+	def Informations_textBrowser_defaultText(self):
+		'''
+		This Method Is The Property For The _Informations_textBrowser_defaultText Attribute.
+
+		@return: self._Informations_textBrowser_defaultText. ( String )
+		'''
+
+		return self._Informations_textBrowser_defaultText
+
+	@Informations_textBrowser_defaultText.setter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def Informations_textBrowser_defaultText(self, value):
+		'''
+		This Method Is The Setter Method For The _Informations_textBrowser_defaultText Attribute.
+
+		@param value: Attribute Value. ( String )
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Read Only!".format("Informations_textBrowser_defaultText"))
+
+	@Informations_textBrowser_defaultText.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def Informations_textBrowser_defaultText(self):
+		'''
+		This Method Is The Deleter Method For The _Informations_textBrowser_defaultText Attribute.
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("Informations_textBrowser_defaultText"))
+
 	#***************************************************************************************
 	#***	Class Methods
 	#***************************************************************************************
@@ -373,7 +408,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This Definition Gathers The Libraries.
 		'''
 
-		walker = Walker(LIBRARIES)
+		walker = Walker(RuntimeConstants.librariesDirectory)
 		modules = walker.walk(filtersIn="%s$" % Constants.librariesExtension)
 		
 		self._modules = {}
@@ -398,6 +433,15 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			interfaces = [object_ for object_ in module.import_.__dict__.keys() if re.search("^I[A-Z]\w+", object_)]
 			if interfaces:
 				module.interfaces = interfaces
+	
+	@core.executionTrace
+	def getModules(self):
+		'''
+		This Definition Gets The Modules.
+		'''
+
+		self.gatherLibraries()
+		self.getInterfaces()
 
 	@core.executionTrace
 	def initializeUI(self):
@@ -405,17 +449,26 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This Definition Triggers The Methods_listWidget Widget.
 		'''
 
+		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeConstants.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
+		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeConstants.resourcesDirectory, UiConstants.searchIcon)))
+		
 		self.Methods_listWidget_setWidget()
-
+		
+		self.Informations_textBrowser.setText(self._Informations_textBrowser_defaultText)
+	
 	@core.executionTrace
 	def executeSnippet(self):
 		'''
 		This Definition Triggers The Selected Snippet Execution.
 		'''
 
-		module = self.Methods_listWidget.currentItem()._datas.module
-		method = self.Methods_listWidget.currentItem()._datas.name	
-		module.import_.__dict__[method]()		
+		listWidget = self.Methods_listWidget.currentItem()
+		if hasattr(listWidget, "_datas"):
+			module = listWidget._datas.module
+			method = listWidget._datas.name	
+			
+			LOGGER.info( "%s | Executing '%s' Snippet From '%s' Module!" % (self.__class__.__name__, method, module.name))
+			module.import_.__dict__[method]()		
 	
 	@core.executionTrace
 	def Methods_listWidget_setWidget(self):
@@ -423,16 +476,24 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This Definition Sets The Methods_listWidget Widget.
 		'''
 		
-		self.Methods_listWidget.clear()
-		self.gatherLibraries()
-		self.getInterfaces()
-		for module in self._modules.values():
-			if module.interfaces:
-				for interface in module.interfaces:
-					listWidgetItem = QListWidgetItem(strings.getNiceName(self.getMethodName(interface)))
-					listWidgetItem._datas = Interface(name=interface, module=module)
-					self.Methods_listWidget.addItem(listWidgetItem)
-		self.Methods_listWidget.sortItems(Qt.AscendingOrder)
+		if self._modules:
+			self.Methods_listWidget.clear()
+		
+			listWidgetItems = set()
+			for module in self._modules.values():
+				if module.interfaces:
+					for interface in module.interfaces:
+						text = strings.getNiceName(self.getMethodName(interface))
+						if re.search(str(self.Search_lineEdit.text()), text, flags=re.IGNORECASE):
+							listWidgetItem = QListWidgetItem(text)
+							listWidgetItem._datas = Interface(name=interface, module=module)
+							listWidgetItems.add(listWidgetItem)
+							listWidgetItems.add(text[0])
+
+			for listWidgetItem in listWidgetItems:
+				self.Methods_listWidget.addItem(listWidgetItem)
+			
+			self.Methods_listWidget.sortItems(Qt.AscendingOrder)
 
 	@core.executionTrace
 	def Execute_Snippet_pushButton_OnClicked(self):
@@ -447,7 +508,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		'''
 		This Method Is Triggered When Reload_Snippets_pushButton Is Clicked.
 		'''
-		
+			
+		self.getModules()
 		self.Methods_listWidget_setWidget()
 
 	@core.executionTrace
@@ -455,34 +517,37 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		'''
 		This Method Is Triggered When Methods_listWidget Selection Has Changed.
 		'''
-
-		datas = self.Methods_listWidget.currentItem()._datas
-		method = self.getMethodName(datas.name)
-		arguments = inspect.getargspec(datas.module.import_.__dict__[method])
-		content = """
-				<h4><center>%s</center></h4>
-				<p>
-				<b>Module:</b> %s
-				<br/>
-				<b>Path:</b> %s
-				</p>
-				<p>
-				<b>Method:</b> %s
-				<br/>
-				<b>Interface:</b> %s
-				<br/>
-				<b>Arguments:</b> %s
-				<br/>
-				<b>Defaults:</b> %s
-				<br/>
-				<b>Variable Arguments:</b> %s
-				<br/>
-				<b>Keywords:</b> %s
-				</p>
-				<p>
-				<b>Documentation:</b> %s
-				</p>
-				""" % (strings.getNiceName(method), datas.module.name, datas.module.import_.__file__, method, datas.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, datas.module.import_.__dict__[method].__doc__)
+		
+		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
+			datas = self.Methods_listWidget.currentItem()._datas
+			method = self.getMethodName(datas.name)
+			arguments = inspect.getargspec(datas.module.import_.__dict__[method])
+			content = """
+					<h4><center>%s</center></h4>
+					<p>
+					<b>Module:</b> %s
+					<br/>
+					<b>Path:</b> %s
+					</p>
+					<p>
+					<b>Method:</b> %s
+					<br/>
+					<b>Interface:</b> %s
+					<br/>
+					<b>Arguments:</b> %s
+					<br/>
+					<b>Defaults:</b> %s
+					<br/>
+					<b>Variable Arguments:</b> %s
+					<br/>
+					<b>Keywords:</b> %s
+					</p>
+					<p>
+					<b>Documentation:</b> %s
+					</p>
+					""" % (strings.getNiceName(method), datas.module.name, datas.module.import_.__file__, method, datas.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, datas.module.import_.__dict__[method].__doc__)
+		else:
+			content = self._Informations_textBrowser_defaultText
 		self.Informations_textBrowser.setText(content)
 	
 	@core.executionTrace
@@ -494,6 +559,16 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		'''
 		
 		self.executeSnippet()
+
+	@core.executionTrace
+	def Search_lineEdit_OnTextChanged(self, text):
+		'''
+		This Method Is Triggered When Search_lineEdit Text Changes.
+		
+		@param text: Current Text Value. ( QString )
+		'''
+		
+		self.Methods_listWidget_setWidget()
 
 #***********************************************************************************************
 #***	Python End

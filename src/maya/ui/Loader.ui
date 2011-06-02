@@ -2,49 +2,45 @@
 <ui version="4.0">
  <class>Loader_MainWindow</class>
  <widget class="QMainWindow" name="Loader_MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>480</width>
-    <height>640</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Snippets Loader</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout">
-    <property name="margin">
-     <number>9</number>
-    </property>
-    <property name="spacing">
-     <number>6</number>
-    </property>
-    <item row="1" column="0">
-     <widget class="QListWidget" name="Methods_listWidget"/>
+  <widget class="QWidget" name="Loader_centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="Snippets_Loader_Logo_label">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </item>
-    <item row="3" column="0">
+    <item row="1" column="0">
+     <widget class="QLabel" name="Search_Icon_label">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="Search_lineEdit"/>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QSplitter" name="Loader_splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QListWidget" name="Methods_listWidget"/>
+      <widget class="QTextBrowser" name="Informations_textBrowser"/>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
      <widget class="QPushButton" name="Execute_Snippet_pushButton">
       <property name="text">
        <string>Execute Snippet!</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLineEdit" name="Search_lineEdit"/>
-    </item>
-    <item row="2" column="0">
-     <widget class="QTextBrowser" name="Informations_textBrowser">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
+    <item row="4" column="0" colspan="2">
      <widget class="QPushButton" name="Reload_Snippets_pushButton">
       <property name="text">
        <string>Reload Snippets!</string>

@@ -38,8 +38,11 @@ class Constants():
 	verbosityLevel = 3
 	loggingSeparators = "*" * 96
 	
-	resourcesPath = "resources"	librariesPath = "libraries"
 	librariesExtension = "py"
+
+	librariesDirectory = "libraries"
+	resourcesDirectory = "resources"	
+	nullObject = "None"
 
 #***********************************************************************************************
 #***	Python End

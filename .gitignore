@@ -3,3 +3,5 @@
 .pydevproject
 
 *.pyc
+
+src/maya/resources/builders/
