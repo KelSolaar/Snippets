@@ -38,9 +38,9 @@ def IToggleSelectionHighlight():
 	toggleSelectionHighlight()
 
 # Set PolySplitRing Nodes Weights To 0.5.
-def polySplit05():
+def splitRingMiddle():
 	for node in cmds.ls(type = "polySplitRing"):
 		cmds.setAttr(node + ".weight", 0.5)
 
-def IPolySplit05():
-	polySplit05()
+def ISplitRingMiddle():
+	splitRingMiddle()
