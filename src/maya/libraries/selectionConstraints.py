@@ -1,45 +1,80 @@
 import maya.cmds as cmds
 
-# Select Star Vertices.
 def selectStarVertices():
+	'''
+	This Definition Selects Star Vertices.
+	'''
+	
 	cmds.polySelectConstraint(m=3, t=1, order=True, orb=(5, 65535))
 	cmds.polySelectConstraint(dis=True)
 
 def ISelectStarVertices():
+	'''
+	This Definition Is The selectStarVertices Method Interface.
+	'''
+	
 	selectStarVertices()
 
-# Select Triangles Faces.
 def selectTrianglesFaces():
+	'''
+	This Definition Selects Triangles Faces.
+	'''
+
 	cmds.polySelectConstraint(m=3, t=8, sz=1)
 	cmds.polySelectConstraint(dis=True)
 
 def ISelectTrianglesFaces():
+	'''
+	This Definition Is The selectTrianglesFaces Method Interface.
+	'''
+
 	selectTrianglesFaces()
 	
-# Select NSides Faces.
 def selectNsidesFaces():
+	'''
+	This Definition Selects NSides Faces.
+	'''
+	
 	cmds.polySelectConstraint(m=3, t=8, sz=3)
 	cmds.polySelectConstraint(dis=True)
 
 def ISelectNsidesFaces():
+	'''
+	This Definition Is The selectNsidesFaces Method Interface.
+	'''
+
 	selectNsidesFaces()
 	
-# Select Boundary Edges.
 def selectBoundaryEdges(components):
+	'''
+	This Definition Selects Selection Boundaries Edges.
+	'''
+	
 	cmds.select(cmds.polyListComponentConversion(components, te=True, bo=True))
 
 def ISelectBoundaryEdges():
-	selectBoundaryEdges(cmds.ls(sl=True, l=True))
+	'''
+	This Definition Is The selectBoundaryEdges Method Interface.
+	'''
 
-# Select Border Edges.
+	selection = cmds.ls(sl=True, l=True)
+	selection and selectBoundaryEdges(selection)
+
 def selectBorderEdges():
+	'''
+	This Definition Selects The Border Edges.
+	'''
+	
 	cmds.polySelectConstraint(m=3, t=0x8000, w=1)
 	cmds.polySelectConstraint(m=0)
 
 def ISelectBorderEdges():
+	'''
+	This Definition Is The selectNsidesFaces Method Interface.
+	'''
+
 	selectBorderEdges()
 	
-# Select Creases Edges.
 def selectCreasesEdges(object):
 	'''
 	This Definition Cleans Maya Hierarchical Polygonal Conversion.

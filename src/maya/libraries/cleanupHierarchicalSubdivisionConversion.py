@@ -1,6 +1,5 @@
 import maya.cmds as cmds
 
-# Cleanup Hierarchical Subdivision Polygon Conversion.
 def cleanupHierarchicalSubdivisionConversion(object):
 	'''
 	This Definition Cleans Maya Hierarchical Polygonal Conversion.

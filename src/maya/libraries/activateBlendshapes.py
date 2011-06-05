@@ -3,7 +3,7 @@
 
 #***********************************************************************************************
 #
-# Copyright (C) 2011 - Thomas Mansencal - kelsolaar_fool@hotmail.com
+# Copyright (C) 2011 - Thomas Mansencal - thomas.mansencal@gmail.com
 #
 #***********************************************************************************************
 
@@ -75,10 +75,10 @@ def activateBlendshapes_Window():
 
 	cmds.window("activateBlendshapes_Window",
 		title="Activate Blendshapes",
-		width=256,
-		height=48)
+		width=320)
 
 	spacing=5
+
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
 	cmds.separator(height=10, style="singleDash")

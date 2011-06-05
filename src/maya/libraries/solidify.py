@@ -8,7 +8,7 @@ def getTransform(node, fullPath=True):
 	This Definition Returns Transform Of The Provided Node.
 
 	@param node: Current Object. ( String )
-	@param fullPath: Current Full Path State. (Boolean)
+	@param fullPath: Current Full Path State. ( Boolean )
 	@return: Object Transform. ( String )
 	'''
 	
@@ -111,7 +111,7 @@ def hasBorderEdges(object):
 	This Definition Returns If An Object Has Border Edges.
 	
 	@param object: Object. ( String )
-	@return: Has Object Border Edges. (Boolean)
+	@return: Has Object Border Edges. ( Boolean )
 	'''
 
 	cmds.select(object)
@@ -126,8 +126,8 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 	
 	@param object: Object. ( String )
 	@param height: Extrusion Height. ( Float )
-	@param divisions: Extrusion Divisions. ( Integer )
-	@param history: Keep Construction History. (Boolean)
+	@param division: Extrusion Divisions. ( Float )
+	@param history: Keep Construction History. ( Boolean )
 	'''
 
 	if  hasBorderEdges(object):
@@ -167,7 +167,7 @@ def solidify_Button_OnClicked(state):
 	'''
 	This Definition Is Triggered By The solidify_Button Button When Clicked.
 	
-	@param state: Button State. (Boolean)
+	@param state: Button State. ( Boolean )
 	'''
 	
 	for object in cmds.ls(sl=True, l=True, o=True):
@@ -185,7 +185,7 @@ def solidify_Window():
 
 	cmds.window("solidify_Window",
 		title="Solidify",
-		width=384)
+		width=320)
 
 	spacing=5
 
@@ -198,7 +198,7 @@ def solidify_Window():
 	
 	cmds.separator(style="single")
 	
-	cmds.columnLayout(columnOffset=("left", 140))
+	cmds.columnLayout(columnOffset=("left", 140) )
 	cmds.checkBox("keepConstructionHistory_CheckBox", label="Keep Construction History",  v=True)
 	cmds.setParent(topLevel=True)
 

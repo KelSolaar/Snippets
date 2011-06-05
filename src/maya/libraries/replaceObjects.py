@@ -5,12 +5,12 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 	'''
 	This Definition Replaces The Targets With Sources.
 
-	@param sources: Sources. (List)
-	@param targets: Targets. (List)
-	@param inPlace: In Place Replacement. (Boolean)
-	@param usePivot: Use Target Pivot. (Boolean)
-	@param asInstance: Duplicate As Instances. (Boolean)
-	@param deleteTargets: Delete Targets. (Boolean)
+	@param sources: Sources. ( List )
+	@param targets: Targets. ( List )
+	@param inPlace: In Place Replacement. ( Boolean )
+	@param usePivot: Use Target Pivot. ( Boolean )
+	@param asInstance: Duplicate As Instances. ( Boolean )
+	@param deleteTargets: Delete Targets. ( Boolean )
 	'''
 	
 	duplicatedObjects = []
@@ -46,7 +46,7 @@ def pickSources_Button_OnClicked(state):
 	'''
 	This Definition Is Triggered By The pickSources_Button Button When Clicked.
 	
-	@param state: Button State. (Boolean)
+	@param state: Button State. ( Boolean )
 	'''
 	
 	cmds.textField("sources_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -55,7 +55,7 @@ def pickTargets_Button_OnClicked(state):
 	'''
 	This Definition Is Triggered By The pickTargets_Button Button When Clicked.
 	
-	@param state: Button State. (Boolean)
+	@param state: Button State. ( Boolean )
 	'''
 
 	cmds.textField("targets_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -64,7 +64,7 @@ def replaceObjects_Button_OnClicked(state):
 	'''
 	This Definition Is Triggered By The replaceObjects_Button Button When Clicked.
 	
-	@param state: Button State. (Boolean)
+	@param state: Button State. ( Boolean )
 	'''
 
 	sources = [source for source in cmds.textField("sources_TextField", query=True, text=True).split(", ") if cmds.objExists(source)]
@@ -84,7 +84,7 @@ def replaceObjects_Window():
 
 	cmds.window("replaceObjects_Window",
 		title="Replace Objects",
-		width=384)
+		width=320)
 
 	spacing=5
 
@@ -104,7 +104,7 @@ def replaceObjects_Window():
 	
 	cmds.separator(style="single")
 	
-	cmds.columnLayout(columnOffset=("left", 140))
+	cmds.columnLayout(columnOffset=("left", 40) )
 	cmds.checkBox("duplicateInPlace_CheckBox", label="Duplicate In Place")
 	cmds.checkBox("useTargetsPivots_CheckBox", label="Use Targets Pivots", v=True)
 	cmds.checkBox("duplicateAsInstances_CheckBox", label="Duplicate As Instances")

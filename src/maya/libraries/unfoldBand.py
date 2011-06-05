@@ -7,7 +7,7 @@ def unfoldBandUVs(object, divisions=1, history=True):
 	
 	@param object: Object. ( String )
 	@param divisions: Extrusion Divisions. ( Integer )
-	@param history: Keep Construction History. (Boolean)
+	@param history: Keep Construction History. ( Boolean )
 	'''
 
 	edgesCount = cmds.polyEvaluate(object, edge=True)
@@ -36,7 +36,7 @@ def unfoldBand_Button_OnClicked(state):
 	'''
 	This Definition Is Triggered By The unfoldBand Button When Clicked.
 	
-	@param state: Button State. (Boolean)
+	@param state: Button State. ( Boolean )
 	'''
 
 	for object in cmds.ls(sl=True, l=True, o=True):

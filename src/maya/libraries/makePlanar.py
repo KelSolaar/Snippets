@@ -8,7 +8,7 @@ def getTransform(node, fullPath=True):
 	This Definition Returns Transform Of The Provided Node.
 
 	@param node: Current Object. ( String )
-	@param fullPath: Current Full Path State. (Boolean)
+	@param fullPath: Current Full Path State. ( Boolean )
 	@return: Object Transform. ( String )
 	'''
 	
@@ -102,7 +102,7 @@ def makePlanar(components):
 	@param components: Components To Planarizes. ( List )
 	'''
 	
-	object = cmds.ls(components = True, o = True)
+	object = cmds.ls(components, o = True)
 	if object:
 		transform = getTransform(object)
 		vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex = True), fl = True)

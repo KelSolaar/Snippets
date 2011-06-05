@@ -1,7 +1,6 @@
 import maya.cmds as cmds
 import maya.mel as mel
 
-# Multiple Targets Vertices Positions Transfert.
 def transfertVerticesPositions(sources, target, searchMethod=0):
 	'''
 	This Definition Transferts Vertices Positions From Sources To Target Object.
@@ -21,9 +20,8 @@ def ITransfertVerticesPositions():
 	'''
 	
 	selection = cmds.ls(sl=True, l=True)
-	transfertVerticesPositions(selection[:-1], selection[-1], 0)
+	selection and transfertVerticesPositions(selection[:-1], selection[-1], 0)
 
-# Toggle Selection Highlight.
 def toggleSelectionHighlight():
 	'''
 	This Definition Toggles Active Modeling Panel Selection Highlight.
@@ -42,21 +40,25 @@ def IToggleSelectionHighlight():
 	
 	toggleSelectionHighlight()
 
-# Set PolySplitRing Nodes Weights To 0.5.
-def splitRingMiddle():
+def splitRingMiddle(nodes):
 	'''
 	This Definition Sets The polySplitRing Nodes Weights To 0.5.
+	
+	@param nodes: Nodes To Retrieve History From. ( List )
 	'''
 	
-	for node in cmds.ls(type = "polySplitRing"):
-		cmds.setAttr(node + ".weight", 0.5)
+	for node in nodes:
+		for historyNode in cmds.listHistory(node):
+			if cmds.nodeType(historyNode) == "polySplitRing":
+				cmds.setAttr(historyNode + ".weight", 0.5)
 
 def ISplitRingMiddle():
 	'''
 	This Definition Is The splitRingMiddle Method Interface.
 	'''
-	
-	splitRingMiddle()
+
+	selection = cmds.ls(sl=True, l=True)
+	splitRingMiddle(selection)
 
 # Vertex Paint Tool Massaging.
 # def vertexPaintToolMassaging():
