@@ -50,6 +50,7 @@ import foundations.io as io
 import foundations.strings as strings
 import libraries.common
 import foundations.namespace as namespace
+from foundations.environment import Environment
 from foundations.walker import Walker
 from globals.constants import Constants
 from globals.runtimeConstants import RuntimeConstants
@@ -72,7 +73,7 @@ RuntimeConstants.loaderUiFile = os.path.join(os.path.dirname(__file__), UiConsta
 if os.path.exists(RuntimeConstants.loaderUiFile):
 	Ui_Loader_Setup, Ui_Loader_Type = uic.loadUiType(RuntimeConstants.loaderUiFile)
 else:
-	ui.common.messageBox("Error", "Error", "'{0}' Ui File Is Not Available!" % UiConstants.loaderUiFile)
+	ui.common.messageBox("Error", "Error", "'%s' Ui File Is Not Available!" % UiConstants.loaderUiFile)
 
 RuntimeConstants.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
 RuntimeConstants.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
@@ -97,6 +98,7 @@ class Interface(core.Structure):
 
 		# --- Setting Class Attributes. ---
 		self.__dict__.update(kwargs)
+
 class Module(object):
 	'''
 	This Class Is The Module Class.
@@ -111,7 +113,7 @@ class Module(object):
 		@param path: Path Of The Component. ( String )
 		'''
 
-		LOGGER.debug("> Initializing '{0}()' Class.".format(self.__class__.__name__))
+		LOGGER.debug("> Initializing '%s()' Class." % (self.__class__.__name__))
 
 		# --- Setting Class Attributes. ---
 		self._name = None
@@ -145,7 +147,7 @@ class Module(object):
 		'''
 
 		if value:
-			assert type(value) in (str, unicode), "'{0}' Attribute: '{1}' Type Is Not 'str' or 'unicode'!".format("name", value)
+			assert type(value) in (str, unicode), "'%s' Attribute: '%s' Type Is Not 'str' or 'unicode'!" % ("name", value)
 		self._name = value
 
 	@name.deleter
@@ -155,7 +157,7 @@ class Module(object):
 		This Method Is The Deleter Method For The _name Attribute.
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("name"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "name")
 
 	@property
 	def path(self):
@@ -177,8 +179,8 @@ class Module(object):
 		'''
 
 		if value:
-			assert type(value) in (str, unicode), "'{0}' Attribute: '{1}' Type Is Not 'str' or 'unicode'!".format("path", value)
-			assert os.path.exists(value), "'{0}' Attribute: '{1}' Directory Doesn't Exists!".format("path", value)
+			assert type(value) in (str, unicode), "'%s' Attribute: '%s' Type Is Not 'str' or 'unicode'!" % ("path", value)
+			assert os.path.exists(value), "'%s' Attribute: '%s' Directory Doesn't Exists!" % ("path", value)
 		self._path = value
 
 	@path.deleter
@@ -188,7 +190,7 @@ class Module(object):
 		This Method Is The Deleter Method For The _path Attribute.
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("path"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "path")
 
 	@property
 	def import_(self):
@@ -210,7 +212,7 @@ class Module(object):
 		'''
 
 		if value:
-			assert type(value) is type(sys), "'{0}' Attribute: '{1}' Type Is Not 'module'!".format("import", value)
+			assert type(value) is type(sys), "'%s' Attribute: '%s' Type Is Not 'module'!" % ("import", value)
 		self._import = value
 
 	@import_.deleter
@@ -220,7 +222,7 @@ class Module(object):
 		This Method Is The Deleter Method For The _import_ Attribute.
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("import"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "import")
 
 	@property
 	def interfaces(self):
@@ -249,7 +251,7 @@ class Module(object):
 		This Method Is The Deleter Method For The _interfaces Attribute.
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("interfaces"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "interfaces")
 
 class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	'''
@@ -268,7 +270,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		@param identity: Current Reports Id. ( String )
 		'''
 
-		LOGGER.debug("> Initializing '{0}()' Class.".format(self.__class__.__name__))
+		LOGGER.debug("> Initializing '%s()' Class." % (self.__class__.__name__))
 
 		Ui_Loader_Type.__init__(self, container)
 		Ui_Loader_Setup.__init__(self)
@@ -278,7 +280,11 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		# --- Setting Class Attributes. ---
 		self._container = container
 		self._modules = None
+		
 		self._Informations_textBrowser_defaultText  =  "<center><br/><br/><h4>* * *</h4>Select A Snippet To Display Related Informations!<h4>* * *</h4></center>"
+		
+		self._linuxTextEditors = ("gedit", "kwrite", "nedit", "mousepad")
+		self._linuxBrowsers = ("nautilus", "dolphin", "konqueror", "thunar")
 		
 		# --- Gathering Modules. ---
 		self.getModules()
@@ -315,7 +321,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		@param value: Attribute Value. ( QObject )
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Read Only!".format("container"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Read Only!" % "container")
 
 	@container.deleter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -324,7 +330,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This Method Is The Deleter Method For The _container Attribute.
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("container"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "container")
 
 	@property
 	def modules(self):
@@ -346,7 +352,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		'''
 
 		if value:
-			assert type(value) is dict, "'{0}' Attribute: '{1}' Type Is Not 'dict'!".format("modules", value)
+			assert type(value) is dict, "'%s' Attribute: '%s' Type Is Not 'dict'!" % ("modules", value)
 		self._modules = value
 
 	@modules.deleter
@@ -356,7 +362,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This Method Is The Deleter Method For The _modules Attribute.
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("modules"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "modules")
 
 	@property
 	def Informations_textBrowser_defaultText(self):
@@ -377,7 +383,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		@param value: Attribute Value. ( String )
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Read Only!".format("Informations_textBrowser_defaultText"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Read Only!" % "Informations_textBrowser_defaultText")
 
 	@Informations_textBrowser_defaultText.deleter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -386,68 +392,79 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This Method Is The Deleter Method For The _Informations_textBrowser_defaultText Attribute.
 		'''
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute Is Not Deletable!".format("Informations_textBrowser_defaultText"))
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "Informations_textBrowser_defaultText")
+
+	@property
+	def linuxTextEditors(self):
+		'''
+		This Method Is The Property For The _linuxTextEditors Attribute.
+
+		@return: self._linuxTextEditors. ( Tuple )
+		'''
+
+		return self._linuxTextEditors
+
+	@linuxTextEditors.setter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def linuxTextEditors(self, value):
+		'''
+		This Method Is The Setter Method For The _linuxTextEditors Attribute.
+
+		@param value: Attribute Value. ( Tuple )
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Read Only!" % "linuxTextEditors")
+
+	@linuxTextEditors.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def linuxTextEditors(self):
+		'''
+		This Method Is The Deleter Method For The _linuxTextEditors Attribute.
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "linuxTextEditors")
+	
+	@property
+	def linuxBrowsers(self):
+		'''
+		This Method Is The Property For The _linuxBrowsers Attribute.
+
+		@return: self._linuxBrowsers. ( QObject )
+		'''
+
+		return self._linuxBrowsers
+
+	@linuxBrowsers.setter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def linuxBrowsers(self, value):
+		'''
+		This Method Is The Setter Method For The _linuxBrowsers Attribute.
+
+		@param value: Attribute Value. ( QObject )
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Read Only!" % "linuxBrowsers")
+
+	@linuxBrowsers.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def linuxBrowsers(self):
+		'''
+		This Method Is The Deleter Method For The _linuxBrowsers Attribute.
+		'''
+
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "linuxBrowsers")
 
 	#***************************************************************************************
 	#***	Class Methods
 	#***************************************************************************************
 	@core.executionTrace
-	def getMethodName(self, name):
-		'''
-		This Definition Gets The Method Name From The Interface.
-		
-		@param name: Interface Name. ( String )
-		@return: Method Name. ( String )
-		'''
-
-		return "%s%s" % (name[1].lower(), name[2:])
-	
-	@core.executionTrace
-	def gatherLibraries(self):
-		'''
-		This Definition Gathers The Libraries.
-		'''
-
-		walker = Walker(RuntimeConstants.librariesDirectory)
-		modules = walker.walk(filtersIn="%s$" % Constants.librariesExtension)
-		
-		self._modules = {}
-		for name, path in modules.items():
-			module = Module()
-			module.name = namespace.getNamespace(name, rootOnly=True)
-			module.path = os.path.dirname(path)
-			self._modules[module.name] = module
-
-	@core.executionTrace
-	def getInterfaces(self):
-		'''
-		This Definition Gets The Interfaces.
-		'''
-
-		for module in self._modules.values():
-			if module.path not in sys.path:
-				sys.path.append(module.path)
-			if module.name in sys.modules.keys():
-				del(sys.modules[module.name])
-			module.import_ = __import__(module.name)
-			interfaces = [object_ for object_ in module.import_.__dict__.keys() if re.search("^I[A-Z]\w+", object_)]
-			if interfaces:
-				module.interfaces = interfaces
-	
-	@core.executionTrace
-	def getModules(self):
-		'''
-		This Definition Gets The Modules.
-		'''
-
-		self.gatherLibraries()
-		self.getInterfaces()
-
-	@core.executionTrace
 	def initializeUI(self):
 		'''
 		This Definition Triggers The Methods_listWidget Widget.
 		'''
+		
+		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
+		self.Methods_listWidget_setActions()
 
 		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeConstants.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
 		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeConstants.resourcesDirectory, UiConstants.searchIcon)))
@@ -455,20 +472,6 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Methods_listWidget_setWidget()
 		
 		self.Informations_textBrowser.setText(self._Informations_textBrowser_defaultText)
-	
-	@core.executionTrace
-	def executeSnippet(self):
-		'''
-		This Definition Triggers The Selected Snippet Execution.
-		'''
-
-		listWidget = self.Methods_listWidget.currentItem()
-		if hasattr(listWidget, "_datas"):
-			module = listWidget._datas.module
-			method = listWidget._datas.name	
-			
-			LOGGER.info( "%s | Executing '%s' Snippet From '%s' Module!" % (self.__class__.__name__, method, module.name))
-			module.import_.__dict__[method]()		
 	
 	@core.executionTrace
 	def Methods_listWidget_setWidget(self):
@@ -487,6 +490,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 						if re.search(str(self.Search_lineEdit.text()), text, flags=re.IGNORECASE):
 							listWidgetItem = QListWidgetItem(text)
 							listWidgetItem._datas = Interface(name=interface, module=module)
+							LOGGER.debug("> Adding QListWidgetItem With Text: '%s'." % text)
 							listWidgetItems.add(listWidgetItem)
 							listWidgetItems.add(text[0])
 
@@ -496,12 +500,48 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			self.Methods_listWidget.sortItems(Qt.AscendingOrder)
 
 	@core.executionTrace
+	def Methods_listWidget_setActions(self):
+		'''
+		This Method Sets The Methods_listWidget Actions.
+		'''
+		
+		editSnippetAction = QAction("Edit Snippet", self.Methods_listWidget)
+		self.connect(editSnippetAction, SIGNAL("triggered()"), self.Methods_listWidget_editSnippetAction)
+		self.Methods_listWidget.addAction(editSnippetAction)
+		
+		exploreSnippetFolderAction = QAction("Explore Snippet Folder", self.Methods_listWidget)
+		self.connect(exploreSnippetFolderAction, SIGNAL("triggered()"), self.Methods_listWidget_exploreSnippetFolderAction)
+		self.Methods_listWidget.addAction(exploreSnippetFolderAction)
+
+	@core.executionTrace
+	def Methods_listWidget_editSnippetAction(self):
+		'''
+		This Method Is Triggered By editSnippetAction.
+		'''
+		listWidget = self.Methods_listWidget.currentItem()
+		if hasattr(listWidget, "_datas"):
+			module = listWidget._datas.module
+			self.editProvidedfile(module.import_.__file__.replace(Constants.librariesCompiledExtension, Constants.librariesExtension))
+
+	@core.executionTrace
+	def Methods_listWidget_exploreSnippetFolderAction(self):
+		'''
+		This Method Is Triggered By editSnippetAction.
+		'''
+
+		listWidget = self.Methods_listWidget.currentItem()
+		if hasattr(listWidget, "_datas"):
+			module = listWidget._datas.module
+			self.exploreProvidedFolder(os.path.dirname(module.import_.__file__))
+
+	@core.executionTrace
 	def Execute_Snippet_pushButton_OnClicked(self):
 		'''
 		This Method Is Triggered When Execute_Snippet_pushButton Is Clicked.
 		'''
-	
-		self.executeSnippet()
+		
+		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
+			self.executeSnippet()
 
 	@core.executionTrace
 	def Reload_Snippets_pushButton_OnClicked(self):
@@ -545,9 +585,11 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 					<p>
 					<b>Documentation:</b> %s
 					</p>
-					""" % (strings.getNiceName(method), datas.module.name, datas.module.import_.__file__, method, datas.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, datas.module.import_.__dict__[method].__doc__)
+					""" % (strings.getNiceName(method), datas.module.name, os.path.normpath(datas.module.import_.__file__), method, datas.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, datas.module.import_.__dict__[method].__doc__)
 		else:
 			content = self._Informations_textBrowser_defaultText
+		
+		LOGGER.debug("> Update 'Informations_textBrowser' Widget Content: '%s'." % content)
 		self.Informations_textBrowser.setText(content)
 	
 	@core.executionTrace
@@ -569,6 +611,157 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		'''
 		
 		self.Methods_listWidget_setWidget()
+
+	@core.executionTrace
+	def getMethodName(self, name):
+		'''
+		This Definition Gets The Method Name From The Interface.
+		
+		@param name: Interface Name. ( String )
+		@return: Method Name. ( String )
+		'''
+
+		return "%s%s" % (name[1].lower(), name[2:])
+	
+	@core.executionTrace
+	def gatherLibraries(self):
+		'''
+		This Definition Gathers The Libraries.
+		'''
+
+		walker = Walker(RuntimeConstants.librariesDirectory)
+		modules = walker.walk(filtersIn=("\.%s$" % Constants.librariesExtension,))
+		
+		self._modules = {}
+		for name, path in modules.items():
+			module = Module()
+			module.name = namespace.getNamespace(name, rootOnly=True)
+			module.path = os.path.dirname(path)
+			self._modules[module.name] = module
+
+	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, ImportError)
+	def getInterfaces(self):
+		'''
+		This Definition Gets The Interfaces.
+		'''
+
+		for module in self._modules.values():
+			if module.path not in sys.path:
+				sys.path.append(module.path)
+			if module.name in sys.modules.keys():
+				del(sys.modules[module.name])
+			
+			module.import_ = __import__(module.name)
+			
+			interfaces = [object_ for object_ in module.import_.__dict__.keys() if re.search("^I[A-Z]\w+", object_)]
+			if interfaces:
+				LOGGER.info( "%s | Registering '%s' Interfaces From '%s' Module!" % (self.__class__.__name__, interfaces, module.name))
+				module.interfaces = interfaces
+	
+	@core.executionTrace
+	def getModules(self):
+		'''
+		This Definition Gets The Modules.
+		'''
+
+		self.gatherLibraries()
+		self.getInterfaces()
+
+	@core.executionTrace
+	def executeSnippet(self):
+		'''
+		This Definition Triggers The Selected Snippet Execution.
+		'''
+
+		listWidget = self.Methods_listWidget.currentItem()
+		if hasattr(listWidget, "_datas"):
+			module = listWidget._datas.module
+			method = listWidget._datas.name	
+			
+			LOGGER.info( "%s | Executing '%s' Snippet From '%s' Module!" % (self.__class__.__name__, method, module.name))
+			module.import_.__dict__[method]()
+
+	@core.executionTrace
+	def editProvidedfile(self, file):
+		'''
+		This Method Provides Editing Capability.
+
+		@param file: File To Edit. ( String )
+		'''
+
+		editCommand = None
+
+		file = os.path.normpath(file)
+		if platform.system() == "Windows" or platform.system() == "Microsoft":
+			LOGGER.info("%s | Launching 'notepad.exe' With '%s'." % (self.__class__.__name__, file))
+			editCommand = "notepad.exe \"%s\"" % file
+		elif platform.system() == "Darwin":
+			LOGGER.info("%s | Launching Default Text Editor With '%s'." % (self.__class__.__name__, file))
+			editCommand = "open -e \"%s\"" % file
+		elif platform.system() == "Linux":
+			environmentVariable = Environment("PATH")
+			paths = environmentVariable.getPath().split(":")
+
+			editorFound = False
+			for editor in self._linuxTextEditors:
+				if not editorFound:
+					try:
+						for path in paths:
+							if os.path.exists(os.path.join(path, editor)):
+								LOGGER.info("%s | Launching '%s' Text Editor With '%s'." % (self.__class__.__name__, editor, file))
+								editCommand = "\"%s\" \"%s\"" % (editor, file)
+								editorFound = True
+								raise StopIteration
+					except StopIteration:
+						pass
+				else:
+					break
+		if editCommand:
+			LOGGER.debug("> Current Edit Command: '%s'." % editCommand)
+			editProcess = QProcess()
+			editProcess.startDetached(editCommand)
+
+	@core.executionTrace
+	def exploreProvidedFolder(self, folder):
+		'''
+		This Method Provides Folder Exploring Capability.
+
+		@param folder: Folder To Explore. ( String )
+		'''
+
+		browserCommand = None
+
+		folder = os.path.normpath(folder)
+		if platform.system() == "Windows" or platform.system() == "Microsoft":
+			LOGGER.info("%s | Launching 'explorer.exe' With '%s'." % (self.__class__.__name__, folder))
+			browserCommand = "explorer.exe \"%s\"" % folder
+		elif platform.system() == "Darwin":
+			LOGGER.info("%s | Launching 'Finder' With '%s'." % (self.__class__.__name__, folder))
+			browserCommand = "open \"%s\"" % folder
+		elif platform.system() == "Linux":
+			environmentVariable = Environment("PATH")
+			paths = environmentVariable.getPath().split(":")
+
+			browserFound = False
+			for browser in self._linuxBrowsers:
+				if not browserFound:
+					try:
+						for path in paths:
+							if os.path.exists(os.path.join(path, browser)):
+								LOGGER.info("%s | Launching '%s' File Browser With '%s'." % (self.__class__.__name__, browser, folder))
+								browserCommand = "\"%s\" \"%s\"" % (browser, folder)
+								browserFound = True
+								raise StopIteration
+					except StopIteration:
+						pass
+				else:
+					break
+
+		if browserCommand:
+			LOGGER.debug("> Current Browser Command: '%s'." % browserCommand)
+			browserProcess = QProcess()
+			browserProcess.startDetached(browserCommand)
 
 #***********************************************************************************************
 #***	Python End
