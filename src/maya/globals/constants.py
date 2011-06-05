@@ -39,6 +39,7 @@ class Constants():
 	loggingSeparators = "*" * 96
 	
 	librariesExtension = "py"
+	librariesCompiledExtension = "pyc"
 
 	librariesDirectory = "libraries"
 	resourcesDirectory = "resources"	

@@ -1,6 +1,14 @@
 import maya.cmds as cmds
 
 def getShapes(object, fullPathState = False, noIntermediateState = True):
+	'''
+	This Definition Returns Shapes Of The Provided Object.
+
+	@param object_: Current Object. ( String )
+	@param fullPath: Current Full Path State. ( Boolean )
+	@param noIntermediate: Current No Intermediate State. ( Boolean )
+	@return: Objects Shapes. ( List )
+	'''
 
 	objectShapes = []
 	shapes = cmds.listRelatives(object, fullPath = fullPathState, shapes = True, noIntermediate = noIntermediateState)
@@ -9,7 +17,14 @@ def getShapes(object, fullPathState = False, noIntermediateState = True):
 
 	return objectShapes
 
-def snapObjectsOnSupport(support, objects):
+def snapObjectsOnSupport(objects, support):
+	'''
+	This Definition Snaps Objects On Support.
+
+	@param objects : Objects To Snap. ( List )
+	@param value : Support. ( String )
+	'''
+
 	if cmds.pluginInfo("nearestPointOnMesh", q = True, loaded = False):
 		cmds.loadPlugin("nearestPointOnMesh")
 
@@ -27,5 +42,9 @@ def snapObjectsOnSupport(support, objects):
 	cmds.delete(nearestPointOnMesh)
 
 def ISnapObjectsOnSupport():
+	'''
+	This Definition Is The snapObjectsOnSupport Method Interface.
+	'''
+
 	selection = cmds.ls(sl = True, l = True)
-	selection and snapObjectsOnSupport(selection[-1], selection[:-1])
+	selection and snapObjectsOnSupport(selection[:-1], selection[-1])

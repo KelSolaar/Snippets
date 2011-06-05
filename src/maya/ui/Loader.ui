@@ -6,45 +6,103 @@
    <string>Snippets Loader</string>
   </property>
   <widget class="QWidget" name="Loader_centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="Loader_centralwidget_gridLayout">
     <item row="0" column="0" colspan="2">
-     <widget class="QLabel" name="Snippets_Loader_Logo_label">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="Search_Icon_label">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="Search_lineEdit"/>
+     <layout class="QHBoxLayout" name="Snippets_Loader_Logo_horizontalLayout">
+      <item>
+       <spacer name="left_horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="Snippets_Loader_Logo_label">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="right_horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </item>
     <item row="2" column="0" colspan="2">
-     <widget class="QSplitter" name="Loader_splitter">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+     <widget class="QFrame" name="Methods_frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
-      <widget class="QListWidget" name="Methods_listWidget"/>
-      <widget class="QTextBrowser" name="Informations_textBrowser"/>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="Methods_frame_gridLayout">
+       <item row="1" column="0">
+        <widget class="QSplitter" name="Loader_splitter">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <widget class="QListWidget" name="Methods_listWidget"/>
+         <widget class="QTextBrowser" name="Informations_textBrowser"/>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="Search_horizontalLayout">
+         <item>
+          <widget class="QLineEdit" name="Search_lineEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="Search_Icon_label">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
     </item>
     <item row="3" column="0" colspan="2">
-     <widget class="QPushButton" name="Execute_Snippet_pushButton">
-      <property name="text">
-       <string>Execute Snippet!</string>
+     <widget class="QFrame" name="Buttons_frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="QPushButton" name="Reload_Snippets_pushButton">
-      <property name="text">
-       <string>Reload Snippets!</string>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
       </property>
+      <layout class="QGridLayout" name="Buttons_frame_gridLayout">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="Execute_Snippet_pushButton">
+         <property name="text">
+          <string>Execute Snippet!</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="Reload_Snippets_pushButton">
+         <property name="text">
+          <string>Reload Snippets!</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>

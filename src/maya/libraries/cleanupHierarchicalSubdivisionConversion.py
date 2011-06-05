@@ -5,7 +5,7 @@ def cleanupHierarchicalSubdivisionConversion(object):
 	'''
 	This Definition Cleans Maya Hierarchical Polygonal Conversion.
 
-	@param object : Object To Cleanup. (String)
+	@param object : Object To Cleanup. ( String )
 	'''
 
 	cmds.select(object)

@@ -55,7 +55,7 @@ def setWeight(value):
 	'''
 	This Definition Activates Every First Blendshape Node Slot In The Scene.
 
-	@param value : Activation Value. (Float)
+	@param value : Activation Value. ( Float )
 	'''
 
 	blendShapesNodes=cmds.ls(type="blendShape")
