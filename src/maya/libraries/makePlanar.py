@@ -119,7 +119,7 @@ def getAverageVector(vectors):
 		for i in range(3):
 			averageVector[i] += vector[i]
 	for i in range(3):
-		averageVector[i] = averageVector[i] / len(vectors)
+		averageVector[i]=averageVector[i] / len(vectors)
 	return averageVector
 
 def makePlanar(components):
@@ -129,24 +129,24 @@ def makePlanar(components):
 	@param components: Components To Planarizes. ( List )
 	'''
 	
-	object = cmds.ls(components, o = True)
+	object = cmds.ls(components, o=True)
 	if object:
 		transform = getTransform(object)
-		vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex = True), fl = True)
+		vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 
-		barycenters = cmds.xform(vertices, q = True, t = True, ws = True)
+		barycenters = cmds.xform(vertices, q=True, t=True, ws=True)
 		barycenter = getAverageVector([(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
 
-		normals = [float(normal) for data in cmds.polyInfo(cmds.polyListComponentConversion(components, toFace = True), faceNormals=True) for normal in data.split()[2:5]]
+		normals = [float(normal) for data in cmds.polyInfo(cmds.polyListComponentConversion(components, toFace=True), faceNormals=True) for normal in data.split()[2:5]]
 		normals = [(normals[i], normals[i + 1], normals[i + 2]) for i in range(0, len(normals), 3)]
-		averageNormal = vectorMatrixMultiplication(normalize(getAverageVector(normals)), cmds.xform(transform, query = True, matrix = True, worldSpace = True))
+		averageNormal = vectorMatrixMultiplication(normalize(getAverageVector(normals)), cmds.xform(transform, query=True, matrix=True, worldSpace=True))
 
 		offset = -dot(averageNormal, barycenter)
 
 		for vertex in vertices:
-			position = cmds.xform(vertex, q = True, t = True, ws = True)
+			position = cmds.xform(vertex, q=True, t=True, ws=True)
 			distance = -(dot(averageNormal, position) + offset)
-			cmds.xform(vertex, r = True, t = (averageNormal[0] * distance, averageNormal[1] * distance, averageNormal[2] * distance))
+			cmds.xform(vertex, r=True, t=(averageNormal[0] * distance, averageNormal[1] * distance, averageNormal[2] * distance))
 
 @stacksHandler
 def IMakePlanar():
