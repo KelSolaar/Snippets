@@ -1,4 +1,4 @@
-# Created With Help Of Fiend3d MelScript (Vlad Tagincev).
+# Credits: Fiend3d (Vlad Tagincev).
 import maya.cmds as cmds
 import maya.mel as mel
 import maya.OpenMaya as OpenMaya
