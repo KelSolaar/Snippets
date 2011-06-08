@@ -137,7 +137,7 @@ def renameFromClosest_Window():
 
 	cmds.showWindow("renameFromClosest_Window")
 
-	cmds.windowPref(enableAll=True);
+	cmds.windowPref(enableAll=True)
 
 def renameFromClosest():
 	'''

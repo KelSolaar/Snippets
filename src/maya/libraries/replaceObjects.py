@@ -144,7 +144,7 @@ def replaceObjects_Window():
 
 	cmds.showWindow("replaceObjects_Window")
 
-	cmds.windowPref(enableAll=True);
+	cmds.windowPref(enableAll=True)
 
 def replaceObjects():
 	'''
