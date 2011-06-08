@@ -70,8 +70,7 @@ def collapseComponents(components, axis=("X", "Y", "Z")):
 	@param axis: Collapse Axis. ( Tuple )
 	'''
 	
-	mel.eval("ConvertSelectionToVertices;")
-	vertices = cmds.ls(sl=True, l=True, fl=True)
+	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 	barycenters=[]
 	barycenters.extend((cmds.xform(vertice, q=True, t=True, ws=True) for vertice in vertices))
 	barycenter = getAverageVector(barycenters)
@@ -79,8 +78,8 @@ def collapseComponents(components, axis=("X", "Y", "Z")):
 		xValue = "X" in axis and barycenter[0] or cmds.xform(vertex, q=True, t=True, ws=True)[0]
 		yValue = "Y" in axis and barycenter[1] or cmds.xform(vertex, q=True, t=True, ws=True)[1]
 		zValue = "Z" in axis and barycenter[2] or cmds.xform(vertex, q=True, t=True, ws=True)[2]
-
-		cmds.xform(vertex, a=True, t=(xValue, yValue, zValue))
+		
+		cmds.xform(vertex, ws=True, t=(xValue, yValue, zValue))
 
 @stacksHandler
 def ICollapseComponents():
@@ -88,15 +87,16 @@ def ICollapseComponents():
 	This Definition Is The collapseComponents Method Interface.
 	'''
 	
-	collapseComponents(cmds.ls(sl=True))
-
+	selection = cmds.ls(sl=True, l=True)
+	selection and collapseComponents(selection)
 
 def collapseComponentsOnX():
 	'''
 	This Definition Triggers The collapseComponents Method On X Axis.
 	'''
 	
-	collapseComponents(cmds.ls(sl=True), axis=("X", ))
+	selection = cmds.ls(sl=True, l=True)
+	selection and collapseComponents(selection, axis=("X", ))
 
 @stacksHandler
 def ICollapseComponentsOnX():
@@ -111,7 +111,8 @@ def collapseComponentsOnY():
 	This Definition Triggers The collapseComponents Method On Y Axis.
 	'''
 	
-	collapseComponents(cmds.ls(sl=True), axis=("Y", ))
+	selection = cmds.ls(sl=True, l=True)
+	selection and collapseComponents(selection, axis=("Y", ))
 
 @stacksHandler
 def ICollapseComponentsOnY():
@@ -126,7 +127,8 @@ def collapseComponentsOnZ():
 	This Definition Triggers The collapseComponents Method On Z Axis.
 	'''
 	
-	collapseComponents(cmds.ls(sl=True), axis=("Z", ))
+	selection = cmds.ls(sl=True, l=True)
+	selection and collapseComponents(selection, axis=("Z", ))
 
 @stacksHandler
 def ICollapseComponentsOnZ():
