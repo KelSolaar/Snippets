@@ -1,5 +1,32 @@
 import maya.cmds as cmds
 
+def stacksHandler(object_):
+	'''
+	This Decorator Is Used To Handle Various Maya Stacks.
+
+	@param object_: Python Object ( Object )
+	@return: Python Function. ( Function )
+	'''
+
+	def stacksHandlerCall(*args, **kwargs):
+		'''
+		This Decorator Is Used To Handle Various Maya Stacks.
+
+		@return: Python Object. ( Python )
+		'''
+		
+		cmds.undoInfo(openChunk=True)
+		value = object_(*args, **kwargs)
+		cmds.undoInfo(closeChunk=True)
+		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		try:
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object_.__name__), addCommandLabel=object_.__name__)
+		except:
+			pass
+		return value
+
+	return stacksHandlerCall
+
 def selectStarVertices():
 	'''
 	This Definition Selects Star Vertices.
@@ -8,6 +35,7 @@ def selectStarVertices():
 	cmds.polySelectConstraint(m=3, t=1, order=True, orb=(5, 65535))
 	cmds.polySelectConstraint(dis=True)
 
+@stacksHandler
 def ISelectStarVertices():
 	'''
 	This Definition Is The selectStarVertices Method Interface.
@@ -23,6 +51,7 @@ def selectTrianglesFaces():
 	cmds.polySelectConstraint(m=3, t=8, sz=1)
 	cmds.polySelectConstraint(dis=True)
 
+@stacksHandler
 def ISelectTrianglesFaces():
 	'''
 	This Definition Is The selectTrianglesFaces Method Interface.
@@ -38,6 +67,7 @@ def selectNsidesFaces():
 	cmds.polySelectConstraint(m=3, t=8, sz=3)
 	cmds.polySelectConstraint(dis=True)
 
+@stacksHandler
 def ISelectNsidesFaces():
 	'''
 	This Definition Is The selectNsidesFaces Method Interface.
@@ -52,6 +82,7 @@ def selectBoundaryEdges(components):
 	
 	cmds.select(cmds.polyListComponentConversion(components, te=True, bo=True))
 
+@stacksHandler
 def ISelectBoundaryEdges():
 	'''
 	This Definition Is The selectBoundaryEdges Method Interface.
@@ -68,6 +99,7 @@ def selectBorderEdges():
 	cmds.polySelectConstraint(m=3, t=0x8000, w=1)
 	cmds.polySelectConstraint(m=0)
 
+@stacksHandler
 def ISelectBorderEdges():
 	'''
 	This Definition Is The selectNsidesFaces Method Interface.
@@ -87,6 +119,7 @@ def selectCreasesEdges(object):
 	if creaseEdges:
 		cmds.select(creaseEdges)
 
+@stacksHandler
 def ISelectCreasesEdges():
 	'''
 	This Definition Is The selectCreasesEdges Method Interface.

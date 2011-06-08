@@ -1,7 +1,35 @@
+import inspect
 import maya.cmds as cmds
 import maya.mel as mel
 import maya.OpenMaya as OpenMaya
 import re
+
+def stacksHandler(object_):
+	'''
+	This Decorator Is Used To Handle Various Maya Stacks.
+
+	@param object_: Python Object ( Object )
+	@return: Python Function. ( Function )
+	'''
+
+	def stacksHandlerCall(*args, **kwargs):
+		'''
+		This Decorator Is Used To Handle Various Maya Stacks.
+
+		@return: Python Object. ( Python )
+		'''
+		
+		cmds.undoInfo(openChunk=True)
+		value = object_(*args, **kwargs)
+		cmds.undoInfo(closeChunk=True)
+		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		try:
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object_.__name__), addCommandLabel=object_.__name__)
+		except:
+			pass
+		return value
+
+	return stacksHandlerCall
 
 def getTransform(node, fullPath=True):
 	'''
@@ -42,23 +70,19 @@ def collapseComponents(components, axis=("X", "Y", "Z")):
 	@param axis: Collapse Axis. ( Tuple )
 	'''
 	
-	objects = list(set(cmds.ls(components, o=True)))
-	if objects:
-		barycenters=[]
-		for object in objects:
-			transform = getTransform(object)
-			vertices = cmds.ls(cmds.polyListComponentConversion([component for component in components if re.search(transform, component)], toVertex=True), fl=True)
-			barycenters.extend((cmds.xform(vertice, q=True, t=True, ws=True) for vertice in vertices))
+	mel.eval("ConvertSelectionToVertices;")
+	vertices = cmds.ls(sl=True, l=True, fl=True)
+	barycenters=[]
+	barycenters.extend((cmds.xform(vertice, q=True, t=True, ws=True) for vertice in vertices))
+	barycenter = getAverageVector(barycenters)
+	for vertex in vertices:
+		xValue = "X" in axis and barycenter[0] or cmds.xform(vertex, q=True, t=True, ws=True)[0]
+		yValue = "Y" in axis and barycenter[1] or cmds.xform(vertex, q=True, t=True, ws=True)[1]
+		zValue = "Z" in axis and barycenter[2] or cmds.xform(vertex, q=True, t=True, ws=True)[2]
 
-		barycenter = getAverageVector(barycenters)
-		print barycenter
-		for vertex in vertices:
-			xValue = "X" in axis and barycenter[0] or cmds.xform(vertex, q=True, t=True, ws=True)[0]
-			yValue = "Y" in axis and barycenter[1] or cmds.xform(vertex, q=True, t=True, ws=True)[1]
-			zValue = "Z" in axis and barycenter[2] or cmds.xform(vertex, q=True, t=True, ws=True)[2]
+		cmds.xform(vertex, a=True, t=(xValue, yValue, zValue))
 
-			cmds.xform(vertex, a=True, t=(xValue, yValue, zValue))
-
+@stacksHandler
 def ICollapseComponents():
 	'''
 	This Definition Is The collapseComponents Method Interface.
@@ -74,6 +98,7 @@ def collapseComponentsOnX():
 	
 	collapseComponents(cmds.ls(sl=True), axis=("X", ))
 
+@stacksHandler
 def ICollapseComponentsOnX():
 	'''
 	This Definition Is The collapseComponentsOnX Method Interface.
@@ -88,6 +113,7 @@ def collapseComponentsOnY():
 	
 	collapseComponents(cmds.ls(sl=True), axis=("Y", ))
 
+@stacksHandler
 def ICollapseComponentsOnY():
 	'''
 	This Definition Is The collapseComponentsOnY Method Interface.
@@ -102,6 +128,7 @@ def collapseComponentsOnZ():
 	
 	collapseComponents(cmds.ls(sl=True), axis=("Z", ))
 
+@stacksHandler
 def ICollapseComponentsOnZ():
 	'''
 	This Definition Is The collapseComponentsOnZ Method Interface.

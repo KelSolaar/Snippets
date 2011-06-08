@@ -1,6 +1,33 @@
 import maya.cmds as cmds
 import maya.mel as mel
 
+def stacksHandler(object_):
+	'''
+	This Decorator Is Used To Handle Various Maya Stacks.
+
+	@param object_: Python Object ( Object )
+	@return: Python Function. ( Function )
+	'''
+
+	def stacksHandlerCall(*args, **kwargs):
+		'''
+		This Decorator Is Used To Handle Various Maya Stacks.
+
+		@return: Python Object. ( Python )
+		'''
+		
+		cmds.undoInfo(openChunk=True)
+		value = object_(*args, **kwargs)
+		cmds.undoInfo(closeChunk=True)
+		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		try:
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object_.__name__), addCommandLabel=object_.__name__)
+		except:
+			pass
+		return value
+
+	return stacksHandlerCall
+
 def transfertVerticesPositions(sources, target, searchMethod=0):
 	'''
 	This Definition Transferts Vertices Positions From Sources To Target Object.
@@ -14,6 +41,7 @@ def transfertVerticesPositions(sources, target, searchMethod=0):
 	    cmds.transferAttributes(target, source, transferPositions=1, sampleSpace=0, searchMethod=3)
 	    cmds.delete(target, ch=True)
 
+@stacksHandler
 def ITransfertVerticesPositions():
 	'''
 	This Definition Is The transfertVerticesPositions Method Interface.
@@ -32,7 +60,7 @@ def toggleSelectionHighlight():
 		cmds.modelEditor(panel, e=True, sel=not cmds.modelEditor(panel, q=True, sel=True))
 	except:
 		pass
-
+@stacksHandler
 def IToggleSelectionHighlight():
 	'''
 	This Definition Is The toggleSelectionHighlight Method Interface.
@@ -52,6 +80,7 @@ def splitRingMiddle(nodes):
 			if cmds.nodeType(historyNode) == "polySplitRing":
 				cmds.setAttr(historyNode + ".weight", 0.5)
 
+@stacksHandler
 def ISplitRingMiddle():
 	'''
 	This Definition Is The splitRingMiddle Method Interface.
@@ -70,6 +99,7 @@ def symmetricalInstance(object):
 	instance = cmds.instance(object)
 	cmds.setAttr(object + ".sx", -1)
 
+@stacksHandler
 def ISymmetricalInstance():
 	'''
 	This Definition Is The symmetricalInstance Method Interface.
