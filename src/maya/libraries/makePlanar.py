@@ -1,4 +1,4 @@
-# Original MelScript Code By Fiend3d (Vlad Tagincev).
+# Created With Help Of Fiend3d MelScript (Vlad Tagincev).
 import maya.cmds as cmds
 import maya.mel as mel
 import maya.OpenMaya as OpenMaya
@@ -137,7 +137,7 @@ def makePlanar(components):
 		barycenters = cmds.xform(vertices, q = True, t = True, ws = True)
 		barycenter = getAverageVector([(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
 
-		normals = cmds.polyNormalPerVertex(cmds.polyListComponentConversion(components, toVertexFace = True), q = True, xyz = True)
+		normals = [float(normal) for data in cmds.polyInfo(cmds.polyListComponentConversion(components, toFace = True), faceNormals=True) for normal in data.split()[2:5]]
 		normals = [(normals[i], normals[i + 1], normals[i + 2]) for i in range(0, len(normals), 3)]
 		averageNormal = vectorMatrixMultiplication(normalize(getAverageVector(normals)), cmds.xform(transform, query = True, matrix = True, worldSpace = True))
 
