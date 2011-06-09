@@ -54,13 +54,14 @@ def normalize(vector):
 	mVector.normalize()
 	return (mVector.x, mVector.y, mVector.z)
 
-def alignComponentsBetweenAnchors(anchorA, anchorB, components):
+def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", "Z")):
 	'''
 	This Definition Aligns Provided Components BetweenThe Two Anchors.
 
 	@param anchorA: Anchor A. ( String )
 	@param anchorB: Anchor B. ( String )
 	@param components: Components To Align. ( List )
+	@param axis: Collapse Axis. ( Tuple )
 	'''
 	
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
@@ -77,7 +78,12 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components):
 		dot = mVectorB*mVectorA
 		mVectorA *= dot
 		offset = mVectorB - mVectorA
-		cmds.xform(vertex, ws=True, r=True, t=(-offset.x, -offset.y, -offset.z))
+
+		xValue = "X" in axis and -offset.x or 0
+		yValue = "Y" in axis and -offset.y or 0
+		zValue = "Z" in axis and -offset.z or 0
+
+		cmds.xform(vertex, ws=True, r=True, t=(xValue, yValue, zValue))
 
 def selectAnchors_Button_OnClicked(state):
 	'''
@@ -94,7 +100,7 @@ def selectAnchors_Button_OnClicked(state):
 
 def alignSelection_Button_OnClicked(state):
 	'''
-	This Definition Is Triggered By The alignSelection_Button Button When Clicked.
+	This Definition Is Triggered By The alignSelection Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
 	'''
@@ -102,6 +108,39 @@ def alignSelection_Button_OnClicked(state):
 	if ALIGNEMENT_ANCHORS:
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection)
+
+def alignSelectionOnXAxis_Button_OnClicked(state):
+	'''
+	This Definition Is Triggered By The alignSelectionOnXAxis Button When Clicked.
+	
+	@param state: Button State. ( Boolean )
+	'''
+
+	if ALIGNEMENT_ANCHORS:
+		selection = cmds.ls(sl=True, l=True)
+		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("X"))
+
+def alignSelectionOnYAxis_Button_OnClicked(state):
+	'''
+	This Definition Is Triggered By The alignSelectionOnYAxis Button When Clicked.
+	
+	@param state: Button State. ( Boolean )
+	'''
+
+	if ALIGNEMENT_ANCHORS:
+		selection = cmds.ls(sl=True, l=True)
+		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Y"))
+
+def alignSelectionOnZAxis_Button_OnClicked(state):
+	'''
+	This Definition Is Triggered By The alignSelectionOnZAxis Button When Clicked.
+	
+	@param state: Button State. ( Boolean )
+	'''
+
+	if ALIGNEMENT_ANCHORS:
+		selection = cmds.ls(sl=True, l=True)
+		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Z"))
 
 def alignComponents_Window():
 	'''
@@ -122,8 +161,17 @@ def alignComponents_Window():
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
 	cmds.button("selectAnchors_Button", label="Select Anchors!", command=selectAnchors_Button_OnClicked)
+
+	cmds.separator(height=10, style="singleDash")
+	
 	cmds.button("alignSelection_Button", label="Align Selection!", command=alignSelection_Button_OnClicked)
 
+	cmds.separator(height=10, style="singleDash")
+	
+	cmds.button("alignSelectionOnXAxis_Button", label="Align Selection On X!", command=alignSelectionOnXAxis_Button_OnClicked)
+	cmds.button("alignSelectionOnYAxis_Button", label="Align Selection On Y!", command=alignSelectionOnYAxis_Button_OnClicked)
+	cmds.button("alignSelectionOnZAxis_Button", label="Align Selection On Z!", command=alignSelectionOnZAxis_Button_OnClicked)
+	
 	cmds.showWindow("alignComponents_Window")
 
 	cmds.windowPref(enableAll=True)
