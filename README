@@ -9,6 +9,23 @@ Adobe Photoshop scripts must be installed into the Adobe Photoshop scripting fol
 	Mac Os X: /Applications/Adobe Photoshop CS*/Presets/Scripts/ 
 	Windows: C:\Program Files\Adobe\Adobe Photoshop CS*\Presets\Scripts\
 
+Alternatively, on Maya, a Snippets Loader is provided, it requries PyQt.
+Launching it is done issuing the following Python code:
+
+import sys
+
+LOADER_PATH = "Path/To/Snippets/Folder/Snippets/src/maya"
+
+if LOADER_PATH not in sys.path:
+	sys.path.append(LOADER_PATH)
+
+import loader
+reload(loader)
+
+import ui.common
+UI = loader.Loader(ui.common.getMayaWindow())
+UI.show()
+
 - About -
 Snippets by Thomas Mansencal - 2009 - 2011
 thomas.mansencal@gmail.com
