@@ -127,3 +127,19 @@ def ISelectCreasesEdges():
 	
 	selection = cmds.ls(sl=True, l=True)
 	selection and selectCreasesEdges(selection[0])
+
+def selectNonManifoldVertices():
+	'''
+	This Definition Selects The Non Manifold Vertices.
+	'''
+	
+	cmds.polySelectConstraint(m=3, t=1, nonmanifold=True)
+	cmds.polySelectConstraint(m=0)
+
+@stacksHandler
+def ISelectNonManifoldVertices():
+	'''
+	This Definition Is The selectNonManifoldVertices Method Interface.
+	'''
+
+	selectNonManifoldVertices()
