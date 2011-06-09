@@ -96,7 +96,9 @@ def selectAnchors_Button_OnClicked(state):
 
 	selection = cmds.ls(sl=True, l=True, fl=True)
 	if len(selection) == 2:
-	    ALIGNEMENT_ANCHORS = (selection[0], selection[1])
+		ALIGNEMENT_ANCHORS = (selection[0], selection[1])
+	else:
+		mel.eval("warning(\"%s | %s\")" % (__name__, "Failed To Retrieve Anchors, You Need To Select Exactly Two Objects Or Components!"))
 
 def alignSelection_Button_OnClicked(state):
 	'''
