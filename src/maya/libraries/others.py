@@ -2,19 +2,19 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -29,13 +29,13 @@ def stacksHandler(object_):
 	return stacksHandlerCall
 
 def transfertVerticesPositions(sources, target, searchMethod=0):
-	'''
+	"""
 	This Definition Transferts Vertices Positions From Sources To Target Object.
 
 	@param sources: Sources Objects. ( List )
 	@param target: Target Object. ( String )
 	@param searchMethod: Current Search Method. ( Integer )
-	'''
+	"""
 
 	for source in sources:
 	    cmds.transferAttributes(target, source, transferPositions=1, sampleSpace=0, searchMethod=3)
@@ -43,17 +43,17 @@ def transfertVerticesPositions(sources, target, searchMethod=0):
 
 @stacksHandler
 def ITransfertVerticesPositions():
-	'''
+	"""
 	This Definition Is The transfertVerticesPositions Method Interface.
-	'''
+	"""
 	
 	selection = cmds.ls(sl=True, l=True)
 	selection and transfertVerticesPositions(selection[:-1], selection[-1], 0)
 
 def toggleSelectionHighlight():
-	'''
+	"""
 	This Definition Toggles Active Modeling Panel Selection Highlight.
-	'''
+	"""
 	
 	panel = cmds.getPanel(withFocus=True)
 	try:
@@ -62,18 +62,18 @@ def toggleSelectionHighlight():
 		pass
 @stacksHandler
 def IToggleSelectionHighlight():
-	'''
+	"""
 	This Definition Is The toggleSelectionHighlight Method Interface.
-	'''
+	"""
 	
 	toggleSelectionHighlight()
 
 def splitRingMiddle(nodes):
-	'''
+	"""
 	This Definition Sets The polySplitRing Nodes Weights To 0.5.
 	
 	@param nodes: Nodes To Retrieve History From. ( List )
-	'''
+	"""
 	
 	for node in nodes:
 		for historyNode in cmds.listHistory(node):
@@ -82,28 +82,28 @@ def splitRingMiddle(nodes):
 
 @stacksHandler
 def ISplitRingMiddle():
-	'''
+	"""
 	This Definition Is The splitRingMiddle Method Interface.
-	'''
+	"""
 
 	selection = cmds.ls(sl=True, l=True)
 	splitRingMiddle(selection)
 
 def symmetricalInstance(object):
-	'''
+	"""
 	This Definition Creates A Symmetrical Instance.
 
 	@param object: Object To Symmetrical Instantiate. ( String )
-	'''
+	"""
 	
 	instance = cmds.instance(object)
 	cmds.setAttr(object + ".sx", -1)
 
 @stacksHandler
 def ISymmetricalInstance():
-	'''
+	"""
 	This Definition Is The symmetricalInstance Method Interface.
-	'''
+	"""
 	
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
 	for object in selection:

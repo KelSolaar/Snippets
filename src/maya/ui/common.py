@@ -7,7 +7,7 @@
 #
 #***********************************************************************************************
 
-'''
+"""
 ************************************************************************************************
 ***	Common.py
 ***
@@ -20,7 +20,7 @@
 ***	Others:
 ***
 ************************************************************************************************
-'''
+"""
 
 #***********************************************************************************************
 #***	Python Begin
@@ -52,24 +52,24 @@ LOGGER = logging.getLogger( Constants.logger )
 #***********************************************************************************************
 @core.executionTrace
 def getMayaWindow():
-	'''
+	"""
 	This Method Returns Maya Window As QObject.
 
 	@return: Maya Window. ( QObject )
-	'''
+	"""
 
 	pointer = OpenMayaUI.MQtUtil.mainWindow()
 	return sip.wrapinstance( long( pointer ), QObject )
 
 @core.executionTrace
 def messageBox( messageType, title, message ):
-	'''
+	"""
 	This Definition Provides A Fast GUI Message Box.
 	
 	@param messageType: Message Type. ( String )
 	@param title: Message Box Title. ( String )
 	@param message: Message Content. ( String )
-	'''
+	"""
 
 	LOGGER.debug( "> Launching messageBox()." )
 	LOGGER.debug( "> Message Type: '%s'.", messageType )
@@ -103,23 +103,23 @@ def messageBox( messageType, title, message ):
 
 @core.executionTrace
 def centerWidgetOnScreen( widget ):
-	'''
+	"""
 	This Definition Centers The Provided Widget Middle Of The Screen.
 	
 	@param widget: Current Widget. ( QWidget )
-	'''
+	"""
 
 	widget.move( QApplication.desktop().width() / 2 - widget.width() / 2, QApplication.desktop().height() / 2 - widget.height() / 2 )
 
 @core.executionTrace
 def resizeWidget( widget, size_x, size_y ):
-	'''
+	"""
 	This Definition Resize The Provided Widget.
 	
 	@param widget: Current Widget. ( QWidget )
 	@param size_x: Size X. ( Integer )
 	@param size_y: Size Y. ( Integer )
-	'''
+	"""
 
 	widget.resize( int( size_x ), int( size_y ) )
 

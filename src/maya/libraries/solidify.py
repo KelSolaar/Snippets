@@ -4,19 +4,19 @@ import maya.OpenMaya as OpenMaya
 import math
 
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -31,13 +31,13 @@ def stacksHandler(object_):
 	return stacksHandlerCall
 
 def getTransform(node, fullPath=True):
-	'''
+	"""
 	This Definition Returns Transform Of The Provided Node.
 
 	@param node: Current Object. ( String )
 	@param fullPath: Current Full Path State. ( Boolean )
 	@return: Object Transform. ( String )
-	'''
+	"""
 	
 	transform = node
 	if cmds.nodeType(node) != "transform":
@@ -46,47 +46,47 @@ def getTransform(node, fullPath=True):
 	return transform
 
 def getMVector(vector):
-	'''
+	"""
 	This Definition Returns An MVector.
 
 	@param vector: Vector. ( List )
 	@return: MVector ( MVector )
-	'''
+	"""
 	
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
 
 def getMMatrix(matrix):
-	'''
+	"""
 	This Definition Returns An MMatrix.
 
 	@param matrix: matrix. ( List )
 	@return: MMatrix ( MMatrix )
-	'''
+	"""
 	
 	mMatrix = OpenMaya.MMatrix()
 	OpenMaya.MScriptUtil.createMatrixFromList(matrix, mMatrix)
 	return mMatrix
 
 def normalize(vector):
-	'''
+	"""
 	This Definition Returns The Normalized Vector.
 
 	@param vector: Vector. ( List )
 	@return: Normalized Vector ( Tuple )
-	'''
+	"""
 	
 	mVector = getMVector(vector)
 	mVector.normalize()
 	return (mVector.x, mVector.y, mVector.z)
 
 def vectorMatrixMultiplication(vector, matrix):
-	'''
+	"""
 	This Definition Returns The Vector Multiplication Between A Vector And A Matrix.
 
 	@param vector: Vector. ( List )
 	@param matrix: matrix. ( List )
 	@return: Matrix Multiplied Vector. ( Tuple )
-	'''
+	"""
 	
 	mVector = getMVector(vector)
 	mMatrix = getMMatrix(matrix)
@@ -94,25 +94,25 @@ def vectorMatrixMultiplication(vector, matrix):
 	return (mVector.x, mVector.y, mVector.z)
 
 def dot(vectorA, vectorB):
-	'''
+	"""
 	This Definition Returns The Dot Product Between Two Vectors.
 
 	@param vectorA: Vector A. ( List )
 	@param vectorB: Vector B. ( List )
 	@return: Dot Product. ( Float )
-	'''
+	"""
 	
 	mVectorA = getMVector(vectorA)
 	mVectorB = getMVector(vectorB)
 	return mVectorA * mVectorB
 
 def getAverageVector(vectors):
-	'''
+	"""
 	This Definition Returns The Average Vector From A List Of Vectors.
 
 	@param vectors: Vectors To Get The Average One. ( List )
 	@return: Average Vector. ( List )
-	'''
+	"""
 	
 	averageVector = [0, 0, 0]
 	for vector in vectors:
@@ -123,23 +123,23 @@ def getAverageVector(vectors):
 	return averageVector
 
 def getAngle(vectorA, vectorB):
-	'''
+	"""
 	This Definition Returns The Angle Between Two Vectors.
 
 	@param vectorA: Vector A. ( List )
 	@param vectorB: Vector B. ( List )
 	@return: Angle Between Vector A and Vector B. ( Float )
-	'''
+	"""
 
 	return math.degrees(math.acos(dot(vectorA, vectorB)))
 
 def hasBorderEdges(object):
-	'''
+	"""
 	This Definition Returns If An Object Has Border Edges.
 	
 	@param object: Object. ( String )
 	@return: Has Object Border Edges. ( Boolean )
-	'''
+	"""
 
 	cmds.select(object)
 	cmds.polySelectConstraint(m=3, t=0x8000, w=1)
@@ -148,14 +148,14 @@ def hasBorderEdges(object):
 		return True
 
 def solidifyObject(object, height=1, divisions=2, history=True):
-	'''
+	"""
 	This Definition Solidifies Provided Object.
 	
 	@param object: Object. ( String )
 	@param height: Extrusion Height. ( Float )
 	@param division: Extrusion Divisions. ( Float )
 	@param history: Keep Construction History. ( Boolean )
-	'''
+	"""
 
 	if  hasBorderEdges(object):
 		transform = getTransform(object)
@@ -191,19 +191,19 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 		not history and cmds.delete(object, ch=True)
 
 def solidify_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The solidify_Button Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 	
 	for object in cmds.ls(sl=True, l=True, o=True):
 		solidifyObject(object, height=cmds.floatSliderGrp("height_FloatSliderGrp", q=True, v=True), divisions=cmds.intSliderGrp("divisions_IntSliderGrp", q=True, v=True), history=cmds.checkBox("keepConstructionHistory_CheckBox", q=True, v=True))
 	
 def solidify_Window():
-	'''
+	"""
 	This Definition Creates The Solidify Main Window.
-	'''
+	"""
 	
 	cmds.windowPref(enableAll=False)
 
@@ -238,16 +238,16 @@ def solidify_Window():
 	cmds.windowPref(enableAll=True)
 
 def solidify():
-	'''
+	"""
 	This Definition Launches The Solidify Main Window.
-	'''
+	"""
 
 	solidify_Window()
 
 @stacksHandler
 def ISolidify():
-	'''
+	"""
 	This Definition Is The solidify Method Interface.
-	'''
+	"""
 	
 	solidify()	

@@ -2,19 +2,19 @@ import random
 import maya.cmds as cmds
 
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -29,7 +29,7 @@ def stacksHandler(object_):
 	return stacksHandlerCall
 
 def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=False, asInstance=False, deleteTargets = True):
-	'''
+	"""
 	This Definition Replaces The Targets With Sources.
 
 	@param sources: Sources. ( List )
@@ -38,7 +38,7 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 	@param usePivot: Use Target Pivot. ( Boolean )
 	@param asInstance: Duplicate As Instances. ( Boolean )
 	@param deleteTargets: Delete Targets. ( Boolean )
-	'''
+	"""
 	
 	duplicatedObjects = []
 	for target in targets:
@@ -70,29 +70,29 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 			cmds.rename(duplicationGrp, "duplication_grp")
 	
 def pickSources_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The pickSources_Button Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 	
 	cmds.textField("sources_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
 def pickTargets_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The pickTargets_Button Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	cmds.textField("targets_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
 def replaceObjects_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The replaceObjects_Button Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	sources = [source for source in cmds.textField("sources_TextField", query=True, text=True).split(", ") if cmds.objExists(source)]
 	targets = [target for target in cmds.textField("targets_TextField", query=True, text=True).split(", ")  if cmds.objExists(target)]
@@ -100,9 +100,9 @@ def replaceObjects_Button_OnClicked(state):
 	replaceTargetsObjectsWithSources(sources, targets, cmds.checkBox("duplicateInPlace_CheckBox", q=True, v=True), cmds.checkBox("useTargetsPivots_CheckBox", q=True, v=True),  cmds.checkBox("duplicateAsInstances_CheckBox", q=True, v=True))
 
 def replaceObjects_Window():
-	'''
+	"""
 	This Definition Creates The Replace Objects Main Window.
-	'''
+	"""
 
 	cmds.windowPref(enableAll=False)
 
@@ -147,16 +147,16 @@ def replaceObjects_Window():
 	cmds.windowPref(enableAll=True)
 
 def replaceObjects():
-	'''
+	"""
 	This Definition Launches The Replace Objects Main Window.
-	'''
+	"""
 	
 	replaceObjects_Window()
 
 @stacksHandler
 def IReplaceObjects():
-	'''
+	"""
 	This Definition Is The replaceObjects Method Interface.
-	'''
+	"""
 
 	replaceObjects()

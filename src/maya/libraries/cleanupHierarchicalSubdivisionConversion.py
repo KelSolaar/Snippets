@@ -1,19 +1,19 @@
 import maya.cmds as cmds
 
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -29,11 +29,11 @@ def stacksHandler(object_):
 
 @stacksHandler
 def cleanupHierarchicalSubdivisionConversion(object):
-	'''
+	"""
 	This Definition Cleans Maya Hierarchical Polygonal Conversion.
 
 	@param object : Object To Cleanup. ( String )
-	'''
+	"""
 
 	cmds.select(object)
 	cmds.polySelectConstraint(m=3, t=8, sz=3)
@@ -57,9 +57,9 @@ def cleanupHierarchicalSubdivisionConversion(object):
 	cmds.select(object)
 
 def ICleanupHierarchicalSubdivisionConversion():
-	'''
+	"""
 	This Definition Is The cleanupHierarchicalSubdivisionConversion Method Interface.
-	'''
+	"""
 
 	for object in cmds.ls(sl=True, l=True):
 		cleanupHierarchicalSubdivisionConversion(object)

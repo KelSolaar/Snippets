@@ -7,7 +7,7 @@
 #
 #***********************************************************************************************
 
-'''
+"""
 ************************************************************************************************
 ***	Common.py
 ***
@@ -20,7 +20,7 @@
 ***	Others:
 ***
 ************************************************************************************************
-'''
+"""
 
 #***********************************************************************************************
 #***	Python Begin
@@ -50,16 +50,16 @@ LOGGER = logging.getLogger(Constants.logger)
 #***	Module Classes And Definitions
 #***************************************************************************************
 class MayaLoggingHandler(logging.Handler):
-	'''
+	"""
 	This Class Provides A Maya Friendly Logging Handler.
-	'''
+	"""
 
 	def emit(self, record):
-		'''
+		"""
 		This Method Emits The Provided Record.
 	
 		@param record: Record. ( String )
-		'''
+		"""
 
 		if record.levelno > logging.INFO:
 			message = record.getMessage()

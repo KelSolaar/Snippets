@@ -3,19 +3,19 @@ import maya.cmds as cmds
 import maya.OpenMaya as OpenMaya
 
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -30,23 +30,23 @@ def stacksHandler(object_):
 	return stacksHandlerCall
 
 def getMPoint(point):
-	'''
+	"""
 	This Definition Returns An MPoint.
 
 	@param point: Point. ( List )
 	@return: MPoint ( MVector )
-	'''
+	"""
 	
 	return OpenMaya.MPoint(point[0], point[1], point[2])
 
 def norme(pointA, pointB):
-	'''
+	"""
 	This Definition Returns The Norme Of A Vector.
 
 	@param pointA: Point A. ( List )
 	@param pointB: Point B. ( List )
 	@return: Norme ( Float )
-	'''
+	"""
 	
 	mPointA = getMPoint(pointA)
 	mPointB = getMPoint(pointB)
@@ -54,13 +54,13 @@ def norme(pointA, pointB):
 	return mVector.length()
 
 def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
-	'''
+	"""
 	This Definition Renames The Targets From Closest Sources.
 
 	@param sources: Sources. ( List )
 	@param targets: Targets. ( List )
 	@param suffixe: Suffixe. ( String )
-	'''
+	"""
 	
 	for target in targets:
 		targetBarycenter=cmds.objectCenter(target, gl=True)
@@ -71,29 +71,29 @@ def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
 		cmds.rename(target, "%s%s" % (closest.split("|")[-1], suffixe))
 
 def pickSources_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The pickSources_Button Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 	
 	cmds.textField("sources_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
 def pickTargets_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The pickTargets_Button Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	cmds.textField("targets_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
 def renameFromClosest_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The renameFromClosest_Button Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	sources = [source for source in cmds.textField("sources_TextField", query=True, text=True).split(", ") if cmds.objExists(source)]
 	targets = [target for target in cmds.textField("targets_TextField", query=True, text=True).split(", ")  if cmds.objExists(target)]
@@ -102,9 +102,9 @@ def renameFromClosest_Button_OnClicked(state):
 	renameTargetsFromClosestSources(sources, targets)
 
 def renameFromClosest_Window():
-	'''
+	"""
 	This Definition Creates The Rename From Closest Main Window.
-	'''
+	"""
 
 	cmds.windowPref(enableAll=False)
 
@@ -140,16 +140,16 @@ def renameFromClosest_Window():
 	cmds.windowPref(enableAll=True)
 
 def renameFromClosest():
-	'''
+	"""
 	This Definition Launches The Rename From Closest Main Window.
-	'''
+	"""
 	
 	renameFromClosest_Window()
 
 @stacksHandler
 def IRenameFromClosest():
-	'''
+	"""
 	This Definition Is The renameFromClosest Method Interface.
-	'''
+	"""
 
 	renameFromClosest()

@@ -2,19 +2,19 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -29,13 +29,13 @@ def stacksHandler(object_):
 	return stacksHandlerCall
 
 def unfoldBandUVs(object, divisions=1, history=True):
-	'''
+	"""
 	This Definition Unfold Object Band UVs.
 	
 	@param object: Object. ( String )
 	@param divisions: Extrusion Divisions. ( Integer )
 	@param history: Keep Construction History. ( Boolean )
-	'''
+	"""
 
 	edgesCount = cmds.polyEvaluate(object, edge=True)
 	edges = cmds.ls(object +".e[0:" + str(edgesCount-1) + "]", fl=True, l=True)
@@ -60,19 +60,19 @@ def unfoldBandUVs(object, divisions=1, history=True):
 	not history and cmds.delete(object, ch=True)
 
 def unfoldBand_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The unfoldBand Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	for object in cmds.ls(sl=True, l=True, o=True):
 		unfoldBandUVs(object, divisions=cmds.intSliderGrp("divisions_IntSliderGrp", q=True, v=True), history=cmds.checkBox("keepConstructionHistory_CheckBox", q=True, v=True))
 	
 def unfoldBand_Window():
-	'''
+	"""
 	This Definition Creates The Solidify Main Window.
-	'''
+	"""
 	
 	cmds.windowPref(enableAll=False)
 
@@ -106,16 +106,16 @@ def unfoldBand_Window():
 	cmds.windowPref(enableAll=True)
 	
 def unfoldBand():
-	'''
+	"""
 	This Definition Launches The Unfold Band Main Window.
-	'''
+	"""
 
 	unfoldBand_Window()
 
 @stacksHandler
 def IUnfoldBand():
-	'''
+	"""
 	This Definition Is The unfoldBand Method Interface.
-	'''
+	"""
 	
 	unfoldBand()	

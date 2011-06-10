@@ -6,19 +6,19 @@ import maya.OpenMaya as OpenMaya
 ALIGNEMENT_ANCHORS = None
 
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -33,36 +33,36 @@ def stacksHandler(object_):
 	return stacksHandlerCall
 
 def getMVector(vector):
-	'''
+	"""
 	This Definition Returns An MVector.
 
 	@param vector: Vector. ( List )
 	@return: MVector ( MVector )
-	'''
+	"""
 	
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
 
 def normalize(vector):
-	'''
+	"""
 	This Definition Returns The Normalized Vector.
 
 	@param vector: Vector. ( List )
 	@return: Normalized Vector ( Tuple )
-	'''
+	"""
 	
 	mVector = getMVector(vector)
 	mVector.normalize()
 	return (mVector.x, mVector.y, mVector.z)
 
 def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", "Z")):
-	'''
+	"""
 	This Definition Aligns Provided Components BetweenThe Two Anchors.
 
 	@param anchorA: Anchor A. ( String )
 	@param anchorB: Anchor B. ( String )
 	@param components: Components To Align. ( List )
 	@param axis: Collapse Axis. ( Tuple )
-	'''
+	"""
 	
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 
@@ -86,11 +86,11 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 		cmds.xform(vertex, ws=True, r=True, t=(xValue, yValue, zValue))
 
 def selectAnchors_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The selectAnchors_Button Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	global ALIGNEMENT_ANCHORS
 
@@ -101,53 +101,53 @@ def selectAnchors_Button_OnClicked(state):
 		mel.eval("warning(\"%s | %s\")" % (__name__, "Failed To Retrieve Anchors, You Need To Select Exactly Two Objects Or Components!"))
 
 def alignSelection_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The alignSelection Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	if ALIGNEMENT_ANCHORS:
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection)
 
 def alignSelectionOnXAxis_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The alignSelectionOnXAxis Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	if ALIGNEMENT_ANCHORS:
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("X"))
 
 def alignSelectionOnYAxis_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The alignSelectionOnYAxis Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	if ALIGNEMENT_ANCHORS:
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Y"))
 
 def alignSelectionOnZAxis_Button_OnClicked(state):
-	'''
+	"""
 	This Definition Is Triggered By The alignSelectionOnZAxis Button When Clicked.
 	
 	@param state: Button State. ( Boolean )
-	'''
+	"""
 
 	if ALIGNEMENT_ANCHORS:
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Z"))
 
 def alignComponents_Window():
-	'''
+	"""
 	This Definition Creates The Align Components Main Window.
-	'''
+	"""
 
 	cmds.windowPref(enableAll=False)
 
@@ -179,16 +179,16 @@ def alignComponents_Window():
 	cmds.windowPref(enableAll=True)
 
 def alignComponents():
-	'''
+	"""
 	This Definition Launches The Align Components Main Window.
-	'''
+	"""
 	
 	alignComponents_Window()
 
 @stacksHandler
 def IAlignComponents():
-	'''
+	"""
 	This Definition Is The alignComponents Method Interface.
-	'''
+	"""
 
 	alignComponents()

@@ -7,7 +7,7 @@
 #
 #***********************************************************************************************
 
-'''
+"""
 ************************************************************************************************
 ***	activateBlendshapes.py
 ***
@@ -20,7 +20,7 @@
 ***	Others :
 ***
 ************************************************************************************************
-'''
+"""
 
 #***********************************************************************************************
 #***	Python Begin
@@ -44,19 +44,19 @@ import maya.mel as mel
 #***	Module Classes And Definitions
 #***********************************************************************************************
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -71,18 +71,18 @@ def stacksHandler(object_):
 	return stacksHandlerCall
 
 def weightSlider_OnValueChanged(value):
-	'''
+	"""
 	This Definition Is Triggered By The 'weightSlider' Slider When Its Value Changed.
-	'''
+	"""
 	
 	setWeight(cmds.floatSliderGrp("weight_FloatSliderGrp", query=True, value=True))
 
 def setWeight(value):
-	'''
+	"""
 	This Definition Activates Every First Blendshape Node Slot In The Scene.
 
 	@param value : Activation Value. ( Float )
-	'''
+	"""
 
 	blendShapesNodes=cmds.ls(type="blendShape")
 	for blendShapesNode in blendShapesNodes :
@@ -90,9 +90,9 @@ def setWeight(value):
 		cmds.setAttr(blendShapesNode + "." + targets[0], value)
 
 def activateBlendshapes_Window():
-	'''
+	"""
 	This Definition Creates The Activate Blendshapes Main Window.
-	'''
+	"""
 
 	cmds.windowPref(enableAll=False)
 
@@ -118,17 +118,17 @@ def activateBlendshapes_Window():
 	cmds.windowPref(enableAll=True)
 
 def activateBlendshapes():
-	'''
+	"""
 	This Definition Launches The Activate Blendshapes Main Window.
-	'''
+	"""
 
 	activateBlendshapes_Window()
 
 @stacksHandler
 def IActivateBlendshapes():
-	'''
+	"""
 	This Definition Is The activateBlendshapes Method Interface.
-	'''
+	"""
 	
 	activateBlendshapes()
 
