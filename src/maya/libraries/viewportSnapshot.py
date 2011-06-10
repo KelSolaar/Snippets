@@ -1,19 +1,19 @@
 import maya.cmds as cmds
 
 def stacksHandler(object_):
-	'''
+	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
 	@param object_: Python Object ( Object )
 	@return: Python Function. ( Function )
-	'''
+	"""
 
 	def stacksHandlerCall(*args, **kwargs):
-		'''
+		"""
 		This Decorator Is Used To Handle Various Maya Stacks.
 
 		@return: Python Object. ( Python )
-		'''
+		"""
 		
 		cmds.undoInfo(openChunk=True)
 		value = object_(*args, **kwargs)
@@ -29,9 +29,9 @@ def stacksHandler(object_):
 
 
 def viewportSnapshot():
-	'''
+	"""
 	This Definition Does A Viewport Snapshot.
-	'''
+	"""
 
 	filter = "Tif Files (*.tif)"
 	file = cmds.fileDialog2(fileFilter=filter, fm=0, dialogStyle=2)
@@ -44,8 +44,8 @@ def viewportSnapshot():
 
 @stacksHandler
 def IViewportSnapshot():
-	'''
+	"""
 	This Definition Is The viewportSnapshot Method Interface.
-	'''
+	"""
 
 	viewportSnapshot()
