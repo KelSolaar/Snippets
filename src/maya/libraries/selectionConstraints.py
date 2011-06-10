@@ -143,3 +143,35 @@ def ISelectNonManifoldVertices():
 	"""
 
 	selectNonManifoldVertices()
+
+def selectLaminaFaces():
+	'''
+	This Definition Selects The Lamina Faces.
+	'''
+	
+	cmds.polySelectConstraint(m=3, t=8, tp=2)
+	cmds.polySelectConstraint(m=0)
+
+@stacksHandler
+def ISelectLaminaFaces():
+	'''
+	This Definition Is The selectLaminaFaces Method Interface.
+	'''
+
+	selectLaminaFaces()
+
+def selectZeroGeometryAreaFaces():
+	'''
+	This Definition Selects The Zero Geometry Area Faces.
+	'''
+	
+	cmds.polySelectConstraint(m=3, t=8, ga=True, gab=(0, 0.0001))
+	cmds.polySelectConstraint(m=0)
+
+@stacksHandler
+def ISelectZeroGeometryAreaFaces():
+	'''
+	This Definition Is The selectZeroGeometryAreaFaces Method Interface.
+	'''
+
+	selectZeroGeometryAreaFaces()
