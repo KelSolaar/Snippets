@@ -146,7 +146,7 @@ def pivotsIdentity(transforms):
 		except:
 			pass
 @stacksHandler
-def IPivotIdentity():
+def IPivotsIdentity():
 	"""
 	This Definition Is The pivotsIdentity Method Interface.
 	"""
