@@ -165,7 +165,7 @@ def selectZeroGeometryAreaFaces():
 	This Definition Selects The Zero Geometry Area Faces.
 	"""
 	
-	cmds.polySelectConstraint(m=3, t=8, ga=True, gab=(0, 0.0001))
+	cmds.polySelectConstraint(m=3, t=8, ga=True, gab=(0, 0.001))
 	cmds.polySelectConstraint(m=0)
 
 @stacksHandler
