@@ -68,6 +68,27 @@ def IToggleSelectionHighlight():
 	
 	toggleSelectionHighlight()
 
+def toggleGeometriesVisibility():
+	'''
+	This Definition Toggles Active Modeling Panel Geometries Visibility Highlight.
+	'''
+	
+	panel = cmds.getPanel(withFocus=True)
+	try:
+		cmds.modelEditor(panel, e=True, nurbsCurves=not cmds.modelEditor(panel, q=True, nurbsCurves=True))
+		cmds.modelEditor(panel, e=True, nurbsSurfaces=not cmds.modelEditor(panel, q=True, nurbsSurfaces=True))
+		cmds.modelEditor(panel, e=True, polymeshes=not cmds.modelEditor(panel, q=True, polymeshes=True))
+		cmds.modelEditor(panel, e=True, subdivSurfaces=not cmds.modelEditor(panel, q=True, subdivSurfaces=True))
+	except:
+		pass
+@stacksHandler
+def IToggleGeometriesVisibility():
+	'''
+	This Definition Is The toggleGeometriesVisibility Method Interface.
+	'''
+	
+	toggleGeometriesVisibility()
+
 def splitRingMiddle(nodes):
 	"""
 	This Definition Sets The polySplitRing Nodes Weights To 0.5.
