@@ -123,7 +123,7 @@ def exportSelectedObjectToUvLayout(object):
 	"""
 
 	file = exportObjectsToFiles((object, ), "Obj", False)[0]
-	os.system("uvlayout %s" % file)
+	os.system("uvlayout %s&" % file)
 
 @stacksHandler
 def IExportSelectedObjectToUvLayout():
@@ -141,7 +141,9 @@ def importDefaultObject():
 
 	name = os.path.join(getUserExportDirectory(), "%s.%s" % ("%s_%s" % (FILE_DEFAULT_PREFIX, setPadding(str(0), 3)), FILE_TYPES["Obj"]["extension"]))
 	if os.path.exists(name):
+		nodesBefore = cmds.ls()
 		cmds.file(name, r=True, dns=True)
+		cmds.select(list(set(cmds.ls()).difference(set(nodesBefore))))
 	else:
 		mel.eval("warning(\"%s | '%s' File Does't Exists!\")" % (__name__, name))
 @stacksHandler
