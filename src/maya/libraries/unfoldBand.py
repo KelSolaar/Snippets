@@ -5,7 +5,7 @@ def stacksHandler(object_):
 	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
-	@param object_: Python Object ( Object )
+	@param object_: Python Object. ( Object )
 	@return: Python Function. ( Function )
 	"""
 

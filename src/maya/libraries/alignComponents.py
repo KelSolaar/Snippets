@@ -9,7 +9,7 @@ def stacksHandler(object_):
 	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
-	@param object_: Python Object ( Object )
+	@param object_: Python Object. ( Object )
 	@return: Python Function. ( Function )
 	"""
 
@@ -98,7 +98,7 @@ def selectAnchors_Button_OnClicked(state):
 	if len(selection) == 2:
 		ALIGNEMENT_ANCHORS = (selection[0], selection[1])
 	else:
-		mel.eval("warning(\"%s | %s\")" % (__name__, "Failed To Retrieve Anchors, You Need To Select Exactly Two Objects Or Components!"))
+		mel.eval("warning(\"%s | Failed To Retrieve Anchors, You Need To Select Exactly Two Objects Or Components!\")" % __name__)
 
 def alignSelection_Button_OnClicked(state):
 	"""
