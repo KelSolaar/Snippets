@@ -472,7 +472,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Methods_listWidget_setWidget()
 		
 		self.Informations_textBrowser.setText(self._Informations_textBrowser_defaultText)
-	
+
+		self.Loader_splitter.setSizes([16777215, 0])
+
 	@core.executionTrace
 	def Methods_listWidget_setWidget(self):
 		"""
