@@ -34,6 +34,21 @@ def stacksHandler(object_):
 
 	return stacksHandlerCall
 
+def getTransform(node, fullPath=True):
+	"""
+	This Definition Returns Transform Of The Provided Node.
+
+	@param node: Current Object. ( String )
+	@param fullPath: Current Full Path State. ( Boolean )
+	@return: Object Transform. ( String )
+	"""
+	
+	transform = node
+	if cmds.nodeType(node) != "transform":
+		parents = cmds.listRelatives(node, fullPath=fullPath, parent=True)
+		transform = parents[0]
+	return transform
+
 def setPadding(data, padding, affix="0"):
 	"""
 	This Definition Pads The Provided Data.
@@ -87,7 +102,7 @@ def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames
 
 def exportSelectedObjectsToShortObjFiles():
 	"""
-	This Definition Export Selected Objects To Short Named Obj Files.
+	This Definition Exports Selected Objects To Short Named Obj Files.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -103,7 +118,7 @@ def IExportSelectedObjectsToShortObjFiles():
 
 def exportSelectedObjectsToLongObjFiles():
 	"""
-	This Definition Export Selected Objects To Long Named Obj Files.
+	This Definition Exports Selected Objects To Long Named Obj Files.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -119,7 +134,7 @@ def IExportSelectedObjectsToLongObjFiles():
 
 def exportSelectedObjectToUvLayout(object):
 	"""
-	This Definition Export The Selected Object To UVLayout.
+	This Definition Exports The Selected Object To UVLayout.
 	"""
 
 	file = exportObjectsToFiles((object, ), "Obj", False)[0]
@@ -136,14 +151,14 @@ def IExportSelectedObjectToUvLayout():
 
 def importDefaultObject():
 	"""
-	This Definition Import The Default Object: 'Export_000.obj'.
+	This Definition Imports The Default Object: 'Export_000.obj'.
 	"""
 
 	name = os.path.join(getUserExportDirectory(), "%s.%s" % ("%s_%s" % (FILE_DEFAULT_PREFIX, setPadding(str(0), 3)), FILE_TYPES["Obj"]["extension"]))
 	if os.path.exists(name):
 		nodesBefore = cmds.ls()
 		cmds.file(name, r=True, dns=True)
-		cmds.select(list(set(cmds.ls()).difference(set(nodesBefore))))
+		cmds.select(getTransform(list(set(cmds.ls()).difference(set(nodesBefore)))[0]))
 	else:
 		mel.eval("warning(\"%s | '%s' File Does't Exists!\")" % (__name__, name))
 @stacksHandler
