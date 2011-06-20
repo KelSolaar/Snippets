@@ -39,7 +39,7 @@ def viewportSnapshot():
 	if file:
 		imageFormat = cmds.getAttr("defaultRenderGlobals.imageFormat")
 		cmds.setAttr("defaultRenderGlobals.imageFormat", 3)
-		cmds.playblast(frame=[maya.cmds.getAttr("time1.outTime")], format="image", os=True, quality=100, p=100, cf=file[0])
+		cmds.playblast(frame=[cmds.getAttr("time1.outTime")], format="image", os=True, quality=100, p=100, cf=file[0])
 		cmds.setAttr("defaultRenderGlobals.imageFormat", imageFormat)
 
 @stacksHandler
