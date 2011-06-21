@@ -3,11 +3,11 @@ import maya.mel as mel
 import maya.OpenMaya as OpenMaya
 import math
 
-def stacksHandler(object_):
+def stacksHandler(object):
 	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
-	@param object_: Python Object. ( Object )
+	@param object: Python Object. ( Object )
 	@return: Python Function. ( Function )
 	"""
 
@@ -19,11 +19,11 @@ def stacksHandler(object_):
 		"""
 		
 		cmds.undoInfo(openChunk=True)
-		value = object_(*args, **kwargs)
+		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
 		# Maya Produces A Weird Command Error If Not Wrapped Here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object_.__name__), addCommandLabel=object_.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -190,7 +190,8 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 	
 		not history and cmds.delete(object, ch=True)
 
-def solidify_Button_OnClicked(state):
+@stacksHandler
+def solidify_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The solidify_Button Button When Clicked.
 	

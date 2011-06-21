@@ -5,11 +5,11 @@ import maya.OpenMaya as OpenMaya
 
 ALIGNEMENT_ANCHORS = None
 
-def stacksHandler(object_):
+def stacksHandler(object):
 	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
-	@param object_: Python Object. ( Object )
+	@param object: Python Object. ( Object )
 	@return: Python Function. ( Function )
 	"""
 
@@ -21,11 +21,11 @@ def stacksHandler(object_):
 		"""
 		
 		cmds.undoInfo(openChunk=True)
-		value = object_(*args, **kwargs)
+		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
 		# Maya Produces A Weird Command Error If Not Wrapped Here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object_.__name__), addCommandLabel=object_.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -85,7 +85,8 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 
 		cmds.xform(vertex, ws=True, r=True, t=(xValue, yValue, zValue))
 
-def selectAnchors_Button_OnClicked(state):
+@stacksHandler
+def selectAnchors_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The selectAnchors_Button Button When Clicked.
 	
@@ -100,7 +101,8 @@ def selectAnchors_Button_OnClicked(state):
 	else:
 		mel.eval("warning(\"%s | Failed To Retrieve Anchors, You Need To Select Exactly Two Objects Or Components!\")" % __name__)
 
-def alignSelection_Button_OnClicked(state):
+@stacksHandler
+def alignSelection_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The alignSelection Button When Clicked.
 	
@@ -111,7 +113,8 @@ def alignSelection_Button_OnClicked(state):
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection)
 
-def alignSelectionOnXAxis_Button_OnClicked(state):
+@stacksHandler
+def alignSelectionOnXAxis_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The alignSelectionOnXAxis Button When Clicked.
 	
@@ -122,7 +125,8 @@ def alignSelectionOnXAxis_Button_OnClicked(state):
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("X"))
 
-def alignSelectionOnYAxis_Button_OnClicked(state):
+@stacksHandler
+def alignSelectionOnYAxis_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The alignSelectionOnYAxis Button When Clicked.
 	
@@ -133,7 +137,8 @@ def alignSelectionOnYAxis_Button_OnClicked(state):
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Y"))
 
-def alignSelectionOnZAxis_Button_OnClicked(state):
+@stacksHandler
+def alignSelectionOnZAxis_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The alignSelectionOnZAxis Button When Clicked.
 	

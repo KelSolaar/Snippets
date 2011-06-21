@@ -34,7 +34,7 @@ import maya.cmds as cmds
 import maya.OpenMaya as OpenMaya
 import maya.mel as mel
 import re
-
+import functools
 #***********************************************************************************************
 #***	Overall Variables
 #***********************************************************************************************
@@ -44,11 +44,11 @@ MAXIMUM_SEARCH_DISTANCE=2**32-1
 #***********************************************************************************************
 #***	Module Classes And Definitions
 #***********************************************************************************************
-def stacksHandler(object_):
+def stacksHandler(object):
 	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
-	@param object_: Python Object. ( Object )
+	@param object: Python Object. ( Object )
 	@return: Python Function. ( Function )
 	"""
 
@@ -60,11 +60,11 @@ def stacksHandler(object_):
 		"""
 		
 		cmds.undoInfo(openChunk=True)
-		value = object_(*args, **kwargs)
+		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
 		# Maya Produces A Weird Command Error If Not Wrapped Here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object_.__name__), addCommandLabel=object_.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -99,7 +99,7 @@ def getShapes(object, fullPathState = False, noIntermediateState = True):
 	"""
 	This Definition Returns Shapes Of The Provided Object.
 
-	@param object_: Current Object. ( String )
+	@param object: Current Object. ( String )
 	@param fullPath: Current Full Path State. ( Boolean )
 	@param noIntermediate: Current No Intermediate State. ( Boolean )
 	@return: Objects Shapes. ( List )
@@ -112,7 +112,8 @@ def getShapes(object, fullPathState = False, noIntermediateState = True):
 
 	return objectShapes
 	
-def getReferenceObject_OnClicked(state):
+@stacksHandler
+def getReferenceObject_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The getReferenceObject Button When Clicked.
 	
@@ -182,7 +183,8 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 
 	cmds.delete(nearestPointOnMeshNode)
 
-def snapIt_Button_OnClicked(state):
+@stacksHandler
+def snapIt_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The snapIt Button When Clicked.
 	

@@ -7,11 +7,11 @@ EXPORT_DIRECTORY = "textures/images/%s/objs" % USER_HOOK
 FILE_DEFAULT_PREFIX = "Export"
 FILE_TYPES = {"Obj" : {"extension" : "obj", "type" : "OBJexport", "options" : "groups=1;ptgroups=1;materials=0;smoothing=1;normals=1"}}
 
-def stacksHandler(object_):
+def stacksHandler(object):
 	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
-	@param object_: Python Object. ( Object )
+	@param object: Python Object. ( Object )
 	@return: Python Function. ( Function )
 	"""
 
@@ -23,11 +23,11 @@ def stacksHandler(object_):
 		"""
 		
 		cmds.undoInfo(openChunk=True)
-		value = object_(*args, **kwargs)
+		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
 		# Maya Produces A Weird Command Error If Not Wrapped Here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object_.__name__), addCommandLabel=object_.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value

@@ -1,11 +1,11 @@
 import random
 import maya.cmds as cmds
 
-def stacksHandler(object_):
+def stacksHandler(object):
 	"""
 	This Decorator Is Used To Handle Various Maya Stacks.
 
-	@param object_: Python Object. ( Object )
+	@param object: Python Object. ( Object )
 	@return: Python Function. ( Function )
 	"""
 
@@ -17,11 +17,11 @@ def stacksHandler(object_):
 		"""
 		
 		cmds.undoInfo(openChunk=True)
-		value = object_(*args, **kwargs)
+		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
 		# Maya Produces A Weird Command Error If Not Wrapped Here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object_.__name__), addCommandLabel=object_.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -69,7 +69,8 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 				cmds.parent(duplicatedObject, duplicationGrp)
 			cmds.rename(duplicationGrp, "duplication_grp")
 	
-def pickSources_Button_OnClicked(state):
+@stacksHandler
+def pickSources_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The pickSources_Button Button When Clicked.
 	
@@ -78,7 +79,8 @@ def pickSources_Button_OnClicked(state):
 	
 	cmds.textField("sources_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
-def pickTargets_Button_OnClicked(state):
+@stacksHandler
+def pickTargets_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The pickTargets_Button Button When Clicked.
 	
@@ -87,7 +89,8 @@ def pickTargets_Button_OnClicked(state):
 
 	cmds.textField("targets_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
-def replaceObjects_Button_OnClicked(state):
+@stacksHandler
+def replaceObjects_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The replaceObjects_Button Button When Clicked.
 	
