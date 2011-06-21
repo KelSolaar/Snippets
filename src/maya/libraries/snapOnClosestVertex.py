@@ -141,6 +141,8 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 	@param components: Components. (List)
 	"""
 	
+	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
+
 	progressBar = mel.eval("$container=$gMainProgressBar");
 
 	cmds.progressBar(progressBar, edit=True, beginProgress=True, isInterruptable=True, status="Snapping Vertices ...", maxValue=len(vertices)) 
@@ -149,7 +151,6 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 
 	nearestPointOnMeshNode=mel.eval("nearestPointOnMesh " +  referenceObject)
 	
-	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 	for vertex in vertices :
 		if cmds.progressBar(progressBar, query=True, isCancelled=True) :
 			break
@@ -197,7 +198,7 @@ def snapIt_Button_OnClicked(state):
 
 def snapOnClosestVertex_Window():
 	"""
-	This Definition Launchs snapOnClosestVertex Window.
+	This Definition Creates The Snap On Closest Vertex Window.
 	"""
 
 	cmds.windowPref(enableAll=False)
