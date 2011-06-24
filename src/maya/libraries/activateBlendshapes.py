@@ -109,7 +109,7 @@ def activateBlendshapes_Window():
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.floatSliderGrp("weight_FloatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, value=0, changeCommand=weightSlider_OnValueChanged , dragCommand=weightSlider_OnValueChanged)
+	cmds.floatSliderGrp("weight_FloatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, sliderStep=0.01, value=0, changeCommand=weightSlider_OnValueChanged , dragCommand=weightSlider_OnValueChanged)
 
 	cmds.separator(height=10, style="singleDash")
 
