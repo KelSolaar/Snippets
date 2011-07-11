@@ -132,6 +132,22 @@ def IExportSelectedObjectsToLongObjFiles():
 
 	exportSelectedObjectsToLongObjFiles()
 
+def exportDefaultObject(object):
+	"""
+	This Definition Exports The Default Object.
+	"""
+
+	exportObjectsToFiles((object, ), "Obj", False)[0]
+
+@stacksHandler
+def IExportDefaultObject():
+	"""
+	This Definition Is The exportDefaultObject Method Interface.
+	"""
+
+	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
+	selection and exportDefaultObject(selection[0])
+
 def exportSelectedObjectToUvLayout(object):
 	"""
 	This Definition Exports The Selected Object To UVLayout.
