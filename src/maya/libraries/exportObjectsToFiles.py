@@ -158,7 +158,8 @@ def importDefaultObject():
 	if os.path.exists(name):
 		nodesBefore = cmds.ls()
 		cmds.file(name, r=True, dns=True)
-		cmds.select(getTransform(list(set(cmds.ls()).difference(set(nodesBefore)))[0]))
+		print list(set(cmds.ls()).difference(set(nodesBefore)))
+		cmds.select([node for node in list(set(cmds.ls()).difference(set(nodesBefore))) if cmds.nodeType(node) == "transform"])
 	else:
 		mel.eval("warning(\"%s | '%s' File Does't Exists!\")" % (__name__, name))
 @stacksHandler
