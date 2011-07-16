@@ -42,19 +42,37 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 #***********************************************************************************************
+#***	Dependencies Globals Manipulation
+#***********************************************************************************************
+import foundations.globals.constants
+from snippets.globals.constants import Constants
+
+def _overrideDependenciesGlobals():
+	"""
+	This Definition Overrides Dependencies Globals.
+
+	@return: Definition Success. ( Boolean )		
+	"""
+
+	foundations.globals.constants.Constants.logger = Constants.logger
+	foundations.globals.constants.Constants.applicationDirectory = Constants.applicationDirectory
+	return True
+
+_overrideDependenciesGlobals()
+
+#***********************************************************************************************
 #***	Internal Imports
 #***********************************************************************************************
 import foundations.core as core
 import foundations.exceptions
 import foundations.io as io
 import foundations.strings as strings
-import libraries.common
 import foundations.namespace as namespace
+import snippets.libraries.common
 from foundations.environment import Environment
 from foundations.walker import Walker
-from globals.constants import Constants
-from globals.runtimeConstants import RuntimeConstants
-from globals.uiConstants import UiConstants
+from snippets.globals.runtimeConstants import RuntimeConstants
+from snippets.globals.uiConstants import UiConstants
 
 #***********************************************************************************************
 #***	Global Variables
@@ -66,7 +84,7 @@ del logging.root.handlers[:]
 
 if LOGGER.handlers == []:
 	consoleHandler = libraries.common.MayaLoggingHandler()
-	consoleHandler.setFormatter(core.LOGGING_FORMATTER)
+	consoleHandler.setFormatter(core.LOGGING_DEFAULT_FORMATTER)
 	LOGGER.addHandler(consoleHandler)
 
 RuntimeConstants.loaderUiFile = os.path.join(os.path.dirname(__file__), UiConstants.loaderUiFile)
@@ -120,7 +138,7 @@ class Module(object):
 		self.name = name
 		self.path = None
 		self._path = path
-		
+
 		self._import = None
 		self._interfaces = None
 
@@ -276,29 +294,29 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		Ui_Loader_Setup.__init__(self)
 
 		self.setupUi(self)
-		
+
 		# --- Setting Class Attributes. ---
 		self._container = container
 		self._modules = None
-		
-		self._Informations_textBrowser_defaultText  =  "<center><br/><br/><h4>* * *</h4>Select A Snippet To Display Related Informations!<h4>* * *</h4></center>"
-		
+
+		self._Informations_textBrowser_defaultText = "<center><br/><br/><h4>* * *</h4>Select A Snippet To Display Related Informations!<h4>* * *</h4></center>"
+
 		self._linuxTextEditors = ("gedit", "kwrite", "nedit", "mousepad")
 		self._linuxBrowsers = ("nautilus", "dolphin", "konqueror", "thunar")
-		
+
 		# --- Gathering Modules. ---
 		self.getModules()
 
 		# --- Setting Up UI. ---
 		self.initializeUI()
-		
+
 		# -- Loader Signals / Slots. ---		
 		self.connect(self.Execute_Snippet_pushButton, SIGNAL("clicked()"), self.Execute_Snippet_pushButton_OnClicked)
 		self.connect(self.Reload_Snippets_pushButton, SIGNAL("clicked()"), self.Reload_Snippets_pushButton_OnClicked)
-		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.Methods_listWidget_OnItemSelectionChanged )
-		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.Methods_listWidget_OnItemDoubleClicked )
-		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.Search_lineEdit_OnTextChanged )
-	
+		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.Methods_listWidget_OnItemSelectionChanged)
+		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.Methods_listWidget_OnItemDoubleClicked)
+		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.Search_lineEdit_OnTextChanged)
+
 	#***************************************************************************************
 	#***	Attributes Properties
 	#***************************************************************************************
@@ -423,7 +441,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "linuxTextEditors")
-	
+
 	@property
 	def linuxBrowsers(self):
 		"""
@@ -462,15 +480,15 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This Definition Triggers The Methods_listWidget Widget.
 		"""
-		
+
 		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
 		self.Methods_listWidget_setActions()
 
 		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeConstants.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
 		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeConstants.resourcesDirectory, UiConstants.searchIcon)))
-		
+
 		self.Methods_listWidget_setWidget()
-		
+
 		self.Informations_textBrowser.setText(self._Informations_textBrowser_defaultText)
 
 		self.Loader_splitter.setSizes([16777215, 0])
@@ -480,10 +498,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This Definition Sets The Methods_listWidget Widget.
 		"""
-		
+
 		if self._modules:
 			self.Methods_listWidget.clear()
-		
+
 			listWidgetItems = set()
 			for module in self._modules.values():
 				if module.interfaces:
@@ -498,7 +516,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 			for listWidgetItem in listWidgetItems:
 				self.Methods_listWidget.addItem(listWidgetItem)
-			
+
 			self.Methods_listWidget.sortItems(Qt.AscendingOrder)
 
 	@core.executionTrace
@@ -506,11 +524,11 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This Method Sets The Methods_listWidget Actions.
 		"""
-		
+
 		editSnippetAction = QAction("Edit Snippet", self.Methods_listWidget)
 		self.connect(editSnippetAction, SIGNAL("triggered()"), self.Methods_listWidget_editSnippetAction)
 		self.Methods_listWidget.addAction(editSnippetAction)
-		
+
 		exploreSnippetFolderAction = QAction("Explore Snippet Folder", self.Methods_listWidget)
 		self.connect(exploreSnippetFolderAction, SIGNAL("triggered()"), self.Methods_listWidget_exploreSnippetFolderAction)
 		self.Methods_listWidget.addAction(exploreSnippetFolderAction)
@@ -541,7 +559,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This Method Is Triggered When Execute_Snippet_pushButton Is Clicked.
 		"""
-		
+
 		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
 			self.executeSnippet()
 
@@ -550,7 +568,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This Method Is Triggered When Reload_Snippets_pushButton Is Clicked.
 		"""
-			
+
 		self.getModules()
 		self.Methods_listWidget_setWidget()
 
@@ -559,7 +577,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This Method Is Triggered When Methods_listWidget Selection Has Changed.
 		"""
-		
+
 		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
 			datas = self.Methods_listWidget.currentItem()._datas
 			method = self.getMethodName(datas.name)
@@ -590,10 +608,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 					""" % (strings.getNiceName(method), datas.module.name, os.path.normpath(datas.module.import_.__file__), method, datas.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, datas.module.import_.__dict__[method].__doc__)
 		else:
 			content = self._Informations_textBrowser_defaultText
-		
+
 		LOGGER.debug("> Update 'Informations_textBrowser' Widget Content: '%s'." % content)
 		self.Informations_textBrowser.setText(content)
-	
+
 	@core.executionTrace
 	def Methods_listWidget_OnItemDoubleClicked(self, listWidgetItem):
 		"""
@@ -601,7 +619,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		
 		@param listWidgetItem: Selected QListWidgetItem. ( QListWidgetItem )
 		"""
-		
+
 		self.executeSnippet()
 
 	@core.executionTrace
@@ -611,7 +629,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		
 		@param text: Current Text Value. ( QString )
 		"""
-		
+
 		self.Methods_listWidget_setWidget()
 
 	@core.executionTrace
@@ -624,7 +642,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 
 		return "%s%s" % (name[1].lower(), name[2:])
-	
+
 	@core.executionTrace
 	def gatherLibraries(self):
 		"""
@@ -633,7 +651,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		walker = Walker(RuntimeConstants.librariesDirectory)
 		modules = walker.walk(filtersIn=("\.%s$" % Constants.librariesExtension,))
-		
+
 		self._modules = {}
 		for name, path in modules.items():
 			module = Module()
@@ -653,14 +671,14 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 				sys.path.append(module.path)
 			if module.name in sys.modules.keys():
 				del(sys.modules[module.name])
-			
+
 			module.import_ = __import__(module.name)
-			
+
 			interfaces = [object_ for object_ in module.import_.__dict__.keys() if re.search("^I[A-Z]\w+", object_)]
 			if interfaces:
-				LOGGER.info( "%s | Registering '%s' Interfaces From '%s' Module!" % (self.__class__.__name__, interfaces, module.name))
+				LOGGER.info("%s | Registering '%s' Interfaces From '%s' Module!" % (self.__class__.__name__, interfaces, module.name))
 				module.interfaces = interfaces
-	
+
 	@core.executionTrace
 	def getModules(self):
 		"""
@@ -679,9 +697,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		listWidget = self.Methods_listWidget.currentItem()
 		if hasattr(listWidget, "_datas"):
 			module = listWidget._datas.module
-			method = listWidget._datas.name	
-			
-			LOGGER.info( "%s | Executing '%s' Snippet From '%s' Module!" % (self.__class__.__name__, method, module.name))
+			method = listWidget._datas.name
+
+			LOGGER.info("%s | Executing '%s' Snippet From '%s' Module!" % (self.__class__.__name__, method, module.name))
 			module.import_.__dict__[method]()
 
 	@core.executionTrace

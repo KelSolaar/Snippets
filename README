@@ -19,11 +19,11 @@ LOADER_PATH = "Path/To/Snippets/Folder/Snippets/src/maya"
 if LOADER_PATH not in sys.path:
 	sys.path.append(LOADER_PATH)
 
-import loader
-reload(loader)
+import snippets.loader
+reload(snippets.loader)
 
-import ui.common
-UI = loader.Loader(ui.common.getMayaWindow())
+import snippets.ui.common
+UI = snippets.loader.Loader(ui.common.getMayaWindow())
 UI.show()
 
 - About -
