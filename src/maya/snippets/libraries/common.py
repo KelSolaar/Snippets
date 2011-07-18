@@ -39,7 +39,7 @@ import re
 #***	Internal Imports
 #***********************************************************************************************
 import foundations.core as core
-from globals.constants import Constants
+from snippets.globals.constants import Constants
 
 #***********************************************************************************************
 #***	Global Variables

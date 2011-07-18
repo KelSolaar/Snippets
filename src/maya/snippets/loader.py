@@ -55,7 +55,6 @@ def _overrideDependenciesGlobals():
 	"""
 
 	foundations.globals.constants.Constants.logger = Constants.logger
-	foundations.globals.constants.Constants.applicationDirectory = Constants.applicationDirectory
 	return True
 
 _overrideDependenciesGlobals()
@@ -83,7 +82,7 @@ LOGGER = logging.getLogger(Constants.logger)
 del logging.root.handlers[:]
 
 if LOGGER.handlers == []:
-	consoleHandler = libraries.common.MayaLoggingHandler()
+	consoleHandler = snippets.libraries.common.MayaLoggingHandler()
 	consoleHandler.setFormatter(core.LOGGING_DEFAULT_FORMATTER)
 	LOGGER.addHandler(consoleHandler)
 
