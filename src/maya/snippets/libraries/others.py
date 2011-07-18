@@ -28,9 +28,31 @@ def stacksHandler(object):
 
 	return stacksHandlerCall
 
-def transfertVerticesPositions(sources, target, searchMethod=0):
+def transfertVerticesPositionsInUvSpace(sources, target, searchMethod=0):
 	"""
-	This Definition Transferts Vertices Positions From Sources To Target Object.
+	This Definition Transferts Vertices Positions From Sources To Target Object In UVs Space.
+
+	@param sources: Sources Objects. ( List )
+	@param target: Target Object. ( String )
+	@param searchMethod: Current Search Method. ( Integer )
+	"""
+
+	for source in sources:
+	    cmds.transferAttributes(target, source, transferPositions=1, sampleSpace=3)
+	    cmds.delete(target, ch=True)
+
+@stacksHandler
+def ITransfertVerticesPositionsInUvSpace():
+	"""
+	This Definition Is The transfertVerticesPositions Method Interface.
+	"""
+	
+	selection = cmds.ls(sl=True, l=True)
+	selection and transfertVerticesPositionsInUvSpace(selection[:-1], selection[-1], 0)
+
+def transfertVerticesPositionsInWorldSpace(sources, target, searchMethod=0):
+	"""
+	This Definition Transferts Vertices Positions From Sources To Target Object In World Space.
 
 	@param sources: Sources Objects. ( List )
 	@param target: Target Object. ( String )
@@ -42,13 +64,13 @@ def transfertVerticesPositions(sources, target, searchMethod=0):
 	    cmds.delete(target, ch=True)
 
 @stacksHandler
-def ITransfertVerticesPositions():
+def ITransfertVerticesPositionsInWorldSpace():
 	"""
 	This Definition Is The transfertVerticesPositions Method Interface.
 	"""
 	
 	selection = cmds.ls(sl=True, l=True)
-	selection and transfertVerticesPositions(selection[:-1], selection[-1], 0)
+	selection and transfertVerticesPositionsInWorldSpace(selection[:-1], selection[-1], 0)
 
 def toggleSelectionHighlight():
 	"""
