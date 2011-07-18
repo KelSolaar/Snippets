@@ -23,7 +23,7 @@ import snippets.loader
 reload(snippets.loader)
 
 import snippets.ui.common
-UI = snippets.loader.Loader(ui.common.getMayaWindow())
+UI = snippets.loader.Loader(snippets.ui.ui.common.getMayaWindow())
 UI.show()
 
 - About -
