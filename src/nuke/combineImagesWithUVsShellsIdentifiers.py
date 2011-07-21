@@ -26,18 +26,16 @@
 #
 
 """
-************************************************************************************************
-***	combineImagesWithUVsShellsIdentifiers.py
-***
-***	Platform:
-***		Windows
-***
-***	Description:
-***		Combines UVs Shells Siblings Images.
-***
-***	Others:
-***
-************************************************************************************************
+**combineImagesWithUVsShellsIdentifiers.py**
+
+**Platform:**
+	Windows.
+
+**Description:**
+	Combines UVs Shells Siblings Images.
+
+**Others:**
+
 """
 
 #***********************************************************************************************
