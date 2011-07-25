@@ -46,7 +46,7 @@ LOGGER = logging.getLogger(Constants.logger)
 
 #***********************************************************************************************
 #***	Module Classes And Definitions
-#***************************************************************************************
+#***********************************************************************************************
 class MayaLoggingHandler(logging.Handler):
 	"""
 	This Class Provides A Maya Friendly Logging Handler.
