@@ -76,7 +76,7 @@ var	strddFileType = localize( "$$$/locale_specific/JavaScripts/LayerCompsToFiles
 var	strpnlOptions = localize( "$$$/locale_specific/JavaScripts/LayerCompsToFiles/PNLOptions=100" );
 
 // the drop down list indexes for file type
-var bmpIndex = 0; 
+var bmpIndex = 0;
 var jpegIndex = 1;
 var pdfIndex = 2;
 var psdIndex = 3;
@@ -115,7 +115,7 @@ main();
 // Return: <none>
 ///////////////////////////////////////////////////////////////////////////////
 function main() {
-    
+
     if ( app.documents.length <= 0 ) {
         if ( DialogModes.NO != app.playbackDisplayDialogs ) {
             alert( strAlertDocumentMustBeOpened );
@@ -124,9 +124,9 @@ function main() {
     }
 
     var exportInfo = new Object();
-    
+
     initExportInfo(exportInfo);
-    
+
  	// look for last used params via Photoshop registry, getCustomOptions will throw if none exist
 	try {
 		var d = app.getCustomOptions("d69fc733-75b4-4d5c-ae8a-c6d6f9a8aa32");
@@ -135,10 +135,10 @@ function main() {
 	catch(e) {
 		// it's ok if we don't have any options, continue with defaults
 	}
-	
+
 	// see if I am getting descriptor parameters
     descriptorToObject(exportInfo, app.playbackParameters, postProcessExportInfo);
-    
+
     if ( DialogModes.ALL == app.playbackDisplayDialogs ) {
     	if (cancelButtonID == settingDialog(exportInfo)) {
 	    	return 'cancel'; // quit, returning 'cancel' (dont localize) makes the actions palette not record our script
@@ -157,14 +157,14 @@ function main() {
         } else {
             app.activeDocument = app.documents[docName];
             docRef = app.activeDocument;
-    
+
             var rememberMaximize;
             var needMaximize = exportInfo.psdMaxComp ? QueryStateType.ALWAYS : QueryStateType.NEVER;
             if ( exportInfo.fileType == psdIndex && app.preferences.maximizeCompatibility != needMaximize ) {
                 rememberMaximize = app.preferences.maximizeCompatibility;
                 app.preferences.maximizeCompatibility = needMaximize;
             }
-            
+
             for ( compsIndex = 0; compsIndex < compsCount; compsIndex++ ) {
                 var compRef = docRef.layerComps[ compsIndex ];
                 if (exportInfo.selectionOnly && !compRef.selected) continue; // selected only
@@ -191,7 +191,7 @@ function main() {
             if ( rememberMaximize != undefined ) {
                 app.preferences.maximizeCompatibility = rememberMaximize;
             }
-            
+
             if ( DialogModes.ALL == app.playbackDisplayDialogs ) {
                 alert(strTitle + strAlertWasSuccessful);
             }
@@ -199,7 +199,7 @@ function main() {
             app.playbackDisplayDialogs = DialogModes.ALL;
 
         }
-    } 
+    }
     catch (e) {
         if ( DialogModes.NO != app.playbackDisplayDialogs ) {
             alert(e);
@@ -221,7 +221,7 @@ function settingDialog(exportInfo)
 
 	dlgMain.orientation = 'column';
 	dlgMain.alignChildren = 'left';
-	
+
 	// -- top of the dialog, first line
     dlgMain.add("statictext", undefined, strLabelDestination);
 
@@ -231,12 +231,12 @@ function settingDialog(exportInfo)
 	dlgMain.grpTop.alignChildren = 'top';
 	dlgMain.grpTop.alignment = 'fill';
 
-	// -- group top left 
+	// -- group top left
 	dlgMain.grpTopLeft = dlgMain.grpTop.add("group");
 	dlgMain.grpTopLeft.orientation = 'column';
 	dlgMain.grpTopLeft.alignChildren = 'left';
 	dlgMain.grpTopLeft.alignment = 'fill';
-	
+
 	// -- the second line in the dialog
 	dlgMain.grpSecondLine = dlgMain.grpTopLeft.add("group");
 	dlgMain.grpSecondLine.orientation = 'row';
@@ -272,7 +272,7 @@ function settingDialog(exportInfo)
 	// -- the sixth line is the panel
     dlgMain.pnlFileType = dlgMain.grpTopLeft.add("panel", undefined, strLabelFileType);
 	dlgMain.pnlFileType.alignment = 'fill';
-    
+
     // -- now a dropdown list
     dlgMain.ddFileType = dlgMain.pnlFileType.add("dropdownlist");
     dlgMain.ddFileType.preferredSize.width = StrToIntWithDefault( strddFileType, 100 );
@@ -288,34 +288,34 @@ function settingDialog(exportInfo)
 	dlgMain.ddFileType.onChange = function() {
 		hideAllFileTypePanel();
 		switch(this.selection.index) {
-			case bmpIndex:	
+			case bmpIndex:
 				dlgMain.pnlFileType.pnlOptions.text = strBMPOptions;
-				dlgMain.pnlFileType.pnlOptions.grpBMPOptions.show();	
+				dlgMain.pnlFileType.pnlOptions.grpBMPOptions.show();
 				break;
-			case jpegIndex:	
+			case jpegIndex:
 				dlgMain.pnlFileType.pnlOptions.text = strJPEGOptions;
-				dlgMain.pnlFileType.pnlOptions.grpJPEGOptions.show();	
+				dlgMain.pnlFileType.pnlOptions.grpJPEGOptions.show();
 				break;
-			case tiffIndex:	
+			case tiffIndex:
 				dlgMain.pnlFileType.pnlOptions.text = strTIFFOptions;
-				dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.show();	
+				dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.show();
 				break;
-			case pdfIndex:	
+			case pdfIndex:
 				dlgMain.pnlFileType.pnlOptions.text = strPDFOptions;
-				dlgMain.pnlFileType.pnlOptions.grpPDFOptions.show();	
+				dlgMain.pnlFileType.pnlOptions.grpPDFOptions.show();
 				break;
 			case targaIndex:
 				dlgMain.pnlFileType.pnlOptions.text = strTargaOptions;
-				dlgMain.pnlFileType.pnlOptions.grpTargaOptions.show();	
+				dlgMain.pnlFileType.pnlOptions.grpTargaOptions.show();
 				break;
-			case psdIndex:	
-			default:		
+			case psdIndex:
+			default:
 				dlgMain.pnlFileType.pnlOptions.text = strPSDOptions;
-				dlgMain.pnlFileType.pnlOptions.grpPSDOptions.show();	
+				dlgMain.pnlFileType.pnlOptions.grpPSDOptions.show();
 				break;
 		}
 	}
-	    
+
     dlgMain.ddFileType.items[exportInfo.fileType].selected = true;
 
 	// -- now after all the radio buttons
@@ -343,18 +343,18 @@ function settingDialog(exportInfo)
 	// TIFF options
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions = dlgMain.pnlFileType.pnlOptions.add("group");
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.orientation = 'column';
-    
+
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression = dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.add("group");
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.alignment = 'left';
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.add("statictext", undefined, strLabelImageCompression);
-    
+
 
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression = dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.add("dropdownlist");
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression.add("item", strNone);
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression.add("item", "LZW");
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression.add("item", "ZIP");
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression.add("item", "JPEG");
-    
+
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression.onChange = function() {
 		if (this.selection.index == compJPEGIndex) {
 			dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpQuality.stQuality.enabled = true;
@@ -386,7 +386,7 @@ function settingDialog(exportInfo)
 		dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpQuality.stQuality.enabled = false;
 		dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpQuality.etQuality.enabled = false;
     }
-    
+
 
 	// PDF options
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions = dlgMain.pnlFileType.pnlOptions.add("group");
@@ -398,32 +398,32 @@ function settingDialog(exportInfo)
 
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpCompression.rbZip = dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpCompression.add("radiobutton", undefined, "ZIP");
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpCompression.rbZip.onClick = function() {
-		dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.stQuality.enabled = false;   
-		dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.etQuality.enabled = false;   
+		dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.stQuality.enabled = false;
+		dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.etQuality.enabled = false;
 	}
 
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpCompression.rbJpeg = dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpCompression.add("radiobutton", undefined, "JPEG");
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpCompression.rbJpeg.onClick = function() {
-		dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.stQuality.enabled = true;   
-		dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.etQuality.enabled = true;   
+		dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.stQuality.enabled = true;
+		dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.etQuality.enabled = true;
 	}
-	
+
 	dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality = dlgMain.pnlFileType.pnlOptions.grpPDFOptions.add("group");
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.alignment = 'left';
-    
+
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.stQuality = dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.add("statictext", undefined, strLabelQuality);
 
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.etQuality = dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.add("edittext", undefined, exportInfo.pdfJpegQuality.toString());
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.etQuality.preferredSize.width = StrToIntWithDefault( stretQuality, 30 );
 
     switch (exportInfo.pdfEncoding) {
-        case PDFEncoding.PDFZIP: 
+        case PDFEncoding.PDFZIP:
 			dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpCompression.rbZip.value  = true;    break;
         case PDFEncoding.JPEG:
-        default: 
+        default:
 			dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpCompression.rbJpeg.value = true;    break;
     }
-    
+
     if (PDFEncoding.JPEG != exportInfo.pdfEncoding) {
         dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.stQuality.enabled = false;
         dlgMain.pnlFileType.pnlOptions.grpPDFOptions.grpQuality.etQuality.enabled = false;
@@ -464,7 +464,7 @@ function settingDialog(exportInfo)
 	dlgMain.grpTopRight = dlgMain.grpTop.add("group");
 	dlgMain.grpTopRight.orientation = 'column';
 	dlgMain.grpTopRight.alignChildren = 'fill';
-	
+
 	dlgMain.btnRun = dlgMain.grpTopRight.add("button", undefined, strButtonRun );
     dlgMain.btnRun.onClick = function() {
 		// check if the setting is properly
@@ -478,13 +478,13 @@ function settingDialog(exportInfo)
 	        alert(strAlertDestinationNotExist);
 			return;
 		}
-    
+
 		dlgMain.close(runButtonID);
 	}
 
 	dlgMain.btnCancel = dlgMain.grpTopRight.add("button", undefined, strButtonCancel );
-    dlgMain.btnCancel.onClick = function() { 
-		dlgMain.close(cancelButtonID); 
+    dlgMain.btnCancel.onClick = function() {
+		dlgMain.close(cancelButtonID);
 	}
 
 	dlgMain.defaultElement = dlgMain.btnRun;
@@ -495,7 +495,7 @@ function settingDialog(exportInfo)
 	dlgMain.grpBottom.orientation = 'column';
 	dlgMain.grpBottom.alignChildren = 'left';
 	dlgMain.grpBottom.alignment = 'fill';
-    
+
     dlgMain.pnlHelp = dlgMain.grpBottom.add("panel");
     dlgMain.pnlHelp.alignment = 'fill';
 
@@ -510,13 +510,13 @@ function settingDialog(exportInfo)
     app.bringToFront();
 
     dlgMain.center();
-    
+
     var result = dlgMain.show();
-    
+
     if (cancelButtonID == result) {
 		return result;  // close to quit
 	}
-    
+
     // get setting from dialog
     exportInfo.destination = dlgMain.etDestination.text;
     exportInfo.fileNamePrefix = dlgMain.etFileNamePrefix.text;
@@ -561,7 +561,7 @@ function settingDialog(exportInfo)
     if (dlgMain.pnlFileType.pnlOptions.grpBMPOptions.rb24bit.value) {
 		exportInfo.bmpDepth = BMPDepthType.TWENTYFOUR;
 	}
-    if (dlgMain.pnlFileType.pnlOptions.grpBMPOptions.rb32bit.value) { 
+    if (dlgMain.pnlFileType.pnlOptions.grpBMPOptions.rb32bit.value) {
 		exportInfo.bmpDepth = BMPDepthType.THIRTYTWO;
 	}
 
@@ -621,7 +621,7 @@ function initExportInfo(exportInfo)
 ///////////////////////////////////////////////////////////////////////////////
 // Function: saveFile
 // Usage: the worker routine, take our params and save the file accordingly
-// Input: reference to the document, the name of the output file, 
+// Input: reference to the document, the name of the output file,
 //        export info object containing more information
 // Return: <none>, a file on disk
 ///////////////////////////////////////////////////////////////////////////////

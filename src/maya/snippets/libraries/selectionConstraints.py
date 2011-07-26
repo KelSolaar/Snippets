@@ -14,7 +14,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -31,7 +31,7 @@ def selectStarVertices():
 	"""
 	This Definition Selects Star Vertices.
 	"""
-	
+
 	cmds.polySelectConstraint(m=3, t=1, order=True, orb=(5, 65535))
 	cmds.polySelectConstraint(dis=True)
 
@@ -40,7 +40,7 @@ def ISelectStarVertices():
 	"""
 	This Definition Is The selectStarVertices Method Interface.
 	"""
-	
+
 	selectStarVertices()
 
 def selectTrianglesFaces():
@@ -58,12 +58,12 @@ def ISelectTrianglesFaces():
 	"""
 
 	selectTrianglesFaces()
-	
+
 def selectNsidesFaces():
 	"""
 	This Definition Selects NSides Faces.
 	"""
-	
+
 	cmds.polySelectConstraint(m=3, t=8, sz=3)
 	cmds.polySelectConstraint(dis=True)
 
@@ -74,12 +74,12 @@ def ISelectNsidesFaces():
 	"""
 
 	selectNsidesFaces()
-	
+
 def selectBoundaryEdges(components):
 	"""
 	This Definition Selects Selection Boundaries Edges.
 	"""
-	
+
 	cmds.select(cmds.polyListComponentConversion(components, te=True, bo=True))
 
 @stacksHandler
@@ -95,7 +95,7 @@ def selectBorderEdges():
 	"""
 	This Definition Selects The Border Edges.
 	"""
-	
+
 	cmds.polySelectConstraint(m=3, t=0x8000, w=1)
 	cmds.polySelectConstraint(m=0)
 
@@ -106,7 +106,7 @@ def ISelectBorderEdges():
 	"""
 
 	selectBorderEdges()
-	
+
 def selectCreasesEdges(object):
 	"""
 	This Definition Cleans Maya Hierarchical Polygonal Conversion.
@@ -124,7 +124,7 @@ def ISelectCreasesEdges():
 	"""
 	This Definition Is The selectCreasesEdges Method Interface.
 	"""
-	
+
 	selection = cmds.ls(sl=True, l=True)
 	selection and selectCreasesEdges(selection[0])
 
@@ -132,7 +132,7 @@ def selectNonManifoldVertices():
 	"""
 	This Definition Selects The Non Manifold Vertices.
 	"""
-	
+
 	cmds.polySelectConstraint(m=3, t=1, nonmanifold=True)
 	cmds.polySelectConstraint(m=0)
 
@@ -148,7 +148,7 @@ def selectLaminaFaces():
 	"""
 	This Definition Selects The Lamina Faces.
 	"""
-	
+
 	cmds.polySelectConstraint(m=3, t=8, tp=2)
 	cmds.polySelectConstraint(m=0)
 
@@ -164,7 +164,7 @@ def selectZeroGeometryAreaFaces():
 	"""
 	This Definition Selects The Zero Geometry Area Faces.
 	"""
-	
+
 	cmds.polySelectConstraint(m=3, t=8, ga=True, gab=(0, 0.001))
 	cmds.polySelectConstraint(m=0)
 

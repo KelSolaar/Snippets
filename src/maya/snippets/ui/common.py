@@ -63,7 +63,7 @@ def getMayaWindow():
 def messageBox( messageType, title, message ):
 	"""
 	This Definition Provides A Fast GUI Message Box.
-	
+
 	@param messageType: Message Type. ( String )
 	@param title: Message Box Title. ( String )
 	@param message: Message Content. ( String )
@@ -103,7 +103,7 @@ def messageBox( messageType, title, message ):
 def centerWidgetOnScreen( widget ):
 	"""
 	This Definition Centers The Provided Widget Middle Of The Screen.
-	
+
 	@param widget: Current Widget. ( QWidget )
 	"""
 
@@ -113,7 +113,7 @@ def centerWidgetOnScreen( widget ):
 def resizeWidget( widget, size_x, size_y ):
 	"""
 	This Definition Resize The Provided Widget.
-	
+
 	@param widget: Current Widget. ( QWidget )
 	@param size_x: Size X. ( Integer )
 	@param size_y: Size Y. ( Integer )

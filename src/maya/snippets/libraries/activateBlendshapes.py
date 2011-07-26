@@ -55,7 +55,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -72,7 +72,7 @@ def weightSlider_OnValueChanged(value):
 	"""
 	This Definition Is Triggered By The 'weightSlider' Slider When Its Value Changed.
 	"""
-	
+
 	setWeight(cmds.floatSliderGrp("weight_FloatSliderGrp", query=True, value=True))
 
 def setWeight(value):
@@ -127,7 +127,7 @@ def IActivateBlendshapes():
 	"""
 	This Definition Is The activateBlendshapes Method Interface.
 	"""
-	
+
 	activateBlendshapes()
 
 #***********************************************************************************************

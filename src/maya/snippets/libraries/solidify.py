@@ -17,7 +17,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -38,7 +38,7 @@ def getTransform(node, fullPath=True):
 	@param fullPath: Current Full Path State. ( Boolean )
 	@return: Object Transform. ( String )
 	"""
-	
+
 	transform = node
 	if cmds.nodeType(node) != "transform":
 		parents = cmds.listRelatives(node, fullPath=fullPath, parent=True)
@@ -52,7 +52,7 @@ def getMVector(vector):
 	@param vector: Vector. ( List )
 	@return: MVector ( MVector )
 	"""
-	
+
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
 
 def getMMatrix(matrix):
@@ -62,7 +62,7 @@ def getMMatrix(matrix):
 	@param matrix: matrix. ( List )
 	@return: MMatrix ( MMatrix )
 	"""
-	
+
 	mMatrix = OpenMaya.MMatrix()
 	OpenMaya.MScriptUtil.createMatrixFromList(matrix, mMatrix)
 	return mMatrix
@@ -74,7 +74,7 @@ def normalize(vector):
 	@param vector: Vector. ( List )
 	@return: Normalized Vector ( Tuple )
 	"""
-	
+
 	mVector = getMVector(vector)
 	mVector.normalize()
 	return (mVector.x, mVector.y, mVector.z)
@@ -87,7 +87,7 @@ def vectorMatrixMultiplication(vector, matrix):
 	@param matrix: matrix. ( List )
 	@return: Matrix Multiplied Vector. ( Tuple )
 	"""
-	
+
 	mVector = getMVector(vector)
 	mMatrix = getMMatrix(matrix)
 	mVector = mVector * mMatrix
@@ -101,7 +101,7 @@ def dot(vectorA, vectorB):
 	@param vectorB: Vector B. ( List )
 	@return: Dot Product. ( Float )
 	"""
-	
+
 	mVectorA = getMVector(vectorA)
 	mVectorB = getMVector(vectorB)
 	return mVectorA * mVectorB
@@ -113,7 +113,7 @@ def getAverageVector(vectors):
 	@param vectors: Vectors To Get The Average One. ( List )
 	@return: Average Vector. ( List )
 	"""
-	
+
 	averageVector = [0, 0, 0]
 	for vector in vectors:
 		for i in range(3):
@@ -136,7 +136,7 @@ def getAngle(vectorA, vectorB):
 def hasBorderEdges(object):
 	"""
 	This Definition Returns If An Object Has Border Edges.
-	
+
 	@param object: Object. ( String )
 	@return: Has Object Border Edges. ( Boolean )
 	"""
@@ -150,7 +150,7 @@ def hasBorderEdges(object):
 def solidifyObject(object, height=1, divisions=2, history=True):
 	"""
 	This Definition Solidifies Provided Object.
-	
+
 	@param object: Object. ( String )
 	@param height: Extrusion Height. ( Float )
 	@param division: Extrusion Divisions. ( Float )
@@ -187,25 +187,25 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 		cmds.polyAutoProjection(borderFaces, t=barycenter, ry=getAngle((0,0,1), averageNormal), rz=getAngle((1,0,0), averageNormal))
 		uvs = cmds.polyListComponentConversion(borderFaces, toUV=1)
 		cmds.polyEditUV(uvs, u=2, v=0)
-	
+
 		not history and cmds.delete(object, ch=True)
 
 @stacksHandler
 def solidify_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The solidify_Button Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
-	
+
 	for object in cmds.ls(sl=True, l=True, o=True):
 		solidifyObject(object, height=cmds.floatSliderGrp("height_FloatSliderGrp", q=True, v=True), divisions=cmds.intSliderGrp("divisions_IntSliderGrp", q=True, v=True), history=cmds.checkBox("keepConstructionHistory_CheckBox", q=True, v=True))
-	
+
 def solidify_Window():
 	"""
 	This Definition Creates The Solidify Main Window.
 	"""
-	
+
 	cmds.windowPref(enableAll=False)
 
 	if (cmds.window("solidify_Window", exists=True)):
@@ -223,15 +223,15 @@ def solidify_Window():
 
 	cmds.floatSliderGrp("height_FloatSliderGrp", label="Height", field=True, minValue=-10, maxValue=10, fieldMinValue=-65535, fieldMaxValue=65535, value=0.1)
 	cmds.intSliderGrp("divisions_IntSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
-	
+
 	cmds.separator(style="single")
-	
+
 	cmds.columnLayout(columnOffset=("left", 140) )
 	cmds.checkBox("keepConstructionHistory_CheckBox", label="Keep Construction History",  v=True)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(height=10, style="singleDash")
-	
+
 	cmds.button("solidify_Button", label="Solidify!", command=solidify_Button_OnClicked)
 
 	cmds.showWindow("solidify_Window")
@@ -250,5 +250,5 @@ def ISolidify():
 	"""
 	This Definition Is The solidify Method Interface.
 	"""
-	
-	solidify()	
+
+	solidify()

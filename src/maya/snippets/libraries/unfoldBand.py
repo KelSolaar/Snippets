@@ -15,7 +15,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -31,7 +31,7 @@ def stacksHandler(object):
 def unfoldBandUVs(object, divisions=1, history=True):
 	"""
 	This Definition Unfold Object Band UVs.
-	
+
 	@param object: Object. ( String )
 	@param divisions: Extrusion Divisions. ( Integer )
 	@param history: Keep Construction History. ( Boolean )
@@ -63,18 +63,18 @@ def unfoldBandUVs(object, divisions=1, history=True):
 def unfoldBand_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The unfoldBand Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
 	for object in cmds.ls(sl=True, l=True, o=True):
 		unfoldBandUVs(object, divisions=cmds.intSliderGrp("divisions_IntSliderGrp", q=True, v=True), history=cmds.checkBox("keepConstructionHistory_CheckBox", q=True, v=True))
-	
+
 def unfoldBand_Window():
 	"""
 	This Definition Creates The Solidify Main Window.
 	"""
-	
+
 	cmds.windowPref(enableAll=False)
 
 	if (cmds.window("unfoldBand_Window", exists=True)):
@@ -91,21 +91,21 @@ def unfoldBand_Window():
 	cmds.separator(height=10, style="singleDash")
 
 	cmds.intSliderGrp("divisions_IntSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
-	
+
 	cmds.separator(style="single")
-	
+
 	cmds.columnLayout(columnOffset=("left", 140) )
 	cmds.checkBox("keepConstructionHistory_CheckBox", label="Keep Construction History",  v=True)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(height=10, style="singleDash")
-	
+
 	cmds.button("unfoldBand_Button", label="Unfold Band!", command=unfoldBand_Button_OnClicked)
 
 	cmds.showWindow("unfoldBand_Window")
 
 	cmds.windowPref(enableAll=True)
-	
+
 def unfoldBand():
 	"""
 	This Definition Launches The Unfold Band Main Window.
@@ -118,5 +118,5 @@ def IUnfoldBand():
 	"""
 	This Definition Is The unfoldBand Method Interface.
 	"""
-	
-	unfoldBand()	
+
+	unfoldBand()

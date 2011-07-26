@@ -31,9 +31,9 @@ class RuntimeConstants():
 	"""
 	This Class Is The Runtime Constants Class.
 	"""
-	
+
 	loaderUiFile = None
-	
+
 	librariesDirectory = None
 	resourcesDirectory = None
 

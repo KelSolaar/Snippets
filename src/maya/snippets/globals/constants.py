@@ -35,13 +35,13 @@ class Constants():
 	logger = "Snippets_Logger"
 	verbosityLevel = 3
 	loggingSeparators = "*" * 96
-	
+
 	librariesExtension = "py"
 	librariesCompiledExtension = "pyc"
 
 	librariesDirectory = "libraries"
 	resourcesDirectory = "resources"
-	
+
 	nullObject = "None"
 
 #***********************************************************************************************
