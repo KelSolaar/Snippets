@@ -21,11 +21,11 @@
 """
 
 #***********************************************************************************************
-#***	Python Begin
+#***	Python Begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports
+#***	External Imports.
 #***********************************************************************************************
 import inspect
 import logging
@@ -40,7 +40,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 #***********************************************************************************************
-#***	Dependencies Globals Manipulation
+#***	Dependencies Globals Manipulation.
 #***********************************************************************************************
 import foundations.globals.constants
 from snippets.globals.constants import Constants
@@ -58,7 +58,7 @@ def _overrideDependenciesGlobals():
 _overrideDependenciesGlobals()
 
 #***********************************************************************************************
-#***	Internal Imports
+#***	Internal Imports.
 #***********************************************************************************************
 import foundations.core as core
 import foundations.exceptions
@@ -72,7 +72,7 @@ from snippets.globals.runtimeConstants import RuntimeConstants
 from snippets.globals.uiConstants import UiConstants
 
 #***********************************************************************************************
-#***	Global Variables
+#***	Global Variables.
 #***********************************************************************************************
 LOGGER = logging.getLogger(Constants.logger)
 
@@ -94,7 +94,7 @@ RuntimeConstants.librariesDirectory = os.path.join(os.path.dirname(__file__), Co
 RuntimeConstants.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
 
 #***********************************************************************************************
-#***	Module Classes And Definitions
+#***	Module Classes And Definitions.
 #***********************************************************************************************
 class Interface(core.Structure):
 	"""
@@ -140,7 +140,7 @@ class Module(object):
 		self._interfaces = None
 
 	#***********************************************************************************************
-	#***	Attributes Properties
+	#***	Attributes Properties.
 	#***********************************************************************************************
 	@property
 	def name(self):
@@ -274,7 +274,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	"""
 
 	#***********************************************************************************************
-	#***	Initialization.
+	#***	Initialization..
 	#***********************************************************************************************
 
 	@core.executionTrace
@@ -315,7 +315,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.Search_lineEdit_OnTextChanged)
 
 	#***********************************************************************************************
-	#***	Attributes Properties
+	#***	Attributes Properties.
 	#***********************************************************************************************
 	@property
 	def container(self):
@@ -470,7 +470,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "linuxBrowsers")
 
 	#***********************************************************************************************
-	#***	Class Methods
+	#***	Class Methods.
 	#***********************************************************************************************
 	@core.executionTrace
 	def initializeUI(self):
@@ -781,5 +781,5 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			browserProcess.startDetached(browserCommand)
 
 #***********************************************************************************************
-#***	Python End
+#***	Python End.
 #***********************************************************************************************
