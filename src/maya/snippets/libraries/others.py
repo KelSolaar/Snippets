@@ -28,7 +28,7 @@ def stacksHandler(object):
 
 	return stacksHandlerCall
 
-def transfertVerticesPositionsInUvSpace(sources, target, searchMethod=0):
+def transfertVerticesPositionsInUvSpace(sources, target):
 	"""
 	This Definition Transferts Vertices Positions From Sources To Target Object In UVs Space.
 
@@ -48,7 +48,7 @@ def ITransfertVerticesPositionsInUvSpace():
 	"""
 	
 	selection = cmds.ls(sl=True, l=True)
-	selection and transfertVerticesPositionsInUvSpace(selection[:-1], selection[-1], 0)
+	selection and transfertVerticesPositionsInUvSpace(selection[:-1], selection[-1])
 
 def transfertVerticesPositionsInWorldSpace(sources, target, searchMethod=0):
 	"""
