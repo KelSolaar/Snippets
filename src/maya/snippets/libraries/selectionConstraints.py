@@ -128,6 +128,22 @@ def ISelectCreasesEdges():
 	selection = cmds.ls(sl=True, l=True)
 	selection and selectCreasesEdges(selection[0])
 
+def selectHardEdges():
+	"""
+	This Definition Selects The Hard Edges.
+	"""
+
+	cmds.polySelectConstraint(m=3, t=0x8000, sm=1)
+	cmds.polySelectConstraint(m=0)
+
+@stacksHandler
+def ISelectHardEdges():
+	"""
+	This Definition Is The selectHardEdges Method Interface.
+	"""
+
+	selectHardEdges()
+
 def selectNonManifoldVertices():
 	"""
 	This Definition Selects The Non Manifold Vertices.
