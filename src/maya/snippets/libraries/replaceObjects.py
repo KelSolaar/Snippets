@@ -15,7 +15,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -39,14 +39,14 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 	@param asInstance: Duplicate As Instances. ( Boolean )
 	@param deleteTargets: Delete Targets. ( Boolean )
 	"""
-	
+
 	duplicatedObjects = []
 	for target in targets:
 		if not asInstance:
 			duplicatedObject = cmds.duplicate(sources[random.randrange(0, len(sources))], rr = True)[0]
 		else:
 			duplicatedObject = cmds.instance(sources[random.randrange(0, len(sources))])[0]
-			
+
 		duplicatedObjects.append(duplicatedObject)
 		if not inPlace:
 			if usePivot:
@@ -56,34 +56,34 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 					cmds.setAttr(duplicatedObject + "." + component, pivot[i])
 			else:
 				components = ("tx", "ty", "tz", "rx", "ry", "rz", "sx", "sy", "sz")
-				
+
 			for component in components:
 				cmds.setAttr(duplicatedObject + "." + component, cmds.getAttr(target + "." + component))
 		if deleteTargets:
 			cmds.delete(target)
-	
+
 	if duplicatedObjects:
 		if not inPlace:
 			duplicationGrp = cmds.group(em = True)
 			for duplicatedObject in duplicatedObjects:
 				cmds.parent(duplicatedObject, duplicationGrp)
 			cmds.rename(duplicationGrp, "duplication_grp")
-	
+
 @stacksHandler
 def pickSources_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The pickSources_Button Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
-	
+
 	cmds.textField("sources_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
 @stacksHandler
 def pickTargets_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The pickTargets_Button Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
@@ -93,7 +93,7 @@ def pickTargets_Button_OnClicked(state=None):
 def replaceObjects_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The replaceObjects_Button Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
@@ -131,9 +131,9 @@ def replaceObjects_Window():
 	targets_TextField=cmds.textField("targets_TextField")
 	cmds.button("pickTargets_Button", label="Pick Targets!", command=pickTargets_Button_OnClicked)
 	cmds.setParent(topLevel=True)
-	
+
 	cmds.separator(style="single")
-	
+
 	cmds.columnLayout(columnOffset=("left", 40) )
 	cmds.checkBox("duplicateInPlace_CheckBox", label="Duplicate In Place")
 	cmds.checkBox("useTargetsPivots_CheckBox", label="Use Targets Pivots", v=True)
@@ -153,7 +153,7 @@ def replaceObjects():
 	"""
 	This Definition Launches The Replace Objects Main Window.
 	"""
-	
+
 	replaceObjects_Window()
 
 @stacksHandler

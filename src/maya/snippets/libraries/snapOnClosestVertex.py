@@ -8,26 +8,24 @@
 #***********************************************************************************************
 
 """
-************************************************************************************************
-***	snapOnClosestVertex.py
-***
-***	Platform :
-***		Windows, Linux, Mac Os X
-***
-***	Description :
-***		Snap On Closest Vertex Module.
-***
-***	Others :
-***
-************************************************************************************************
+**snapOnClosestVertex.py**
+
+**Platform :**
+	Windows, Linux, Mac Os X.
+
+**Description :**
+	Snap On Closest Vertex Module.
+
+**Others :**
+
 """
 
 #***********************************************************************************************
-#***	Python Begin
+#***	Python Begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports
+#***	External Imports.
 #***********************************************************************************************
 import math
 import maya.cmds as cmds
@@ -36,13 +34,13 @@ import maya.mel as mel
 import re
 import functools
 #***********************************************************************************************
-#***	Overall Variables
+#***	Overall Variables.
 #***********************************************************************************************
 TOLERANCE=64
 MAXIMUM_SEARCH_DISTANCE=2**32-1
 
 #***********************************************************************************************
-#***	Module Classes And Definitions
+#***	Module Classes And Definitions.
 #***********************************************************************************************
 def stacksHandler(object):
 	"""
@@ -58,7 +56,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -78,7 +76,7 @@ def getMPoint(point):
 	@param point: Point. ( List )
 	@return: MPoint ( MVector )
 	"""
-	
+
 	return OpenMaya.MPoint(point[0], point[1], point[2])
 
 def norme(pointA, pointB):
@@ -89,7 +87,7 @@ def norme(pointA, pointB):
 	@param pointB: Point B. ( List )
 	@return: Norme ( Float )
 	"""
-	
+
 	mPointA = getMPoint(pointA)
 	mPointB = getMPoint(pointB)
 	mVector = mPointA - mPointB
@@ -111,17 +109,17 @@ def getShapes(object, fullPathState = False, noIntermediateState = True):
 		objectShapes = shapes
 
 	return objectShapes
-	
+
 @stacksHandler
 def getReferenceObject_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The getReferenceObject Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
-	
+
 	selection = cmds.ls(sl=True, type="transform")
-	
+
 	if selection :
 		cmds.textField("referenceObject_TextField", edit=True, text=selection[0])
 
@@ -131,9 +129,9 @@ def loadPlugin(plugin):
 
 	@param plugin: Plugin To Load. (String)
 	"""
-	
+
 	not cmds.pluginInfo(plugin, query=True, loaded=True) and cmds.loadPlugin(plugin)
-	
+
 def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 	"""
 	This Function Snaps Vertices Onto The Reference Object Vertices.
@@ -141,44 +139,44 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 	@param referenceObject: Reference Mesh. (String)
 	@param components: Components. (List)
 	"""
-	
+
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 
 	progressBar = mel.eval("$container=$gMainProgressBar");
 
-	cmds.progressBar(progressBar, edit=True, beginProgress=True, isInterruptable=True, status="Snapping Vertices ...", maxValue=len(vertices)) 
-	
+	cmds.progressBar(progressBar, edit=True, beginProgress=True, isInterruptable=True, status="Snapping Vertices ...", maxValue=len(vertices))
+
 	loadPlugin("nearestPointOnMesh")
 
 	nearestPointOnMeshNode=mel.eval("nearestPointOnMesh " +  referenceObject)
-	
+
 	for vertex in vertices :
 		if cmds.progressBar(progressBar, query=True, isCancelled=True) :
 			break
-		
+
 		closestDistance=MAXIMUM_SEARCH_DISTANCE
 
 		vertexPosition = cmds.pointPosition(vertex, world=True)
 		cmds.setAttr(nearestPointOnMeshNode + ".inPosition", vertexPosition[0], vertexPosition[1], vertexPosition[2])
 		associatedFaceId = cmds.getAttr(nearestPointOnMeshNode + ".nearestFaceIndex")
 		vtxsFaces = cmds.filterExpand(cmds.polyListComponentConversion((referenceObject + ".f[" + str(associatedFaceId) + "]"), fromFace=True,  toVertexFace=True ), sm=70, expand=True)
-		
+
 		closestPosition = []
 		for vtxsFace in vtxsFaces :
 			associatedVtx = cmds.polyListComponentConversion(vtxsFace, fromVertexFace=True, toVertex=True)
 			associatedVtxPosition = cmds.pointPosition(associatedVtx, world=True)
-			
+
 			distance = norme(vertexPosition, associatedVtxPosition)
 
 			if distance < closestDistance :
 				closestDistance=distance
 				closestPosition=associatedVtxPosition
-			
+
 			if closestDistance < tolerance :
 				cmds.move(closestPosition[0], closestPosition[1], closestPosition[2], vertex, worldSpace=True)
 
 		cmds.progressBar(progressBar, edit=True, step=1)
-	
+
 	cmds.progressBar(progressBar, edit=True, endProgress=True)
 
 	cmds.delete(nearestPointOnMeshNode)
@@ -187,14 +185,14 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 def snapIt_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The snapIt Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
-	
+
 	referenceObject = cmds.textField("referenceObject_TextField", query=True, text=True)
 
 	referenceObjectShapes = cmds.objExists(referenceObject) and getShapes(referenceObject) or None
-	
+
 	selection = cmds.ls(sl=True, fl=True)
 	referenceObjectShapes and selection and snapComponentsOnClosestVertex(referenceObjectShapes[0], selection, TOLERANCE)
 
@@ -222,8 +220,8 @@ def snapOnClosestVertex_Window():
 	cmds.button("getReferenceObject_Button", label="Get Reference Object!", command=getReferenceObject_OnClicked)
 	cmds.setParent(topLevel=True)
 
-	cmds.separator(style="single")	
-	
+	cmds.separator(style="single")
+
 	cmds.button("snapIt_Button", label="Snap It !", al="center", command=snapIt_Button_OnClicked)
 
 	cmds.showWindow("snapOnClosestVertex_Window")
@@ -233,7 +231,7 @@ def snapOnClosestVertex():
 	"""
 	This Definition Launches The Snap On Closest Vertex Main Window.
 	"""
-	
+
 	snapOnClosestVertex_Window()
 
 @stacksHandler
@@ -245,5 +243,5 @@ def ISnapOnClosestVertex():
 	snapOnClosestVertex()
 
 #***********************************************************************************************
-#***	Python End
+#***	Python End.
 #***********************************************************************************************

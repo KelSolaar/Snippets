@@ -6,7 +6,7 @@ Snippets is a GitHub Repository I decided to create as a host to the various cod
 - Installation / Usage -
 The Snippets are usually executed by a simple copy / paste into your target 3d Package Scripting Interpreter.
 Adobe Photoshop scripts must be installed into the Adobe Photoshop scripting folder:
-	Mac Os X: /Applications/Adobe Photoshop CS*/Presets/Scripts/ 
+	Mac Os X: /Applications/Adobe Photoshop CS*/Presets/Scripts/
 	Windows: C:\Program Files\Adobe\Adobe Photoshop CS*\Presets\Scripts\
 
 Alternatively, on Maya, a Snippets Loader is provided, it requries PyQt.

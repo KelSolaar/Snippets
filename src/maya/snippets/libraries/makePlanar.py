@@ -17,7 +17,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -38,7 +38,7 @@ def getTransform(node, fullPath=True):
 	@param fullPath: Current Full Path State. ( Boolean )
 	@return: Object Transform. ( String )
 	"""
-	
+
 	transform = node
 	if cmds.nodeType(node) != "transform":
 		parents = cmds.listRelatives(node, fullPath=fullPath, parent=True)
@@ -52,7 +52,7 @@ def getMVector(vector):
 	@param vector: Vector. ( List )
 	@return: MVector ( MVector )
 	"""
-	
+
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
 
 def getMMatrix(matrix):
@@ -62,7 +62,7 @@ def getMMatrix(matrix):
 	@param matrix: matrix. ( List )
 	@return: MMatrix ( MMatrix )
 	"""
-	
+
 	mMatrix = OpenMaya.MMatrix()
 	OpenMaya.MScriptUtil.createMatrixFromList(matrix, mMatrix)
 	return mMatrix
@@ -74,7 +74,7 @@ def normalize(vector):
 	@param vector: Vector. ( List )
 	@return: Normalized Vector ( Tuple )
 	"""
-	
+
 	mVector = getMVector(vector)
 	mVector.normalize()
 	return (mVector.x, mVector.y, mVector.z)
@@ -87,7 +87,7 @@ def vectorMatrixMultiplication(vector, matrix):
 	@param matrix: matrix. ( List )
 	@return: Matrix Multiplied Vector. ( Tuple )
 	"""
-	
+
 	mVector = getMVector(vector)
 	mMatrix = getMMatrix(matrix)
 	mVector = mVector * mMatrix
@@ -101,7 +101,7 @@ def dot(vectorA, vectorB):
 	@param vectorB: Vector B. ( List )
 	@return: Dot Product. ( Float )
 	"""
-	
+
 	mVectorA = getMVector(vectorA)
 	mVectorB = getMVector(vectorB)
 	return mVectorA * mVectorB
@@ -113,7 +113,7 @@ def getAverageVector(vectors):
 	@param vectors: Vectors To Get The Average One. ( List )
 	@return: Average Vector. ( List )
 	"""
-	
+
 	averageVector = [0, 0, 0]
 	for vector in vectors:
 		for i in range(3):
@@ -128,7 +128,7 @@ def makePlanar(components):
 
 	@param components: Components To Planarizes. ( List )
 	"""
-	
+
 	object = cmds.ls(components, o=True)
 	if object:
 		transform = getTransform(object)
@@ -153,5 +153,5 @@ def IMakePlanar():
 	"""
 	This Definition Is The makePlanar Method Interface.
 	"""
-	
+
 	makePlanar(cmds.ls(sl=True))

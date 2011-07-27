@@ -14,7 +14,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -35,7 +35,7 @@ def viewportSnapshot():
 
 	filter = "Tif Files (*.tif)"
 	file = cmds.fileDialog2(fileFilter=filter, fm=0, dialogStyle=2)
-    
+
 	if file:
 		imageFormat = cmds.getAttr("defaultRenderGlobals.imageFormat")
 		cmds.setAttr("defaultRenderGlobals.imageFormat", 3)

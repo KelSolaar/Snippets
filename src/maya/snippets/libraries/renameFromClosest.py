@@ -16,7 +16,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -36,7 +36,7 @@ def getMPoint(point):
 	@param point: Point. ( List )
 	@return: MPoint ( MVector )
 	"""
-	
+
 	return OpenMaya.MPoint(point[0], point[1], point[2])
 
 def norme(pointA, pointB):
@@ -47,7 +47,7 @@ def norme(pointA, pointB):
 	@param pointB: Point B. ( List )
 	@return: Norme ( Float )
 	"""
-	
+
 	mPointA = getMPoint(pointA)
 	mPointB = getMPoint(pointB)
 	mVector = mPointA - mPointB
@@ -61,7 +61,7 @@ def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
 	@param targets: Targets. ( List )
 	@param suffixe: Suffixe. ( String )
 	"""
-	
+
 	for target in targets:
 		targetBarycenter=cmds.objectCenter(target, gl=True)
 		normes = {}
@@ -74,17 +74,17 @@ def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
 def pickSources_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The pickSources_Button Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
-	
+
 	cmds.textField("sources_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
 @stacksHandler
 def pickTargets_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The pickTargets_Button Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
@@ -94,14 +94,14 @@ def pickTargets_Button_OnClicked(state=None):
 def renameFromClosest_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The renameFromClosest_Button Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
 	sources = [source for source in cmds.textField("sources_TextField", query=True, text=True).split(", ") if cmds.objExists(source)]
 	targets = [target for target in cmds.textField("targets_TextField", query=True, text=True).split(", ")  if cmds.objExists(target)]
-	
-	
+
+
 	renameTargetsFromClosestSources(sources, targets)
 
 def renameFromClosest_Window():
@@ -117,7 +117,7 @@ def renameFromClosest_Window():
 	cmds.window("renameFromClosest_Window",
 		title="Rename From Closest",
 		width=320)
-	
+
 	spacing=5
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
@@ -146,7 +146,7 @@ def renameFromClosest():
 	"""
 	This Definition Launches The Rename From Closest Main Window.
 	"""
-	
+
 	renameFromClosest_Window()
 
 @stacksHandler

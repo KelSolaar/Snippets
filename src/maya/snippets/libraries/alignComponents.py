@@ -19,7 +19,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -39,7 +39,7 @@ def getMVector(vector):
 	@param vector: Vector. ( List )
 	@return: MVector ( MVector )
 	"""
-	
+
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
 
 def normalize(vector):
@@ -49,7 +49,7 @@ def normalize(vector):
 	@param vector: Vector. ( List )
 	@return: Normalized Vector ( Tuple )
 	"""
-	
+
 	mVector = getMVector(vector)
 	mVector.normalize()
 	return (mVector.x, mVector.y, mVector.z)
@@ -63,13 +63,13 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 	@param components: Components To Align. ( List )
 	@param axis: Collapse Axis. ( Tuple )
 	"""
-	
+
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 
 	pointA = cmds.xform(anchorA, q=True, t=True, ws=True)
 	pointB = cmds.xform(anchorB, q=True, t=True, ws=True)
 	vectorA = normalize([pointB_ - pointA_ for pointA_, pointB_ in zip(pointA, pointB)])
-	
+
 	for vertex in vertices:
 		pointC = cmds.xform(vertex, q=True, ws=True, t=True)
 		vectorB = [pointC_ - pointA_ for pointA_, pointC_ in zip(pointA, pointC)]
@@ -89,7 +89,7 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 def selectAnchors_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The selectAnchors_Button Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
@@ -105,7 +105,7 @@ def selectAnchors_Button_OnClicked(state=None):
 def alignSelection_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The alignSelection Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
@@ -117,7 +117,7 @@ def alignSelection_Button_OnClicked(state=None):
 def alignSelectionOnXAxis_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The alignSelectionOnXAxis Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
@@ -129,7 +129,7 @@ def alignSelectionOnXAxis_Button_OnClicked(state=None):
 def alignSelectionOnYAxis_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The alignSelectionOnYAxis Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
@@ -141,7 +141,7 @@ def alignSelectionOnYAxis_Button_OnClicked(state=None):
 def alignSelectionOnZAxis_Button_OnClicked(state=None):
 	"""
 	This Definition Is Triggered By The alignSelectionOnZAxis Button When Clicked.
-	
+
 	@param state: Button State. ( Boolean )
 	"""
 
@@ -162,7 +162,7 @@ def alignComponents_Window():
 	cmds.window("alignComponents_Window",
 		title="Align Components",
 		width=320)
-	
+
 	spacing=5
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
@@ -170,15 +170,15 @@ def alignComponents_Window():
 	cmds.button("selectAnchors_Button", label="Select Anchors!", command=selectAnchors_Button_OnClicked)
 
 	cmds.separator(height=10, style="singleDash")
-	
+
 	cmds.button("alignSelection_Button", label="Align Selection!", command=alignSelection_Button_OnClicked)
 
 	cmds.separator(height=10, style="singleDash")
-	
+
 	cmds.button("alignSelectionOnXAxis_Button", label="Align Selection On X!", command=alignSelectionOnXAxis_Button_OnClicked)
 	cmds.button("alignSelectionOnYAxis_Button", label="Align Selection On Y!", command=alignSelectionOnYAxis_Button_OnClicked)
 	cmds.button("alignSelectionOnZAxis_Button", label="Align Selection On Z!", command=alignSelectionOnZAxis_Button_OnClicked)
-	
+
 	cmds.showWindow("alignComponents_Window")
 
 	cmds.windowPref(enableAll=True)
@@ -187,7 +187,7 @@ def alignComponents():
 	"""
 	This Definition Launches The Align Components Main Window.
 	"""
-	
+
 	alignComponents_Window()
 
 @stacksHandler

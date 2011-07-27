@@ -8,40 +8,38 @@
 #***********************************************************************************************
 
 """
-************************************************************************************************
-***	activateBlendshapes.py
-***
-***	Platform :
-***		Windows, Linux, Mac Os X
-***
-***	Description :
-***      	Activate Blendshapes Module.
-***
-***	Others :
-***
-************************************************************************************************
+**activateBlendshapes.py**
+
+**Platform :**
+	Windows, Linux, Mac Os X.
+
+**Description :**
+	Activate Blendshapes Module.
+
+**Others :**
+
 """
 
 #***********************************************************************************************
-#***	Python Begin
+#***	Python Begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports
+#***	External Imports.
 #***********************************************************************************************
 import maya.cmds as cmds
 import maya.mel as mel
 
 #***********************************************************************************************
-#***	Internal Imports
+#***	Internal Imports.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Global Variables
+#***	Global Variables.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Module Classes And Definitions
+#***	Module Classes And Definitions.
 #***********************************************************************************************
 def stacksHandler(object):
 	"""
@@ -57,7 +55,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -74,7 +72,7 @@ def weightSlider_OnValueChanged(value):
 	"""
 	This Definition Is Triggered By The 'weightSlider' Slider When Its Value Changed.
 	"""
-	
+
 	setWeight(cmds.floatSliderGrp("weight_FloatSliderGrp", query=True, value=True))
 
 def setWeight(value):
@@ -129,9 +127,9 @@ def IActivateBlendshapes():
 	"""
 	This Definition Is The activateBlendshapes Method Interface.
 	"""
-	
+
 	activateBlendshapes()
 
 #***********************************************************************************************
-#***	Python End
+#***	Python End.
 #***********************************************************************************************

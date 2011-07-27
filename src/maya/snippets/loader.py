@@ -8,26 +8,24 @@
 #***********************************************************************************************
 
 """
-************************************************************************************************
-***	loader.py
-***
-***	Platform:
-***		Windows, Linux, Mac Os X
-***
-***	Description:
-***      	Loader Module.
-***
-***	Others:
-***
-************************************************************************************************
+**loader.py**
+
+**Platform:**
+	Windows, Linux, Mac Os X.
+
+**Description:**
+	Loader Module.
+
+**Others:**
+
 """
 
 #***********************************************************************************************
-#***	Python Begin
+#***	Python Begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports
+#***	External Imports.
 #***********************************************************************************************
 import inspect
 import logging
@@ -42,7 +40,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 #***********************************************************************************************
-#***	Dependencies Globals Manipulation
+#***	Dependencies Globals Manipulation.
 #***********************************************************************************************
 import foundations.globals.constants
 from snippets.globals.constants import Constants
@@ -51,7 +49,7 @@ def _overrideDependenciesGlobals():
 	"""
 	This Definition Overrides Dependencies Globals.
 
-	@return: Definition Success. ( Boolean )		
+	@return: Definition Success. ( Boolean )
 	"""
 
 	foundations.globals.constants.Constants.logger = Constants.logger
@@ -60,7 +58,7 @@ def _overrideDependenciesGlobals():
 _overrideDependenciesGlobals()
 
 #***********************************************************************************************
-#***	Internal Imports
+#***	Internal Imports.
 #***********************************************************************************************
 import foundations.core as core
 import foundations.exceptions
@@ -74,7 +72,7 @@ from snippets.globals.runtimeConstants import RuntimeConstants
 from snippets.globals.uiConstants import UiConstants
 
 #***********************************************************************************************
-#***	Global Variables
+#***	Global Variables.
 #***********************************************************************************************
 LOGGER = logging.getLogger(Constants.logger)
 
@@ -96,7 +94,7 @@ RuntimeConstants.librariesDirectory = os.path.join(os.path.dirname(__file__), Co
 RuntimeConstants.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
 
 #***********************************************************************************************
-#***	Module Classes And Definitions
+#***	Module Classes And Definitions.
 #***********************************************************************************************
 class Interface(core.Structure):
 	"""
@@ -125,7 +123,7 @@ class Module(object):
 	def __init__(self, name=None, path=None):
 		"""
 		This Method Initializes The Class.
-		
+
 		@param name: Name Of The Component. ( String )
 		@param path: Path Of The Component. ( String )
 		"""
@@ -141,9 +139,9 @@ class Module(object):
 		self._import = None
 		self._interfaces = None
 
-	#***************************************************************************************
-	#***	Attributes Properties
-	#***************************************************************************************
+	#***********************************************************************************************
+	#***	Attributes Properties.
+	#***********************************************************************************************
 	@property
 	def name(self):
 		"""
@@ -159,7 +157,7 @@ class Module(object):
 	def name(self, value):
 		"""
 		This Method Is The Setter Method For The _name Attribute.
-		
+
 		@param value: Attribute Value. ( String )
 		"""
 
@@ -191,7 +189,7 @@ class Module(object):
 	def path(self, value):
 		"""
 		This Method Is The Setter Method For The _path Attribute.
-		
+
 		@param value: Attribute Value. ( String )
 		"""
 
@@ -224,7 +222,7 @@ class Module(object):
 	def import_(self, value):
 		"""
 		This Method Is The Setter Method For The _import_ Attribute.
-		
+
 		@param value: Attribute Value. ( Module )
 		"""
 
@@ -255,7 +253,7 @@ class Module(object):
 	def interfaces(self, value):
 		"""
 		This Method Is The Setter Method For The _interfaces Attribute.
-		
+
 		@param value: Attribute Value. ( Object )
 		"""
 
@@ -275,9 +273,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	This Class Is The Main Class For Loader.
 	"""
 
-	#***************************************************************************************
-	#***	Initialization.
-	#***************************************************************************************
+	#***********************************************************************************************
+	#***	Initialization..
+	#***********************************************************************************************
 
 	@core.executionTrace
 	def __init__(self, container=None):
@@ -309,16 +307,16 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		# --- Setting Up UI. ---
 		self.initializeUI()
 
-		# -- Loader Signals / Slots. ---		
+		# -- Loader Signals / Slots. ---
 		self.connect(self.Execute_Snippet_pushButton, SIGNAL("clicked()"), self.Execute_Snippet_pushButton_OnClicked)
 		self.connect(self.Reload_Snippets_pushButton, SIGNAL("clicked()"), self.Reload_Snippets_pushButton_OnClicked)
 		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.Methods_listWidget_OnItemSelectionChanged)
 		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.Methods_listWidget_OnItemDoubleClicked)
 		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.Search_lineEdit_OnTextChanged)
 
-	#***************************************************************************************
-	#***	Attributes Properties
-	#***************************************************************************************
+	#***********************************************************************************************
+	#***	Attributes Properties.
+	#***********************************************************************************************
 	@property
 	def container(self):
 		"""
@@ -364,7 +362,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	def modules(self, value):
 		"""
 		This Method Is The Setter Method For The _modules Attribute.
-		
+
 		@param value: Attribute Value. ( Dictionary )
 		"""
 
@@ -471,9 +469,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute Is Not Deletable!" % "linuxBrowsers")
 
-	#***************************************************************************************
-	#***	Class Methods
-	#***************************************************************************************
+	#***********************************************************************************************
+	#***	Class Methods.
+	#***********************************************************************************************
 	@core.executionTrace
 	def initializeUI(self):
 		"""
@@ -615,7 +613,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	def Methods_listWidget_OnItemDoubleClicked(self, listWidgetItem):
 		"""
 		This Method Is Triggered When Methods_listWidget Is Double Clicked.
-		
+
 		@param listWidgetItem: Selected QListWidgetItem. ( QListWidgetItem )
 		"""
 
@@ -625,7 +623,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	def Search_lineEdit_OnTextChanged(self, text):
 		"""
 		This Method Is Triggered When Search_lineEdit Text Changes.
-		
+
 		@param text: Current Text Value. ( QString )
 		"""
 
@@ -635,7 +633,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	def getMethodName(self, name):
 		"""
 		This Definition Gets The Method Name From The Interface.
-		
+
 		@param name: Interface Name. ( String )
 		@return: Method Name. ( String )
 		"""
@@ -783,5 +781,5 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			browserProcess.startDetached(browserCommand)
 
 #***********************************************************************************************
-#***	Python End
+#***	Python End.
 #***********************************************************************************************

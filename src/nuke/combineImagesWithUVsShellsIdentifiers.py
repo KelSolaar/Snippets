@@ -26,25 +26,23 @@
 #
 
 """
-************************************************************************************************
-***	combineImagesWithUVsShellsIdentifiers.py
-***
-***	Platform:
-***		Windows
-***
-***	Description:
-***		Combines UVs Shells Siblings Images.
-***
-***	Others:
-***
-************************************************************************************************
+**combineImagesWithUVsShellsIdentifiers.py**
+
+**Platform:**
+	Windows.
+
+**Description:**
+	Combines UVs Shells Siblings Images.
+
+**Others:**
+
 """
 
 #***********************************************************************************************
-#***	Python Begin
+#***	Python Begin.
 #***********************************************************************************************
 #***********************************************************************************************
-#***	External Imports
+#***	External Imports.
 #***********************************************************************************************
 import nuke
 import glob
@@ -53,11 +51,11 @@ import sys
 import re
 
 #***********************************************************************************************
-#***	Internal Imports
+#***	Internal Imports.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Global Variables
+#***	Global Variables.
 #***********************************************************************************************
 GLOB_FILTER = "tif"
 OUTPUT_FILE_FORMAT = "tif"
@@ -65,11 +63,11 @@ SHELLS_FILTER = "u[0-9]+_v[0-9]+"
 NAMESPACE_SPLITTER = "|"
 
 #***********************************************************************************************
-#***	Main Python Code
+#***	Main Python Code.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Module Classes And Definitions
+#***	Module Classes And Definitions.
 #***********************************************************************************************
 def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 	"""
@@ -147,7 +145,7 @@ def getSplitextBasename(path):
 def getUVsShellsSiblingsTrees(elements, outputDirectory, outputFileFormat, outputPrefix=""):
 	"""
 	This Gets UVs Shells Siblings Trees.
-	
+
 	@param elements: Elements To Get UVS Shells Trees Siblings From. ( List )
 	@param outputPrefix: Write Nodes Output Prefix. ( String )
 	@param outputDirectory: Write Nodes Output Directory. ( String )
@@ -168,7 +166,7 @@ def getUVsShellsSiblingsTrees(elements, outputDirectory, outputFileFormat, outpu
 def combineImagesWithUVsShellsIdentifiers():
 	"""
 	This Definition Combines Images With UVs Shells Identifiers.
-	
+
 	@return: Definition Success. ( List )
 	"""
 
@@ -182,6 +180,6 @@ def combineImagesWithUVsShellsIdentifiers():
 	return getUVsShellsSiblingsTrees(files, directory, OUTPUT_FILE_FORMAT) and True or False
 
 #***********************************************************************************************
-#***	Python End
+#***	Python End.
 #***********************************************************************************************
 

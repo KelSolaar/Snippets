@@ -21,7 +21,7 @@ def stacksHandler(object):
 
 		@return: Python Object. ( Python )
 		"""
-		
+
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
@@ -42,7 +42,7 @@ def getTransform(node, fullPath=True):
 	@param fullPath: Current Full Path State. ( Boolean )
 	@return: Object Transform. ( String )
 	"""
-	
+
 	transform = node
 	if cmds.nodeType(node) != "transform":
 		parents = cmds.listRelatives(node, fullPath=fullPath, parent=True)
@@ -52,7 +52,7 @@ def getTransform(node, fullPath=True):
 def setPadding(data, padding, affix="0"):
 	"""
 	This Definition Pads The Provided Data.
-	
+
 	@param data: Data To Pad. ( String )
 	@param padding: Padding. ( Integer )
 	@param affix: Padding Affix. ( String )
@@ -65,18 +65,18 @@ def setPadding(data, padding, affix="0"):
 def getUserExportDirectory():
 	"""
 	This Definition Gets The User Export Directory.
-	
+
 	@return: Export directory. ( String )
 	"""
 
 	workspace = cmds.workspace(q=True, rd=True)
 	user = os.environ["USER"]
 	return os.path.join(workspace, EXPORT_DIRECTORY.replace(USER_HOOK, user))
-	 
+
 def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames=False):
 	"""
 	This Definition Export Provided Objects To Files.
-	
+
 	@param objects: Objects To Export. ( List )
 	@param exportType: Export Type. ( String )
 	@param useObjectsNames: Use Objects Names. ( Boolean )

@@ -8,26 +8,24 @@
 #***********************************************************************************************
 
 """
-************************************************************************************************
-***	Common.py
-***
-***	Platform:
-***		Windows, Linux, Mac Os X
-***
-***	Description:
-***      	UI Common Module.
-***
-***	Others:
-***
-************************************************************************************************
+**Common.py**
+
+**Platform:**
+	Windows, Linux, Mac Os X.
+
+**Description:**
+	UI Common Module.
+
+**Others:**
+
 """
 
 #***********************************************************************************************
-#***	Python Begin
+#***	Python Begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports
+#***	External Imports.
 #***********************************************************************************************
 import logging
 import platform
@@ -37,18 +35,18 @@ from PyQt4.QtGui import *
 import sip
 
 #***********************************************************************************************
-#***	Internal Imports
+#***	Internal Imports.
 #***********************************************************************************************
 import foundations.core as core
 from snippets.globals.constants import Constants
 
 #***********************************************************************************************
-#***	Global Variables
+#***	Global Variables.
 #***********************************************************************************************
 LOGGER = logging.getLogger( Constants.logger )
 
 #***********************************************************************************************
-#***	Module Classes And Definitions
+#***	Module Classes And Definitions.
 #***********************************************************************************************
 @core.executionTrace
 def getMayaWindow():
@@ -65,7 +63,7 @@ def getMayaWindow():
 def messageBox( messageType, title, message ):
 	"""
 	This Definition Provides A Fast GUI Message Box.
-	
+
 	@param messageType: Message Type. ( String )
 	@param title: Message Box Title. ( String )
 	@param message: Message Content. ( String )
@@ -105,7 +103,7 @@ def messageBox( messageType, title, message ):
 def centerWidgetOnScreen( widget ):
 	"""
 	This Definition Centers The Provided Widget Middle Of The Screen.
-	
+
 	@param widget: Current Widget. ( QWidget )
 	"""
 
@@ -115,7 +113,7 @@ def centerWidgetOnScreen( widget ):
 def resizeWidget( widget, size_x, size_y ):
 	"""
 	This Definition Resize The Provided Widget.
-	
+
 	@param widget: Current Widget. ( QWidget )
 	@param size_x: Size X. ( Integer )
 	@param size_y: Size Y. ( Integer )
@@ -124,5 +122,5 @@ def resizeWidget( widget, size_x, size_y ):
 	widget.resize( int( size_x ), int( size_y ) )
 
 #***********************************************************************************************
-#***	Python End
+#***	Python End.
 #***********************************************************************************************
