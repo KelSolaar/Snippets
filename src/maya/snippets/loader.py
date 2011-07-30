@@ -307,7 +307,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		# --- Setting up ui. ---
 		self.initializeUI()
 
-		# -- Loader  Signals / Slots . ---
+		# -- Loader Signals / Slots. ---
 		self.connect(self.Execute_Snippet_pushButton, SIGNAL("clicked()"), self.Execute_Snippet_pushButton_OnClicked)
 		self.connect(self.Reload_Snippets_pushButton, SIGNAL("clicked()"), self.Reload_Snippets_pushButton_OnClicked)
 		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.Methods_listWidget_OnItemSelectionChanged)
