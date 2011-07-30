@@ -56,7 +56,7 @@ def getMayaWindow():
 	"""
 	This method returns Maya window as QObject.
 
-	@return: Maya window. ( QObject )
+	:return: Maya window. ( QObject )
 	"""
 
 	pointer = OpenMayaUI.MQtUtil.mainWindow()
@@ -67,9 +67,9 @@ def messageBox( messageType, title, message ):
 	"""
 	This definition provides a fast gui message box.
 
-	@param messageType: Message type. ( String )
-	@param title: Message box title. ( String )
-	@param message: Message content. ( String )
+	:param messageType: Message type. ( String )
+	:param title: Message box title. ( String )
+	:param message: Message content. ( String )
 	"""
 
 	LOGGER.debug( "> Launching messagebox()." )
@@ -107,7 +107,7 @@ def centerWidgetOnScreen( widget ):
 	"""
 	This definition centers the provided Widget middle of the screen.
 
-	@param widget: Current Widget. ( QWidget )
+	:param widget: Current Widget. ( QWidget )
 	"""
 
 	widget.move( QApplication.desktop().width() / 2 - widget.width() / 2, QApplication.desktop().height() / 2 - widget.height() / 2 )
@@ -117,9 +117,9 @@ def resizeWidget( widget, size_x, size_y ):
 	"""
 	This definition resize the provided Widget.
 
-	@param widget: Current Widget. ( QWidget )
-	@param size_x: Size x. ( Integer )
-	@param size_y: Size y. ( Integer )
+	:param widget: Current Widget. ( QWidget )
+	:param size_x: Size x. ( Integer )
+	:param size_y: Size y. ( Integer )
 	"""
 
 	widget.resize( int( size_x ), int( size_y ) )

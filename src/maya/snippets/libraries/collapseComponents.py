@@ -15,15 +15,15 @@ def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
 
-	@param object: Python object. ( Object )
-	@return: Python function. ( Function )
+	:param object: Python object. ( Object )
+	:return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		This decorator is used to handle various Maya stacks.
 
-		@return: Python object. ( Python )
+		:return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -42,9 +42,9 @@ def getTransform(node, fullPath=True):
 	"""
 	This definition returns transform of the provided node.
 
-	@param node: Current object. ( String )
-	@param fullPath: Current full path state. (Boolean)
-	@return: Object transform. ( String )
+	:param node: Current object. ( String )
+	:param fullPath: Current full path state. (Boolean)
+	:return: Object transform. ( String )
 	"""
 
 	transform = node
@@ -57,8 +57,8 @@ def getAverageVector(vectors):
 	"""
 	This definition returns the average vector from a list of vectors.
 
-	@param vectors: Vectors to get the average one. ( List )
-	@return: Average vector. ( List )
+	:param vectors: Vectors to get the average one. ( List )
+	:return: Average vector. ( List )
 	"""
 
 	averageVector = [0, 0, 0]
@@ -73,8 +73,8 @@ def collapseComponents(components, axis=("X", "Y", "Z")):
 	"""
 	This definition collapses the provided Components.
 
-	@param components: Components to collapse. ( List )
-	@param axis: Collapse axis. ( Tuple )
+	:param components: Components to collapse. ( List )
+	:param axis: Collapse axis. ( Tuple )
 	"""
 
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)

@@ -12,15 +12,15 @@ def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
 
-	@param object: Python object. ( Object )
-	@return: Python function. ( Function )
+	:param object: Python object. ( Object )
+	:return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		This decorator is used to handle various Maya stacks.
 
-		@return: Python object. ( Python )
+		:return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -39,9 +39,9 @@ def unfoldBandUVs(object, divisions=1, history=True):
 	"""
 	This definition unfold object band UVs.
 
-	@param object: Object. ( String )
-	@param divisions: Extrusion divisions. ( Integer )
-	@param history: Keep construction history. ( Boolean )
+	:param object: Object. ( String )
+	:param divisions: Extrusion divisions. ( Integer )
+	:param history: Keep construction history. ( Boolean )
 	"""
 
 	edgesCount = cmds.polyEvaluate(object, edge=True)
@@ -71,7 +71,7 @@ def unfoldBand_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the unfoldBand_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	for object in cmds.ls(sl=True, l=True, o=True):

@@ -14,15 +14,15 @@ def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
 
-	@param object: Python object. ( Object )
-	@return: Python function. ( Function )
+	:param object: Python object. ( Object )
+	:return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		This decorator is used to handle various Maya stacks.
 
-		@return: Python object. ( Python )
+		:return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -41,9 +41,9 @@ def getTransform(node, fullPath=True):
 	"""
 	This definition returns transform of the provided node.
 
-	@param node: Current object. ( String )
-	@param fullPath: Current full path state. ( Boolean )
-	@return: Object transform. ( String )
+	:param node: Current object. ( String )
+	:param fullPath: Current full path state. ( Boolean )
+	:return: Object transform. ( String )
 	"""
 
 	transform = node
@@ -56,8 +56,8 @@ def getMVector(vector):
 	"""
 	This definition returns an MVector.
 
-	@param vector: Vector. ( List )
-	@return: MVector ( MVector )
+	:param vector: Vector. ( List )
+	:return: MVector ( MVector )
 	"""
 
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
@@ -66,8 +66,8 @@ def getMMatrix(matrix):
 	"""
 	This definition returns an MMatrix.
 
-	@param matrix: matrix. ( List )
-	@return: MMatrix ( MMatrix )
+	:param matrix: matrix. ( List )
+	:return: MMatrix ( MMatrix )
 	"""
 
 	mMatrix = OpenMaya.MMatrix()
@@ -78,8 +78,8 @@ def normalize(vector):
 	"""
 	This definition returns the normalized vector.
 
-	@param vector: Vector. ( List )
-	@return: Normalized vector ( Tuple )
+	:param vector: Vector. ( List )
+	:return: Normalized vector ( Tuple )
 	"""
 
 	mVector = getMVector(vector)
@@ -90,9 +90,9 @@ def vectorMatrixMultiplication(vector, matrix):
 	"""
 	This definition returns the vector multiplication between a Vector And a matrix.
 
-	@param vector: Vector. ( List )
-	@param matrix: matrix. ( List )
-	@return: Matrix multiplied vector. ( Tuple )
+	:param vector: Vector. ( List )
+	:param matrix: matrix. ( List )
+	:return: Matrix multiplied vector. ( Tuple )
 	"""
 
 	mVector = getMVector(vector)
@@ -104,9 +104,9 @@ def dot(vectorA, vectorB):
 	"""
 	This definition returns the dot product between two vectors.
 
-	@param vectorA: Vector A. ( List )
-	@param vectorB: Vector B. ( List )
-	@return: Dot product. ( Float )
+	:param vectorA: Vector A. ( List )
+	:param vectorB: Vector B. ( List )
+	:return: Dot product. ( Float )
 	"""
 
 	mVectorA = getMVector(vectorA)
@@ -117,8 +117,8 @@ def getAverageVector(vectors):
 	"""
 	This definition returns the average vector from a list of vectors.
 
-	@param vectors: Vectors to get the average one. ( List )
-	@return: Average vector. ( List )
+	:param vectors: Vectors to get the average one. ( List )
+	:return: Average vector. ( List )
 	"""
 
 	averageVector = [0, 0, 0]
@@ -133,7 +133,7 @@ def makePlanar(components):
 	"""
 	This definition planarizes the provided Components.
 
-	@param components: Components to planarizes. ( List )
+	:param components: Components to planarizes. ( List )
 	"""
 
 	object = cmds.ls(components, o=True)

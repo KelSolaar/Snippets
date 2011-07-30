@@ -12,15 +12,15 @@ def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
 
-	@param object: Python object. ( Object )
-	@return: Python function. ( Function )
+	:param object: Python object. ( Object )
+	:return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		This decorator is used to handle various Maya stacks.
 
-		@return: Python object. ( Python )
+		:return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -39,9 +39,9 @@ def transfertVerticesPositionsInUvSpace(sources, target):
 	"""
 	This definition transferts vertices positions from sources to target object in UVs space.
 
-	@param sources: Sources objects. ( List )
-	@param target: Target object. ( String )
-	@param searchMethod: Current search method. ( Integer )
+	:param sources: Sources objects. ( List )
+	:param target: Target object. ( String )
+	:param searchMethod: Current search method. ( Integer )
 	"""
 
 	for source in sources:
@@ -61,9 +61,9 @@ def transfertVerticesPositionsInWorldSpace(sources, target, searchMethod=0):
 	"""
 	This definition transferts vertices positions from sources to target object in world space.
 
-	@param sources: Sources objects. ( List )
-	@param target: Target object. ( String )
-	@param searchMethod: Current search method. ( Integer )
+	:param sources: Sources objects. ( List )
+	:param target: Target object. ( String )
+	:param searchMethod: Current search method. ( Integer )
 	"""
 
 	for source in sources:
@@ -122,7 +122,7 @@ def splitRingMiddle(nodes):
 	"""
 	This definition sets the polysplitring nodes weights to 0.5.
 
-	@param nodes: Nodes to retrieve history from. ( List )
+	:param nodes: Nodes to retrieve history from. ( List )
 	"""
 
 	for node in nodes:
@@ -143,7 +143,7 @@ def symmetricalInstance(object):
 	"""
 	This definition creates a symmetrical instance.
 
-	@param object: Object to symmetrical instantiate. ( String )
+	:param object: Object to symmetrical instantiate. ( String )
 	"""
 
 	instance = cmds.instance(object)
@@ -163,7 +163,7 @@ def pivotsIdentity(transforms):
 	"""
 	This definition puts provided transforms pivots to origin.
 
-	@param transforms: Transforms to affect pivots. ( List )
+	:param transforms: Transforms to affect pivots. ( List )
 	"""
 
 	for transform in transforms:

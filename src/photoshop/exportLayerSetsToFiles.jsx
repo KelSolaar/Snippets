@@ -164,7 +164,7 @@ function exportLayerSetsToFiles_UI()
  * This function constructs the exportOptions object.
  *
  * @param	{String}	exportType	"Current export type."
- * @return	{SaveOptions}	"Return a saveOptions object."
+ * :return	{SaveOptions}	"Return a saveOptions object."
  */
 function getExportOptions(exportType)
 {
@@ -194,7 +194,7 @@ function getExportOptions(exportType)
 /**
  * This function gets a resolution suffix.
  *
- * @return	{String}	"Return a resolution suffix."
+ * :return	{String}	"Return a resolution suffix."
  */
 function getSuffix()
 {

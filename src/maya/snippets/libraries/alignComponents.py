@@ -16,15 +16,15 @@ def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
 
-	@param object: Python object. ( Object )
-	@return: Python function. ( Function )
+	:param object: Python object. ( Object )
+	:return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		This decorator is used to handle various Maya stacks.
 
-		@return: Python object. ( Python )
+		:return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -43,8 +43,8 @@ def getMVector(vector):
 	"""
 	This definition returns an MVector.
 
-	@param vector: Vector. ( List )
-	@return: MVector ( MVector )
+	:param vector: Vector. ( List )
+	:return: MVector ( MVector )
 	"""
 
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
@@ -53,8 +53,8 @@ def normalize(vector):
 	"""
 	This definition returns the normalized vector.
 
-	@param vector: Vector. ( List )
-	@return: Normalized vector ( Tuple )
+	:param vector: Vector. ( List )
+	:return: Normalized vector ( Tuple )
 	"""
 
 	mVector = getMVector(vector)
@@ -65,10 +65,10 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 	"""
 	This definition aligns provided Components between the two anchors.
 
-	@param anchorA: Anchor a. ( String )
-	@param anchorB: Anchor b. ( String )
-	@param components: Components to align. ( List )
-	@param axis: Collapse axis. ( Tuple )
+	:param anchorA: Anchor a. ( String )
+	:param anchorB: Anchor b. ( String )
+	:param components: Components to align. ( List )
+	:param axis: Collapse axis. ( Tuple )
 	"""
 
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
@@ -97,7 +97,7 @@ def selectAnchors_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the selectAnchors_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	global ALIGNEMENT_ANCHORS
@@ -113,7 +113,7 @@ def alignSelection_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the alignSelection_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -125,7 +125,7 @@ def alignSelectionOnXAxis_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the alignSelectionOnXAxis_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -137,7 +137,7 @@ def alignSelectionOnYAxis_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the alignSelectionOnYAxis_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -149,7 +149,7 @@ def alignSelectionOnZAxis_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the alignSelectionOnZAxis_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	if ALIGNEMENT_ANCHORS:

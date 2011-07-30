@@ -45,7 +45,7 @@ def _overrideDependenciesGlobals():
 	"""
 	This definition overrides dependencies globals.
 
-	@return: Definition success. ( Boolean )
+	:return: Definition success. ( Boolean )
 	"""
 
 	foundations.globals.constants.Constants.logger = Constants.logger
@@ -109,7 +109,7 @@ class Interface(core.Structure):
 		"""
 		This method initializes the class.
 
-		@param kwargs: name, module. ( Key / Value pairs )
+		:param kwargs: name, module. ( Key / Value pairs )
 		"""
 
 		core.Structure.__init__(self, **kwargs)
@@ -127,8 +127,8 @@ class Module(object):
 		"""
 		This method initializes the class.
 
-		@param name: Name of the Component. ( String )
-		@param path: Path of the Component. ( String )
+		:param name: Name of the Component. ( String )
+		:param path: Path of the Component. ( String )
 		"""
 
 		LOGGER.debug("> Initializing '%s()' class." % (self.__class__.__name__))
@@ -150,7 +150,7 @@ class Module(object):
 		"""
 		This method is the property for the _name attribute.
 
-		@return: self._name. ( String )
+		:return: self._name. ( String )
 		"""
 
 		return self._name
@@ -161,7 +161,7 @@ class Module(object):
 		"""
 		This method is the setter method for the _name attribute.
 
-		@param value: Attribute value. ( String )
+		:param value: Attribute value. ( String )
 		"""
 
 		if value:
@@ -182,7 +182,7 @@ class Module(object):
 		"""
 		This method is the property for the _path attribute.
 
-		@return: self._path. ( String )
+		:return: self._path. ( String )
 		"""
 
 		return self._path
@@ -193,7 +193,7 @@ class Module(object):
 		"""
 		This method is the setter method for the _path attribute.
 
-		@param value: Attribute value. ( String )
+		:param value: Attribute value. ( String )
 		"""
 
 		if value:
@@ -215,7 +215,7 @@ class Module(object):
 		"""
 		This method is the property for the _import_ attribute.
 
-		@return: self._import. ( Module )
+		:return: self._import. ( Module )
 		"""
 
 		return self._import
@@ -226,7 +226,7 @@ class Module(object):
 		"""
 		This method is the setter method for the _import_ attribute.
 
-		@param value: Attribute value. ( Module )
+		:param value: Attribute value. ( Module )
 		"""
 
 		if value:
@@ -247,7 +247,7 @@ class Module(object):
 		"""
 		This method is the property for the _interfaces attribute.
 
-		@return: self._interfaces. ( Object )
+		:return: self._interfaces. ( Object )
 		"""
 
 		return self._interfaces
@@ -257,7 +257,7 @@ class Module(object):
 		"""
 		This method is the setter method for the _interfaces attribute.
 
-		@param value: Attribute value. ( Object )
+		:param value: Attribute value. ( Object )
 		"""
 
 		self._interfaces = value
@@ -285,7 +285,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method initializes the class.
 
-		@param identity: Current reports id. ( String )
+		:param identity: Current reports id. ( String )
 		"""
 
 		LOGGER.debug("> Initializing '%s()' class." % (self.__class__.__name__))
@@ -325,7 +325,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the property for the _container attribute.
 
-		@return: self._container. ( QObject )
+		:return: self._container. ( QObject )
 		"""
 
 		return self._container
@@ -336,7 +336,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the setter method for the _container attribute.
 
-		@param value: Attribute value. ( QObject )
+		:param value: Attribute value. ( QObject )
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is read only!" % "container")
@@ -355,7 +355,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the property for the _modules attribute.
 
-		@return: self._modules. ( Dictionary )
+		:return: self._modules. ( Dictionary )
 		"""
 
 		return self._modules
@@ -366,7 +366,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the setter method for the _modules attribute.
 
-		@param value: Attribute value. ( Dictionary )
+		:param value: Attribute value. ( Dictionary )
 		"""
 
 		if value:
@@ -387,7 +387,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the property for the _Informations_textBrowser_defaultText attribute.
 
-		@return: self._Informations_textBrowser_defaultText. ( String )
+		:return: self._Informations_textBrowser_defaultText. ( String )
 		"""
 
 		return self._Informations_textBrowser_defaultText
@@ -398,7 +398,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the setter method for the _Informations_textBrowser_defaultText attribute.
 
-		@param value: Attribute value. ( String )
+		:param value: Attribute value. ( String )
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is read only!" % "Informations_textBrowser_defaultText")
@@ -417,7 +417,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the property for the _linuxTextEditors attribute.
 
-		@return: self._linuxTextEditors. ( Tuple )
+		:return: self._linuxTextEditors. ( Tuple )
 		"""
 
 		return self._linuxTextEditors
@@ -428,7 +428,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the setter method for the _linuxTextEditors attribute.
 
-		@param value: Attribute value. ( Tuple )
+		:param value: Attribute value. ( Tuple )
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is read only!" % "linuxTextEditors")
@@ -447,7 +447,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the property for the _linuxBrowsers attribute.
 
-		@return: self._linuxBrowsers. ( QObject )
+		:return: self._linuxBrowsers. ( QObject )
 		"""
 
 		return self._linuxBrowsers
@@ -458,7 +458,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the setter method for the _linuxBrowsers attribute.
 
-		@param value: Attribute value. ( QObject )
+		:param value: Attribute value. ( QObject )
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is read only!" % "linuxBrowsers")
@@ -617,7 +617,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is triggered when Methods_listWidget is double clicked.
 
-		@param listWidgetItem: Selected QListWidgetItem. ( QListWidgetItem )
+		:param listWidgetItem: Selected QListWidgetItem. ( QListWidgetItem )
 		"""
 
 		self.executeSnippet()
@@ -627,7 +627,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is triggered when Search_lineEdit text changes.
 
-		@param text: Current text value. ( QString )
+		:param text: Current text value. ( QString )
 		"""
 
 		self.Methods_listWidget_setWidget()
@@ -637,8 +637,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This definition gets the method name from the Interface.
 
-		@param name: Interface name. ( String )
-		@return: Method name. ( String )
+		:param name: Interface name. ( String )
+		:return: Method name. ( String )
 		"""
 
 		return "%s%s" % (name[1].lower(), name[2:])
@@ -707,7 +707,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method provides editing capability.
 
-		@param file: File to edit. ( String )
+		:param file: File to edit. ( String )
 		"""
 
 		editCommand = None
@@ -747,7 +747,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method provides folder exploring capability.
 
-		@param folder: Folder to explore. ( String )
+		:param folder: Folder to explore. ( String )
 		"""
 
 		browserCommand = None

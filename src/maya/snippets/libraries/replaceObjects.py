@@ -12,15 +12,15 @@ def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
 
-	@param object: Python object. ( Object )
-	@return: Python function. ( Function )
+	:param object: Python object. ( Object )
+	:return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		This decorator is used to handle various Maya stacks.
 
-		@return: Python object. ( Python )
+		:return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -39,12 +39,12 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 	"""
 	This definition replaces the targets with sources.
 
-	@param sources: Sources. ( List )
-	@param targets: Targets. ( List )
-	@param inPlace: In place replacement. ( Boolean )
-	@param usePivot: Use target pivot. ( Boolean )
-	@param asInstance: Duplicate as instances. ( Boolean )
-	@param deleteTargets: Delete targets. ( Boolean )
+	:param sources: Sources. ( List )
+	:param targets: Targets. ( List )
+	:param inPlace: In place replacement. ( Boolean )
+	:param usePivot: Use target pivot. ( Boolean )
+	:param asInstance: Duplicate as instances. ( Boolean )
+	:param deleteTargets: Delete targets. ( Boolean )
 	"""
 
 	duplicatedObjects = []
@@ -81,7 +81,7 @@ def pickSources_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the pickSources_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	cmds.textField("sources_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -91,7 +91,7 @@ def pickTargets_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the pickTargets_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	cmds.textField("targets_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -101,7 +101,7 @@ def replaceObjects_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the replaceObjects_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	sources = [source for source in cmds.textField("sources_textField", query=True, text=True).split(", ") if cmds.objExists(source)]

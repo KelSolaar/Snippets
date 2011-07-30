@@ -13,15 +13,15 @@ def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
 
-	@param object: Python object. ( Object )
-	@return: Python function. ( Function )
+	:param object: Python object. ( Object )
+	:return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		This decorator is used to handle various Maya stacks.
 
-		@return: Python object. ( Python )
+		:return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -40,8 +40,8 @@ def getMPoint(point):
 	"""
 	This definition returns an MPoint.
 
-	@param point: Point. ( List )
-	@return: MPoint ( MVector )
+	:param point: Point. ( List )
+	:return: MPoint ( MVector )
 	"""
 
 	return OpenMaya.MPoint(point[0], point[1], point[2])
@@ -50,9 +50,9 @@ def norme(pointA, pointB):
 	"""
 	This definition returns the norme of a vector.
 
-	@param pointA: Point A. ( List )
-	@param pointB: Point B. ( List )
-	@return: Norme ( Float )
+	:param pointA: Point A. ( List )
+	:param pointB: Point B. ( List )
+	:return: Norme ( Float )
 	"""
 
 	mPointA = getMPoint(pointA)
@@ -64,9 +64,9 @@ def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
 	"""
 	This definition renames the targets from closest sources.
 
-	@param sources: Sources. ( List )
-	@param targets: Targets. ( List )
-	@param suffixe: Suffixe. ( String )
+	:param sources: Sources. ( List )
+	:param targets: Targets. ( List )
+	:param suffixe: Suffixe. ( String )
 	"""
 
 	for target in targets:
@@ -82,7 +82,7 @@ def pickSources_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the pickSources_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	cmds.textField("sources_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -92,7 +92,7 @@ def pickTargets_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the pickTargets_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	cmds.textField("targets_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -102,7 +102,7 @@ def renameFromClosest_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the renameFromClosest_button button when clicked.
 
-	@param state: Button state. ( Boolean )
+	:param state: Button state. ( Boolean )
 	"""
 
 	sources = [source for source in cmds.textField("sources_textField", query=True, text=True).split(", ") if cmds.objExists(source)]
