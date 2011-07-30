@@ -3,23 +3,23 @@ import maya.mel as mel
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -30,11 +30,11 @@ def stacksHandler(object):
 
 def unfoldBandUVs(object, divisions=1, history=True):
 	"""
-	This Definition Unfold Object Band UVs.
+	This definition unfold object band UVs.
 
 	@param object: Object. ( String )
-	@param divisions: Extrusion Divisions. ( Integer )
-	@param history: Keep Construction History. ( Boolean )
+	@param divisions: Extrusion divisions. ( Integer )
+	@param history: Keep construction history. ( Boolean )
 	"""
 
 	edgesCount = cmds.polyEvaluate(object, edge=True)
@@ -60,27 +60,27 @@ def unfoldBandUVs(object, divisions=1, history=True):
 	not history and cmds.delete(object, ch=True)
 
 @stacksHandler
-def unfoldBand_Button_OnClicked(state=None):
+def unfoldBand_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The unfoldBand Button When Clicked.
+	This definition is triggered by the unfoldBand_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
 	for object in cmds.ls(sl=True, l=True, o=True):
-		unfoldBandUVs(object, divisions=cmds.intSliderGrp("divisions_IntSliderGrp", q=True, v=True), history=cmds.checkBox("keepConstructionHistory_CheckBox", q=True, v=True))
+		unfoldBandUVs(object, divisions=cmds.intSliderGrp("divisions_intSliderGrp", q=True, v=True), history=cmds.checkBox("keepConstructionHistory_checkBox", q=True, v=True))
 
-def unfoldBand_Window():
+def unfoldBand_window():
 	"""
-	This Definition Creates The Solidify Main Window.
+	This definition creates the 'Unfold Band' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("unfoldBand_Window", exists=True)):
-		cmds.deleteUI("unfoldBand_Window")
+	if (cmds.window("unfoldBand_window", exists=True)):
+		cmds.deleteUI("unfoldBand_window")
 
-	cmds.window("unfoldBand_Window",
+	cmds.window("unfoldBand_window",
 		title="Unfold Band",
 		width=384)
 
@@ -90,33 +90,33 @@ def unfoldBand_Window():
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.intSliderGrp("divisions_IntSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
+	cmds.intSliderGrp("divisions_intSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
 
 	cmds.separator(style="single")
 
 	cmds.columnLayout(columnOffset=("left", 140) )
-	cmds.checkBox("keepConstructionHistory_CheckBox", label="Keep Construction History",  v=True)
+	cmds.checkBox("keepConstructionHistory_checkBox", label="Keep Construction History",  v=True)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.button("unfoldBand_Button", label="Unfold Band!", command=unfoldBand_Button_OnClicked)
+	cmds.button("unfoldBand_button", label="Unfold Band!", command=unfoldBand_button_OnClicked)
 
-	cmds.showWindow("unfoldBand_Window")
+	cmds.showWindow("unfoldBand_window")
 
 	cmds.windowPref(enableAll=True)
 
 def unfoldBand():
 	"""
-	This Definition Launches The Unfold Band Main Window.
+	This definition launches the 'Unfold Band' main window.
 	"""
 
-	unfoldBand_Window()
+	unfoldBand_window()
 
 @stacksHandler
 def IUnfoldBand():
 	"""
-	This Definition Is The unfoldBand Method Interface.
+	This definition is the unfoldBand definition Interface.
 	"""
 
 	unfoldBand()

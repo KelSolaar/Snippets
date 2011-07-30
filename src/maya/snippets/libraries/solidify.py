@@ -5,23 +5,23 @@ import math
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -32,11 +32,11 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This Definition Returns Transform Of The Provided Node.
+	This definition returns transform of the provided node.
 
-	@param node: Current Object. ( String )
-	@param fullPath: Current Full Path State. ( Boolean )
-	@return: Object Transform. ( String )
+	@param node: Current object. ( String )
+	@param fullPath: Current full path state. ( Boolean )
+	@return: Object transform. ( String )
 	"""
 
 	transform = node
@@ -47,7 +47,7 @@ def getTransform(node, fullPath=True):
 
 def getMVector(vector):
 	"""
-	This Definition Returns An MVector.
+	This definition returns an MVector.
 
 	@param vector: Vector. ( List )
 	@return: MVector ( MVector )
@@ -57,7 +57,7 @@ def getMVector(vector):
 
 def getMMatrix(matrix):
 	"""
-	This Definition Returns An MMatrix.
+	This definition returns an MMatrix.
 
 	@param matrix: matrix. ( List )
 	@return: MMatrix ( MMatrix )
@@ -69,10 +69,10 @@ def getMMatrix(matrix):
 
 def normalize(vector):
 	"""
-	This Definition Returns The Normalized Vector.
+	This definition returns the normalized vector.
 
 	@param vector: Vector. ( List )
-	@return: Normalized Vector ( Tuple )
+	@return: Normalized vector ( Tuple )
 	"""
 
 	mVector = getMVector(vector)
@@ -81,11 +81,11 @@ def normalize(vector):
 
 def vectorMatrixMultiplication(vector, matrix):
 	"""
-	This Definition Returns The Vector Multiplication Between A Vector And A Matrix.
+	This definition returns the vector multiplication between a Vector And a matrix.
 
 	@param vector: Vector. ( List )
 	@param matrix: matrix. ( List )
-	@return: Matrix Multiplied Vector. ( Tuple )
+	@return: Matrix multiplied vector. ( Tuple )
 	"""
 
 	mVector = getMVector(vector)
@@ -95,11 +95,11 @@ def vectorMatrixMultiplication(vector, matrix):
 
 def dot(vectorA, vectorB):
 	"""
-	This Definition Returns The Dot Product Between Two Vectors.
+	This definition returns the dot product between two vectors.
 
 	@param vectorA: Vector A. ( List )
 	@param vectorB: Vector B. ( List )
-	@return: Dot Product. ( Float )
+	@return: Dot product. ( Float )
 	"""
 
 	mVectorA = getMVector(vectorA)
@@ -108,10 +108,10 @@ def dot(vectorA, vectorB):
 
 def getAverageVector(vectors):
 	"""
-	This Definition Returns The Average Vector From A List Of Vectors.
+	This definition returns the average vector from a list of vectors.
 
-	@param vectors: Vectors To Get The Average One. ( List )
-	@return: Average Vector. ( List )
+	@param vectors: Vectors to get the average one. ( List )
+	@return: Average vector. ( List )
 	"""
 
 	averageVector = [0, 0, 0]
@@ -124,21 +124,21 @@ def getAverageVector(vectors):
 
 def getAngle(vectorA, vectorB):
 	"""
-	This Definition Returns The Angle Between Two Vectors.
+	This definition returns the angle between two vectors.
 
 	@param vectorA: Vector A. ( List )
 	@param vectorB: Vector B. ( List )
-	@return: Angle Between Vector A and Vector B. ( Float )
+	@return: Angle between Vector A and Vector B. ( Float )
 	"""
 
 	return math.degrees(math.acos(dot(vectorA, vectorB)))
 
 def hasBorderEdges(object):
 	"""
-	This Definition Returns If An Object Has Border Edges.
+	This definition returns if an object has border edges.
 
 	@param object: Object. ( String )
-	@return: Has Object Border Edges. ( Boolean )
+	@return: Has object border edges. ( Boolean )
 	"""
 
 	cmds.select(object)
@@ -149,15 +149,15 @@ def hasBorderEdges(object):
 
 def solidifyObject(object, height=1, divisions=2, history=True):
 	"""
-	This Definition Solidifies Provided Object.
+	This definition solidifies provided object.
 
 	@param object: Object. ( String )
-	@param height: Extrusion Height. ( Float )
-	@param division: Extrusion Divisions. ( Float )
-	@param history: Keep Construction History. ( Boolean )
+	@param height: Extrusion height. ( Float )
+	@param division: Extrusion divisions. ( Float )
+	@param history: Keep construction history. ( Boolean )
 	"""
 
-	if  hasBorderEdges(object):
+	if	hasBorderEdges(object):
 		transform = getTransform(object)
 		vertices = cmds.ls(cmds.polyListComponentConversion(object, toVertex = True), fl = True)
 
@@ -191,27 +191,27 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 		not history and cmds.delete(object, ch=True)
 
 @stacksHandler
-def solidify_Button_OnClicked(state=None):
+def solidify_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The solidify_Button Button When Clicked.
+	This definition is triggered by the solidify_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
 	for object in cmds.ls(sl=True, l=True, o=True):
-		solidifyObject(object, height=cmds.floatSliderGrp("height_FloatSliderGrp", q=True, v=True), divisions=cmds.intSliderGrp("divisions_IntSliderGrp", q=True, v=True), history=cmds.checkBox("keepConstructionHistory_CheckBox", q=True, v=True))
+		solidifyObject(object, height=cmds.floatSliderGrp("height_floatSliderGrp", q=True, v=True), divisions=cmds.intSliderGrp("divisions_intSliderGrp", q=True, v=True), history=cmds.checkBox("keepConstructionHistory_checkBox", q=True, v=True))
 
-def solidify_Window():
+def solidify_window():
 	"""
-	This Definition Creates The Solidify Main Window.
+	This definition creates the 'Solidify' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("solidify_Window", exists=True)):
-		cmds.deleteUI("solidify_Window")
+	if (cmds.window("solidify_window", exists=True)):
+		cmds.deleteUI("solidify_window")
 
-	cmds.window("solidify_Window",
+	cmds.window("solidify_window",
 		title="Solidify",
 		width=320)
 
@@ -221,34 +221,34 @@ def solidify_Window():
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.floatSliderGrp("height_FloatSliderGrp", label="Height", field=True, minValue=-10, maxValue=10, fieldMinValue=-65535, fieldMaxValue=65535, value=0.1)
-	cmds.intSliderGrp("divisions_IntSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
+	cmds.floatSliderGrp("height_floatSliderGrp", label="Height", field=True, minValue=-10, maxValue=10, fieldMinValue=-65535, fieldMaxValue=65535, value=0.1)
+	cmds.intSliderGrp("divisions_intSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
 
 	cmds.separator(style="single")
 
 	cmds.columnLayout(columnOffset=("left", 140) )
-	cmds.checkBox("keepConstructionHistory_CheckBox", label="Keep Construction History",  v=True)
+	cmds.checkBox("keepConstructionHistory_checkBox", label="Keep Construction History",  v=True)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.button("solidify_Button", label="Solidify!", command=solidify_Button_OnClicked)
+	cmds.button("solidify_button", label="Solidify!", command=solidify_button_OnClicked)
 
-	cmds.showWindow("solidify_Window")
+	cmds.showWindow("solidify_window")
 
 	cmds.windowPref(enableAll=True)
 
 def solidify():
 	"""
-	This Definition Launches The Solidify Main Window.
+	This definition launches the 'Solidify' main window.
 	"""
 
-	solidify_Window()
+	solidify_window()
 
 @stacksHandler
 def ISolidify():
 	"""
-	This Definition Is The solidify Method Interface.
+	This definition is the solidify definition Interface.
 	"""
 
 	solidify()

@@ -6,23 +6,23 @@ import re
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -33,11 +33,11 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This Definition Returns Transform Of The Provided Node.
+	This definition returns transform of the provided node.
 
-	@param node: Current Object. ( String )
-	@param fullPath: Current Full Path State. (Boolean)
-	@return: Object Transform. ( String )
+	@param node: Current object. ( String )
+	@param fullPath: Current full path state. (Boolean)
+	@return: Object transform. ( String )
 	"""
 
 	transform = node
@@ -48,10 +48,10 @@ def getTransform(node, fullPath=True):
 
 def getAverageVector(vectors):
 	"""
-	This Definition Returns The Average Vector From A List Of Vectors.
+	This definition returns the average vector from a list of vectors.
 
-	@param vectors: Vectors To Get The Average One. ( List )
-	@return: Average Vector. ( List )
+	@param vectors: Vectors to get the average one. ( List )
+	@return: Average vector. ( List )
 	"""
 
 	averageVector = [0, 0, 0]
@@ -64,10 +64,10 @@ def getAverageVector(vectors):
 
 def collapseComponents(components, axis=("X", "Y", "Z")):
 	"""
-	This Definition Collapses The Provided Components.
+	This definition collapses the provided Components.
 
-	@param components: Components To Collapse. ( List )
-	@param axis: Collapse Axis. ( Tuple )
+	@param components: Components to collapse. ( List )
+	@param axis: Collapse axis. ( Tuple )
 	"""
 
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
@@ -84,7 +84,7 @@ def collapseComponents(components, axis=("X", "Y", "Z")):
 @stacksHandler
 def ICollapseComponents():
 	"""
-	This Definition Is The collapseComponents Method Interface.
+	This definition is the collapseComponents definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -92,7 +92,7 @@ def ICollapseComponents():
 
 def collapseComponentsOnX():
 	"""
-	This Definition Triggers The collapseComponents Method On X Axis.
+	This definition triggers the collapseComponents method on x axis.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -101,14 +101,14 @@ def collapseComponentsOnX():
 @stacksHandler
 def ICollapseComponentsOnX():
 	"""
-	This Definition Is The collapseComponentsOnX Method Interface.
+	This definition is the collapseComponentsOnX definition Interface.
 	"""
 
 	collapseComponentsOnX()
 
 def collapseComponentsOnY():
 	"""
-	This Definition Triggers The collapseComponents Method On Y Axis.
+	This definition triggers the collapseComponents method on y axis.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -117,14 +117,14 @@ def collapseComponentsOnY():
 @stacksHandler
 def ICollapseComponentsOnY():
 	"""
-	This Definition Is The collapseComponentsOnY Method Interface.
+	This definition is the collapseComponentsOnY definition Interface.
 	"""
 
 	collapseComponentsOnY()
 
 def collapseComponentsOnZ():
 	"""
-	This Definition Triggers The collapseComponents Method On Z Axis.
+	This definition triggers the collapseComponents method on z axis.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -133,7 +133,7 @@ def collapseComponentsOnZ():
 @stacksHandler
 def ICollapseComponentsOnZ():
 	"""
-	This Definition Is The collapseComponentsOnZ Method Interface.
+	This definition is the collapseComponentsOnZ definition Interface.
 	"""
 
 	collapseComponentsOnZ()

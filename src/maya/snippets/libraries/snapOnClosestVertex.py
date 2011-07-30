@@ -14,18 +14,18 @@
 	Windows, Linux, Mac Os X.
 
 **Description :**
-	Snap On Closest Vertex Module.
+	Snap on closest vertex Module.
 
 **Others :**
 
 """
 
 #***********************************************************************************************
-#***	Python Begin.
+#***	Python begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports.
+#***	External imports.
 #***********************************************************************************************
 import math
 import maya.cmds as cmds
@@ -34,33 +34,33 @@ import maya.mel as mel
 import re
 import functools
 #***********************************************************************************************
-#***	Overall Variables.
+#***	Overall variables.
 #***********************************************************************************************
 TOLERANCE=64
 MAXIMUM_SEARCH_DISTANCE=2**32-1
 
 #***********************************************************************************************
-#***	Module Classes And Definitions.
+#***	Module classes and definitions.
 #***********************************************************************************************
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -71,7 +71,7 @@ def stacksHandler(object):
 
 def getMPoint(point):
 	"""
-	This Definition Returns An MPoint.
+	This definition returns an MPoint.
 
 	@param point: Point. ( List )
 	@return: MPoint ( MVector )
@@ -81,7 +81,7 @@ def getMPoint(point):
 
 def norme(pointA, pointB):
 	"""
-	This Definition Returns The Norme Of A Vector.
+	This definition returns the norme of a vector.
 
 	@param pointA: Point A. ( List )
 	@param pointB: Point B. ( List )
@@ -95,12 +95,12 @@ def norme(pointA, pointB):
 
 def getShapes(object, fullPathState = False, noIntermediateState = True):
 	"""
-	This Definition Returns Shapes Of The Provided Object.
+	This definition returns shapes of the provided object.
 
-	@param object: Current Object. ( String )
-	@param fullPath: Current Full Path State. ( Boolean )
-	@param noIntermediate: Current No Intermediate State. ( Boolean )
-	@return: Objects Shapes. ( List )
+	@param object: Current object. ( String )
+	@param fullPath: Current full path state. ( Boolean )
+	@param noIntermediate: Current no intermediate state. ( Boolean )
+	@return: Objects shapes. ( List )
 	"""
 
 	objectShapes = []
@@ -111,32 +111,32 @@ def getShapes(object, fullPathState = False, noIntermediateState = True):
 	return objectShapes
 
 @stacksHandler
-def getReferenceObject_OnClicked(state=None):
+def getReferenceObject_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The getReferenceObject Button When Clicked.
+	This definition is triggered by the getReferenceObject_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
 	selection = cmds.ls(sl=True, type="transform")
 
 	if selection :
-		cmds.textField("referenceObject_TextField", edit=True, text=selection[0])
+		cmds.textField("referenceObject_textField", edit=True, text=selection[0])
 
 def loadPlugin(plugin):
 	"""
-	This Function Loads A Plugin.
+	This function loads a plugin.
 
-	@param plugin: Plugin To Load. (String)
+	@param plugin: Plugin to load. (String)
 	"""
 
 	not cmds.pluginInfo(plugin, query=True, loaded=True) and cmds.loadPlugin(plugin)
 
 def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 	"""
-	This Function Snaps Vertices Onto The Reference Object Vertices.
+	This function snaps vertices onto the reference object vertices.
 
-	@param referenceObject: Reference Mesh. (String)
+	@param referenceObject: Reference mesh. (String)
 	@param components: Components. (List)
 	"""
 
@@ -144,11 +144,11 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 
 	progressBar = mel.eval("$container=$gMainProgressBar");
 
-	cmds.progressBar(progressBar, edit=True, beginProgress=True, isInterruptable=True, status="Snapping Vertices ...", maxValue=len(vertices))
+	cmds.progressBar(progressBar, edit=True, beginProgress=True, isInterruptable=True, status="Snapping vertices ...", maxValue=len(vertices))
 
 	loadPlugin("nearestPointOnMesh")
 
-	nearestPointOnMeshNode=mel.eval("nearestPointOnMesh " +  referenceObject)
+	nearestPointOnMeshNode=mel.eval("nearestPointOnMesh " + referenceObject)
 
 	for vertex in vertices :
 		if cmds.progressBar(progressBar, query=True, isCancelled=True) :
@@ -159,7 +159,7 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 		vertexPosition = cmds.pointPosition(vertex, world=True)
 		cmds.setAttr(nearestPointOnMeshNode + ".inPosition", vertexPosition[0], vertexPosition[1], vertexPosition[2])
 		associatedFaceId = cmds.getAttr(nearestPointOnMeshNode + ".nearestFaceIndex")
-		vtxsFaces = cmds.filterExpand(cmds.polyListComponentConversion((referenceObject + ".f[" + str(associatedFaceId) + "]"), fromFace=True,  toVertexFace=True ), sm=70, expand=True)
+		vtxsFaces = cmds.filterExpand(cmds.polyListComponentConversion((referenceObject + ".f[" + str(associatedFaceId) + "]"), fromFace=True,	toVertexFace=True ), sm=70, expand=True)
 
 		closestPosition = []
 		for vtxsFace in vtxsFaces :
@@ -182,31 +182,31 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 	cmds.delete(nearestPointOnMeshNode)
 
 @stacksHandler
-def snapIt_Button_OnClicked(state=None):
+def snapIt_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The snapIt Button When Clicked.
+	This definition is triggered by the snapIt_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
-	referenceObject = cmds.textField("referenceObject_TextField", query=True, text=True)
+	referenceObject = cmds.textField("referenceObject_textField", query=True, text=True)
 
 	referenceObjectShapes = cmds.objExists(referenceObject) and getShapes(referenceObject) or None
 
 	selection = cmds.ls(sl=True, fl=True)
 	referenceObjectShapes and selection and snapComponentsOnClosestVertex(referenceObjectShapes[0], selection, TOLERANCE)
 
-def snapOnClosestVertex_Window():
+def snapOnClosestVertex_window():
 	"""
-	This Definition Creates The Snap On Closest Vertex Window.
+	This definition creates the 'Snap On Closest Vertex' vertex window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("snapOnClosestVertex_Window", exists=True)):
-		cmds.deleteUI("snapOnClosestVertex_Window")
+	if (cmds.window("snapOnClosestVertex_window", exists=True)):
+		cmds.deleteUI("snapOnClosestVertex_window")
 
-	cmds.window("snapOnClosestVertex_Window",
+	cmds.window("snapOnClosestVertex_window",
 		title="Snap On Closest Vertex",
 		width=320)
 
@@ -216,32 +216,32 @@ def snapOnClosestVertex_Window():
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Reference Object:")
-	referenceObject_TextField = cmds.textField("referenceObject_TextField")
-	cmds.button("getReferenceObject_Button", label="Get Reference Object!", command=getReferenceObject_OnClicked)
+	referenceObject_textField = cmds.textField("referenceObject_textField")
+	cmds.button("getReferenceObject_button", label="Get Reference Object!", command=getReferenceObject_button_OnClicked)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")
 
-	cmds.button("snapIt_Button", label="Snap It !", al="center", command=snapIt_Button_OnClicked)
+	cmds.button("snapIt_button", label="Snap It!", al="center", command=snapIt_button_OnClicked)
 
-	cmds.showWindow("snapOnClosestVertex_Window")
+	cmds.showWindow("snapOnClosestVertex_window")
 	cmds.windowPref(enableAll=True)
 
 def snapOnClosestVertex():
 	"""
-	This Definition Launches The Snap On Closest Vertex Main Window.
+	This definition launches the 'Snap On Closest Vertex' main window.
 	"""
 
-	snapOnClosestVertex_Window()
+	snapOnClosestVertex_window()
 
 @stacksHandler
 def ISnapOnClosestVertex():
 	"""
-	This Definition Is The snapOnClosestVertex Method Interface.
+	This definition is the snapOnClosestVertex definition Interface.
 	"""
 
 	snapOnClosestVertex()
 
 #***********************************************************************************************
-#***	Python End.
+#***	Python end.
 #***********************************************************************************************

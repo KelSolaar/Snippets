@@ -3,23 +3,23 @@ import maya.cmds as cmds
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -30,14 +30,14 @@ def stacksHandler(object):
 
 def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=False, asInstance=False, deleteTargets = True):
 	"""
-	This Definition Replaces The Targets With Sources.
+	This definition replaces the targets with sources.
 
 	@param sources: Sources. ( List )
 	@param targets: Targets. ( List )
-	@param inPlace: In Place Replacement. ( Boolean )
-	@param usePivot: Use Target Pivot. ( Boolean )
-	@param asInstance: Duplicate As Instances. ( Boolean )
-	@param deleteTargets: Delete Targets. ( Boolean )
+	@param inPlace: In place replacement. ( Boolean )
+	@param usePivot: Use target pivot. ( Boolean )
+	@param asInstance: Duplicate as instances. ( Boolean )
+	@param deleteTargets: Delete targets. ( Boolean )
 	"""
 
 	duplicatedObjects = []
@@ -70,49 +70,49 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 			cmds.rename(duplicationGrp, "duplication_grp")
 
 @stacksHandler
-def pickSources_Button_OnClicked(state=None):
+def pickSources_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The pickSources_Button Button When Clicked.
+	This definition is triggered by the pickSources_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
-	cmds.textField("sources_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
+	cmds.textField("sources_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
 @stacksHandler
-def pickTargets_Button_OnClicked(state=None):
+def pickTargets_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The pickTargets_Button Button When Clicked.
+	This definition is triggered by the pickTargets_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
-	cmds.textField("targets_TextField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
+	cmds.textField("targets_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
 
 @stacksHandler
-def replaceObjects_Button_OnClicked(state=None):
+def replaceObjects_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The replaceObjects_Button Button When Clicked.
+	This definition is triggered by the replaceObjects_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
-	sources = [source for source in cmds.textField("sources_TextField", query=True, text=True).split(", ") if cmds.objExists(source)]
-	targets = [target for target in cmds.textField("targets_TextField", query=True, text=True).split(", ")  if cmds.objExists(target)]
+	sources = [source for source in cmds.textField("sources_textField", query=True, text=True).split(", ") if cmds.objExists(source)]
+	targets = [target for target in cmds.textField("targets_textField", query=True, text=True).split(", ")	if cmds.objExists(target)]
 
-	replaceTargetsObjectsWithSources(sources, targets, cmds.checkBox("duplicateInPlace_CheckBox", q=True, v=True), cmds.checkBox("useTargetsPivots_CheckBox", q=True, v=True),  cmds.checkBox("duplicateAsInstances_CheckBox", q=True, v=True))
+	replaceTargetsObjectsWithSources(sources, targets, cmds.checkBox("duplicateInPlace_checkBox", q=True, v=True), cmds.checkBox("useTargetsPivots_checkBox", q=True, v=True),	cmds.checkBox("duplicateAsInstances_checkBox", q=True, v=True))
 
-def replaceObjects_Window():
+def replaceObjects_window():
 	"""
-	This Definition Creates The Replace Objects Main Window.
+	This definition creates the 'Replace Objects' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("replaceObjects_Window", exists=True)):
-		cmds.deleteUI("replaceObjects_Window")
+	if (cmds.window("replaceObjects_window", exists=True)):
+		cmds.deleteUI("replaceObjects_window")
 
-	cmds.window("replaceObjects_Window",
+	cmds.window("replaceObjects_window",
 		title="Replace Objects",
 		width=320)
 
@@ -122,44 +122,44 @@ def replaceObjects_Window():
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Sources:")
-	sources_TextField=cmds.textField("sources_TextField")
-	cmds.button("pickSources_Button", label="Pick Sources!", command=pickSources_Button_OnClicked)
+	sources_textField=cmds.textField("sources_textField")
+	cmds.button("pickSources_button", label="Pick Sources!", command=pickSources_button_OnClicked)
 	cmds.setParent(topLevel=True)
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Targets:")
-	targets_TextField=cmds.textField("targets_TextField")
-	cmds.button("pickTargets_Button", label="Pick Targets!", command=pickTargets_Button_OnClicked)
+	targets_textField=cmds.textField("targets_textField")
+	cmds.button("pickTargets_button", label="Pick Targets!", command=pickTargets_button_OnClicked)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")
 
 	cmds.columnLayout(columnOffset=("left", 40) )
-	cmds.checkBox("duplicateInPlace_CheckBox", label="Duplicate In Place")
-	cmds.checkBox("useTargetsPivots_CheckBox", label="Use Targets Pivots", v=True)
-	cmds.checkBox("duplicateAsInstances_CheckBox", label="Duplicate As Instances")
-	cmds.checkBox("deleteTargets_CheckBox", label="Delete Targets",  v=True)
+	cmds.checkBox("duplicateInPlace_checkBox", label="Duplicate In Place")
+	cmds.checkBox("useTargetsPivots_checkBox", label="Use Targets Pivots", v=True)
+	cmds.checkBox("duplicateAsInstances_checkBox", label="Duplicate As Instances")
+	cmds.checkBox("deleteTargets_checkBox", label="Delete Targets",	 v=True)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")
 
-	cmds.button("replaceObjects_Button", label="Replace Objects!", command=replaceObjects_Button_OnClicked)
+	cmds.button("replaceObjects_button", label="Replace Objects!", command=replaceObjects_button_OnClicked)
 
-	cmds.showWindow("replaceObjects_Window")
+	cmds.showWindow("replaceObjects_window")
 
 	cmds.windowPref(enableAll=True)
 
 def replaceObjects():
 	"""
-	This Definition Launches The Replace Objects Main Window.
+	This definition launches the 'Replace Objects' main window.
 	"""
 
-	replaceObjects_Window()
+	replaceObjects_window()
 
 @stacksHandler
 def IReplaceObjects():
 	"""
-	This Definition Is The replaceObjects Method Interface.
+	This definition is the replaceObjects definition Interface.
 	"""
 
 	replaceObjects()

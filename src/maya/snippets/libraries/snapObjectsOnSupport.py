@@ -2,23 +2,23 @@ import maya.cmds as cmds
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -29,12 +29,12 @@ def stacksHandler(object):
 
 def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
-	This Definition Returns Shapes Of The Provided Object.
+	This definition returns shapes of the provided object.
 
-	@param object: Current Object. ( String )
-	@param fullPath: Current Full Path State. ( Boolean )
-	@param noIntermediate: Current No Intermediate State. ( Boolean )
-	@return: Objects Shapes. ( List )
+	@param object: Current object. ( String )
+	@param fullPath: Current full path state. ( Boolean )
+	@param noIntermediate: Current no intermediate state. ( Boolean )
+	@return: Objects shapes. ( List )
 	"""
 
 	objectShapes = []
@@ -46,9 +46,9 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 
 def snapObjectsOnSupport(objects, support):
 	"""
-	This Definition Snaps Objects On Support.
+	This definition snaps objects on support.
 
-	@param objects : Objects To Snap. ( List )
+	@param objects : Objects to snap. ( List )
 	@param value : Support. ( String )
 	"""
 
@@ -71,7 +71,7 @@ def snapObjectsOnSupport(objects, support):
 @stacksHandler
 def ISnapObjectsOnSupport():
 	"""
-	This Definition Is The snapObjectsOnSupport Method Interface.
+	This definition is the snapObjectsOnSupport definition Interface.
 	"""
 
 	selection = cmds.ls(sl = True, l = True)

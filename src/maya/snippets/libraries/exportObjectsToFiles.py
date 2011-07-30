@@ -9,23 +9,23 @@ FILE_TYPES = {"Obj" : {"extension" : "obj", "type" : "OBJexport", "options" : "g
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -36,11 +36,11 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This Definition Returns Transform Of The Provided Node.
+	This definition returns transform of the provided node.
 
-	@param node: Current Object. ( String )
-	@param fullPath: Current Full Path State. ( Boolean )
-	@return: Object Transform. ( String )
+	@param node: Current object. ( String )
+	@param fullPath: Current full path state. ( Boolean )
+	@return: Object transform. ( String )
 	"""
 
 	transform = node
@@ -51,11 +51,11 @@ def getTransform(node, fullPath=True):
 
 def setPadding(data, padding, affix="0"):
 	"""
-	This Definition Pads The Provided Data.
+	This definition pads the provided data.
 
-	@param data: Data To Pad. ( String )
+	@param data: Data to pad. ( String )
 	@param padding: Padding. ( Integer )
-	@param affix: Padding Affix. ( String )
+	@param affix: Padding affix. ( String )
 	"""
 
 	while len(data) < padding:
@@ -64,7 +64,7 @@ def setPadding(data, padding, affix="0"):
 
 def getUserExportDirectory():
 	"""
-	This Definition Gets The User Export Directory.
+	This definition gets the user export directory.
 
 	@return: Export directory. ( String )
 	"""
@@ -75,13 +75,13 @@ def getUserExportDirectory():
 
 def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames=False):
 	"""
-	This Definition Export Provided Objects To Files.
+	This definition export provided objects to files.
 
-	@param objects: Objects To Export. ( List )
-	@param exportType: Export Type. ( String )
-	@param useObjectsNames: Use Objects Names. ( Boolean )
-	@param useLongNames: Use Long Maya Names. ( Boolean )
-	@return: Exported Files. ( List )
+	@param objects: Objects to export. ( List )
+	@param exportType: Export type. ( String )
+	@param useObjectsNames: Use objects names. ( Boolean )
+	@param useLongNames: Use long Maya names. ( Boolean )
+	@return: Exported files. ( List )
 	"""
 
 	exportDirectory = getUserExportDirectory()
@@ -94,7 +94,7 @@ def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames
 		else:
 			basename = "%s_%s" % (FILE_DEFAULT_PREFIX, setPadding(str(i), 3))
 		name = os.path.join(exportDirectory, "%s.%s" % (basename, FILE_TYPES[exportType]["extension"]))
-		print("%s | Export '%s' To '%s'!" % (__name__, object, name))
+		print("%s | Export '%s' to '%s'!" % (__name__, object, name))
 		cmds.select(object)
 		cmds.file(name, force=True, options=FILE_TYPES[exportType]["options"], typ=FILE_TYPES[exportType]["type"], es=True)
 		exportedFiles.append(name)
@@ -102,7 +102,7 @@ def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames
 
 def exportSelectedObjectsToShortObjFiles():
 	"""
-	This Definition Exports Selected Objects To Short Named Obj Files.
+	This definition exports selected objects to short named obj files.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -111,14 +111,14 @@ def exportSelectedObjectsToShortObjFiles():
 @stacksHandler
 def IExportSelectedObjectsToShortObjFiles():
 	"""
-	This Definition Is The exportSelectedObjectsToShortObjFiles Method Interface.
+	This definition is the exportSelectedObjectsToShortObjFiles definition Interface.
 	"""
 
 	exportSelectedObjectsToShortObjFiles()
 
 def exportSelectedObjectsToLongObjFiles():
 	"""
-	This Definition Exports Selected Objects To Long Named Obj Files.
+	This definition exports selected objects to long named obj files.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -127,14 +127,14 @@ def exportSelectedObjectsToLongObjFiles():
 @stacksHandler
 def IExportSelectedObjectsToLongObjFiles():
 	"""
-	This Definition Is The exportSelectedObjectsToLongObjFiles Method Interface.
+	This definition is the exportSelectedObjectsToLongObjFiles definition Interface.
 	"""
 
 	exportSelectedObjectsToLongObjFiles()
 
 def exportDefaultObject(object):
 	"""
-	This Definition Exports The Default Object.
+	This definition exports the default object.
 	"""
 
 	exportObjectsToFiles((object, ), "Obj", False)[0]
@@ -142,7 +142,7 @@ def exportDefaultObject(object):
 @stacksHandler
 def IExportDefaultObject():
 	"""
-	This Definition Is The exportDefaultObject Method Interface.
+	This definition is the exportDefaultObject definition Interface.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -150,7 +150,7 @@ def IExportDefaultObject():
 
 def exportSelectedObjectToUvLayout(object):
 	"""
-	This Definition Exports The Selected Object To UVLayout.
+	This definition exports the selected object to uvlayout.
 	"""
 
 	file = exportObjectsToFiles((object, ), "Obj", False)[0]
@@ -159,7 +159,7 @@ def exportSelectedObjectToUvLayout(object):
 @stacksHandler
 def IExportSelectedObjectToUvLayout():
 	"""
-	This Definition Is The exportSelectedObjectToUvLayout Method Interface.
+	This definition is the exportSelectedObjectToUvLayout definition Interface.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -167,7 +167,7 @@ def IExportSelectedObjectToUvLayout():
 
 def importDefaultObject():
 	"""
-	This Definition Imports The Default Object: 'Export_000.obj'.
+	This definition imports the default object: 'Export_000.obj'.
 	"""
 
 	name = os.path.join(getUserExportDirectory(), "%s.%s" % ("%s_%s" % (FILE_DEFAULT_PREFIX, setPadding(str(0), 3)), FILE_TYPES["Obj"]["extension"]))
@@ -176,11 +176,11 @@ def importDefaultObject():
 		cmds.file(name, r=True, dns=True)
 		cmds.select([node for node in list(set(cmds.ls()).difference(set(nodesBefore))) if cmds.nodeType(node) == "transform"])
 	else:
-		mel.eval("warning(\"%s | '%s' File Does't Exists!\")" % (__name__, name))
+		mel.eval("warning(\"%s | '%s' file does't exists!\")" % (__name__, name))
 @stacksHandler
 def IImportDefaultObject():
 	"""
-	This Definition Is The importDefaultObject Method Interface.
+	This definition is the importDefaultObject definition Interface.
 	"""
 
 	importDefaultObject()

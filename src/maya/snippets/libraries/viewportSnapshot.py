@@ -2,23 +2,23 @@ import maya.cmds as cmds
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -30,10 +30,10 @@ def stacksHandler(object):
 
 def viewportSnapshot():
 	"""
-	This Definition Does A Viewport Snapshot.
+	This definition does a viewport snapshot.
 	"""
 
-	filter = "Tif Files (*.tif)"
+	filter = "Tif files (*.tif)"
 	file = cmds.fileDialog2(fileFilter=filter, fm=0, dialogStyle=2)
 
 	if file:
@@ -45,7 +45,7 @@ def viewportSnapshot():
 @stacksHandler
 def IViewportSnapshot():
 	"""
-	This Definition Is The viewportSnapshot Method Interface.
+	This definition is the viewportSnapshot definition Interface.
 	"""
 
 	viewportSnapshot()

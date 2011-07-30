@@ -14,52 +14,52 @@
 	Windows, Linux, Mac Os X.
 
 **Description :**
-	Activate Blendshapes Module.
+	Activate blendshapes Module.
 
 **Others :**
 
 """
 
 #***********************************************************************************************
-#***	Python Begin.
+#***	Python begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports.
+#***	External imports.
 #***********************************************************************************************
 import maya.cmds as cmds
 import maya.mel as mel
 
 #***********************************************************************************************
-#***	Internal Imports.
+#***	Internal imports.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Global Variables.
+#***	Global variables.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Module Classes And Definitions.
+#***	Module classes and definitions.
 #***********************************************************************************************
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -70,16 +70,16 @@ def stacksHandler(object):
 
 def weightSlider_OnValueChanged(value):
 	"""
-	This Definition Is Triggered By The 'weightSlider' Slider When Its Value Changed.
+	This definition is triggered by the 'weightSlider' slider when its value changed.
 	"""
 
-	setWeight(cmds.floatSliderGrp("weight_FloatSliderGrp", query=True, value=True))
+	setWeight(cmds.floatSliderGrp("weight_floatSliderGrp", query=True, value=True))
 
 def setWeight(value):
 	"""
-	This Definition Activates Every First Blendshape Node Slot In The Scene.
+	This definition activates every first blendshape node slot in the scene.
 
-	@param value : Activation Value. ( Float )
+	@param value : Activation value. ( Float )
 	"""
 
 	blendShapesNodes=cmds.ls(type="blendShape")
@@ -87,17 +87,17 @@ def setWeight(value):
 		targets=cmds.listAttr(blendShapesNode + ".w", m=True)
 		cmds.setAttr(blendShapesNode + "." + targets[0], value)
 
-def activateBlendshapes_Window():
+def activateBlendshapes_window():
 	"""
-	This Definition Creates The Activate Blendshapes Main Window.
+	This definition creates the 'Activate Blendshapes' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("activateBlendshapes_Window", exists=True)):
-		cmds.deleteUI("activateBlendshapes_Window")
+	if (cmds.window("activateBlendshapes_window", exists=True)):
+		cmds.deleteUI("activateBlendshapes_window")
 
-	cmds.window("activateBlendshapes_Window",
+	cmds.window("activateBlendshapes_window",
 		title="Activate Blendshapes",
 		width=320)
 
@@ -107,29 +107,29 @@ def activateBlendshapes_Window():
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.floatSliderGrp("weight_FloatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, sliderStep=0.01, value=0, changeCommand=weightSlider_OnValueChanged , dragCommand=weightSlider_OnValueChanged)
+	cmds.floatSliderGrp("weight_floatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, sliderStep=0.01, value=0, changeCommand=weightSlider_OnValueChanged , dragCommand=weightSlider_OnValueChanged)
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.showWindow("activateBlendshapes_Window")
+	cmds.showWindow("activateBlendshapes_window")
 
 	cmds.windowPref(enableAll=True)
 
 def activateBlendshapes():
 	"""
-	This Definition Launches The Activate Blendshapes Main Window.
+	This definition launches the 'Activate Blendshapes' main window.
 	"""
 
-	activateBlendshapes_Window()
+	activateBlendshapes_window()
 
 @stacksHandler
 def IActivateBlendshapes():
 	"""
-	This Definition Is The activateBlendshapes Method Interface.
+	This definition is the activateBlendshapes definition Interface.
 	"""
 
 	activateBlendshapes()
 
 #***********************************************************************************************
-#***	Python End.
+#***	Python end.
 #***********************************************************************************************

@@ -5,23 +5,23 @@ import maya.OpenMaya as OpenMaya
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -32,11 +32,11 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This Definition Returns Transform Of The Provided Node.
+	This definition returns transform of the provided node.
 
-	@param node: Current Object. ( String )
-	@param fullPath: Current Full Path State. ( Boolean )
-	@return: Object Transform. ( String )
+	@param node: Current object. ( String )
+	@param fullPath: Current full path state. ( Boolean )
+	@return: Object transform. ( String )
 	"""
 
 	transform = node
@@ -47,7 +47,7 @@ def getTransform(node, fullPath=True):
 
 def getMVector(vector):
 	"""
-	This Definition Returns An MVector.
+	This definition returns an MVector.
 
 	@param vector: Vector. ( List )
 	@return: MVector ( MVector )
@@ -57,7 +57,7 @@ def getMVector(vector):
 
 def getMMatrix(matrix):
 	"""
-	This Definition Returns An MMatrix.
+	This definition returns an MMatrix.
 
 	@param matrix: matrix. ( List )
 	@return: MMatrix ( MMatrix )
@@ -69,10 +69,10 @@ def getMMatrix(matrix):
 
 def normalize(vector):
 	"""
-	This Definition Returns The Normalized Vector.
+	This definition returns the normalized vector.
 
 	@param vector: Vector. ( List )
-	@return: Normalized Vector ( Tuple )
+	@return: Normalized vector ( Tuple )
 	"""
 
 	mVector = getMVector(vector)
@@ -81,11 +81,11 @@ def normalize(vector):
 
 def vectorMatrixMultiplication(vector, matrix):
 	"""
-	This Definition Returns The Vector Multiplication Between A Vector And A Matrix.
+	This definition returns the vector multiplication between a Vector And a matrix.
 
 	@param vector: Vector. ( List )
 	@param matrix: matrix. ( List )
-	@return: Matrix Multiplied Vector. ( Tuple )
+	@return: Matrix multiplied vector. ( Tuple )
 	"""
 
 	mVector = getMVector(vector)
@@ -95,11 +95,11 @@ def vectorMatrixMultiplication(vector, matrix):
 
 def dot(vectorA, vectorB):
 	"""
-	This Definition Returns The Dot Product Between Two Vectors.
+	This definition returns the dot product between two vectors.
 
 	@param vectorA: Vector A. ( List )
 	@param vectorB: Vector B. ( List )
-	@return: Dot Product. ( Float )
+	@return: Dot product. ( Float )
 	"""
 
 	mVectorA = getMVector(vectorA)
@@ -108,10 +108,10 @@ def dot(vectorA, vectorB):
 
 def getAverageVector(vectors):
 	"""
-	This Definition Returns The Average Vector From A List Of Vectors.
+	This definition returns the average vector from a list of vectors.
 
-	@param vectors: Vectors To Get The Average One. ( List )
-	@return: Average Vector. ( List )
+	@param vectors: Vectors to get the average one. ( List )
+	@return: Average vector. ( List )
 	"""
 
 	averageVector = [0, 0, 0]
@@ -124,9 +124,9 @@ def getAverageVector(vectors):
 
 def makePlanar(components):
 	"""
-	This Definition Planarizes The Provided Components.
+	This definition planarizes the provided Components.
 
-	@param components: Components To Planarizes. ( List )
+	@param components: Components to planarizes. ( List )
 	"""
 
 	object = cmds.ls(components, o=True)
@@ -151,7 +151,7 @@ def makePlanar(components):
 @stacksHandler
 def IMakePlanar():
 	"""
-	This Definition Is The makePlanar Method Interface.
+	This definition is the makePlanar definition Interface.
 	"""
 
 	makePlanar(cmds.ls(sl=True))

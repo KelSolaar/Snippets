@@ -7,23 +7,23 @@ ALIGNEMENT_ANCHORS = None
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -34,7 +34,7 @@ def stacksHandler(object):
 
 def getMVector(vector):
 	"""
-	This Definition Returns An MVector.
+	This definition returns an MVector.
 
 	@param vector: Vector. ( List )
 	@return: MVector ( MVector )
@@ -44,10 +44,10 @@ def getMVector(vector):
 
 def normalize(vector):
 	"""
-	This Definition Returns The Normalized Vector.
+	This definition returns the normalized vector.
 
 	@param vector: Vector. ( List )
-	@return: Normalized Vector ( Tuple )
+	@return: Normalized vector ( Tuple )
 	"""
 
 	mVector = getMVector(vector)
@@ -56,12 +56,12 @@ def normalize(vector):
 
 def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", "Z")):
 	"""
-	This Definition Aligns Provided Components BetweenThe Two Anchors.
+	This definition aligns provided Components between the two anchors.
 
-	@param anchorA: Anchor A. ( String )
-	@param anchorB: Anchor B. ( String )
-	@param components: Components To Align. ( List )
-	@param axis: Collapse Axis. ( Tuple )
+	@param anchorA: Anchor a. ( String )
+	@param anchorB: Anchor b. ( String )
+	@param components: Components to align. ( List )
+	@param axis: Collapse axis. ( Tuple )
 	"""
 
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
@@ -86,11 +86,11 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 		cmds.xform(vertex, ws=True, r=True, t=(xValue, yValue, zValue))
 
 @stacksHandler
-def selectAnchors_Button_OnClicked(state=None):
+def selectAnchors_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The selectAnchors_Button Button When Clicked.
+	This definition is triggered by the selectAnchors_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
 	global ALIGNEMENT_ANCHORS
@@ -99,14 +99,14 @@ def selectAnchors_Button_OnClicked(state=None):
 	if len(selection) == 2:
 		ALIGNEMENT_ANCHORS = (selection[0], selection[1])
 	else:
-		mel.eval("warning(\"%s | Failed To Retrieve Anchors, You Need To Select Exactly Two Objects Or Components!\")" % __name__)
+		mel.eval("warning(\"%s | failed to retrieve anchors, you need to select exactly two objects or components!\")" % __name__)
 
 @stacksHandler
-def alignSelection_Button_OnClicked(state=None):
+def alignSelection_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The alignSelection Button When Clicked.
+	This definition is triggered by the alignSelection_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -114,11 +114,11 @@ def alignSelection_Button_OnClicked(state=None):
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection)
 
 @stacksHandler
-def alignSelectionOnXAxis_Button_OnClicked(state=None):
+def alignSelectionOnXAxis_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The alignSelectionOnXAxis Button When Clicked.
+	This definition is triggered by the alignSelectionOnXAxis_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -126,11 +126,11 @@ def alignSelectionOnXAxis_Button_OnClicked(state=None):
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("X"))
 
 @stacksHandler
-def alignSelectionOnYAxis_Button_OnClicked(state=None):
+def alignSelectionOnYAxis_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The alignSelectionOnYAxis Button When Clicked.
+	This definition is triggered by the alignSelectionOnYAxis_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -138,28 +138,28 @@ def alignSelectionOnYAxis_Button_OnClicked(state=None):
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Y"))
 
 @stacksHandler
-def alignSelectionOnZAxis_Button_OnClicked(state=None):
+def alignSelectionOnZAxis_button_OnClicked(state=None):
 	"""
-	This Definition Is Triggered By The alignSelectionOnZAxis Button When Clicked.
+	This definition is triggered by the alignSelectionOnZAxis_button button when clicked.
 
-	@param state: Button State. ( Boolean )
+	@param state: Button state. ( Boolean )
 	"""
 
 	if ALIGNEMENT_ANCHORS:
 		selection = cmds.ls(sl=True, l=True)
 		selection and alignComponentsBetweenAnchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Z"))
 
-def alignComponents_Window():
+def alignComponents_window():
 	"""
-	This Definition Creates The Align Components Main Window.
+	This definition creates the 'Align Components' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("alignComponents_Window", exists=True)):
-		cmds.deleteUI("alignComponents_Window")
+	if (cmds.window("alignComponents_window", exists=True)):
+		cmds.deleteUI("alignComponents_window")
 
-	cmds.window("alignComponents_Window",
+	cmds.window("alignComponents_window",
 		title="Align Components",
 		width=320)
 
@@ -167,33 +167,33 @@ def alignComponents_Window():
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
-	cmds.button("selectAnchors_Button", label="Select Anchors!", command=selectAnchors_Button_OnClicked)
+	cmds.button("selectAnchors_button", label="Select Anchors!", command=selectAnchors_button_OnClicked)
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.button("alignSelection_Button", label="Align Selection!", command=alignSelection_Button_OnClicked)
+	cmds.button("alignSelection_button", label="Align Selection!", command=alignSelection_button_OnClicked)
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.button("alignSelectionOnXAxis_Button", label="Align Selection On X!", command=alignSelectionOnXAxis_Button_OnClicked)
-	cmds.button("alignSelectionOnYAxis_Button", label="Align Selection On Y!", command=alignSelectionOnYAxis_Button_OnClicked)
-	cmds.button("alignSelectionOnZAxis_Button", label="Align Selection On Z!", command=alignSelectionOnZAxis_Button_OnClicked)
+	cmds.button("alignSelectionOnXAxis_button", label="Align Selection On X!", command=alignSelectionOnXAxis_button_OnClicked)
+	cmds.button("alignSelectionOnYAxis_button", label="Align Selection On Y!", command=alignSelectionOnYAxis_button_OnClicked)
+	cmds.button("alignSelectionOnZAxis_button", label="Align Selection On Z!", command=alignSelectionOnZAxis_button_OnClicked)
 
-	cmds.showWindow("alignComponents_Window")
+	cmds.showWindow("alignComponents_window")
 
 	cmds.windowPref(enableAll=True)
 
 def alignComponents():
 	"""
-	This Definition Launches The Align Components Main Window.
+	This definition launches the 'Align Components' main window.
 	"""
 
-	alignComponents_Window()
+	alignComponents_window()
 
 @stacksHandler
 def IAlignComponents():
 	"""
-	This Definition Is The alignComponents Method Interface.
+	This definition is the alignComponents definition Interface.
 	"""
 
 	alignComponents()

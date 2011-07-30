@@ -14,18 +14,18 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	Common Functions Module.
+	Common functions Module.
 
 **Others:**
 
 """
 
 #***********************************************************************************************
-#***	Python Begin.
+#***	Python begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports.
+#***	External imports.
 #***********************************************************************************************
 import logging
 import maya.cmds as cmds
@@ -34,27 +34,27 @@ import maya.OpenMaya as OpenMaya
 import re
 
 #***********************************************************************************************
-#***	Internal Imports.
+#***	Internal imports.
 #***********************************************************************************************
 import foundations.core as core
 from snippets.globals.constants import Constants
 
 #***********************************************************************************************
-#***	Global Variables.
+#***	Global variables.
 #***********************************************************************************************
 LOGGER = logging.getLogger(Constants.logger)
 
 #***********************************************************************************************
-#***	Module Classes And Definitions.
+#***	Module classes and definitions.
 #***********************************************************************************************
 class MayaLoggingHandler(logging.Handler):
 	"""
-	This Class Provides A Maya Friendly Logging Handler.
+	This class provides a Maya friendly logging handler.
 	"""
 
 	def emit(self, record):
 		"""
-		This Method Emits The Provided Record.
+		This method emits the provided record.
 
 		@param record: Record. ( String )
 		"""
@@ -76,5 +76,5 @@ class MayaLoggingHandler(logging.Handler):
 			OpenMaya.MGlobal.displayInfo(message)
 
 #***********************************************************************************************
-#***	Python End.
+#***	Python end.
 #***********************************************************************************************

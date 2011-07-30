@@ -32,17 +32,17 @@
 	Windows.
 
 **Description:**
-	Combines UVs Shells Siblings Images.
+	Combines UVs shells siblings images.
 
 **Others:**
 
 """
 
 #***********************************************************************************************
-#***	Python Begin.
+#***	Python begin.
 #***********************************************************************************************
 #***********************************************************************************************
-#***	External Imports.
+#***	External imports.
 #***********************************************************************************************
 import nuke
 import glob
@@ -51,11 +51,11 @@ import sys
 import re
 
 #***********************************************************************************************
-#***	Internal Imports.
+#***	Internal imports.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Global Variables.
+#***	Global variables.
 #***********************************************************************************************
 GLOB_FILTER = "tif"
 OUTPUT_FILE_FORMAT = "tif"
@@ -63,18 +63,18 @@ SHELLS_FILTER = "u[0-9]+_v[0-9]+"
 NAMESPACE_SPLITTER = "|"
 
 #***********************************************************************************************
-#***	Main Python Code.
+#***	Main Python code.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Module Classes And Definitions.
+#***	Module classes and definitions.
 #***********************************************************************************************
 def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 	"""
-	This Definition Gets UVs Shells Siblings From Provided Elements.
-	@param elements: Elements To Filter. ( List )
-	@param filter: Shells Identifier Regex Filter. ( String )
-	@return: UVs Shells Siblings. ( Dictionary )
+	This definition gets UVs shells siblings from provided elements.
+	@param elements: Elements to filter. ( List )
+	@param filter: Shells identifier regex filter. ( String )
+	@return: UVs shells siblings. ( Dictionary )
 	"""
 
 	uvsShellsSiblings = {}
@@ -93,21 +93,21 @@ def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 
 def _getReadNode(name="", file=None):
 	"""
-	This Definition Gets A Nuke Read Node.
-	@param name: Node Name. ( String )
-	@param file: Node File Parameter. ( String )
-	@return: Read Node. ( Node )
+	This definition gets a Nuke read node.
+	@param name: Node name. ( String )
+	@param file: Node file parameter. ( String )
+	@return: Read node. ( Node )
 	"""
 
 	return nuke.nodes.Read(file=file, name="{0}_Read".format(name))
 
 def _getMerge2Node(name="", nodes=None, useMask=True):
 	"""
-	This Definition Gets A Nuke Merge2 Node.
-	@param name: Node Name. ( String )
-	@param nodes: Inputs Nodes List. ( List )
-	@param useMask: Input Mask Slot Will Be Connected. ( Boolean )
-	@return: Merge2 Node. ( Node )
+	This definition gets a Nuke merge2 node.
+	@param name: Node name. ( String )
+	@param nodes: Inputs nodes list. ( List )
+	@param useMask: Input mask slot will be connected. ( Boolean )
+	@return: Merge2 node. ( Node )
 	"""
 
 	merge = nuke.nodes.Merge2(name="{0}_Merge".format(name))
@@ -120,11 +120,11 @@ def _getMerge2Node(name="", nodes=None, useMask=True):
 
 def _getWriteNode(name="", file=None, node=None):
 	"""
-	This Definition Gets A Nuke Read Node.
-	@param name: Node Name. ( String )
-	@param file: Node File Parameter. ( String )
-	@param node: Input Node. ( Node )
-	@return: Write Node. ( Node )
+	This definition gets a Nuke read node.
+	@param name: Node name. ( String )
+	@param file: Node file parameter. ( String )
+	@param node: Input node. ( Node )
+	@return: Write node. ( Node )
 	"""
 
 	write = nuke.nodes.Write(file=file, name="{0}_Write".format(name))
@@ -133,10 +133,10 @@ def _getWriteNode(name="", file=None, node=None):
 
 def getSplitextBasename(path):
 	"""
-	This Definition Get The Basename Of A Path Without Its Extension.
+	This definition get the basename of a path without its extension.
 
-	@param path: Path To Extract The Basename Without Extension. ( String )
-	@return: Splitext Basename. ( String )
+	@param path: Path to extract the basename without extension. ( String )
+	@return: Splitext basename. ( String )
 	"""
 
 	basename = os.path.splitext(os.path.basename(os.path.normpath(path)))[0]
@@ -144,13 +144,13 @@ def getSplitextBasename(path):
 
 def getUVsShellsSiblingsTrees(elements, outputDirectory, outputFileFormat, outputPrefix=""):
 	"""
-	This Gets UVs Shells Siblings Trees.
+	This gets UVs shells siblings trees.
 
-	@param elements: Elements To Get UVS Shells Trees Siblings From. ( List )
-	@param outputPrefix: Write Nodes Output Prefix. ( String )
-	@param outputDirectory: Write Nodes Output Directory. ( String )
-	@param outputFileFormat: Write Nodes Output Format. ( String )
-	@return: Write Nodes. ( List )
+	@param elements: Elements to get UVs shells trees siblings from. ( List )
+	@param outputPrefix: Write nodes output prefix. ( String )
+	@param outputDirectory: Write nodes output directory. ( String )
+	@param outputFileFormat: Write nodes output format. ( String )
+	@return: Write nodes. ( List )
 	"""
 
 	writes = []
@@ -165,12 +165,12 @@ def getUVsShellsSiblingsTrees(elements, outputDirectory, outputFileFormat, outpu
 
 def combineImagesWithUVsShellsIdentifiers():
 	"""
-	This Definition Combines Images With UVs Shells Identifiers.
+	This definition combines images with UVs shells identifiers.
 
-	@return: Definition Success. ( List )
+	@return: Definition success. ( List )
 	"""
 
-	directory = nuke.getFilename("Choose A Directory Containing Images With UVs Shells Identifiers To Combine!", multiple=False)
+	directory = nuke.getFilename("Choose a directory containing images with UVs shells identifiers to combine!", multiple=False)
 	if not directory: return
 	if not os.path.exists(directory): return
 
@@ -180,6 +180,6 @@ def combineImagesWithUVsShellsIdentifiers():
 	return getUVsShellsSiblingsTrees(files, directory, OUTPUT_FILE_FORMAT) and True or False
 
 #***********************************************************************************************
-#***	Python End.
+#***	Python end.
 #***********************************************************************************************
 

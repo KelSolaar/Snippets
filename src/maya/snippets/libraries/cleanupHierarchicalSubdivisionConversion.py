@@ -2,23 +2,23 @@ import maya.cmds as cmds
 
 def stacksHandler(object):
 	"""
-	This Decorator Is Used To Handle Various Maya Stacks.
+	This decorator is used to handle various Maya stacks.
 
-	@param object: Python Object. ( Object )
-	@return: Python Function. ( Function )
+	@param object: Python object. ( Object )
+	@return: Python function. ( Function )
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This Decorator Is Used To Handle Various Maya Stacks.
+		This decorator is used to handle various Maya stacks.
 
-		@return: Python Object. ( Python )
+		@return: Python object. ( Python )
 		"""
 
 		cmds.undoInfo(openChunk=True)
 		value = object(*args, **kwargs)
 		cmds.undoInfo(closeChunk=True)
-		# Maya Produces A Weird Command Error If Not Wrapped Here.
+		# Maya produces a weird command error if not wrapped here.
 		try:
 			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
@@ -30,9 +30,9 @@ def stacksHandler(object):
 @stacksHandler
 def cleanupHierarchicalSubdivisionConversion(object):
 	"""
-	This Definition Cleans Maya Hierarchical Polygonal Conversion.
+	This definition cleans Maya hierarchical polygonal conversion.
 
-	@param object : Object To Cleanup. ( String )
+	@param object : Object to cleanup. ( String )
 	"""
 
 	cmds.select(object)
@@ -45,20 +45,20 @@ def cleanupHierarchicalSubdivisionConversion(object):
 	nsideVertices = cmds.ls(sl=True, l=True, fl=True)
 	offendingEdges = []
 	for vertice in nsideVertices:
-	    faces = cmds.ls(cmds.polyListComponentConversion(vertice, fv=True, tf=True), fl=True, l=True)
-	    faces = [face for face in faces if not face in nsidesFaces]
-	    if len(faces) == 2:
-	        faceEdgesA = cmds.ls(cmds.polyListComponentConversion(faces[0], ff=True, te=True), fl=True, l=True)
-	        faceEdgesB = cmds.ls(cmds.polyListComponentConversion(faces[1], ff=True, te=True), fl=True, l=True)
-	        sharedEdge = list(set(faceEdgesA).intersection(faceEdgesB))
-	        offendingEdges.append(sharedEdge[0])
+		faces = cmds.ls(cmds.polyListComponentConversion(vertice, fv=True, tf=True), fl=True, l=True)
+		faces = [face for face in faces if not face in nsidesFaces]
+		if len(faces) == 2:
+			faceEdgesA = cmds.ls(cmds.polyListComponentConversion(faces[0], ff=True, te=True), fl=True, l=True)
+			faceEdgesB = cmds.ls(cmds.polyListComponentConversion(faces[1], ff=True, te=True), fl=True, l=True)
+			sharedEdge = list(set(faceEdgesA).intersection(faceEdgesB))
+			offendingEdges.append(sharedEdge[0])
 	cmds.polySelectSp(offendingEdges, loop=True)
 	cmds.polyDelEdge(cmds.ls(sl=True), cv=True, ch=True)
 	cmds.select(object)
 
 def ICleanupHierarchicalSubdivisionConversion():
 	"""
-	This Definition Is The cleanupHierarchicalSubdivisionConversion Method Interface.
+	This definition is the cleanupHierarchicalSubdivisionConversion definition Interface.
 	"""
 
 	for object in cmds.ls(sl=True, l=True):

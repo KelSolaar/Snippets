@@ -14,22 +14,22 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	Snippets Constants Module.
+	Snippets constants Module.
 
 **Others:**
 
 """
 
 #***********************************************************************************************
-#***	Python Begin.
+#***	Python begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	Global Variables.
+#***	Global variables.
 #***********************************************************************************************
 class RuntimeConstants():
 	"""
-	This Class Is The Runtime Constants Class.
+	This class is the runtime constants class.
 	"""
 
 	loaderUiFile = None
@@ -38,5 +38,5 @@ class RuntimeConstants():
 	resourcesDirectory = None
 
 #***********************************************************************************************
-#***	Python End.
+#***	Python end.
 #***********************************************************************************************

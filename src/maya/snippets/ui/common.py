@@ -14,18 +14,18 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	UI Common Module.
+	UI common Module.
 
 **Others:**
 
 """
 
 #***********************************************************************************************
-#***	Python Begin.
+#***	Python begin.
 #***********************************************************************************************
 
 #***********************************************************************************************
-#***	External Imports.
+#***	External imports.
 #***********************************************************************************************
 import logging
 import platform
@@ -35,25 +35,25 @@ from PyQt4.QtGui import *
 import sip
 
 #***********************************************************************************************
-#***	Internal Imports.
+#***	Internal imports.
 #***********************************************************************************************
 import foundations.core as core
 from snippets.globals.constants import Constants
 
 #***********************************************************************************************
-#***	Global Variables.
+#***	Global variables.
 #***********************************************************************************************
 LOGGER = logging.getLogger( Constants.logger )
 
 #***********************************************************************************************
-#***	Module Classes And Definitions.
+#***	Module classes and definitions.
 #***********************************************************************************************
 @core.executionTrace
 def getMayaWindow():
 	"""
-	This Method Returns Maya Window As QObject.
+	This method returns Maya window as QObject.
 
-	@return: Maya Window. ( QObject )
+	@return: Maya window. ( QObject )
 	"""
 
 	pointer = OpenMayaUI.MQtUtil.mainWindow()
@@ -62,15 +62,15 @@ def getMayaWindow():
 @core.executionTrace
 def messageBox( messageType, title, message ):
 	"""
-	This Definition Provides A Fast GUI Message Box.
+	This definition provides a fast gui message box.
 
-	@param messageType: Message Type. ( String )
-	@param title: Message Box Title. ( String )
-	@param message: Message Content. ( String )
+	@param messageType: Message type. ( String )
+	@param title: Message box title. ( String )
+	@param message: Message content. ( String )
 	"""
 
-	LOGGER.debug( "> Launching messageBox()." )
-	LOGGER.debug( "> Message Type: '%s'.", messageType )
+	LOGGER.debug( "> Launching messagebox()." )
+	LOGGER.debug( "> Message type: '%s'.", messageType )
 	LOGGER.debug( "> Title: '%s'.", title )
 	LOGGER.debug( "> Message: '%s'.", message )
 
@@ -102,7 +102,7 @@ def messageBox( messageType, title, message ):
 @core.executionTrace
 def centerWidgetOnScreen( widget ):
 	"""
-	This Definition Centers The Provided Widget Middle Of The Screen.
+	This definition centers the provided Widget middle of the screen.
 
 	@param widget: Current Widget. ( QWidget )
 	"""
@@ -112,15 +112,15 @@ def centerWidgetOnScreen( widget ):
 @core.executionTrace
 def resizeWidget( widget, size_x, size_y ):
 	"""
-	This Definition Resize The Provided Widget.
+	This definition resize the provided Widget.
 
 	@param widget: Current Widget. ( QWidget )
-	@param size_x: Size X. ( Integer )
-	@param size_y: Size Y. ( Integer )
+	@param size_x: Size x. ( Integer )
+	@param size_y: Size y. ( Integer )
 	"""
 
 	widget.resize( int( size_x ), int( size_y ) )
 
 #***********************************************************************************************
-#***	Python End.
+#***	Python end.
 #***********************************************************************************************
