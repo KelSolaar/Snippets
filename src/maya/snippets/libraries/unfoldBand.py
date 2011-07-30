@@ -1,6 +1,13 @@
 import maya.cmds as cmds
 import maya.mel as mel
 
+__author__ = "Thomas Mansencal"
+__copyright__ = "Copyright (C) 2010 - 2011 - Thomas Mansencal"
+__license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
+__maintainer__ = "Thomas Mansencal"
+__email__ = "thomas.mansencal@gmail.com"
+__status__ = "Production"
+
 def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.

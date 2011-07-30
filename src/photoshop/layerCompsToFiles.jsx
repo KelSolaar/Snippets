@@ -93,20 +93,16 @@ var compJPEGIndex = 3;
 var runButtonID = 1;
 var cancelButtonID = 2;
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Dispatch
 ///////////////////////////////////////////////////////////////////////////////
 
-
 main();
-
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Functions
 ///////////////////////////////////////////////////////////////////////////////
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: main
@@ -207,7 +203,6 @@ function main() {
     	return 'cancel'; // quit, returning 'cancel' (dont localize) makes the actions palette not record our script
     }
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: settingDialog
@@ -348,7 +343,6 @@ function settingDialog(exportInfo)
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.alignment = 'left';
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.add("statictext", undefined, strLabelImageCompression);
 
-
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression = dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.add("dropdownlist");
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression.add("item", strNone);
     dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpCompression.ddCompression.add("item", "LZW");
@@ -386,7 +380,6 @@ function settingDialog(exportInfo)
 		dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpQuality.stQuality.enabled = false;
 		dlgMain.pnlFileType.pnlOptions.grpTIFFOptions.grpQuality.etQuality.enabled = false;
     }
-
 
 	// PDF options
     dlgMain.pnlFileType.pnlOptions.grpPDFOptions = dlgMain.pnlFileType.pnlOptions.add("group");
@@ -443,7 +436,6 @@ function settingDialog(exportInfo)
         case TargaBitsPerPixels.THIRTYTWO:   dlgMain.pnlFileType.pnlOptions.grpTargaOptions.rb32bit.value = true;   break;
         default: dlgMain.pnlFileType.pnlOptions.grpTargaOptions.rb24bit.value = true;   break;
     }
-
 
 	// BMP options
     dlgMain.pnlFileType.pnlOptions.grpBMPOptions = dlgMain.pnlFileType.pnlOptions.add("group");
@@ -568,7 +560,6 @@ function settingDialog(exportInfo)
     return result;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Function: hideAllFileTypePanel
 // Usage: hide all the panels in the common actions
@@ -583,7 +574,6 @@ function hideAllFileTypePanel() {
     dlgMain.pnlFileType.pnlOptions.grpTargaOptions.hide();
     dlgMain.pnlFileType.pnlOptions.grpBMPOptions.hide();
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: initExportInfo
@@ -616,7 +606,6 @@ function initExportInfo(exportInfo)
         exportInfo.fileNamePrefix = app.activeDocument.name; // filename body part
     }
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: saveFile
@@ -684,7 +673,6 @@ function saveFile( docRef, fileNameBody, exportInfo)
     }
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Function: zeroSuppress
 // Usage: return a string padded to digit(s)
@@ -699,7 +687,6 @@ function zeroSuppress (num, digit)
 	}
     return tmp;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: objectToDescriptor
@@ -738,7 +725,6 @@ function objectToDescriptor (o, f) {
 	}
     return d;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: descriptorToObject
@@ -783,7 +769,6 @@ function descriptorToObject (o, d, f) {
 		o = f(o);
 	}
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function: preProcessExportInfo

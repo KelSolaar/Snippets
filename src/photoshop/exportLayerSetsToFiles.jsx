@@ -5,39 +5,35 @@
 //***********************************************************************************************
 
 /**
- * @projectDescription	exportLayerSetsToFiles.jsx - Photoshop CS 3 /4 Export Layer Sets To Files Script.
+ * @projectDescription	exportLayerSetsToFiles.jsx - Photoshop CS 3 /4 Export Layer Sets to files script.
  *
  * MODIFY THIS AT YOUR OWN RISK
  *
  * @author	Thomas Mansencal	thomas.mansencal@gmail.com
  * @os		Windows,  Mac Os X
- * @tasklist	Code Comment.
+ * @tasklist	Code comment.
  */
-//***********************************************************************************************
-//***	Javascript Begin
-//***********************************************************************************************
 
 //***********************************************************************************************
-//***	Global Variables
+//***	Global variables.
 //***********************************************************************************************
 MATCHING_EXPORT = false
 CHANNELS_TYPES = ["Diffuse", "Specular", "Bump"]
 SUPPORTED_WIDTHS = [256, "025k", 512, "05k", 1024, "1k", 2048, "2k", 4096, "4k", 8192, "8k", 16384, "16k"];
 
 //***********************************************************************************************
-//***	Script Classes And Functions
+//***	Script classes and functions.
 //***********************************************************************************************
 
 /**
- * This Function Is The Main Function.
+ * This function is the main function.
  */
 function exportLayerSetsToFiles()
 {
 
-
 	if (app.documents.length <= 0)
 	{
-		alert("ELtF | Error: There Is No Active Document!");
+		alert("ELtF | Error: There is no active document!");
 		return;
 	}
 	try
@@ -47,7 +43,7 @@ function exportLayerSetsToFiles()
 	}
 	catch (e)
 	{
-		alert("ELtF | Error: The Document Has Not Been Saved!");
+		alert("ELtF | Error: The document has not been saved!");
 		return;
 	}
 	if (0 == exportLayerSetsToFiles_UI())
@@ -55,7 +51,7 @@ function exportLayerSetsToFiles()
 }
 
 /**
- * This Function Is The UI Function.
+ * This function is the ui function.
  */
 function exportLayerSetsToFiles_UI()
 {
@@ -66,25 +62,25 @@ function exportLayerSetsToFiles_UI()
 	var brush = ui.graphics.newBrush(ui.graphics.BrushType.THEME_COLOR, "appDialogBackground");
 	ui.graphics.backgroundColor = brush;
 	ui.graphics.disabledBackgroundColor = ui.graphics.backgroundColor;
-	ui.alignChildren = 'fill';
+	ui.alignChildren = "fill";
 
-	ui.Export_Panel = ui.add('panel');
-	ui.Export_Panel.orientation = 'column';
-	ui.Export_Panel.alignChildren = 'fill';
-	ui.Export_Panel.margins = margin;
-	ui.Export_Panel.text = "Export Directory";
+	ui.Export_panel = ui.add("panel");
+	ui.Export_panel.orientation = "column";
+	ui.Export_panel.alignChildren = "fill";
+	ui.Export_panel.margins = margin;
+	ui.Export_panel.text = "Export Directory";
 
-	ui.Browse_Group = ui.Export_Panel.add("group");
-	ui.Browse_Group.orientation = 'row';
+	ui.Browse_group = ui.Export_panel.add("group");
+	ui.Browse_group.orientation = "row";
 
-	ui.Folder_EditText = ui.Browse_Group.add("edittext", undefined, "");
-	ui.Folder_EditText.preferredSize.width = 192;
-	ui.Folder_EditText.text = new Folder(activeDocument.fullName.parent).fsName;
+	ui.Folder_editText = ui.Browse_group.add("edittext", undefined, "");
+	ui.Folder_editText.preferredSize.width = 192;
+	ui.Folder_editText.text = new Folder(activeDocument.fullName.parent).fsName;
 
-	ui.Browse_Button = ui.Browse_Group.add("button", undefined, "...");
-	ui.Browse_Button.onClick = function()
+	ui.Browse_button = ui.Browse_group.add("button", undefined, "...");
+	ui.Browse_button.onClick = function()
 	{
-		exportFolder = new Folder(ui.Folder_EditText.text);
+		exportFolder = new Folder(ui.Folder_editText.text);
 		if (exportFolder.exists)
 			var selectedFolder = Folder.selectDialog(undefined, exportFolder.fsName);
 		else
@@ -92,83 +88,83 @@ function exportLayerSetsToFiles_UI()
 
 		if (selectedFolder != null)
 		{
-			ui.Folder_EditText.text = selectedFolder.fsName;
+			ui.Folder_editText.text = selectedFolder.fsName;
 		}
 	}
 
-	ui.Affixes_Panel = ui.add('panel');
-	ui.Affixes_Panel.orientation = 'column';
-	ui.Affixes_Panel.alignChildren = 'fill';
-	ui.Affixes_Panel.margins = margin;
-	ui.Affixes_Panel.text = "Export Affixes";
+	ui.Affixes_panel = ui.add("panel");
+	ui.Affixes_panel.orientation = "column";
+	ui.Affixes_panel.alignChildren = "fill";
+	ui.Affixes_panel.margins = margin;
+	ui.Affixes_panel.text = "Export Affixes";
 
-	ui.Affixes_Group = ui.Affixes_Panel.add("group");
-	ui.Affixes_Group.orientation = 'row';
+	ui.Affixes_group = ui.Affixes_panel.add("group");
+	ui.Affixes_group.orientation = "row";
 
-	ui.Affixes_Group.add("statictext", undefined, "Prefix:");
-	ui.Prefix_EditText = ui.Affixes_Group.add("edittext", undefined, "");
-	ui.Prefix_EditText.preferredSize.width = 80;
+	ui.Affixes_group.add("statictext", undefined, "Prefix:");
+	ui.Prefix_editText = ui.Affixes_group.add("edittext", undefined, "");
+	ui.Prefix_editText.preferredSize.width = 80;
 	var documentName = activeDocument.fullName.name;
-	ui.Prefix_EditText.text = decodeURI(documentName.substring(0, documentName.indexOf(".")));
+	ui.Prefix_editText.text = decodeURI(documentName.substring(0, documentName.indexOf(".")));
 
-	ui.Affixes_Group.add("statictext", undefined, "Suffix:");
-	ui.Suffix_EditText = ui.Affixes_Group.add("edittext", undefined, "");
-	ui.Suffix_EditText.preferredSize.width = 80;
-	ui.Suffix_EditText.text = getSuffix();
+	ui.Affixes_group.add("statictext", undefined, "Suffix:");
+	ui.Suffix_editText = ui.Affixes_group.add("edittext", undefined, "");
+	ui.Suffix_editText.preferredSize.width = 80;
+	ui.Suffix_editText.text = getSuffix();
 
-	ui.Format_Panel = ui.add('panel');
-	ui.Format_Panel.orientation = 'column';
-	ui.Format_Panel.alignChildren = 'fill';
-	ui.Format_Panel.margins = margin;
-	ui.Format_Panel.text = "Export Format";
+	ui.Format_panel = ui.add("panel");
+	ui.Format_panel.orientation = "column";
+	ui.Format_panel.alignChildren = "fill";
+	ui.Format_panel.margins = margin;
+	ui.Format_panel.text = "Export Format";
 
-	ui.Format_Group = ui.Format_Panel.add("group");
-	ui.Format_Group.orientation = 'row';
-	ui.Format_Group.spacing = 56;
+	ui.Format_group = ui.Format_panel.add("group");
+	ui.Format_group.orientation = "row";
+	ui.Format_group.spacing = 56;
 
-	ui.Format_Group.add("statictext", undefined, "File Format:");
-	ui.Tiff_RadioButton = ui.Format_Group.add("radiobutton", undefined, "Tiff");
-	ui.Tiff_RadioButton.value = true;
-	ui.Jpeg_RadioButton = ui.Format_Group.add("radiobutton", undefined, "Jpeg");
-	ui.Jpeg_RadioButton.value = false;
+	ui.Format_group.add("statictext", undefined, "File Format:");
+	ui.Tiff_radioButton = ui.Format_group.add("radiobutton", undefined, "Tiff");
+	ui.Tiff_radioButton.value = true;
+	ui.Jpeg_radioButton = ui.Format_group.add("radiobutton", undefined, "Jpeg");
+	ui.Jpeg_radioButton.value = false;
 
-	ui.Modal_Group = ui.add("group");
-	ui.Modal_Group.orientation = 'row';
-	ui.Modal_Group.alignment = 'right';
+	ui.Modal_group = ui.add("group");
+	ui.Modal_group.orientation = "row";
+	ui.Modal_group.alignment = "right";
 
-	ui.Export_Button = ui.Modal_Group.add("button", undefined, "Export");
-	ui.Export_Button.onClick = function()
+	ui.Export_button = ui.Modal_group.add("button", undefined, "Export");
+	ui.Export_button.onClick = function()
 	{
-		if (ui.Folder_EditText.text != "")
+		if (ui.Folder_editText.text != "")
 		{
-			exportFolder = new Folder(ui.Folder_EditText.text);
+			exportFolder = new Folder(ui.Folder_editText.text);
 			if (exportFolder.exists)
 			{
-				if (ui.Tiff_RadioButton.value == true)
+				if (ui.Tiff_radioButton.value == true)
 					exportFormat = getExportOptions("Tiff")
 				else
 					exportFormat = getExportOptions("Jpeg")
-				doExportLayerSetsToFile(CHANNELS_TYPES, exportFormat[0], exportFormat[1], exportFolder, ui.Prefix_EditText.text, ui.Suffix_EditText.text)
+				doExportLayerSetsToFile(CHANNELS_TYPES, exportFormat[0], exportFormat[1], exportFolder, ui.Prefix_editText.text, ui.Suffix_editText.text)
 			}
 			else
-				alert("ELtF | Error: Export Directory Doesn't Exists!");
+				alert("ELtF | Error: Export directory doesn"t exists!");
 		}
 		else
-			alert("ELtF | Error: You Need To Choose An Export Directory!");
+			alert("ELtF | Error: You need to choose an export directory!");
 
 	}
 
-	ui.Cancel_Button = ui.Modal_Group.add("button", undefined, "Cancel");
+	ui.Cancel_button = ui.Modal_group.add("button", undefined, "Cancel");
 
 	ui.center();
 	return ui.show();
 }
 
 /**
- * This Function Constructs The ExportOptions Object.
+ * This function constructs the exportOptions object.
  *
- * @param	{String}	exportType	"Current Export Type."
- * @return	{SaveOptions}	"Return A SaveOptions Object."
+ * @param	{String}	exportType	"Current export type."
+ * @return	{SaveOptions}	"Return a saveOptions object."
  */
 function getExportOptions(exportType)
 {
@@ -196,9 +192,9 @@ function getExportOptions(exportType)
 }
 
 /**
- * This Function Gets A Resolution Suffix.
+ * This function gets a resolution suffix.
  *
- * @return	{String}	"Return A Resolution Suffix."
+ * @return	{String}	"Return a resolution suffix."
  */
 function getSuffix()
 {
@@ -212,14 +208,14 @@ function getSuffix()
 }
 
 /**
- * This Function Exports The LayerSets.
+ * This function exports the layerSets.
  *
- * @param	{StringArray}	channelsTypes	"Current Channels Types."
- * @param	{SaveOptions}	exportOptions	"Current Save Options Object."
- * @param	{String}	extension	"Current Extension."
- * @param	{String}	exportFolder	"Current Export Folder."
- * @param	{String}	prefix		"Current Export Prefix."
- * @param	{String}	suffix		"Current Export Suffix."
+ * @param	{StringArray}	channelsTypes	"Current channels types."
+ * @param	{SaveOptions}	exportOptions	"Current save options object."
+ * @param	{String}	extension	"Current extension."
+ * @param	{String}	exportFolder	"Current export folder."
+ * @param	{String}	prefix		"Current export prefix."
+ * @param	{String}	suffix		"Current export suffix."
  */
 function doExportLayerSetsToFile(channelsTypes, exportOptions, extension, exportFolder, prefix, suffix)
 {
@@ -259,7 +255,3 @@ function doExportLayerSetsToFile(channelsTypes, exportOptions, extension, export
 }
 
 exportLayerSetsToFiles();
-
-//***********************************************************************************************
-//***	Javascript End
-//***********************************************************************************************

@@ -21,10 +21,6 @@
 """
 
 #***********************************************************************************************
-#***	Python begin.
-#***********************************************************************************************
-
-#***********************************************************************************************
 #***	External imports.
 #***********************************************************************************************
 import inspect
@@ -72,8 +68,15 @@ from snippets.globals.runtimeConstants import RuntimeConstants
 from snippets.globals.uiConstants import UiConstants
 
 #***********************************************************************************************
-#***	Global variables.
+#***	Module attributes.
 #***********************************************************************************************
+__author__ = "Thomas Mansencal"
+__copyright__ = "Copyright (C) 2010 - 2011 - Thomas Mansencal"
+__license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
+__maintainer__ = "Thomas Mansencal"
+__email__ = "thomas.mansencal@gmail.com"
+__status__ = "Production"
+
 LOGGER = logging.getLogger(Constants.logger)
 
 # Remove existing handlers.
@@ -780,6 +783,3 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			browserProcess = QProcess()
 			browserProcess.startDetached(browserCommand)
 
-#***********************************************************************************************
-#***	Python end.
-#***********************************************************************************************

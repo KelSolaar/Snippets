@@ -3,6 +3,13 @@ import os
 from PythonQt.QtCore import *
 from PythonQt.QtGui import *
 
+__author__ = "Thomas Mansencal"
+__copyright__ = "Copyright (C) 2010 - 2011 - Thomas Mansencal"
+__license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
+__maintainer__ = "Thomas Mansencal"
+__email__ = "thomas.mansencal@gmail.com"
+__status__ = "Production"
+
 def getObjectsFromFiles(files):
 	for file in files:
 		os.path.exists(file) and mari.geo.load(file)
