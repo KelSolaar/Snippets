@@ -148,7 +148,7 @@ class Module(object):
 	@property
 	def name(self):
 		"""
-		This method is the property for the _name attribute.
+		This method is the property for the __name attribute.
 
 		:return: self._name. ( String )
 		"""
@@ -159,7 +159,7 @@ class Module(object):
 	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
 	def name(self, value):
 		"""
-		This method is the setter method for the _name attribute.
+		This method is the setter method for the __name attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -172,7 +172,7 @@ class Module(object):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def name(self):
 		"""
-		This method is the deleter method for the _name attribute.
+		This method is the deleter method for the __name attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "name")
@@ -180,7 +180,7 @@ class Module(object):
 	@property
 	def path(self):
 		"""
-		This method is the property for the _path attribute.
+		This method is the property for the __path attribute.
 
 		:return: self._path. ( String )
 		"""
@@ -191,7 +191,7 @@ class Module(object):
 	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
 	def path(self, value):
 		"""
-		This method is the setter method for the _path attribute.
+		This method is the setter method for the __path attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -205,7 +205,7 @@ class Module(object):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def path(self):
 		"""
-		This method is the deleter method for the _path attribute.
+		This method is the deleter method for the __path attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "path")
@@ -213,7 +213,7 @@ class Module(object):
 	@property
 	def import_(self):
 		"""
-		This method is the property for the _import_ attribute.
+		This method is the property for the __import_ attribute.
 
 		:return: self._import. ( Module )
 		"""
@@ -224,7 +224,7 @@ class Module(object):
 	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
 	def import_(self, value):
 		"""
-		This method is the setter method for the _import_ attribute.
+		This method is the setter method for the __import_ attribute.
 
 		:param value: Attribute value. ( Module )
 		"""
@@ -237,7 +237,7 @@ class Module(object):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def import_(self):
 		"""
-		This method is the deleter method for the _import_ attribute.
+		This method is the deleter method for the __import_ attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "import")
@@ -245,7 +245,7 @@ class Module(object):
 	@property
 	def interfaces(self):
 		"""
-		This method is the property for the _interfaces attribute.
+		This method is the property for the __interfaces attribute.
 
 		:return: self._interfaces. ( Object )
 		"""
@@ -255,7 +255,7 @@ class Module(object):
 	@interfaces.setter
 	def interfaces(self, value):
 		"""
-		This method is the setter method for the _interfaces attribute.
+		This method is the setter method for the __interfaces attribute.
 
 		:param value: Attribute value. ( Object )
 		"""
@@ -266,7 +266,7 @@ class Module(object):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def interfaces(self):
 		"""
-		This method is the deleter method for the _interfaces attribute.
+		This method is the deleter method for the __interfaces attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "interfaces")
@@ -323,7 +323,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def container(self):
 		"""
-		This method is the property for the _container attribute.
+		This method is the property for the __container attribute.
 
 		:return: self._container. ( QObject )
 		"""
@@ -334,7 +334,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def container(self, value):
 		"""
-		This method is the setter method for the _container attribute.
+		This method is the setter method for the __container attribute.
 
 		:param value: Attribute value. ( QObject )
 		"""
@@ -345,7 +345,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def container(self):
 		"""
-		This method is the deleter method for the _container attribute.
+		This method is the deleter method for the __container attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "container")
@@ -353,7 +353,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def modules(self):
 		"""
-		This method is the property for the _modules attribute.
+		This method is the property for the __modules attribute.
 
 		:return: self._modules. ( Dictionary )
 		"""
@@ -364,7 +364,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
 	def modules(self, value):
 		"""
-		This method is the setter method for the _modules attribute.
+		This method is the setter method for the __modules attribute.
 
 		:param value: Attribute value. ( Dictionary )
 		"""
@@ -377,7 +377,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def modules(self):
 		"""
-		This method is the deleter method for the _modules attribute.
+		This method is the deleter method for the __modules attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "modules")
@@ -385,7 +385,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def Informations_textBrowser_defaultText(self):
 		"""
-		This method is the property for the _Informations_textBrowser_defaultText attribute.
+		This method is the property for the __Informations_textBrowser_defaultText attribute.
 
 		:return: self._Informations_textBrowser_defaultText. ( String )
 		"""
@@ -396,7 +396,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def Informations_textBrowser_defaultText(self, value):
 		"""
-		This method is the setter method for the _Informations_textBrowser_defaultText attribute.
+		This method is the setter method for the __Informations_textBrowser_defaultText attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -407,7 +407,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def Informations_textBrowser_defaultText(self):
 		"""
-		This method is the deleter method for the _Informations_textBrowser_defaultText attribute.
+		This method is the deleter method for the __Informations_textBrowser_defaultText attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "Informations_textBrowser_defaultText")
@@ -415,7 +415,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def linuxTextEditors(self):
 		"""
-		This method is the property for the _linuxTextEditors attribute.
+		This method is the property for the __linuxTextEditors attribute.
 
 		:return: self._linuxTextEditors. ( Tuple )
 		"""
@@ -426,7 +426,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def linuxTextEditors(self, value):
 		"""
-		This method is the setter method for the _linuxTextEditors attribute.
+		This method is the setter method for the __linuxTextEditors attribute.
 
 		:param value: Attribute value. ( Tuple )
 		"""
@@ -437,7 +437,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def linuxTextEditors(self):
 		"""
-		This method is the deleter method for the _linuxTextEditors attribute.
+		This method is the deleter method for the __linuxTextEditors attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "linuxTextEditors")
@@ -445,7 +445,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def linuxBrowsers(self):
 		"""
-		This method is the property for the _linuxBrowsers attribute.
+		This method is the property for the __linuxBrowsers attribute.
 
 		:return: self._linuxBrowsers. ( QObject )
 		"""
@@ -456,7 +456,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def linuxBrowsers(self, value):
 		"""
-		This method is the setter method for the _linuxBrowsers attribute.
+		This method is the setter method for the __linuxBrowsers attribute.
 
 		:param value: Attribute value. ( QObject )
 		"""
@@ -467,7 +467,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def linuxBrowsers(self):
 		"""
-		This method is the deleter method for the _linuxBrowsers attribute.
+		This method is the deleter method for the __linuxBrowsers attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "linuxBrowsers")
