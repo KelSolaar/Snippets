@@ -55,8 +55,8 @@ def snapObjectsOnSupport(objects, support):
 	"""
 	This definition snaps objects on support.
 
-	@param objects : Objects to snap. ( List )
-	@param value : Support. ( String )
+	:param objects: Objects to snap. ( List )
+	:param value: Support. ( String )
 	"""
 
 	if cmds.pluginInfo("nearestPointOnMesh", q = True, loaded = False):

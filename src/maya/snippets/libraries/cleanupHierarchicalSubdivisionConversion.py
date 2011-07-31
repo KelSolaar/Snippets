@@ -39,7 +39,7 @@ def cleanupHierarchicalSubdivisionConversion(object):
 	"""
 	This definition cleans Maya hierarchical polygonal conversion.
 
-	@param object : Object to cleanup. ( String )
+	:param object: Object to cleanup. ( String )
 	"""
 
 	cmds.select(object)

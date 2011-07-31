@@ -118,7 +118,7 @@ def selectCreasesEdges(object):
 	"""
 	This definition cleans Maya hierarchical polygonal conversion.
 
-	@param object : Object to select creases edges. ( String )
+	:param object: Object to select creases edges. ( String )
 	"""
 
 	edges = cmds.ls(object +".e[0:" + str(cmds.polyEvaluate(object, edge=True)-1) + "]", fl = True)
