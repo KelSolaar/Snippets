@@ -721,7 +721,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			editCommand = "open -e \"%s\"" % file
 		elif platform.system() == "Linux":
 			environmentVariable = Environment("PATH")
-			paths = environmentVariable.getPath().split(":")
+			paths = environmentVariable.getValue().split(":")
 
 			editorFound = False
 			for editor in self._linuxTextEditors:
@@ -761,7 +761,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			browserCommand = "open \"%s\"" % folder
 		elif platform.system() == "Linux":
 			environmentVariable = Environment("PATH")
-			paths = environmentVariable.getPath().split(":")
+			paths = environmentVariable.getValue().split(":")
 
 			browserFound = False
 			for browser in self._linuxBrowsers:
