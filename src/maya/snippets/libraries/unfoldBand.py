@@ -69,7 +69,7 @@ def unfoldBandUVs(object, divisions=1, history=True):
 @stacksHandler
 def unfoldBand_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the unfoldBand_button button when clicked.
+	This definition is triggered by the **unfoldBand_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""

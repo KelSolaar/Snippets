@@ -200,7 +200,7 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 @stacksHandler
 def solidify_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the solidify_button button when clicked.
+	This definition is triggered by the **solidify_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""

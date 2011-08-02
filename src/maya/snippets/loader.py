@@ -101,7 +101,7 @@ RuntimeConstants.resourcesDirectory = os.path.join(os.path.dirname(__file__), Co
 #***********************************************************************************************
 class Interface(core.Structure):
 	"""
-	This is the Interface class.
+	This is the **Interface** class.
 	"""
 
 	@core.executionTrace
@@ -119,7 +119,7 @@ class Interface(core.Structure):
 
 class Module(object):
 	"""
-	This class is the Module class.
+	This class is the **Module** class.
 	"""
 
 	@core.executionTrace
@@ -478,7 +478,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def initializeUI(self):
 		"""
-		This definition triggers the Methods_listWidget Widget.
+		This definition triggers the **Methods_listWidget** Widget.
 		"""
 
 		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
@@ -496,7 +496,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Methods_listWidget_setWidget(self):
 		"""
-		This definition sets the Methods_listWidget Widget.
+		This definition sets the **Methods_listWidget** Widget.
 		"""
 
 		if self._modules:
@@ -522,7 +522,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Methods_listWidget_setActions(self):
 		"""
-		This method sets the Methods_listWidget actions.
+		This method sets the **Methods_listWidget** Widget actions.
 		"""
 
 		editSnippetAction = QAction("Edit Snippet", self.Methods_listWidget)
@@ -536,7 +536,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Methods_listWidget_editSnippetAction(self):
 		"""
-		This method is triggered by editSnippet action.
+		This method is triggered by **editSnippet** action.
 		"""
 		listWidget = self.Methods_listWidget.currentItem()
 		if hasattr(listWidget, "_datas"):
@@ -546,7 +546,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Methods_listWidget_exploreSnippetFolderAction(self):
 		"""
-		This method is triggered by exploreSnippetFolder action.
+		This method is triggered by **exploreSnippetFolder** action.
 		"""
 
 		listWidget = self.Methods_listWidget.currentItem()
@@ -557,7 +557,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Execute_Snippet_pushButton_OnClicked(self):
 		"""
-		This method is triggered when Execute_Snippet_pushButton is clicked.
+		This method is triggered when **Execute_Snippet_pushButton** is clicked.
 		"""
 
 		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
@@ -566,7 +566,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Reload_Snippets_pushButton_OnClicked(self):
 		"""
-		This method is triggered when Reload_Snippets_pushButton is clicked.
+		This method is triggered when **Reload_Snippets_pushButton** is clicked.
 		"""
 
 		self.getModules()
@@ -575,7 +575,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Methods_listWidget_OnItemSelectionChanged(self):
 		"""
-		This method is triggered when Methods_listWidget selection has changed.
+		This method is triggered when **Methods_listWidget** selection has changed.
 		"""
 
 		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
@@ -615,7 +615,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Methods_listWidget_OnItemDoubleClicked(self, listWidgetItem):
 		"""
-		This method is triggered when Methods_listWidget is double clicked.
+		This method is triggered when **Methods_listWidget** is double clicked.
 
 		:param listWidgetItem: Selected QListWidgetItem. ( QListWidgetItem )
 		"""
@@ -625,7 +625,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Search_lineEdit_OnTextChanged(self, text):
 		"""
-		This method is triggered when Search_lineEdit text changes.
+		This method is triggered when **Search_lineEdit** text changes.
 
 		:param text: Current text value. ( QString )
 		"""

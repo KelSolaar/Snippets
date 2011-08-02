@@ -95,7 +95,7 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 @stacksHandler
 def selectAnchors_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the selectAnchors_button button when clicked.
+	This definition is triggered by the **selectAnchors_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -111,7 +111,7 @@ def selectAnchors_button_OnClicked(state=None):
 @stacksHandler
 def alignSelection_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the alignSelection_button button when clicked.
+	This definition is triggered by the **alignSelection_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -123,7 +123,7 @@ def alignSelection_button_OnClicked(state=None):
 @stacksHandler
 def alignSelectionOnXAxis_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the alignSelectionOnXAxis_button button when clicked.
+	This definition is triggered by the **alignSelectionOnXAxis_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -135,7 +135,7 @@ def alignSelectionOnXAxis_button_OnClicked(state=None):
 @stacksHandler
 def alignSelectionOnYAxis_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the alignSelectionOnYAxis_button button when clicked.
+	This definition is triggered by the **alignSelectionOnYAxis_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -147,7 +147,7 @@ def alignSelectionOnYAxis_button_OnClicked(state=None):
 @stacksHandler
 def alignSelectionOnZAxis_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the alignSelectionOnZAxis_button button when clicked.
+	This definition is triggered by the **alignSelectionOnZAxis_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""

@@ -116,7 +116,7 @@ def getShapes(object, fullPathState = False, noIntermediateState = True):
 @stacksHandler
 def getReferenceObject_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the getReferenceObject_button button when clicked.
+	This definition is triggered by the **getReferenceObject_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -187,7 +187,7 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 @stacksHandler
 def snapIt_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the snapIt_button button when clicked.
+	This definition is triggered by the **snapIt_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""

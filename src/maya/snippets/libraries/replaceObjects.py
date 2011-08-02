@@ -79,7 +79,7 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 @stacksHandler
 def pickSources_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the pickSources_button button when clicked.
+	This definition is triggered by the **pickSources_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -89,7 +89,7 @@ def pickSources_button_OnClicked(state=None):
 @stacksHandler
 def pickTargets_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the pickTargets_button button when clicked.
+	This definition is triggered by the **pickTargets_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -99,7 +99,7 @@ def pickTargets_button_OnClicked(state=None):
 @stacksHandler
 def replaceObjects_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the replaceObjects_button button when clicked.
+	This definition is triggered by the **replaceObjects_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
