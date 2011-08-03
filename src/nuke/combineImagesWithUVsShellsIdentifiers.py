@@ -16,8 +16,8 @@
 #***********************************************************************************************
 #***	External imports.
 #***********************************************************************************************
-import nuke
 import glob
+import nuke
 import os
 import sys
 import re
@@ -39,7 +39,6 @@ __status__ = "Production"
 GLOB_FILTER = "tif"
 OUTPUT_FILE_FORMAT = "tif"
 SHELLS_FILTER = "u[0-9]+_v[0-9]+"
-NAMESPACE_SPLITTER = "|"
 
 #***********************************************************************************************
 #***	Main Python code.
@@ -51,6 +50,7 @@ NAMESPACE_SPLITTER = "|"
 def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 	"""
 	This definition gets UVs shells siblings from provided elements.
+
 	:param elements: Elements to filter. ( List )
 	:param filter: Shells identifier regex filter. ( String )
 	:return: UVs shells siblings. ( Dictionary )
@@ -72,7 +72,8 @@ def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 
 def _getReadNode(name="", file=None):
 	"""
-	This definition gets a Nuke read node.
+	This definition gets a Nuke **Read** node.
+
 	:param name: Node name. ( String )
 	:param file: Node file parameter. ( String )
 	:return: Read node. ( Node )
@@ -82,7 +83,8 @@ def _getReadNode(name="", file=None):
 
 def _getMerge2Node(name="", nodes=None, useMask=True):
 	"""
-	This definition gets a Nuke merge2 node.
+	This definition gets a Nuke **Merge2** node.
+
 	:param name: Node name. ( String )
 	:param nodes: Inputs nodes list. ( List )
 	:param useMask: Input mask slot will be connected. ( Boolean )
@@ -91,7 +93,7 @@ def _getMerge2Node(name="", nodes=None, useMask=True):
 
 	merge = nuke.nodes.Merge2(name="{0}_Merge".format(name))
 
-	nodes = not nodes and [] or nodes
+	nodes = not nodes and [] or list(nodes)
 	not useMask and len(nodes) >= 2 and nodes.insert(2, None)
 	for i, node in enumerate(nodes):
 		merge.setInput(i, node)
@@ -99,7 +101,8 @@ def _getMerge2Node(name="", nodes=None, useMask=True):
 
 def _getWriteNode(name="", file=None, node=None):
 	"""
-	This definition gets a Nuke read node.
+	This definition gets a Nuke **Write** node.
+
 	:param name: Node name. ( String )
 	:param file: Node file parameter. ( String )
 	:param node: Input node. ( Node )
@@ -126,9 +129,9 @@ def getUVsShellsSiblingsTrees(elements, outputDirectory, outputFileFormat, outpu
 	This gets UVs shells siblings trees.
 
 	:param elements: Elements to get UVs shells trees siblings from. ( List )
-	:param outputPrefix: Write nodes output prefix. ( String )
 	:param outputDirectory: Write nodes output directory. ( String )
 	:param outputFileFormat: Write nodes output format. ( String )
+	:param outputPrefix: Write nodes output prefix. ( String )
 	:return: Write nodes. ( List )
 	"""
 
