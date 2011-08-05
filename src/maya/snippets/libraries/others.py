@@ -35,6 +35,23 @@ def stacksHandler(object):
 
 	return stacksHandlerCall
 
+def getShapes(object, fullPathState = False, noIntermediateState = True):
+	"""
+	This definition returns shapes of the provided object.
+
+	:param object: Current object. ( String )
+	:param fullPath: Current full path state. ( Boolean )
+	:param noIntermediate: Current no intermediate state. ( Boolean )
+	:return: Objects shapes. ( List )
+	"""
+
+	objectShapes = []
+	shapes = cmds.listRelatives(object, fullPath = fullPathState, shapes = True, noIntermediate = noIntermediateState)
+	if shapes != None:
+		objectShapes = shapes
+
+	return objectShapes
+
 def transfertVerticesPositionsInUvSpace(sources, target):
 	"""
 	This definition transferts vertices positions from sources to target object in UVs space.
@@ -98,9 +115,9 @@ def IToggleSelectionHighlight():
 	toggleSelectionHighlight()
 
 def toggleGeometriesVisibility():
-	'''
+	"""
 	This definition toggles active modeling panel geometries visibility highlight.
-	'''
+	"""
 
 	panel = cmds.getPanel(withFocus=True)
 	try:
@@ -112,11 +129,32 @@ def toggleGeometriesVisibility():
 		pass
 @stacksHandler
 def IToggleGeometriesVisibility():
-	'''
+	"""
 	This definition is the toggleGeometriesVisibility definition Interface.
-	'''
+	"""
 
 	toggleGeometriesVisibility()
+
+def toggleGeometriesShadingOverride(nodes):
+	"""
+	This definition toggles geometries shading override.
+	
+	:param nodes: Nodes to toggle shading override on. ( List )
+	"""
+
+	for node in nodes:
+		shape = getShapes(node, True)[0]    
+		cmds.setAttr("%s.overrideEnabled" % shape, 1)
+		cmds.setAttr("%s.overrideShading" % shape, not cmds.getAttr("%s.overrideShading" % shape))
+
+@stacksHandler
+def IToggleGeometriesShadingOverride():
+	"""
+	This definition is the toggleGeometriesShadingOverride definition Interface.
+	"""
+	
+	selection = cmds.ls(sl=True, l=True, type="transform")
+	selection = toggleGeometriesShadingOverride(selection)
 
 def splitRingMiddle(nodes):
 	"""
