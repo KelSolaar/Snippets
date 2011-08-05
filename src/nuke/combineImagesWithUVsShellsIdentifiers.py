@@ -11,7 +11,7 @@
 	Combines UVs shells siblings images.
 
 **Others:**
-
+	TODO: Refactor _get'Nuke'Node using \*\*kwargs for optional arguments.
 """
 #***********************************************************************************************
 #***	External imports.
@@ -115,7 +115,7 @@ def _getWriteNode(name="", file=None, node=None):
 
 def getSplitextBasename(path):
 	"""
-	This definition get the basename of a path without its extension.
+	This definition gets the basename of a path without its extension.
 
 	:param path: Path to extract the basename without extension. ( String )
 	:return: Splitext basename. ( String )
@@ -149,7 +149,7 @@ def combineImagesWithUVsShellsIdentifiers():
 	"""
 	This definition combines images with UVs shells identifiers.
 
-	:return: Definition success. ( List )
+	:return: Definition success. ( Boolean )
 	"""
 
 	directory = nuke.getFilename("Choose a directory containing images with UVs shells identifiers to combine!", multiple=False)
