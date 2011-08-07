@@ -123,4 +123,3 @@ def resizeWidget( widget, size_x, size_y ):
 	"""
 
 	widget.resize( int( size_x ), int( size_y ) )
-

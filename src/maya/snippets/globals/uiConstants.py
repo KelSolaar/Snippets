@@ -39,4 +39,3 @@ class UiConstants():
 
 	snippetsLoaderLogo = "Snippets_Loader_Logo.png"
 	searchIcon = "Search_Icon.png"
-

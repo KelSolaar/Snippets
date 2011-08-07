@@ -131,4 +131,3 @@ def IActivateBlendshapes():
 	"""
 
 	activateBlendshapes()
-

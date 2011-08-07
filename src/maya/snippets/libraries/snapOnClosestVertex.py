@@ -244,4 +244,3 @@ def ISnapOnClosestVertex():
 	"""
 
 	snapOnClosestVertex()
-

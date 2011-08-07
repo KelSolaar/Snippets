@@ -77,4 +77,3 @@ class MayaLoggingHandler(logging.Handler):
 			OpenMaya.MGlobal.displayInfo(message)
 		else:
 			OpenMaya.MGlobal.displayInfo(message)
-

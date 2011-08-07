@@ -46,4 +46,3 @@ class Constants():
 	resourcesDirectory = "resources"
 
 	nullObject = "None"
-

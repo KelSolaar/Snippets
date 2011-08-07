@@ -782,4 +782,3 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			LOGGER.debug("> Current browser command: '%s'." % browserCommand)
 			browserProcess = QProcess()
 			browserProcess.startDetached(browserCommand)
-

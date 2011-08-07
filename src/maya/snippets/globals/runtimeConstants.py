@@ -39,4 +39,3 @@ class RuntimeConstants():
 
 	librariesDirectory = None
 	resourcesDirectory = None
-

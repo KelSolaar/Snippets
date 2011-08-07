@@ -160,4 +160,3 @@ def combineImagesWithUVsShellsIdentifiers():
 	files = glob.glob("{0}/*{1}".format(directory, GLOB_FILTER))
 
 	return getUVsShellsSiblingsTrees(files, directory, OUTPUT_FILE_FORMAT) and True or False
-
