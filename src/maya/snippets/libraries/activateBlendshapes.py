@@ -40,6 +40,13 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["stacksHandler",
+			"weightSlider_OnValueChanged",
+			"setWeight",
+			"activateBlendshapes_window",
+			"activateBlendshapes",
+			"IActivateBlendshapes"]
+
 #***********************************************************************************************
 #***	Module classes and definitions.
 #***********************************************************************************************
@@ -63,7 +70,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -84,9 +91,9 @@ def setWeight(value):
 	:param value: Activation value. ( Float )
 	"""
 
-	blendShapesNodes=cmds.ls(type="blendShape")
+	blendShapesNodes = cmds.ls(type="blendShape")
 	for blendShapesNode in blendShapesNodes :
-		targets=cmds.listAttr(blendShapesNode + ".w", m=True)
+		targets = cmds.listAttr(blendShapesNode + ".w", m=True)
 		cmds.setAttr(blendShapesNode + "." + targets[0], value)
 
 def activateBlendshapes_window():
@@ -103,7 +110,7 @@ def activateBlendshapes_window():
 		title="Activate Blendshapes",
 		width=320)
 
-	spacing=5
+	spacing = 5
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 

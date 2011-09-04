@@ -9,6 +9,26 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["USER_HOOK",
+			"EXPORT_DIRECTORY",
+			"FILE_DEFAULT_PREFIX",
+			"FILE_TYPES",
+			"stacksHandler",
+			"getTransform",
+			"setPadding",
+			"getUserExportDirectory",
+			"exportObjectsToFiles",
+			"exportSelectedObjectsToShortObjFiles",
+			"IExportSelectedObjectsToShortObjFiles",
+			"exportSelectedObjectsToLongObjFiles",
+			"IExportSelectedObjectsToLongObjFiles",
+			"exportDefaultObject",
+			"IExportDefaultObject",
+			"exportSelectedObjectToUvLayout",
+			"IExportSelectedObjectToUvLayout",
+			"importDefaultObject",
+			"IImportDefaultObject"]
+
 USER_HOOK = "@user"
 EXPORT_DIRECTORY = "textures/images/%s/objs" % USER_HOOK
 FILE_DEFAULT_PREFIX = "Export"
@@ -34,7 +54,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -97,7 +117,7 @@ def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames
 	exportedFiles = []
 	for i, object in enumerate(objects):
 		if useObjectsNames:
-			basename = useLongNames and object.replace("|","_") or object.split("|")[-1]
+			basename = useLongNames and object.replace("|", "_") or object.split("|")[-1]
 		else:
 			basename = "%s_%s" % (FILE_DEFAULT_PREFIX, setPadding(str(i), 3))
 		name = os.path.join(exportDirectory, "%s.%s" % (basename, FILE_TYPES[exportType]["extension"]))
@@ -144,7 +164,7 @@ def exportDefaultObject(object):
 	This definition exports the default object.
 	"""
 
-	exportObjectsToFiles((object, ), "Obj", False)[0]
+	exportObjectsToFiles((object,), "Obj", False)[0]
 
 @stacksHandler
 def IExportDefaultObject():
@@ -160,7 +180,7 @@ def exportSelectedObjectToUvLayout(object):
 	This definition exports the selected object to uvlayout.
 	"""
 
-	file = exportObjectsToFiles((object, ), "Obj", False)[0]
+	file = exportObjectsToFiles((object,), "Obj", False)[0]
 	os.system("uvlayout %s&" % file)
 
 @stacksHandler

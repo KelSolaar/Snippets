@@ -8,13 +8,13 @@
 #***********************************************************************************************
 
 """
-**RuntimeConstants.py**
+**RuntimeGlobals.py**
 
 **Platform:**
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	Snippets constants Module.
+	Snippets runtime globals Module.
 
 **Others:**
 
@@ -30,9 +30,14 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-class RuntimeConstants():
+__all__ = ["RuntimeConstants"]
+
+#***********************************************************************************************
+#***	Module classes and definitions.
+#***********************************************************************************************
+class RuntimeGlobals():
 	"""
-	This class is the runtime constants class.
+	This class is the runtime globals class.
 	"""
 
 	loaderUiFile = None

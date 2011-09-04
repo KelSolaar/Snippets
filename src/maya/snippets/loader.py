@@ -64,7 +64,7 @@ import foundations.namespace as namespace
 import snippets.libraries.common
 from foundations.environment import Environment
 from foundations.walker import Walker
-from snippets.globals.runtimeConstants import RuntimeConstants
+from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.globals.uiConstants import UiConstants
 
 #***********************************************************************************************
@@ -77,6 +77,8 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Interface", "Module", "Loader"]
+
 LOGGER = logging.getLogger(Constants.logger)
 
 # Remove existing handlers.
@@ -87,14 +89,14 @@ if LOGGER.handlers == []:
 	consoleHandler.setFormatter(core.LOGGING_DEFAULT_FORMATTER)
 	LOGGER.addHandler(consoleHandler)
 
-RuntimeConstants.loaderUiFile = os.path.join(os.path.dirname(__file__), UiConstants.loaderUiFile)
-if os.path.exists(RuntimeConstants.loaderUiFile):
-	Ui_Loader_Setup, Ui_Loader_Type = uic.loadUiType(RuntimeConstants.loaderUiFile)
+RuntimeGlobals.loaderUiFile = os.path.join(os.path.dirname(__file__), UiConstants.loaderUiFile)
+if os.path.exists(RuntimeGlobals.loaderUiFile):
+	Ui_Loader_Setup, Ui_Loader_Type = uic.loadUiType(RuntimeGlobals.loaderUiFile)
 else:
 	ui.common.messageBox("Error", "Error", "'%s' Ui file is not available!" % UiConstants.loaderUiFile)
 
-RuntimeConstants.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
-RuntimeConstants.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
+RuntimeGlobals.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
+RuntimeGlobals.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
 
 #***********************************************************************************************
 #***	Module classes and definitions.
@@ -481,8 +483,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
 		self.Methods_listWidget_setActions()
 
-		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeConstants.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
-		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeConstants.resourcesDirectory, UiConstants.searchIcon)))
+		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
+		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.searchIcon)))
 
 		self.Methods_listWidget_setWidget()
 
@@ -646,7 +648,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This definition gathers the libraries.
 		"""
 
-		walker = Walker(RuntimeConstants.librariesDirectory)
+		walker = Walker(RuntimeGlobals.librariesDirectory)
 		modules = walker.walk(filtersIn=("\.%s$" % Constants.librariesExtension,))
 
 		self._modules = {}

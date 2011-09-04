@@ -8,6 +8,13 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["stacksHandler",
+			"unfoldBandUVs",
+			"unfoldBand_button_OnClicked",
+			"unfoldBand_window",
+			"unfoldBand",
+			"IUnfoldBand"]
+
 def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
@@ -28,7 +35,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -45,7 +52,7 @@ def unfoldBandUVs(object, divisions=1, history=True):
 	"""
 
 	edgesCount = cmds.polyEvaluate(object, edge=True)
-	edges = cmds.ls(object +".e[0:" + str(edgesCount-1) + "]", fl=True, l=True)
+	edges = cmds.ls(object + ".e[0:" + str(edgesCount - 1) + "]", fl=True, l=True)
 
 	cmds.select(object)
 	cmds.polySelectConstraint(m=3, t=0x8000, w=1)
@@ -91,7 +98,7 @@ def unfoldBand_window():
 		title="Unfold Band",
 		width=384)
 
-	spacing=5
+	spacing = 5
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
@@ -101,8 +108,8 @@ def unfoldBand_window():
 
 	cmds.separator(style="single")
 
-	cmds.columnLayout(columnOffset=("left", 140) )
-	cmds.checkBox("keepConstructionHistory_checkBox", label="Keep Construction History",  v=True)
+	cmds.columnLayout(columnOffset=("left", 140))
+	cmds.checkBox("keepConstructionHistory_checkBox", label="Keep Construction History", v=True)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(height=10, style="singleDash")

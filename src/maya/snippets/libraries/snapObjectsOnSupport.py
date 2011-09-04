@@ -7,6 +7,11 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["stacksHandler",
+			"getShapes",
+			"snapObjectsOnSupport",
+			"ISnapObjectsOnSupport"]
+
 def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
@@ -27,7 +32,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -45,7 +50,7 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
 
 	objectShapes = []
-	shapes = cmds.listRelatives(object, fullPath = fullPathState, shapes = True, noIntermediate = noIntermediateState)
+	shapes = cmds.listRelatives(object, fullPath=fullPathState, shapes=True, noIntermediate=noIntermediateState)
 	if shapes != None:
 		objectShapes = shapes
 
@@ -59,12 +64,12 @@ def snapObjectsOnSupport(objects, support):
 	:param value: Support. ( String )
 	"""
 
-	if cmds.pluginInfo("nearestPointOnMesh", q = True, loaded = False):
+	if cmds.pluginInfo("nearestPointOnMesh", q=True, loaded=False):
 		cmds.loadPlugin("nearestPointOnMesh")
 
 	nearestPointOnMesh = cmds.createNode("nearestPointOnMesh")
 	supportShape = getShapes(support)[0]
-	cmds.connectAttr(supportShape + ".outMesh", nearestPointOnMesh + ".inMesh", f = True)
+	cmds.connectAttr(supportShape + ".outMesh", nearestPointOnMesh + ".inMesh", f=True)
 
 	allAxis = ("X", "Y", "Z")
 	for object in objects:
@@ -81,5 +86,5 @@ def ISnapObjectsOnSupport():
 	This definition is the snapObjectsOnSupport definition Interface.
 	"""
 
-	selection = cmds.ls(sl = True, l = True)
+	selection = cmds.ls(sl=True, l=True)
 	selection and snapObjectsOnSupport(selection[:-1], selection[-1])

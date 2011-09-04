@@ -10,6 +10,22 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["stacksHandler",
+			"getTransform",
+			"getMVector",
+			"getMMatrix",
+			"normalize",
+			"vectorMatrixMultiplication",
+			"dot",
+			"getAverageVector",
+			"getAngle",
+			"hasBorderEdges",
+			"solidifyObject",
+			"solidify_button_OnClicked",
+			"solidify_window",
+			"solidify",
+			"ISolidify"]
+
 def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
@@ -30,7 +46,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -166,22 +182,22 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 
 	if	hasBorderEdges(object):
 		transform = getTransform(object)
-		vertices = cmds.ls(cmds.polyListComponentConversion(object, toVertex = True), fl = True)
+		vertices = cmds.ls(cmds.polyListComponentConversion(object, toVertex=True), fl=True)
 
-		barycenters = cmds.xform(vertices, q = True, t = True, ws = True)
+		barycenters = cmds.xform(vertices, q=True, t=True, ws=True)
 		barycenter = getAverageVector([(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
 
-		normals = cmds.polyNormalPerVertex(cmds.polyListComponentConversion(object, toVertexFace = True), q = True, xyz = True)
+		normals = cmds.polyNormalPerVertex(cmds.polyListComponentConversion(object, toVertexFace=True), q=True, xyz=True)
 		normals = [(normals[i], normals[i + 1], normals[i + 2]) for i in range(0, len(normals), 3)]
-		averageNormal = vectorMatrixMultiplication(normalize(getAverageVector(normals)), cmds.xform(transform, query = True, matrix = True, worldSpace = True))
+		averageNormal = vectorMatrixMultiplication(normalize(getAverageVector(normals)), cmds.xform(transform, query=True, matrix=True, worldSpace=True))
 
 		facesCount = cmds.polyEvaluate(object, face=True)
-		faces = object +".f[0:" + str(facesCount-1) + "]"
+		faces = object + ".f[0:" + str(facesCount - 1) + "]"
 		extrude = cmds.polyExtrudeFacet(faces, constructionHistory=1, keepFacesTogether=1, divisions=divisions)
 		cmds.setAttr(extrude[0] + ".localTranslateZ", height)
 		borderEdges = cmds.polyListComponentConversion(faces, te=True, bo=True)
 		cmds.polyMapCut(borderEdges)
-		uvs = cmds.polyListComponentConversion(object +".f[0:" + str(facesCount-1) + "]", toUV=1)
+		uvs = cmds.polyListComponentConversion(object + ".f[0:" + str(facesCount - 1) + "]", toUV=1)
 		cmds.polyEditUV(uvs, u=1, v=0)
 
 		extendedFaces = cmds.ls(faces, fl=True)
@@ -191,7 +207,7 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 
 		borderFaces = list(set(extendedFaces).difference(set(cmds.ls(faces, fl=True))))
 		cmds.select(borderFaces)
-		cmds.polyAutoProjection(borderFaces, t=barycenter, ry=getAngle((0,0,1), averageNormal), rz=getAngle((1,0,0), averageNormal))
+		cmds.polyAutoProjection(borderFaces, t=barycenter, ry=getAngle((0, 0, 1), averageNormal), rz=getAngle((1, 0, 0), averageNormal))
 		uvs = cmds.polyListComponentConversion(borderFaces, toUV=1)
 		cmds.polyEditUV(uvs, u=2, v=0)
 
@@ -222,19 +238,19 @@ def solidify_window():
 		title="Solidify",
 		width=320)
 
-	spacing=5
+	spacing = 5
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.floatSliderGrp("height_floatSliderGrp", label="Height", field=True, minValue=-10, maxValue=10, fieldMinValue=-65535, fieldMaxValue=65535, value=0.1)
+	cmds.floatSliderGrp("height_floatSliderGrp", label="Height", field=True, minValue= -10, maxValue=10, fieldMinValue= -65535, fieldMaxValue=65535, value=0.1)
 	cmds.intSliderGrp("divisions_intSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
 
 	cmds.separator(style="single")
 
-	cmds.columnLayout(columnOffset=("left", 140) )
-	cmds.checkBox("keepConstructionHistory_checkBox", label="Keep Construction History",  v=True)
+	cmds.columnLayout(columnOffset=("left", 140))
+	cmds.checkBox("keepConstructionHistory_checkBox", label="Keep Construction History", v=True)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(height=10, style="singleDash")

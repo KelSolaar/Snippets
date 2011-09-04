@@ -7,6 +7,10 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["stacksHandler",
+			"cleanupHierarchicalSubdivisionConversion",
+			"ICleanupHierarchicalSubdivisionConversion"]
+
 def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
@@ -27,7 +31,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value

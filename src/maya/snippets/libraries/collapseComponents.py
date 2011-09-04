@@ -11,6 +11,18 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["stacksHandler",
+			"getTransform",
+			"getAverageVector",
+			"collapseComponents",
+			"ICollapseComponents",
+			"collapseComponentsOnX",
+			"ICollapseComponentsOnX",
+			"collapseComponentsOnY",
+			"ICollapseComponentsOnY",
+			"collapseComponentsOnZ",
+			"ICollapseComponentsOnZ"]
+
 def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
@@ -31,7 +43,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -66,7 +78,7 @@ def getAverageVector(vectors):
 		for i in range(3):
 			averageVector[i] += vector[i]
 	for i in range(3):
-		averageVector[i]=averageVector[i] / len(vectors)
+		averageVector[i] = averageVector[i] / len(vectors)
 	return averageVector
 
 def collapseComponents(components, axis=("X", "Y", "Z")):
@@ -78,7 +90,7 @@ def collapseComponents(components, axis=("X", "Y", "Z")):
 	"""
 
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
-	barycenters=[]
+	barycenters = []
 	barycenters.extend((cmds.xform(vertice, q=True, t=True, ws=True) for vertice in vertices))
 	barycenter = getAverageVector(barycenters)
 	for vertex in vertices:
@@ -103,7 +115,7 @@ def collapseComponentsOnX():
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and collapseComponents(selection, axis=("X", ))
+	selection and collapseComponents(selection, axis=("X",))
 
 @stacksHandler
 def ICollapseComponentsOnX():
@@ -119,7 +131,7 @@ def collapseComponentsOnY():
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and collapseComponents(selection, axis=("Y", ))
+	selection and collapseComponents(selection, axis=("Y",))
 
 @stacksHandler
 def ICollapseComponentsOnY():
@@ -135,7 +147,7 @@ def collapseComponentsOnZ():
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and collapseComponents(selection, axis=("Z", ))
+	selection and collapseComponents(selection, axis=("Z",))
 
 @stacksHandler
 def ICollapseComponentsOnZ():

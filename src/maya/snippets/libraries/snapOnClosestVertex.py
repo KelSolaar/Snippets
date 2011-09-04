@@ -39,8 +39,22 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-TOLERANCE=64
-MAXIMUM_SEARCH_DISTANCE=2**32-1
+__all__ = ["TOLERANCE",
+			"MAXIMUM_SEARCH_DISTANCE",
+			"stacksHandler",
+			"getMPoint",
+			"norme",
+			"getShapes",
+			"getReferenceObject_button_OnClicked",
+			"loadPlugin",
+			"snapComponentsOnClosestVertex",
+			"snapIt_button_OnClicked",
+			"snapOnClosestVertex_window",
+			"snapOnClosestVertex",
+			"ISnapOnClosestVertex"]
+
+TOLERANCE = 64
+MAXIMUM_SEARCH_DISTANCE = 2 ** 32 - 1
 
 #***********************************************************************************************
 #***	Module classes and definitions.
@@ -65,7 +79,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -96,7 +110,7 @@ def norme(pointA, pointB):
 	mVector = mPointA - mPointB
 	return mVector.length()
 
-def getShapes(object, fullPathState = False, noIntermediateState = True):
+def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
 	This definition returns shapes of the provided object.
 
@@ -107,7 +121,7 @@ def getShapes(object, fullPathState = False, noIntermediateState = True):
 	"""
 
 	objectShapes = []
-	shapes = cmds.listRelatives(object, fullPath = fullPathState, shapes = True, noIntermediate = noIntermediateState)
+	shapes = cmds.listRelatives(object, fullPath=fullPathState, shapes=True, noIntermediate=noIntermediateState)
 	if shapes != None:
 		objectShapes = shapes
 
@@ -151,18 +165,18 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 
 	loadPlugin("nearestPointOnMesh")
 
-	nearestPointOnMeshNode=mel.eval("nearestPointOnMesh " + referenceObject)
+	nearestPointOnMeshNode = mel.eval("nearestPointOnMesh " + referenceObject)
 
 	for vertex in vertices :
 		if cmds.progressBar(progressBar, query=True, isCancelled=True) :
 			break
 
-		closestDistance=MAXIMUM_SEARCH_DISTANCE
+		closestDistance = MAXIMUM_SEARCH_DISTANCE
 
 		vertexPosition = cmds.pointPosition(vertex, world=True)
 		cmds.setAttr(nearestPointOnMeshNode + ".inPosition", vertexPosition[0], vertexPosition[1], vertexPosition[2])
 		associatedFaceId = cmds.getAttr(nearestPointOnMeshNode + ".nearestFaceIndex")
-		vtxsFaces = cmds.filterExpand(cmds.polyListComponentConversion((referenceObject + ".f[" + str(associatedFaceId) + "]"), fromFace=True,	toVertexFace=True ), sm=70, expand=True)
+		vtxsFaces = cmds.filterExpand(cmds.polyListComponentConversion((referenceObject + ".f[" + str(associatedFaceId) + "]"), fromFace=True, 	toVertexFace=True), sm=70, expand=True)
 
 		closestPosition = []
 		for vtxsFace in vtxsFaces :
@@ -172,8 +186,8 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 			distance = norme(vertexPosition, associatedVtxPosition)
 
 			if distance < closestDistance :
-				closestDistance=distance
-				closestPosition=associatedVtxPosition
+				closestDistance = distance
+				closestPosition = associatedVtxPosition
 
 			if closestDistance < tolerance :
 				cmds.move(closestPosition[0], closestPosition[1], closestPosition[2], vertex, worldSpace=True)

@@ -9,6 +9,17 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["stacksHandler",
+			"getMPoint",
+			"norme",
+			"renameTargetsFromClosestSources",
+			"pickSources_button_OnClicked",
+			"pickTargets_button_OnClicked",
+			"renameFromClosest_button_OnClicked",
+			"renameFromClosest_window",
+			"renameFromClosest",
+			"IRenameFromClosest"]
+
 def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
@@ -29,7 +40,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -70,7 +81,7 @@ def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
 	"""
 
 	for target in targets:
-		targetBarycenter=cmds.objectCenter(target, gl=True)
+		targetBarycenter = cmds.objectCenter(target, gl=True)
 		normes = {}
 		for source in sources:
 			normes[source] = norme(targetBarycenter, cmds.objectCenter(source, gl=True))
@@ -124,19 +135,19 @@ def renameFromClosest_window():
 		title="Rename From Closest",
 		width=320)
 
-	spacing=5
+	spacing = 5
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Sources:")
-	sources_textField=cmds.textField("sources_textField")
+	sources_textField = cmds.textField("sources_textField")
 	cmds.button("pickSources_button", label="Pick Sources!", command=pickSources_button_OnClicked)
 	cmds.setParent(topLevel=True)
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Targets:")
-	targets_textField=cmds.textField("targets_textField")
+	targets_textField = cmds.textField("targets_textField")
 	cmds.button("pickTargets_button", label="Pick Targets!", command=pickTargets_button_OnClicked)
 	cmds.setParent(topLevel=True)
 

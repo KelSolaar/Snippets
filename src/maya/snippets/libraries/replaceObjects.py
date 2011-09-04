@@ -8,6 +8,15 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["stacksHandler",
+			"replaceTargetsObjectsWithSources",
+			"pickSources_button_OnClicked",
+			"pickTargets_button_OnClicked",
+			"replaceObjects_button_OnClicked",
+			"replaceObjects_window",
+			"replaceObjects",
+			"IReplaceObjects"]
+
 def stacksHandler(object):
 	"""
 	This decorator is used to handle various Maya stacks.
@@ -28,14 +37,14 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
 
 	return stacksHandlerCall
 
-def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=False, asInstance=False, deleteTargets = True):
+def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=False, asInstance=False, deleteTargets=True):
 	"""
 	This definition replaces the targets with sources.
 
@@ -50,7 +59,7 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 	duplicatedObjects = []
 	for target in targets:
 		if not asInstance:
-			duplicatedObject = cmds.duplicate(sources[random.randrange(0, len(sources))], rr = True)[0]
+			duplicatedObject = cmds.duplicate(sources[random.randrange(0, len(sources))], rr=True)[0]
 		else:
 			duplicatedObject = cmds.instance(sources[random.randrange(0, len(sources))])[0]
 
@@ -58,7 +67,7 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 		if not inPlace:
 			if usePivot:
 				components = ("rx", "ry", "rz", "sx", "sy", "sz")
-				pivot = cmds.xform(target, query = True, worldSpace = True, rotatePivot = True)
+				pivot = cmds.xform(target, query=True, worldSpace=True, rotatePivot=True)
 				for i, component  in enumerate(("tx", "ty", "tz")):
 					cmds.setAttr(duplicatedObject + "." + component, pivot[i])
 			else:
@@ -71,7 +80,7 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 
 	if duplicatedObjects:
 		if not inPlace:
-			duplicationGrp = cmds.group(em = True)
+			duplicationGrp = cmds.group(em=True)
 			for duplicatedObject in duplicatedObjects:
 				cmds.parent(duplicatedObject, duplicationGrp)
 			cmds.rename(duplicationGrp, "duplication_grp")
@@ -107,7 +116,7 @@ def replaceObjects_button_OnClicked(state=None):
 	sources = [source for source in cmds.textField("sources_textField", query=True, text=True).split(", ") if cmds.objExists(source)]
 	targets = [target for target in cmds.textField("targets_textField", query=True, text=True).split(", ")	if cmds.objExists(target)]
 
-	replaceTargetsObjectsWithSources(sources, targets, cmds.checkBox("duplicateInPlace_checkBox", q=True, v=True), cmds.checkBox("useTargetsPivots_checkBox", q=True, v=True),	cmds.checkBox("duplicateAsInstances_checkBox", q=True, v=True))
+	replaceTargetsObjectsWithSources(sources, targets, cmds.checkBox("duplicateInPlace_checkBox", q=True, v=True), cmds.checkBox("useTargetsPivots_checkBox", q=True, v=True), 	cmds.checkBox("duplicateAsInstances_checkBox", q=True, v=True))
 
 def replaceObjects_window():
 	"""
@@ -123,29 +132,29 @@ def replaceObjects_window():
 		title="Replace Objects",
 		width=320)
 
-	spacing=5
+	spacing = 5
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Sources:")
-	sources_textField=cmds.textField("sources_textField")
+	sources_textField = cmds.textField("sources_textField")
 	cmds.button("pickSources_button", label="Pick Sources!", command=pickSources_button_OnClicked)
 	cmds.setParent(topLevel=True)
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Targets:")
-	targets_textField=cmds.textField("targets_textField")
+	targets_textField = cmds.textField("targets_textField")
 	cmds.button("pickTargets_button", label="Pick Targets!", command=pickTargets_button_OnClicked)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")
 
-	cmds.columnLayout(columnOffset=("left", 40) )
+	cmds.columnLayout(columnOffset=("left", 40))
 	cmds.checkBox("duplicateInPlace_checkBox", label="Duplicate In Place")
 	cmds.checkBox("useTargetsPivots_checkBox", label="Use Targets Pivots", v=True)
 	cmds.checkBox("duplicateAsInstances_checkBox", label="Duplicate As Instances")
-	cmds.checkBox("deleteTargets_checkBox", label="Delete Targets",	 v=True)
+	cmds.checkBox("deleteTargets_checkBox", label="Delete Targets", 	 v=True)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")

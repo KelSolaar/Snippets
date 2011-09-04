@@ -10,6 +10,20 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
+__all__ = ["ALIGNEMENT_ANCHORS",
+			"stacksHandler",
+			"getMVector",
+			"normalize",
+			"alignComponentsBetweenAnchors",
+			"selectAnchors_button_OnClicked",
+			"alignSelection_button_OnClicked",
+			"alignSelectionOnXAxis_button_OnClicked",
+			"alignSelectionOnYAxis_button_OnClicked",
+			"alignSelectionOnZAxis_button_OnClicked",
+			"alignComponents_window",
+			"alignComponents",
+			"IAlignComponents"]
+
 ALIGNEMENT_ANCHORS = None
 
 def stacksHandler(object):
@@ -32,7 +46,7 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")"% (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
@@ -82,13 +96,13 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 		vectorB = [pointC_ - pointA_ for pointA_, pointC_ in zip(pointA, pointC)]
 		mVectorA = getMVector(vectorA)
 		mVectorB = getMVector(vectorB)
-		dot = mVectorB*mVectorA
+		dot = mVectorB * mVectorA
 		mVectorA *= dot
 		offset = mVectorB - mVectorA
 
-		xValue = "X" in axis and -offset.x or 0
-		yValue = "Y" in axis and -offset.y or 0
-		zValue = "Z" in axis and -offset.z or 0
+		xValue = "X" in axis and - offset.x or 0
+		yValue = "Y" in axis and - offset.y or 0
+		zValue = "Z" in axis and - offset.z or 0
 
 		cmds.xform(vertex, ws=True, r=True, t=(xValue, yValue, zValue))
 
@@ -170,7 +184,7 @@ def alignComponents_window():
 		title="Align Components",
 		width=320)
 
-	spacing=5
+	spacing = 5
 
 	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
