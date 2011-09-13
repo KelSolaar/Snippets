@@ -477,7 +477,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def initializeUI(self):
 		"""
-		This definition triggers the **Methods_listWidget** Widget.
+		This method triggers the **Methods_listWidget** Widget.
 		"""
 
 		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
@@ -495,7 +495,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Methods_listWidget_setWidget(self):
 		"""
-		This definition sets the **Methods_listWidget** Widget.
+		This method sets the **Methods_listWidget** Widget.
 		"""
 
 		if self._modules:
@@ -634,7 +634,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def getMethodName(self, name):
 		"""
-		This definition gets the method name from the Interface.
+		This method gets the method name from the Interface.
 
 		:param name: Interface name. ( String )
 		:return: Method name. ( String )
@@ -645,7 +645,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def gatherLibraries(self):
 		"""
-		This definition gathers the libraries.
+		This method gathers the libraries.
 		"""
 
 		walker = Walker(RuntimeGlobals.librariesDirectory)
@@ -662,7 +662,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.exceptionsHandler(None, False, ImportError)
 	def getInterfaces(self):
 		"""
-		This definition gets the interfaces.
+		This method gets the interfaces.
 		"""
 
 		for module in self._modules.values():
@@ -681,7 +681,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def getModules(self):
 		"""
-		This definition gets the Modules.
+		This method gets the Modules.
 		"""
 
 		self.gatherLibraries()
@@ -690,7 +690,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def executeSnippet(self):
 		"""
-		This definition triggers the selected Snippet execution.
+		This method triggers the selected Snippet execution.
 		"""
 
 		listWidget = self.Methods_listWidget.currentItem()
