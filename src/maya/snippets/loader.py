@@ -63,7 +63,7 @@ import foundations.strings as strings
 import foundations.namespace as namespace
 import snippets.libraries.common
 from foundations.environment import Environment
-from foundations.walker import Walker
+from foundations.walkers import OsWalker
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.globals.uiConstants import UiConstants
 
@@ -648,8 +648,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This method gathers the libraries.
 		"""
 
-		walker = Walker(RuntimeGlobals.librariesDirectory)
-		modules = walker.walk(filtersIn=("\.%s$" % Constants.librariesExtension,))
+		osWalker = OsWalker(RuntimeGlobals.librariesDirectory)
+		modules = osWalker.walk(filtersIn=("\.%s$" % Constants.librariesExtension,))
 
 		self._modules = {}
 		for name, path in modules.items():
