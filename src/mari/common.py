@@ -39,7 +39,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["fillPaintBuffer", "projectColor", "projectBlack", "projectWhite"]
+__all__ = ["fillPaintBuffer", "projectColor", "projectBlack", "projectWhite", "getSelectedPatches", "displaySelectedPatches"]
 
 def fillPaintBuffer(color):
 	"""
@@ -112,6 +112,8 @@ def displaySelectedPatches():
 	return True
 
 mari.menus.addAction(mari.actions.create("Show Selected Patches ...", "import common;reload(common);common.displaySelectedPatches()"), "MainWindow/&MPC/")
+mari.menus.addSeparator("MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Project Black", "import common;reload(common);common.projectBlack()"), "MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Project White", "import common;reload(common);common.projectWhite()"), "MainWindow/&MPC/")
+mari.menus.addSeparator("MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Clear History Queue ...", "mari.history.clear()"), "MainWindow/&MPC/")
