@@ -23,6 +23,7 @@
 #***********************************************************************************************
 #***	External imports.
 #***********************************************************************************************
+import inspect
 import mari
 import os
 from PythonQt.QtCore import *
@@ -84,7 +85,33 @@ def projectWhite():
 
 	return projectColor(QColor(255, 255, 255,255))
 
+def getSelectedPatches():
+	"""
+	This definition returns current selected patches.
+
+	:return: Selected patches. ( List )
+	"""
+
+	patches = []
+	for patch in mari.geo.current().patches():
+    		if patch.isSelected():
+			patches.append(patch.name())
+	return sorted(patches)
+
+def displaySelectedPatches():
+	"""
+	This definition displays current selected patches.
+
+	:return: Definition success. ( Boolean )
+	"""
+	
+	patches = getSelectedPatches()
+	print "%s | Current object: '%s'" % (inspect.getmodulename(__file__), mari.geo.current().name())
+	print "%s | Selected patches: '%s'" % (inspect.getmodulename(__file__), patches)
+	mari.utils.misc.message("Current object: '%s'\nSelected patches: '%s'" % (mari.geo.current().name(), ", ".join(patches)), title="Current Object Selected Patches")
+	return True
+
+mari.menus.addAction(mari.actions.create("Show Selected Patches ...", "import common;reload(common);common.displaySelectedPatches()"), "MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Project Black", "import common;reload(common);common.projectBlack()"), "MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Project White", "import common;reload(common);common.projectWhite()"), "MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Clear History Queue ...", "mari.history.clear()"), "MainWindow/&MPC/")
-
