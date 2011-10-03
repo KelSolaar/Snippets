@@ -39,7 +39,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["fillPaintBuffer", "projectColor", "projectBlack", "projectWhite", "getSelectedPatches", "displaySelectedPatches"]
+__all__ = ["fillPaintBuffer", "projectColor", "projectBlack", "projectWhite", "getSelectedPatches", "displaySelectedPatches", "playblastTimeRange"]
 
 def fillPaintBuffer(color):
 	"""
@@ -111,7 +111,35 @@ def displaySelectedPatches():
 	mari.utils.misc.message("Current object: '%s'\nSelected patches: '%s'" % (mari.geo.current().name(), ", ".join(patches)), title="Current Object Selected Patches")
 	return True
 
+def playblastTimeRange():
+	"""
+	This definition playblasts current time range.
+
+	:return: Definition success. ( Boolean )
+	"""
+
+	mari.actions.find('/Mari/Canvas/Screenshot settings').trigger()
+	
+	currentFrame = mari.clock.frame()
+	startFrame = mari.clock.startFrame()
+	endFrame = mari.clock.stopFrame()
+
+	mari.clock.setFrame(startFrame)
+	#mari.app.startProcessing("Playblasting ...", endFrame - startFrame)
+	mari.app.processEvents()
+	for i in range(startFrame, endFrame):
+		mari.actions.find('/Mari/Canvas/Take Screenshot').trigger()
+		mari.clock.stepForward()
+		mari.app.processEvents()
+		#mari.app.stepProgress()
+	#mari.app.stopProcessing()
+	mari.clock.setFrame(currentFrame)
+
+	return True
+
 mari.menus.addAction(mari.actions.create("Show Selected Patches ...", "import common;reload(common);common.displaySelectedPatches()"), "MainWindow/&MPC/")
+mari.menus.addSeparator("MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create("Playblast Time Range ...", "import common;reload(common);common.playblastTimeRange()"), "MainWindow/&MPC/")
 mari.menus.addSeparator("MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Project Black", "import common;reload(common);common.projectBlack()"), "MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Project White", "import common;reload(common);common.projectWhite()"), "MainWindow/&MPC/")
