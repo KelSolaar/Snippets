@@ -556,7 +556,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Execute_Snippet_pushButton_OnClicked(self):
 		"""
-		This method is triggered when **Execute_Snippet_pushButton** is clicked.
+		This method is triggered when **Execute_Snippet_pushButton** Widget is clicked.
 		"""
 
 		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
@@ -565,7 +565,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def Reload_Snippets_pushButton_OnClicked(self):
 		"""
-		This method is triggered when **Reload_Snippets_pushButton** is clicked.
+		This method is triggered when **Reload_Snippets_pushButton** Widget is clicked.
 		"""
 
 		self.getModules()
