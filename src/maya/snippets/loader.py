@@ -307,14 +307,14 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.getModules()
 
 		# --- Setting up ui. ---
-		self.initializeUI()
+		self.__initializeUI()
 
 		# -- Loader Signals / Slots. ---
-		self.connect(self.Execute_Snippet_pushButton, SIGNAL("clicked()"), self.Execute_Snippet_pushButton_OnClicked)
-		self.connect(self.Reload_Snippets_pushButton, SIGNAL("clicked()"), self.Reload_Snippets_pushButton_OnClicked)
-		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.Methods_listWidget_OnItemSelectionChanged)
-		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.Methods_listWidget_OnItemDoubleClicked)
-		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.Search_lineEdit_OnTextChanged)
+		self.connect(self.Execute_Snippet_pushButton, SIGNAL("clicked()"), self.__Execute_Snippet_pushButton__clicked)
+		self.connect(self.Reload_Snippets_pushButton, SIGNAL("clicked()"), self.__Reload_Snippets_pushButton__clicked)
+		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.__Methods_listWidget__itemSelectionChanged)
+		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.__Methods_listWidget__itemDoubleClicked)
+		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.__Search_lineEdit__textChanged)
 
 	#***********************************************************************************************
 	#***	Attributes properties.
@@ -475,25 +475,25 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	#***	Class methods.
 	#***********************************************************************************************
 	@core.executionTrace
-	def initializeUI(self):
+	def __initializeUI(self):
 		"""
 		This method triggers the **Methods_listWidget** Widget.
 		"""
 
 		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
-		self.Methods_listWidget_setActions()
+		self.__Methods_listWidget_setActions()
 
 		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
 		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.searchIcon)))
 
-		self.Methods_listWidget_setWidget()
+		self.__Methods_listWidget_setWidget()
 
 		self.Informations_textBrowser.setText(self._Informations_textBrowser_defaultText)
 
 		self.Loader_splitter.setSizes([16777215, 0])
 
 	@core.executionTrace
-	def Methods_listWidget_setWidget(self):
+	def __Methods_listWidget_setWidget(self):
 		"""
 		This method sets the **Methods_listWidget** Widget.
 		"""
@@ -519,21 +519,21 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			self.Methods_listWidget.sortItems(Qt.AscendingOrder)
 
 	@core.executionTrace
-	def Methods_listWidget_setActions(self):
+	def __Methods_listWidget_setActions(self):
 		"""
 		This method sets the **Methods_listWidget** Widget actions.
 		"""
 
 		editSnippetAction = QAction("Edit Snippet", self.Methods_listWidget)
-		self.connect(editSnippetAction, SIGNAL("triggered()"), self.Methods_listWidget_editSnippetAction)
+		self.connect(editSnippetAction, SIGNAL("triggered()"), self.__Methods_listWidget_editSnippetAction)
 		self.Methods_listWidget.addAction(editSnippetAction)
 
 		exploreSnippetFolderAction = QAction("Explore Snippet Folder", self.Methods_listWidget)
-		self.connect(exploreSnippetFolderAction, SIGNAL("triggered()"), self.Methods_listWidget_exploreSnippetFolderAction)
+		self.connect(exploreSnippetFolderAction, SIGNAL("triggered()"), self.__Methods_listWidget_exploreSnippetFolderAction)
 		self.Methods_listWidget.addAction(exploreSnippetFolderAction)
 
 	@core.executionTrace
-	def Methods_listWidget_editSnippetAction(self):
+	def __Methods_listWidget_editSnippetAction(self):
 		"""
 		This method is triggered by **editSnippet** action.
 		"""
@@ -543,7 +543,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			self.editProvidedfile(module.import_.__file__.replace(Constants.librariesCompiledExtension, Constants.librariesExtension))
 
 	@core.executionTrace
-	def Methods_listWidget_exploreSnippetFolderAction(self):
+	def __Methods_listWidget_exploreSnippetFolderAction(self):
 		"""
 		This method is triggered by **exploreSnippetFolder** action.
 		"""
@@ -554,7 +554,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			self.exploreProvidedFolder(os.path.dirname(module.import_.__file__))
 
 	@core.executionTrace
-	def Execute_Snippet_pushButton_OnClicked(self):
+	def __Execute_Snippet_pushButton__clicked(self):
 		"""
 		This method is triggered when **Execute_Snippet_pushButton** Widget is clicked.
 		"""
@@ -563,18 +563,18 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			self.executeSnippet()
 
 	@core.executionTrace
-	def Reload_Snippets_pushButton_OnClicked(self):
+	def __Reload_Snippets_pushButton__clicked(self):
 		"""
 		This method is triggered when **Reload_Snippets_pushButton** Widget is clicked.
 		"""
 
 		self.getModules()
-		self.Methods_listWidget_setWidget()
+		self.__Methods_listWidget_setWidget()
 
 	@core.executionTrace
-	def Methods_listWidget_OnItemSelectionChanged(self):
+	def __Methods_listWidget__itemSelectionChanged(self):
 		"""
-		This method is triggered when **Methods_listWidget** selection has changed.
+		This method is triggered when **Methods_listWidget** Widget selection has changed.
 		"""
 
 		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
@@ -612,9 +612,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Informations_textBrowser.setText(content)
 
 	@core.executionTrace
-	def Methods_listWidget_OnItemDoubleClicked(self, listWidgetItem):
+	def __Methods_listWidget__itemDoubleClicked(self, listWidgetItem):
 		"""
-		This method is triggered when **Methods_listWidget** is double clicked.
+		This method is triggered when **Methods_listWidget** Widget is double clicked.
 
 		:param listWidgetItem: Selected QListWidgetItem. ( QListWidgetItem )
 		"""
@@ -622,14 +622,14 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.executeSnippet()
 
 	@core.executionTrace
-	def Search_lineEdit_OnTextChanged(self, text):
+	def __Search_lineEdit__textChanged(self, text):
 		"""
-		This method is triggered when **Search_lineEdit** text changes.
+		This method is triggered when **Search_lineEdit** Widget text changes.
 
 		:param text: Current text value. ( QString )
 		"""
 
-		self.Methods_listWidget_setWidget()
+		self.__Methods_listWidget_setWidget()
 
 	@core.executionTrace
 	def getMethodName(self, name):
@@ -663,6 +663,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	def getInterfaces(self):
 		"""
 		This method gets the interfaces.
+
+		:return: Method success. ( Boolean )
 		"""
 
 		for module in self._modules.values():
@@ -677,20 +679,28 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			if interfaces:
 				LOGGER.info("%s | Registering '%s' Interfaces from '%s' Module!" % (self.__class__.__name__, interfaces, module.name))
 				module.interfaces = interfaces
+		return True
 
 	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def getModules(self):
 		"""
 		This method gets the Modules.
+	
+		:return: Method success. ( Boolean )
 		"""
 
 		self.gatherLibraries()
 		self.getInterfaces()
+		return True
 
 	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def executeSnippet(self):
 		"""
 		This method triggers the selected Snippet execution.
+		
+		:return: Method success. ( Boolean )
 		"""
 
 		listWidget = self.Methods_listWidget.currentItem()
@@ -700,13 +710,16 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 			LOGGER.info("%s | Executing '%s' Snippet from '%s' Module!" % (self.__class__.__name__, method, module.name))
 			module.import_.__dict__[method]()
+		return True
 
 	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def editProvidedfile(self, file):
 		"""
 		This method provides editing capability.
 
 		:param file: File to edit. ( String )
+		:return: Method success. ( Boolean )
 		"""
 
 		editCommand = None
@@ -740,13 +753,16 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			LOGGER.debug("> Current edit command: '%s'." % editCommand)
 			editProcess = QProcess()
 			editProcess.startDetached(editCommand)
+		return True
 
 	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def exploreProvidedFolder(self, folder):
 		"""
 		This method provides folder exploring capability.
 
 		:param folder: Folder to explore. ( String )
+		:return: Method success. ( Boolean )
 		"""
 
 		browserCommand = None
@@ -781,3 +797,4 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			LOGGER.debug("> Current browser command: '%s'." % browserCommand)
 			browserProcess = QProcess()
 			browserProcess.startDetached(browserCommand)
+		return True
