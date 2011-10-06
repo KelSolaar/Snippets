@@ -24,8 +24,10 @@
 #***	External imports.
 #***********************************************************************************************
 import inspect
+import itertools
 import mari
 import os
+import re
 from PythonQt.QtCore import *
 from PythonQt.QtGui import *
 
@@ -39,7 +41,31 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["fillPaintBuffer", "projectColor", "projectBlack", "projectWhite", "getSelectedPatches", "displaySelectedPatches", "playblastTimeRange"]
+__all__ = ["unpackDefault",
+	"fillPaintBuffer",
+	"projectColor",
+	"projectBlack",
+	"projectWhite",
+	"getSelectedPatches",
+	"displaySelectedPatches",
+	"getPatchesFromSequence",
+	"selectPatches",
+	"selectInputPatches",
+	"playblastTimeRange",
+	"writeUVsMasks",
+	"exportUVsMasks"]
+
+def unpackDefault(datas, length=3, default=None):
+	"""
+	This definition unpack provided iterable datas with default if needed.
+	
+	:param datas: Iterable. ( String / Tuple / List )
+	:param length: Default length. ( Integer )
+	:param default: Default value. ( Object )
+	:return: Definition success. ( Boolean )
+	"""
+
+	return itertools.islice(itertools.chain(iter(datas), itertools.repeat(default)), length)
 
 def fillPaintBuffer(color):
 	"""
@@ -111,6 +137,50 @@ def displaySelectedPatches():
 	mari.utils.misc.message("Current object: '%s'\nSelected patches: '%s'" % (mari.geo.current().name(), ", ".join(patches)), title="Current Object Selected Patches")
 	return True
 
+def getPatchesFromSequence(sequence):
+	"""
+	This definition returns patches from the provided sequence.
+
+	:param sequence: sequence. ( String )
+	:return: Patches. ( List )
+	"""
+	
+	patches = []
+	for pattern in sequence.split(","):
+		start, end, step = (item.strip() for item in unpackDefault(re.split("-|%", pattern), default=""))
+		if start and not end:
+			patches.append(int(start))
+		elif start and end and not step:
+			patches.extend(range(int(start), int(end) + 1))
+		elif start and end and step:
+			patches.extend(range(int(start), int(end) + 1, int(step)))
+	return patches
+
+def selectPatches(patches):
+	"""
+	This definition selects provided patches.
+
+	:param patches: patches. ( List )
+	:return: Definition success. ( Boolean )
+	"""
+	
+	patches	= [str(patch) for patch in patches]
+	for patch in mari.geo.current().patches():
+		patch.setSelected(patch.name() in patches)
+			
+	return True
+
+def selectInputPatches():
+	"""
+	This definition selects input patches.
+
+	:return: Definition success. ( Boolean )
+	"""
+
+	sequence = QInputDialog.getText(None, "Select Patches", "Patches Sequences:")
+	if sequence:
+        	return selectPatches(getPatchesFromSequence(sequence))
+
 def playblastTimeRange():
 	"""
 	This definition playblasts current time range.
@@ -137,7 +207,45 @@ def playblastTimeRange():
 
 	return True
 
+def writeUVsMasks(directory):
+	"""
+	This definition writes UVs masks to provided output directory.
+
+	:return: Definition success. ( Boolean )
+	"""
+
+	if not directory:
+		return
+
+	images = mari.images.list()
+	patches = mari.geo.current().patches()
+	
+	# mari.app.startProcessing("Exporting UVs Masks", len(patches))
+	for patch in patches:
+		patch.setSelected(True)
+		mari.actions.find('/Mari/Geometry/Patches/UV Mask to Image Manager').trigger()
+		patch.setSelected(False)
+		currentImage = tuple(set(mari.images.list()).difference(images))[0]
+		currentImage.saveAs(os.path.join(directory, "%s_%s.tif" % (mari.projects.current().name(), patch.name())))
+		currentImage.close()
+		# mari.app.stepProgress()
+	# mari.app.stopProcessing()
+	return True
+
+def exportUVsMasks():
+	"""
+	This definition exports UVs masks.
+
+	:return: Definition success. ( Boolean )
+	"""
+	
+	return writeUVsMasks(QFileDialog.getExistingDirectory(None, "Select Output Directory",))
+
+
 mari.menus.addAction(mari.actions.create("Show Selected Patches ...", "import common;reload(common);common.displaySelectedPatches()"), "MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create("Select Input Patches ...", "import common;reload(common);common.selectInputPatches()"), "MainWindow/&MPC/")
+mari.menus.addSeparator("MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create("Export UVs Masks ...", "import common;reload(common);common.exportUVsMasks()"), "MainWindow/&MPC/")
 mari.menus.addSeparator("MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Playblast Time Range ...", "import common;reload(common);common.playblastTimeRange()"), "MainWindow/&MPC/")
 mari.menus.addSeparator("MainWindow/&MPC/")
