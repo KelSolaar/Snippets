@@ -25,7 +25,9 @@ __all__ = ["stacksHandler",
 			"symmetricalInstance",
 			"ISymmetricalInstance",
 			"pivotsIdentity",
-			"IPivotsIdentity"]
+			"IPivotsIdentity",
+			"flattenHierarchy",
+			"IFlattenHierarchy"]
 
 def stacksHandler(object):
 	"""
@@ -194,7 +196,7 @@ def ISplitRingMiddle():
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	splitRingMiddle(selection)
+	selection and splitRingMiddle(selection)
 
 def symmetricalInstance(object):
 	"""
@@ -237,3 +239,35 @@ def IPivotsIdentity():
 
 	selection = cmds.ls(sl=True, l=True, type="transform")
 	selection and pivotsIdentity(selection)
+
+
+def flattenHierachy(object):
+    	"""
+	This definition flattens provided object hierarchy.
+
+	:return: Definition succes. ( Boolean )
+	"""
+
+	relatives = cmds.listRelatives(object, allDescendents=True, fullPath=True)
+	for relative in relatives:
+		if not getShapes(relative):
+			continue
+		if cmds.listRelatives(relative, fullPath=True, parent=True)[0] != object:
+			cmds.parent(relative, object)
+
+	relatives = cmds.listRelatives(object, fullPath=True)
+	if relatives:
+		for relative in relatives:
+			if not getShapes(relative):
+				cmds.delete(relative)
+	return True
+
+@stacksHandler
+def IFlattenHierachy():
+	"""
+	This definition is the flattenHierachy definition Interface.
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	for object in selection:
+		flattenHierachy(object)
