@@ -5,8 +5,4 @@
 
 *.pyc
 
-src/nuke/combineKronosImagesWithUVsShellsIdentifiers.py
-src/nuke/getKronosPlatesImages.py
-src/nuke/combineRGBImages.py
-
 src/maya/resources/builders/
