@@ -3,6 +3,7 @@ import math
 import maya.cmds as cmds
 import maya.mel as mel
 import maya.OpenMaya as OpenMaya
+import os
 import pprint
 
 __author__ = "Thomas Mansencal"
@@ -12,8 +13,11 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["DEFAULT_SCALE_COVERAGE = 0.98",
+__all__ = ["RESOURCES_DIRECTORY", 
+				"CHECKER_IMAGE",
+				"DEFAULT_SCALE_COVERAGE = 0.98",
 				"stacksHandler",
+				"isGeometry",
 				"getObjectUVsArea",
 				"getComponentUVDims",
 				"getMariPatchFromUVDims",
@@ -39,6 +43,9 @@ __all__ = ["DEFAULT_SCALE_COVERAGE = 0.98",
 				"mirrorComponentsUVs",
 				"stackObjectsUVs",
 				"autoRatioUVsAreas",
+				"addUVsChecker",
+				"removeUVsChecker",
+				"setUVsCheckerRepeats",
 				"flipUVs_button_OnClicked",
 				"moveUpUVs_button_OnClicked",
 				"flopUVs_button_OnClicked",
@@ -57,9 +64,15 @@ __all__ = ["DEFAULT_SCALE_COVERAGE = 0.98",
 				"stackUVsOnVCenter_button_OnClicked",
 				"stackUVsOnVRight_button_OnClicked",
 				"autoRatioUVsAreas_button_OnClicked",
+				"addUVsChecker_button_OnClicked",
+				"uRepeat_floatField_OnChanged",
+				"vRepeat_floatField_OnChanged",
 				"unfoldingTools_window",
 				"unfoldingTools",
 				"IUvsTools"]
+
+RESOURCES_DIRECTORY = os.path.join(os.path.dirname(__file__), "../resources")
+CHECKER_IMAGE = "images/Checker.jpg"
 
 DEFAULT_SCALE_COVERAGE = 0.98
 
@@ -89,6 +102,19 @@ def stacksHandler(object):
 		return value
 
 	return stacksHandlerCall
+
+def isGeometry(object_):
+	"""
+	This definition returns if a node is a geometry.
+
+	:param object_: Current object to check. ( String )
+	:return: Geometry object state. ( Boolean )
+	"""
+
+	if cmds.nodeType(object_) == "mesh" or cmds.nodeType(object_) == "nurbsSurface" or cmds.nodeType(object_) == "subdiv":
+		return True
+	else:
+		return False
 
 def getObjectUVsArea(object):
 	"""
@@ -333,7 +359,6 @@ def scaleCenterComponentsUVs(components, coverage):
 	cmds.polyEditUV(uvs, pu=uTargetCenter + 0.5, pv=vTargetCenter + 0.5, su=scaleFactor, sv=scaleFactor)
 	return True
 
-
 @stacksHandler
 def rotateComponentsUVs(components, value, clockWise=True):
 	"""
@@ -449,6 +474,89 @@ def autoRatioUVsAreas(objects):
 		currentUVsArea = getObjectUVsArea(object)
 		scaleFactor = math.sqrt(((currentArea * uvsArea) / currentUVsArea) / area)
 		scaleComponentsUVs(object, su=scaleFactor, sv=scaleFactor)
+	return True
+
+@stacksHandler
+def addUVsChecker(items, uRepeats=4, vRepeats=4):
+	"""
+	This definition applies UVs checkers onto provided geometry objects.
+
+	:param items: Current items list. ( List )
+	:param uRepeats: U checker repeats. ( Float )
+	:param vRepeats: V checker repeats. ( Float )
+	:return: Definition succes. ( Boolean )
+	"""
+
+	# Removing previous UVs checkers shaders.
+	removeUVsChecker()
+
+	lambertSE = cmds.sets(renderable=True, noSurfaceShader=True, empty=True)
+	lambert = cmds.shadingNode("lambert", asShader=True)
+	cmds.connectAttr(lambert + ".outColor", lambertSE + ".surfaceShader", force=True)
+
+	file = cmds.shadingNode("file", asTexture=True)
+	cmds.setAttr(file + ".fileTextureName", os.path.normpath(os.path.join(RESOURCES_DIRECTORY, CHECKER_IMAGE)), type="string")
+	place2dTexture = cmds.shadingNode("place2dTexture", asUtility=True)
+	cmds.setAttr(place2dTexture + ".repeatU", uRepeats)
+	cmds.setAttr(place2dTexture + ".repeatV", vRepeats)
+	uvAttributes = ("coverage", "translateFrame", "rotateFrame", "mirrorU", "mirrorV", "stagger", "wrapU", "wrapV" , "repeatUV" , "vertexUvOne" , "vertexUvTwo" , "vertexUvThree" , "vertexCameraOne", "noiseUV", "offset", "rotateUV")
+	for uvAttribute in uvAttributes:
+		cmds.connectAttr(place2dTexture + "." + uvAttribute, file + "." + uvAttribute, force=True)
+
+	cmds.connectAttr(file + ".outColor", lambert + ".color", force=True)
+
+	for item in items:
+		if "." in item:
+			continue
+		cmds.sets(item, edit=True, forceElement=lambertSE)
+
+	cmds.rename(lambert, "UVsChecker_Lambert")
+	cmds.rename(lambertSE, "UVsChecker_ShadingEngine")
+	cmds.rename(file, "UVsChecker_File")
+	cmds.rename(place2dTexture, "UVsChecker_Place2dTexture")
+	return True
+
+@stacksHandler
+def removeUVsChecker():
+	"""
+	This definition removes UVs checkers from the scene.
+	:return: Definition succes. ( Boolean )
+	"""
+
+	if cmds.objExists("UVsChecker_ShadingEngine"):
+		connections = cmds.listHistory("UVsChecker_ShadingEngine")
+
+		for connection in connections:
+			if isGeometry(connection):
+				cmds.sets(connection, edit=True, forceElement="initialShadingGroup")
+
+		cmds.delete("UVsChecker_ShadingEngine")
+
+	if cmds.objExists("UVsChecker_Lambert"):
+		cmds.delete("UVsChecker_Lambert")
+
+	if cmds.objExists("UVsChecker_File"):
+		cmds.delete("UVsChecker_File")
+
+	if cmds.objExists("UVsChecker_Place2dTexture"):
+		cmds.delete("UVsChecker_Place2dTexture")
+	return True	
+
+@stacksHandler
+def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
+	"""
+	This definition sets UVs checkers repeats.
+
+	:param uRepeats: U checker repeats. ( Float )
+	:param vRepeats: V checker repeats. ( Float )
+	:return: Definition succes. ( Boolean )
+	"""
+
+	if not cmds.objExists("UVsChecker_Place2dTexture"):
+		return
+	
+	uRepeats and cmds.setAttr("UVsChecker_Place2dTexture.repeatU", uRepeats)
+	vRepeats and cmds.setAttr("UVsChecker_Place2dTexture.repeatV", vRepeats)
 	return True
 
 @stacksHandler
@@ -648,6 +756,37 @@ def autoRatioUVsAreas_button_OnClicked(state=None):
 	selection = cmds.ls(sl=True, l=True)
 	selection and autoRatioUVsAreas(selection)
 
+@stacksHandler
+def addUVsChecker_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **addUVsChecker_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and addUVsChecker(selection)
+
+@stacksHandler
+def uRepeat_floatField_OnChanged(value=None):
+	"""
+	This definition is triggered by the **uRepeat_floatField** button when changed.
+
+	:param value: Field value. ( Float )
+	"""
+		
+	setUVsCheckerRepeats(uRepeats=value)
+
+@stacksHandler
+def vRepeat_floatField_OnChanged(value=None):
+	"""
+	This definition is triggered by the **vRepeat_floatField** button when changed.
+
+	:param value: Field value. ( Float )
+	"""
+		
+	setUVsCheckerRepeats(vRepeats=value)
+
 def unfoldingTools_window():
 	"""
 	This definition creates the 'Unfolding Tools' main window.
@@ -693,18 +832,18 @@ def unfoldingTools_window():
 	
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Coverage %:")
-	cmds.intField("coverage_intField", minValue= 0, maxValue=100, value=98)
+	cmds.intField("coverage_intField", minValue=0, maxValue=100, value=98)
 	cmds.setParent(upLevel=True)
 	
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Move Factor:")
-	cmds.floatField("moveFactor_floatField", minValue= 0, maxValue=10, value=1)
+	cmds.floatField("moveFactor_floatField", minValue=0, maxValue=10, value=1)
 	cmds.setParent(upLevel=True)
 	
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Scale U / V:")
-	cmds.floatField("uScale_floatField", minValue= -10, maxValue=10, value=1)
-	cmds.floatField("vScale_floatField", minValue= -10, maxValue=10, value=1)
+	cmds.floatField("uScale_floatField", minValue=-10, maxValue=10, value=1)
+	cmds.floatField("vScale_floatField", minValue=-10, maxValue=10, value=1)
 	cmds.setParent(upLevel=True)
 
 	cmds.setParent(upLevel=True)
@@ -722,7 +861,7 @@ def unfoldingTools_window():
 	
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Angle:")
-	cmds.floatField("rotation_floatField", minValue= -360, maxValue=360, value=45)
+	cmds.floatField("rotation_floatField", minValue=-360, maxValue=360, value=45)
 	cmds.setParent(upLevel=True)
 	
 	cmds.setParent(upLevel=True)
@@ -740,7 +879,7 @@ def unfoldingTools_window():
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.button("alignUVsMinimumU_button", label="Align Min. U", command=lambda state: mel.eval("alignUV 1 1 0 0;"))
-	cmds.button("straightenUVs_button", label="Straigthen", command=lambda state: mel.eval("print \"Not implemented yet!\";"))
+	cmds.button("straightenUVs_button", label="Straigthen", command=lambda state: mel.eval("warning \"Not implemented yet!\";"))
 	cmds.button("alignUVsMaximumU_button", label="Align Max. U", command=lambda state: mel.eval("alignUV 1 0 0 0;"))
 	cmds.setParent(upLevel=True)
 	
@@ -799,6 +938,26 @@ def unfoldingTools_window():
 	cmds.button(label="", enable=False)
 	cmds.button("printUVsMariPatches_button", label="Print Mari Patches", command=lambda state: printComponentsOccupationAsMariPatches())
 	cmds.setParent(upLevel=True)
+
+	cmds.setParent(upLevel=True)
+	cmds.setParent(upLevel=True)
+
+	cmds.frameLayout(label="UVs Checker", collapsable=True, borderStyle="etchedIn")
+	
+	cmds.columnLayout()
+
+	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
+	cmds.button("addUVsChecker_button", label="Add Checker", command=addUVsChecker_button_OnClicked)
+	cmds.button(label="", enable=False)
+	cmds.button("removeUVsChecker_button", label="Remove Checker", command=lambda state: removeUVsChecker())
+	cmds.setParent(upLevel=True)
+
+	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
+	cmds.text(label="Repeat U / V:")
+	cmds.floatField("uRepeat_floatField", minValue=0.01, maxValue=256, value=4, step=0.25, changeCommand=uRepeat_floatField_OnChanged)
+	cmds.floatField("vRepeat_floatField", minValue=0.01, maxValue=256, value=4, step=0.25, changeCommand=vRepeat_floatField_OnChanged)
+	cmds.setParent(upLevel=True)
+
 
 	cmds.setParent(upLevel=True)
 	cmds.setParent(upLevel=True)
