@@ -1,6 +1,8 @@
+# UVs area calculation code by Naughty Nathan: http://forums.cgsociety.org/showpost.php?p=6522248&postcount=4
 import math
 import maya.cmds as cmds
 import maya.mel as mel
+import maya.OpenMaya as OpenMaya
 import pprint
 
 __author__ = "Thomas Mansencal"
@@ -12,6 +14,7 @@ __status__ = "Production"
 
 __all__ = ["DEFAULT_SCALE_COVERAGE = 0.98",
 				"stacksHandler",
+				"getObjectUVsArea",
 				"getComponentUVDims",
 				"getMariPatchFromUVDims",
 				"getComponentsUVDims",
@@ -30,12 +33,12 @@ __all__ = ["DEFAULT_SCALE_COVERAGE = 0.98",
 				"IPrintComponentsUvsCenterAsMariPatch",
 				"scaleComponentsUVs",
 				"centerComponentsUVs",
-				"scaleCenterComponentsUvs",
-				"IScaleCenterComponentsUvs",
+				"scaleCenterComponentsUVs",
 				"rotateComponentsUVs",
 				"moveComponentsUVs",
 				"mirrorComponentsUVs",
 				"stackObjectsUVs",
+				"autoRatioUVsAreas",
 				"flipUVs_button_OnClicked",
 				"moveUpUVs_button_OnClicked",
 				"flopUVs_button_OnClicked",
@@ -47,10 +50,15 @@ __all__ = ["DEFAULT_SCALE_COVERAGE = 0.98",
 				"scaleUVs_button_OnClicked",
 				"rotateCounterClockWiseUVs_button_OnClicked",
 				"rotateClockWiseUVs_button_OnClicked",
-				"stackUVsOnU_button_OnClicked",
-				"stackUVsOnV_button_OnClicked",
-				"uvsTools_window",
-				"uvsTools",
+				"stackUVsOnUBottom_button_OnClicked",
+				"stackUVsOnUCenter_button_OnClicked",
+				"stackUVsOnUTop_button_OnClicked",
+				"stackUVsOnVLeft_button_OnClicked",
+				"stackUVsOnVCenter_button_OnClicked",
+				"stackUVsOnVRight_button_OnClicked",
+				"autoRatioUVsAreas_button_OnClicked",
+				"unfoldingTools_window",
+				"unfoldingTools",
 				"IUvsTools"]
 
 DEFAULT_SCALE_COVERAGE = 0.98
@@ -81,6 +89,30 @@ def stacksHandler(object):
 		return value
 
 	return stacksHandlerCall
+
+def getObjectUVsArea(object):
+	"""
+	This definition returns provided object UVs area.
+
+	:param object: Object to retrieve UVs area. ( String )
+	:return: UVs area. ( Integer )
+	"""
+
+	selectionList = OpenMaya.MSelectionList()
+	selectionList.add(object)
+	selectionListIterator = OpenMaya.MItSelectionList(selectionList)
+	dagPath = OpenMaya.MDagPath()
+	selectionListIterator.getDagPath(dagPath, OpenMaya.MObject())
+	meshPolygonIterator = OpenMaya.MItMeshPolygon(dagPath)
+	scriptUtil = OpenMaya.MScriptUtil()
+	scriptUtil.createFromDouble(0.0)
+	areaPointer = scriptUtil.asDoublePtr() 
+	uvsArea = 0
+	while not meshPolygonIterator.isDone():
+		meshPolygonIterator.getUVArea(areaPointer)
+		uvsArea += OpenMaya.MScriptUtil(areaPointer).asDouble()
+		meshPolygonIterator.next()
+	return uvsArea
 
 def getComponentUVDims(component):
 	"""
@@ -280,7 +312,7 @@ def centerComponentsUVs(components):
 	return True
 
 @stacksHandler
-def scaleCenterComponentsUvs(components, coverage):
+def scaleCenterComponentsUVs(components, coverage):
 	"""
 	This definition scales / centers provided components UVs.
 
@@ -299,14 +331,6 @@ def scaleCenterComponentsUvs(components, coverage):
 	cmds.polyEditUV(uvs, pu=uTargetCenter + 0.5, pv=vTargetCenter + 0.5, su=scaleFactor, sv=scaleFactor)
 	return True
 
-@stacksHandler
-def IScaleCenterComponentsUvs():
-	"""
-	This definition is the scaleCenterComponentsUVs definition Interface.
-	"""
-
-	selection = cmds.ls(sl=True, l=True)
-	selection and scaleCenterComponentsUvs(selection, DEFAULT_SCALE_COVERAGE)
 
 @stacksHandler
 def rotateComponentsUVs(components, value, clockWise=True):
@@ -323,7 +347,6 @@ def rotateComponentsUVs(components, value, clockWise=True):
 	uCenter, vCenter = getComponentsUVsCenter(uvs)
 	if not clockWise:
 		value = -value
-	print value
 	cmds.polyEditUV(uvs, pu=uCenter, pv=vCenter, a=-value)		
 	return True
 
@@ -362,11 +385,12 @@ def mirrorComponentsUVs(components, horizontal=True):
 
 
 @stacksHandler
-def stackObjectsUVs(objects, horizontal=True, margin=0):
+def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 	"""
 	This definition stacks provided objects UVs.
 
-	:param components: Components. ( Tuple / List )
+	:param objects: Objects. ( Tuple / List )
+	:param alignement: Alignement ( "bottom", "top", "left", "right", "center" ). ( String )
 	:param horizontal: Horizontal stack. ( Boolean )
 	:return: Definition succes. ( Boolean )
 	"""
@@ -379,20 +403,52 @@ def stackObjectsUVs(objects, horizontal=True, margin=0):
 	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
 	uBorder = uMax - uMin + uMin
 	vBorder = vMax - vMin + vMin
-	for i, object in enumerate(objects):
+	for object in objects:
 		uvs = cmds.ls(cmds.polyListComponentConversion(object, toUV=True), fl=True)		
 		currentUMin, currentVMin, currentUMax, currentVMax = getComponentsBoundingBox(uvs)
 		if horizontal:
 			offsetU = uBorder - currentUMin + margin
-			offsetV = vMin - currentVMin
+			if alignement == "bottom":
+				offsetV = vMin - currentVMin
+			elif alignement == "center":
+				offsetV = (vMin - currentVMin) / 2 + (vMax - currentVMax) / 2
+			elif alignement == "top":
+				offsetV = vMax - currentVMax
 			uBorder = uBorder + currentUMax - currentUMin + margin
 		else:
-			offsetU = uMin - currentUMin
 			offsetV = vBorder - currentVMin + margin
+			if alignement == "left":
+				offsetU = uMin - currentUMin
+			elif alignement == "center":
+				offsetU = (uMin - currentUMin) / 2 + (uMax - currentUMax) / 2
+			elif alignement == "right":
+				offsetU = uMax - currentUMax
 			vBorder = vBorder + currentVMax - currentVMin + margin
 		cmds.polyEditUV(uvs, u=offsetU, v=offsetV)	
 	return True
 	
+@stacksHandler
+def autoRatioUVsAreas(objects):
+	"""
+	This definition scales objects UVs depending their worldspace ares.
+
+	:param objects: Objects. ( Tuple / List )
+	:return: Definition succes. ( Boolean )
+	"""
+	
+	if not objects:
+		return
+	baseObject = objects.pop(0)
+	area = cmds.polyEvaluate(baseObject, worldArea=True)
+	uvsArea = getObjectUVsArea(baseObject)
+
+	for object in objects:
+		currentArea = cmds.polyEvaluate(object, worldArea=True)
+		currentUVsArea = getObjectUVsArea(object)
+		scaleFactor = math.sqrt(((currentArea * uvsArea) / currentUVsArea) / area)
+		scaleComponentsUVs(object, su=scaleFactor, sv=scaleFactor)
+	return True
+
 @stacksHandler
 def flipUVs_button_OnClicked(state=None):
 	"""
@@ -446,7 +502,7 @@ def fitUVs_button_OnClicked(state=None):
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and scaleCenterComponentsUvs(selection, float(cmds.intField("coverage_intField", q=True, value=True)) / 100)
+	selection and scaleCenterComponentsUVs(selection, float(cmds.intField("coverage_intField", q=True, value=True)) / 100)
 
 @stacksHandler
 def moveRightUVs_button_OnClicked(state=None):
@@ -515,39 +571,93 @@ def rotateClockWiseUVs_button_OnClicked(state=None):
 	selection and rotateComponentsUVs(selection, cmds.floatField("rotation_floatField", q=True, value=True))
 
 @stacksHandler
-def stackUVsOnU_button_OnClicked(state=None):
+def stackUVsOnUBottom_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **stackUVsOnU_button** button when clicked.
+	This definition is triggered by the **stackUVsOnUBottom_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and stackObjectsUVs(selection, margin=cmds.floatField("margin_floatField", q=True, value=True))
+	selection and stackObjectsUVs(selection, alignement="bottom", margin=cmds.floatField("margin_floatField", q=True, value=True))
 
 @stacksHandler
-def stackUVsOnV_button_OnClicked(state=None):
+def stackUVsOnUCenter_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **stackUVsOnV_button** button when clicked.
+	This definition is triggered by the **stackUVsOnUCenter_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and stackObjectsUVs(selection, horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
+	selection and stackObjectsUVs(selection, alignement="center", margin=cmds.floatField("margin_floatField", q=True, value=True))
 
-def uvsTools_window():
+@stacksHandler
+def stackUVsOnUTop_button_OnClicked(state=None):
 	"""
-	This definition creates the 'UVs Tools' main window.
+	This definition is triggered by the **stackUVsOnUTop_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and stackObjectsUVs(selection, alignement="top", margin=cmds.floatField("margin_floatField", q=True, value=True))
+@stacksHandler
+def stackUVsOnVLeft_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **stackUVsOnVLeft_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and stackObjectsUVs(selection, alignement="left", horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
+
+@stacksHandler
+def stackUVsOnVCenter_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **stackUVsOnVCenter_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and stackObjectsUVs(selection, alignement="center", horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
+
+@stacksHandler
+def stackUVsOnVRight_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **stackUVsOnVRight_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and stackObjectsUVs(selection, alignement="right", horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
+
+@stacksHandler
+def autoRatioUVsAreas_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **autoRatioUVsAreas_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and autoRatioUVsAreas(selection)
+
+def unfoldingTools_window():
+	"""
+	This definition creates the 'Unfolding Tools' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("uvsTools_window", exists=True)):
-		cmds.deleteUI("uvsTools_window")
+	if (cmds.window("unfoldingTools_window", exists=True)):
+		cmds.deleteUI("unfoldingTools_window")
 
-	cmds.window("uvsTools_window",
-		title="UVs Tools",
+	cmds.window("unfoldingTools_window",
+		title="Unfolding Tools",
 		width=320)
 
 	spacing = 0
@@ -595,7 +705,8 @@ def uvsTools_window():
 	cmds.floatField("vScale_floatField", minValue= -10, maxValue=10, value=1)
 	cmds.setParent(upLevel=True)
 
-	cmds.setParent(topLevel=True)
+	cmds.setParent(upLevel=True)
+	cmds.setParent(upLevel=True)
 
 	cmds.frameLayout(label="UVs Rotation", collapsable=True, borderStyle="etchedIn")
 	
@@ -612,6 +723,9 @@ def uvsTools_window():
 	cmds.floatField("rotation_floatField", minValue= -360, maxValue=360, value=45)
 	cmds.setParent(upLevel=True)
 	
+	cmds.setParent(upLevel=True)
+	cmds.setParent(upLevel=True)
+
 	cmds.frameLayout(label="UVs Alignement", collapsable=True, borderStyle="etchedIn")
 	
 	cmds.columnLayout()
@@ -624,7 +738,7 @@ def uvsTools_window():
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.button("alignUVsMinimumU_button", label="Align Min. U", command=lambda state: mel.eval("alignUV 1 1 0 0;"))
-	cmds.button("straightenUVs_button", label="Straigthen")
+	cmds.button("straightenUVs_button", label="Straigthen", command=lambda state: mel.eval("print \"Not implemented yet!\";"))
 	cmds.button("alignUVsMaximumU_button", label="Align Max. U", command=lambda state: mel.eval("alignUV 1 0 0 0;"))
 	cmds.setParent(upLevel=True)
 	
@@ -634,16 +748,23 @@ def uvsTools_window():
 	cmds.button(label="", enable=False)
 	cmds.setParent(upLevel=True)
 
-	cmds.setParent(topLevel=True)
+	cmds.setParent(upLevel=True)
+	cmds.setParent(upLevel=True)
 
 	cmds.frameLayout(label="UVs Stacks", collapsable=True, borderStyle="etchedIn")
 	
 	cmds.columnLayout()
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
-	cmds.button("stackUVsOnU_button", label="Stack On U", command=stackUVsOnU_button_OnClicked)
-	cmds.button(label="", enable=False)
-	cmds.button("stackUVsOnV_button", label="Stack On V", command=stackUVsOnV_button_OnClicked)
+	cmds.button("stackUVsOnUBottom_button", label="Stack On U Bottom", command=stackUVsOnUBottom_button_OnClicked)
+	cmds.button("stackUVsOnUCenter_button", label="Stack On U Center", command=stackUVsOnUCenter_button_OnClicked)
+	cmds.button("stackUVsOnUTop_button", label="Stack On U Top", command=stackUVsOnUTop_button_OnClicked)
+	cmds.setParent(upLevel=True)
+
+	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
+	cmds.button("stackUVsOnVLeft_button", label="Stack On V Left", command=stackUVsOnVLeft_button_OnClicked)
+	cmds.button("stackUVsOnVCenter_button", label="Stack On V Center", command=stackUVsOnVCenter_button_OnClicked)
+	cmds.button("stackUVsOnVRight_button", label="Stack On V Right", command=stackUVsOnVRight_button_OnClicked)
 	cmds.setParent(upLevel=True)
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
@@ -651,23 +772,50 @@ def uvsTools_window():
 	cmds.floatField("margin_floatField", minValue= 0, maxValue=10, value=0.001)
 	cmds.setParent(upLevel=True)
 
-	cmds.setParent(topLevel=True)
+	cmds.setParent(upLevel=True)
+	cmds.setParent(upLevel=True)
 
-	cmds.showWindow("uvsTools_window")
+	cmds.frameLayout(label="UVs Auto Ratio", collapsable=True, borderStyle="etchedIn")
+	
+	cmds.columnLayout()
+
+	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
+	cmds.button(label="", enable=False)
+	cmds.button("autoRatioUVsAreas_button", label="UVs Auto Ratio", command=autoRatioUVsAreas_button_OnClicked)
+	cmds.button(label="", enable=False)
+	cmds.setParent(upLevel=True)
+
+	cmds.setParent(upLevel=True)
+	cmds.setParent(upLevel=True)
+
+	cmds.frameLayout(label="UVs Verbose", collapsable=True, borderStyle="etchedIn")
+	
+	cmds.columnLayout()
+
+	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
+	cmds.button("printUVsUVdims_button", label="Print UVDims", command=lambda state: printComponentsOccupationAsUvDims())
+	cmds.button(label="", enable=False)
+	cmds.button("printUVsMariPatches_button", label="Print Mari Patches", command=lambda state: printComponentsOccupationAsMariPatches())
+	cmds.setParent(upLevel=True)
+
+	cmds.setParent(upLevel=True)
+	cmds.setParent(upLevel=True)
+
+	cmds.showWindow("unfoldingTools_window")
 
 	cmds.windowPref(enableAll=True)
 
-def uvsTools():
+def unfoldingTools():
 	"""
-	This definition launches the 'UVs Tools' main window.
+	This definition launches the 'Unfolding Tools' main window.
 	"""
 
-	uvsTools_window()
+	unfoldingTools_window()
 
 @stacksHandler
-def IUvsTools():
+def IUnfoldingTools():
 	"""
-	This definition is the uvsTools definition Interface.
+	This definition is the unfoldingTools definition Interface.
 	"""
 
-	uvsTools()
+	unfoldingTools()
