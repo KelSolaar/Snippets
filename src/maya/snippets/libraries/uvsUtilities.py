@@ -217,15 +217,16 @@ def IPrintComponentsOccupationAsMariPatches():
 
 	printComponentsOccupationAsMariPatches()
 
-def getComponentsBoundingBox(components):
+def getComponentsBoundingBox(components, skipComponentsConversion=False):
 	"""
 	This definition returns provided components Bounding Box.
 
 	:param components: Components. ( Tuple / List )
+	:param skipComponentsConversion: Skip components conversion. ( Boolean )
 	:return: Components Bounding Box. ( Tuple )
 	"""
 	
-	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
+	uvs = skipComponentsConversion and components or cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
 	uMin, vMin, uMax, vMax = 2**8, 2**8, -2**8, -2**8
 	for uv in uvs:	
 		u, v = cmds.polyEditUV(uv, q=True, uValue=True, vValue=True)
@@ -235,15 +236,16 @@ def getComponentsBoundingBox(components):
 		vMax = max(v, vMax)
 	return uMin, vMin, uMax, vMax
 
-def getComponentsUVsCenter(components):
+def getComponentsUVsCenter(components, skipComponentsConversion=False):
 	"""
 	This definition returns provided components UVs center.
 
 	:param components: Components. ( Tuple / List )
+	:param skipComponentsConversion: Skip components conversion. ( Boolean )
 	:return: Components UVs center. ( Tuple )
 	"""
 	
-	uMin, vMin, uMax, vMax = getComponentsBoundingBox(components)
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(components, skipComponentsConversion)
 	return (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
 
 def printComponentsUvsCenterAsUvDims():
@@ -291,7 +293,7 @@ def scaleComponentsUVs(components, su=1, sv=1):
 	if sv == 0.0:
 		sv = 1e-15
 	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uCenter, vCenter = getComponentsUVsCenter(uvs)
+	uCenter, vCenter = getComponentsUVsCenter(uvs, skipComponentsConversion=True)
 	cmds.polyEditUV(uvs, pu=uCenter, pv=vCenter, su=su, sv=sv)
 	return True
 
@@ -305,7 +307,7 @@ def centerComponentsUVs(components):
 	"""
 	
 	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs, skipComponentsConversion=True)
 	uCenter, vCenter = (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
 	uTargetCenter, vTargetCenter = math.floor(uCenter), math.floor(vCenter)
 	cmds.polyEditUV(uvs, u=uTargetCenter - uCenter + 0.5, v=vTargetCenter - vCenter + 0.5)
@@ -321,7 +323,7 @@ def scaleCenterComponentsUVs(components, coverage):
 	"""
 	
 	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs, skipComponentsConversion=True)
 	uCenter, vCenter = (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
 	uTargetCenter, vTargetCenter = math.floor(uCenter), math.floor(vCenter)
 	cmds.polyEditUV(uvs, u=uTargetCenter - uCenter + 0.5, v=vTargetCenter - vCenter + 0.5)
@@ -344,7 +346,7 @@ def rotateComponentsUVs(components, value, clockWise=True):
 	"""
 	
 	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uCenter, vCenter = getComponentsUVsCenter(uvs)
+	uCenter, vCenter = getComponentsUVsCenter(uvs, skipComponentsConversion=True)
 	if not clockWise:
 		value = -value
 	cmds.polyEditUV(uvs, pu=uCenter, pv=vCenter, a=-value)		
@@ -376,7 +378,7 @@ def mirrorComponentsUVs(components, horizontal=True):
 	"""
 
 	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uCenter, vCenter = (math.floor(value) for value in getComponentsUVsCenter(uvs))
+	uCenter, vCenter = (math.floor(value) for value in getComponentsUVsCenter(uvs, skipComponentsConversion=True))
 	if horizontal:
 		cmds.polyEditUV(uvs, pu=uCenter + 0.5, pv=vCenter + 0.5, su=-1)	
 	else:
@@ -399,13 +401,13 @@ def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 		return
 
 	uvs = cmds.ls(cmds.polyListComponentConversion(objects.pop(0), toUV=True), fl=True)	
-	uCenter, vCenter = getComponentsUVsCenter(uvs)
-	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
+	uCenter, vCenter = getComponentsUVsCenter(uvs, skipComponentsConversion=True)
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs, skipComponentsConversion=True)
 	uBorder = uMax - uMin + uMin
 	vBorder = vMax - vMin + vMin
 	for object in objects:
 		uvs = cmds.ls(cmds.polyListComponentConversion(object, toUV=True), fl=True)		
-		currentUMin, currentVMin, currentUMax, currentVMax = getComponentsBoundingBox(uvs)
+		currentUMin, currentVMin, currentUMax, currentVMax = getComponentsBoundingBox(uvs, skipComponentsConversion=True)
 		if horizontal:
 			offsetU = uBorder - currentUMin + margin
 			if alignement == "bottom":
