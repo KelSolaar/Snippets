@@ -5,6 +5,7 @@ import maya.mel as mel
 import maya.OpenMaya as OpenMaya
 import os
 import pprint
+import re
 
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2010 - 2011 - Thomas Mansencal"
@@ -18,6 +19,7 @@ __all__ = ["RESOURCES_DIRECTORY",
 				"DEFAULT_SCALE_COVERAGE = 0.98",
 				"stacksHandler",
 				"isGeometry",
+				"getUVsFromComponents",
 				"getObjectUVsArea",
 				"getComponentUVDims",
 				"getMariPatchFromUVDims",
@@ -42,6 +44,7 @@ __all__ = ["RESOURCES_DIRECTORY",
 				"moveComponentsUVs",
 				"mirrorComponentsUVs",
 				"stackObjectsUVs",
+				"prescaleUVsShells",
 				"autoRatioUVsAreas",
 				"addUVsChecker",
 				"removeUVsChecker",
@@ -103,18 +106,31 @@ def stacksHandler(object):
 
 	return stacksHandlerCall
 
-def isGeometry(object_):
+def isGeometry(object):
 	"""
 	This definition returns if a node is a geometry.
 
-	:param object_: Current object to check. ( String )
+	:param object: Current object to check. ( String )
 	:return: Geometry object state. ( Boolean )
 	"""
 
-	if cmds.nodeType(object_) == "mesh" or cmds.nodeType(object_) == "nurbsSurface" or cmds.nodeType(object_) == "subdiv":
+	if cmds.nodeType(object) == "mesh" or cmds.nodeType(object) == "nurbsSurface" or cmds.nodeType(object) == "subdiv":
 		return True
 	else:
 		return False
+
+def getUVsFromComponents(components):
+	"""
+	This definition returns the uvs from provided components.
+
+	:param components: Components. ( List )
+	:return: Components UVs. ( List )
+	"""
+    
+   	for component in components:
+		if not re.search(r"map\[\d+\]", component):
+			return cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
+	return components        
 
 def getObjectUVsArea(object):
 	"""
@@ -170,7 +186,7 @@ def getComponentsUVDims(components):
 	:return: Components UVDims. ( List )
 	"""
 
-	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
+	uvs = getUVsFromComponents(components)
 	uvDims = []
 	for uv in uvs:
 		uDim, vDim = getComponentUVDims(uv)
@@ -243,16 +259,15 @@ def IPrintComponentsOccupationAsMariPatches():
 
 	printComponentsOccupationAsMariPatches()
 
-def getComponentsBoundingBox(components, skipComponentsConversion=False):
+def getComponentsBoundingBox(components):
 	"""
 	This definition returns provided components Bounding Box.
 
 	:param components: Components. ( Tuple / List )
-	:param skipComponentsConversion: Skip components conversion. ( Boolean )
 	:return: Components Bounding Box. ( Tuple )
 	"""
 	
-	uvs = skipComponentsConversion and components or cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
+	uvs = getUVsFromComponents(components)
 	uMin, vMin, uMax, vMax = 2**8, 2**8, -2**8, -2**8
 	for uv in uvs:	
 		u, v = cmds.polyEditUV(uv, q=True, uValue=True, vValue=True)
@@ -262,16 +277,15 @@ def getComponentsBoundingBox(components, skipComponentsConversion=False):
 		vMax = max(v, vMax)
 	return uMin, vMin, uMax, vMax
 
-def getComponentsUVsCenter(components, skipComponentsConversion=False):
+def getComponentsUVsCenter(components):
 	"""
 	This definition returns provided components UVs center.
 
 	:param components: Components. ( Tuple / List )
-	:param skipComponentsConversion: Skip components conversion. ( Boolean )
 	:return: Components UVs center. ( Tuple )
 	"""
 	
-	uMin, vMin, uMax, vMax = getComponentsBoundingBox(components, skipComponentsConversion)
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(components)
 	return (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
 
 def printComponentsUvsCenterAsUvDims():
@@ -314,12 +328,13 @@ def scaleComponentsUVs(components, su=1, sv=1):
 	:param sv: Scale V value. ( Float )
 	:return: Definition succes. ( Boolean )
 	"""
+	
 	if su == 0.0:
 		su = 1e-15
 	if sv == 0.0:
 		sv = 1e-15
-	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uCenter, vCenter = getComponentsUVsCenter(uvs, skipComponentsConversion=True)
+	uvs = getUVsFromComponents(components)
+	uCenter, vCenter = getComponentsUVsCenter(uvs)
 	cmds.polyEditUV(uvs, pu=uCenter, pv=vCenter, su=su, sv=sv)
 	return True
 
@@ -332,8 +347,8 @@ def centerComponentsUVs(components):
 	:return: Definition succes. ( Boolean )
 	"""
 	
-	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs, skipComponentsConversion=True)
+	uvs = getUVsFromComponents(components)
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
 	uCenter, vCenter = (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
 	uTargetCenter, vTargetCenter = math.floor(uCenter), math.floor(vCenter)
 	cmds.polyEditUV(uvs, u=uTargetCenter - uCenter + 0.5, v=vTargetCenter - vCenter + 0.5)
@@ -348,8 +363,8 @@ def scaleCenterComponentsUVs(components, coverage):
 	:return: Definition succes. ( Boolean )
 	"""
 	
-	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs, skipComponentsConversion=True)
+	uvs = getUVsFromComponents(components)
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
 	uCenter, vCenter = (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
 	uTargetCenter, vTargetCenter = math.floor(uCenter), math.floor(vCenter)
 	cmds.polyEditUV(uvs, u=uTargetCenter - uCenter + 0.5, v=vTargetCenter - vCenter + 0.5)
@@ -370,8 +385,8 @@ def rotateComponentsUVs(components, value, clockWise=True):
 	:return: Definition succes. ( Boolean )
 	"""
 	
-	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uCenter, vCenter = getComponentsUVsCenter(uvs, skipComponentsConversion=True)
+	uvs = getUVsFromComponents(components)
+	uCenter, vCenter = getComponentsUVsCenter(uvs)
 	if not clockWise:
 		value = -value
 	cmds.polyEditUV(uvs, pu=uCenter, pv=vCenter, a=-value)		
@@ -388,7 +403,7 @@ def moveComponentsUVs(components, u=0, v=0):
 	:return: Definition succes. ( Boolean )
 	"""
 
-	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
+	uvs = getUVsFromComponents(components)
 	cmds.polyEditUV(uvs, u=u, v=v)	
 	return True
 
@@ -402,8 +417,8 @@ def mirrorComponentsUVs(components, horizontal=True):
 	:return: Definition succes. ( Boolean )
 	"""
 
-	uvs = cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
-	uCenter, vCenter = (math.floor(value) for value in getComponentsUVsCenter(uvs, skipComponentsConversion=True))
+	uvs = getUVsFromComponents(components)
+	uCenter, vCenter = (math.floor(value) for value in getComponentsUVsCenter(uvs))
 	if horizontal:
 		cmds.polyEditUV(uvs, pu=uCenter + 0.5, pv=vCenter + 0.5, su=-1)	
 	else:
@@ -425,14 +440,14 @@ def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 	if not objects:
 		return
 
-	uvs = cmds.ls(cmds.polyListComponentConversion(objects.pop(0), toUV=True), fl=True)	
-	uCenter, vCenter = getComponentsUVsCenter(uvs, skipComponentsConversion=True)
-	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs, skipComponentsConversion=True)
+	uvs = getUVsFromComponents(objects.pop(0))	
+	uCenter, vCenter = getComponentsUVsCenter(uvs)
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
 	uBorder = uMax - uMin + uMin
 	vBorder = vMax - vMin + vMin
 	for object in objects:
-		uvs = cmds.ls(cmds.polyListComponentConversion(object, toUV=True), fl=True)		
-		currentUMin, currentVMin, currentUMax, currentVMax = getComponentsBoundingBox(uvs, skipComponentsConversion=True)
+		uvs = getUVsFromComponents(object)		
+		currentUMin, currentVMin, currentUMax, currentVMax = getComponentsBoundingBox(uvs)
 		if horizontal:
 			offsetU = uBorder - currentUMin + margin
 			if alignement == "bottom":
@@ -453,11 +468,39 @@ def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 			vBorder = vBorder + currentVMax - currentVMin + margin
 		cmds.polyEditUV(uvs, u=offsetU, v=offsetV)	
 	return True
+
+@stacksHandler
+def prescaleUVsShells(object):
+	"""
+	This definition prescales object UVs shells.
+
+	:param objects: Object. ( String )
+	:return: Definition succes. ( Boolean )
+	"""
 	
+	uvs = getUVsFromComponents(object)	
+	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
+	uCenter, vCenter = (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
+	width, height = uMax - uMin, vMax - vMin
+	scale = max(width, height)
+	
+	cmds.polyMultiLayoutUV(object, lm=0, sc=1, rbf=0, fr=False, ps=0.2, l=2, psc=True)
+
+	currentUMin, currentVMin, currentUMax, currentVMax = getComponentsBoundingBox(uvs)
+	currentUCenter, currentVCenter = (currentUMin + currentUMax) / 2.0, (currentVMin + currentVMax) / 2.0
+	currentWidth, currentHeight = currentUMax - currentUMin, currentVMax - currentVMin
+	currentScale = max(currentWidth, currentHeight)
+	
+	scaleFactor = scale / currentScale
+
+	cmds.polyEditUV(uvs, u=uCenter - currentUCenter, v=vCenter - currentVCenter)		
+	scaleComponentsUVs(uvs, su=scaleFactor, sv=scaleFactor)
+	return True
+
 @stacksHandler
 def autoRatioUVsAreas(objects):
 	"""
-	This definition scales objects UVs depending their worldspace ares.
+	This definition scales objects UVs depending their worldspace areas.
 
 	:param objects: Objects. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
@@ -746,6 +789,18 @@ def stackUVsOnVRight_button_OnClicked(state=None):
 	selection and stackObjectsUVs(selection, alignement="right", horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
 
 @stacksHandler
+def prescaleUVsShells_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **prescaleUVsShells_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	for object in selection:
+		prescaleUVsShells(object)
+
+@stacksHandler
 def autoRatioUVsAreas_button_OnClicked(state=None):
 	"""
 	This definition is triggered by the **autoRatioUVsAreas_button** button when clicked.
@@ -921,9 +976,9 @@ def unfoldingTools_window():
 	cmds.columnLayout()
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
+	cmds.button("prescaleUVsShells_button", label="Prescale Shells", command=prescaleUVsShells_button_OnClicked)
 	cmds.button(label="", enable=False)
-	cmds.button("autoRatioUVsAreas_button", label="UVs Auto Ratio", command=autoRatioUVsAreas_button_OnClicked)
-	cmds.button(label="", enable=False)
+	cmds.button("autoRatioUVsAreas_button", label="Auto Ratio", command=autoRatioUVsAreas_button_OnClicked)
 	cmds.setParent(upLevel=True)
 
 	cmds.setParent(upLevel=True)
