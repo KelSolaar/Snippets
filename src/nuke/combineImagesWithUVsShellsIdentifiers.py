@@ -57,7 +57,7 @@ def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 
 	uvsShellsSiblings = {}
 	for element in elements:
-		search = re.search("({0})".format(filter), element)
+		search = re.search(r"({0})".format(filter), element)
 		if not search:
 			continue
 
