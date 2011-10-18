@@ -147,7 +147,7 @@ def getPatchesFromSequence(sequence):
 	
 	patches = []
 	for pattern in sequence.split(","):
-		start, end, step = (item.strip() for item in unpackDefault(re.split("-|%", pattern), default=""))
+		start, end, step = (item.strip() for item in unpackDefault(re.split(r"-|%", pattern), default=""))
 		if start and not end:
 			patches.append(int(start))
 		elif start and end and not step:

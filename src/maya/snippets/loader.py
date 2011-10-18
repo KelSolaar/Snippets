@@ -675,7 +675,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 			module.import_ = __import__(module.name)
 
-			interfaces = [object_ for object_ in module.import_.__dict__.keys() if re.search("^I[A-Z]\w+", object_)]
+			interfaces = [object_ for object_ in module.import_.__dict__.keys() if re.search(r"^I[A-Z]\w+", object_)]
 			if interfaces:
 				LOGGER.info("%s | Registering '%s' Interfaces from '%s' Module!" % (self.__class__.__name__, interfaces, module.name))
 				module.interfaces = interfaces

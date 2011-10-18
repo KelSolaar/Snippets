@@ -85,14 +85,14 @@ def renameUdimToMariNames(parameters, arguments):
 	if os.path.exists(parameters.sourceDirectory):
 		files = glob.glob("{0}/*{1}".format(parameters.sourceDirectory, parameters.filesExtensions))
 		for file in files:
-			search = re.search("({0})".format(UDIM_FILTER), file)
+			search = re.search(r"({0})".format(UDIM_FILTER), file)
 			if not search:
 				continue
 			patchNumber = getMariPatchNumberFromUdim(search.group(0))
 			if parameters.renamePrefix:
 				name = "{0}{1}.{2}".format(parameters.renamePrefix, str(patchNumber), parameters.filesExtensions)
 			else:
-				name = re.sub("({0})".format(UDIM_FILTER), str(patchNumber), file)
+				name = re.sub(r"({0})".format(UDIM_FILTER), str(patchNumber), file)
 			
 			print("'{0}' | Rename '{1}' file to '{2}'.".format(inspect.getmodulename(__file__),file, name))
 			os.rename(file, name)
