@@ -74,7 +74,7 @@ __all__ = ["RESOURCES_DIRECTORY",
 				"unfoldingTools",
 				"IUvsTools"]
 
-RESOURCES_DIRECTORY = os.path.join(os.path.dirname(__file__), "../resources")
+RESOURCES_DIRECTORY = os.path.join(os.path.dirname("__file__" in locals().keys() and __file__ or str()), "../resources")
 CHECKER_IMAGE = "images/Checker.jpg"
 
 DEFAULT_SCALE_COVERAGE = 0.98
