@@ -5,7 +5,6 @@ import maya.mel as mel
 import maya.OpenMaya as OpenMaya
 import os
 import pprint
-import re
 
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2010 - 2011 - Thomas Mansencal"
@@ -119,17 +118,18 @@ def isGeometry(object):
 	else:
 		return False
 
-def getUVsFromComponents(components):
+def getUVsFromComponents(components, flatten=True):
 	"""
 	This definition returns the uvs from provided components.
 
 	:param components: Components. ( List )
+	:param flatten: Flatten components list. ( Boolean )
 	:return: Components UVs. ( List )
 	"""
     
    	for component in components:
-		if not re.search(r"map\[\d+\]", component):
-			return cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=True)
+		if not "map[" in component:
+			return cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=flatten)
 	return components        
 
 def getObjectUVsArea(object):
@@ -393,6 +393,25 @@ def rotateComponentsUVs(components, value, clockWise=True):
 	return True
 
 @stacksHandler
+def polyRotateComponentsUVs(components, value, clockWise=True):
+	"""
+	This definition rotates provided components UVs using Maya "polyRotateUVs" melscript ( Ugly but sadly faster ).
+
+	:param components: Components. ( Tuple / List )
+	:param value: Rotation value. ( Float )
+	:param clockWise: Rotation direction. ( Boolean )
+	:return: Definition succes. ( Boolean )
+	"""
+	
+	selection = cmds.ls(sl=True, l=True)
+	if clockWise:
+		value = -value	
+	
+	mel.eval("polyRotateUVs %s" % value)
+	cmds.select(selection)
+	return True
+
+@stacksHandler
 def moveComponentsUVs(components, u=0, v=0):
 	"""
 	This definition moves provided components UVs.
@@ -403,7 +422,7 @@ def moveComponentsUVs(components, u=0, v=0):
 	:return: Definition succes. ( Boolean )
 	"""
 
-	uvs = getUVsFromComponents(components)
+	uvs = getUVsFromComponents(components, flatten=False)
 	cmds.polyEditUV(uvs, u=u, v=v)	
 	return True
 
@@ -710,7 +729,7 @@ def rotateCounterClockWiseUVs_button_OnClicked(state=None):
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and rotateComponentsUVs(selection, cmds.floatField("rotation_floatField", q=True, value=True), clockWise=False)
+	selection and polyRotateComponentsUVs(selection, cmds.floatField("rotation_floatField", q=True, value=True), clockWise=False)
 
 @stacksHandler
 def rotateClockWiseUVs_button_OnClicked(state=None):
@@ -721,7 +740,7 @@ def rotateClockWiseUVs_button_OnClicked(state=None):
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and rotateComponentsUVs(selection, cmds.floatField("rotation_floatField", q=True, value=True))
+	selection and polyRotateComponentsUVs(selection, cmds.floatField("rotation_floatField", q=True, value=True))
 
 @stacksHandler
 def stackUVsOnUBottom_button_OnClicked(state=None):
