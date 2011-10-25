@@ -105,6 +105,28 @@ def stacksHandler(object):
 
 	return stacksHandlerCall
 
+def anchorSelection(object):
+	"""
+	This decorator is used to anchor current selection.
+
+	:param object: Python object. ( Object )
+	:return: Python function. ( Function )
+	"""
+
+	def function(*args, **kwargs):
+		"""
+		This decorator is used to anchor current selection.
+
+		:return: Python object. ( Python )
+		"""
+
+		selection = cmds.ls(sl=True, l=True)
+		value = object(*args, **kwargs)
+		cmds.select(selection)
+		return value
+
+	return function
+
 def isGeometry(object):
 	"""
 	This definition returns if a node is a geometry.
@@ -393,6 +415,7 @@ def rotateComponentsUVs(components, value, clockWise=True):
 	return True
 
 @stacksHandler
+@anchorSelection
 def polyRotateComponentsUVs(components, value, clockWise=True):
 	"""
 	This definition rotates provided components UVs using Maya "polyRotateUVs" melscript ( Ugly but sadly faster ).
@@ -403,12 +426,10 @@ def polyRotateComponentsUVs(components, value, clockWise=True):
 	:return: Definition succes. ( Boolean )
 	"""
 	
-	selection = cmds.ls(sl=True, l=True)
 	if clockWise:
 		value = -value	
 	
 	mel.eval("polyRotateUVs %s" % value)
-	cmds.select(selection)
 	return True
 
 @stacksHandler
