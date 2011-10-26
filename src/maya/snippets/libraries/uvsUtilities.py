@@ -5,6 +5,7 @@ import maya.mel as mel
 import maya.OpenMaya as OpenMaya
 import os
 import pprint
+import re
 
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2010 - 2011 - Thomas Mansencal"
@@ -148,9 +149,10 @@ def getUVsFromComponents(components, flatten=True):
 	:param flatten: Flatten components list. ( Boolean )
 	:return: Components UVs. ( List )
 	"""
-    
+    	
+	pattern = re.compile(r"map\[\d+\]")
    	for component in components:
-		if not "map[" in component:
+		if not re.search(pattern, component):
 			return cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=flatten)
 	return components        
 
