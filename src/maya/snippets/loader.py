@@ -508,7 +508,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 						text = strings.getNiceName(self.getMethodName(interface))
 						if re.search(str(self.Search_lineEdit.text()), text, flags=re.IGNORECASE):
 							listWidgetItem = QListWidgetItem(text)
-							listWidgetItem._datas = Interface(name=interface, module=module)
+							listWidgetItem._data = Interface(name=interface, module=module)
 							LOGGER.debug("> Adding QListWidgetItem with text: '%s'." % text)
 							listWidgetItems.add(listWidgetItem)
 							listWidgetItems.add(text[0])
@@ -538,8 +538,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This method is triggered by **editSnippet** action.
 		"""
 		listWidget = self.Methods_listWidget.currentItem()
-		if hasattr(listWidget, "_datas"):
-			module = listWidget._datas.module
+		if hasattr(listWidget, "_data"):
+			module = listWidget._data.module
 			self.editProvidedfile(module.import_.__file__.replace(Constants.librariesCompiledExtension, Constants.librariesExtension))
 
 	@core.executionTrace
@@ -549,8 +549,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 
 		listWidget = self.Methods_listWidget.currentItem()
-		if hasattr(listWidget, "_datas"):
-			module = listWidget._datas.module
+		if hasattr(listWidget, "_data"):
+			module = listWidget._data.module
 			self.exploreProvidedFolder(os.path.dirname(module.import_.__file__))
 
 	@core.executionTrace
@@ -559,7 +559,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This method is triggered when **Execute_Snippet_pushButton** Widget is clicked.
 		"""
 
-		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
+		if hasattr(self.Methods_listWidget.currentItem(), "_data"):
 			self.executeSnippet()
 
 	@core.executionTrace
@@ -577,10 +577,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This method is triggered when **Methods_listWidget** Widget selection has changed.
 		"""
 
-		if hasattr(self.Methods_listWidget.currentItem(), "_datas"):
-			datas = self.Methods_listWidget.currentItem()._datas
-			method = self.getMethodName(datas.name)
-			arguments = inspect.getargspec(datas.module.import_.__dict__[method])
+		if hasattr(self.Methods_listWidget.currentItem(), "_data"):
+			data = self.Methods_listWidget.currentItem()._data
+			method = self.getMethodName(data.name)
+			arguments = inspect.getargspec(data.module.import_.__dict__[method])
 			content = """
 					<h4><center>%s</center></h4>
 					<p>
@@ -604,7 +604,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 					<p>
 					<b>Documentation:</b> %s
 					</p>
-					""" % (strings.getNiceName(method), datas.module.name, os.path.normpath(datas.module.import_.__file__), method, datas.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, datas.module.import_.__dict__[method].__doc__)
+					""" % (strings.getNiceName(method), data.module.name, os.path.normpath(data.module.import_.__file__), method, data.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, data.module.import_.__dict__[method].__doc__)
 		else:
 			content = self._Informations_textBrowser_defaultText
 
@@ -704,9 +704,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 
 		listWidget = self.Methods_listWidget.currentItem()
-		if hasattr(listWidget, "_datas"):
-			module = listWidget._datas.module
-			method = listWidget._datas.name
+		if hasattr(listWidget, "_data"):
+			module = listWidget._data.module
+			method = listWidget._data.name
 
 			LOGGER.info("%s | Executing '%s' Snippet from '%s' Module!" % (self.__class__.__name__, method, module.name))
 			module.import_.__dict__[method]()

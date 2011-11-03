@@ -55,17 +55,17 @@ __all__ = ["unpackDefault",
 	"writeUVsMasks",
 	"exportUVsMasks"]
 
-def unpackDefault(datas, length=3, default=None):
+def unpackDefault(data, length=3, default=None):
 	"""
-	This definition unpack provided iterable datas with default if needed.
+	This definition unpack provided iterable data with default if needed.
 	
-	:param datas: Iterable. ( String / Tuple / List )
+	:param data: Iterable. ( String / Tuple / List )
 	:param length: Default length. ( Integer )
 	:param default: Default value. ( Object )
 	:return: Definition success. ( Boolean )
 	"""
 
-	return itertools.islice(itertools.chain(iter(datas), itertools.repeat(default)), length)
+	return itertools.islice(itertools.chain(iter(data), itertools.repeat(default)), length)
 
 def fillPaintBuffer(color):
 	"""
