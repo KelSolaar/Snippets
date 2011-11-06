@@ -63,7 +63,7 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This definition returns transform of the provided node.
+	This definition returns transform of the given node.
 
 	:param node: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -78,7 +78,7 @@ def getTransform(node, fullPath=True):
 
 def setPadding(data, padding, affix="0"):
 	"""
-	This definition pads the provided data.
+	This definition pads the given data.
 
 	:param data: Data to pad. ( String )
 	:param padding: Padding. ( Integer )
@@ -102,7 +102,7 @@ def getUserExportDirectory():
 
 def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames=False):
 	"""
-	This definition export provided objects to files.
+	This definition export given objects to files.
 
 	:param objects: Objects to export. ( List )
 	:param exportType: Export type. ( String )

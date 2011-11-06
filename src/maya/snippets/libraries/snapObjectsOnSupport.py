@@ -41,7 +41,7 @@ def stacksHandler(object):
 
 def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
-	This definition returns shapes of the provided object.
+	This definition returns shapes of the given object.
 
 	:param object: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )

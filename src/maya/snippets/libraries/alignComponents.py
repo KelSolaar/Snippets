@@ -77,7 +77,7 @@ def normalize(vector):
 
 def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", "Z")):
 	"""
-	This definition aligns provided Components between the two anchors.
+	This definition aligns given Components between the two anchors.
 
 	:param anchorA: Anchor a. ( String )
 	:param anchorB: Anchor b. ( String )

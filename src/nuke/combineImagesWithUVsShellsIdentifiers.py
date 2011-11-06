@@ -48,7 +48,7 @@ SHELLS_FILTER = "u[0-9]+_v[0-9]+"
 #***********************************************************************************************
 def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 	"""
-	This definition gets UVs shells siblings from provided elements.
+	This definition gets UVs shells siblings from given elements.
 
 	:param elements: Elements to filter. ( List )
 	:param filter: Shells identifier regex filter. ( String )

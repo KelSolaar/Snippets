@@ -105,7 +105,7 @@ def messageBox( messageType, title, message ):
 @core.executionTrace
 def centerWidgetOnScreen( widget ):
 	"""
-	This definition centers provided Widget middle of the screen.
+	This definition centers given Widget middle of the screen.
 
 	:param widget: Current Widget. ( QWidget )
 	"""
@@ -115,7 +115,7 @@ def centerWidgetOnScreen( widget ):
 @core.executionTrace
 def resizeWidget( widget, size_x, size_y ):
 	"""
-	This definition resize provided Widget.
+	This definition resize given Widget.
 
 	:param widget: Current Widget. ( QWidget )
 	:param size_x: Size x. ( Integer )

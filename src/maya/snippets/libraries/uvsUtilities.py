@@ -143,7 +143,7 @@ def isGeometry(object):
 
 def getUVsFromComponents(components, flatten=True):
 	"""
-	This definition returns the uvs from provided components.
+	This definition returns the uvs from given components.
 
 	:param components: Components. ( List )
 	:param flatten: Flatten components list. ( Boolean )
@@ -158,7 +158,7 @@ def getUVsFromComponents(components, flatten=True):
 
 def getObjectUVsArea(object):
 	"""
-	This definition returns provided object UVs area.
+	This definition returns given object UVs area.
 
 	:param object: Object to retrieve UVs area. ( String )
 	:return: UVs area. ( Integer )
@@ -182,7 +182,7 @@ def getObjectUVsArea(object):
 
 def getComponentUVDims(component):
 	"""
-	This definition returns the UVDims of the provided component.
+	This definition returns the UVDims of the given component.
 
 	:param component: Component to retrieve the UVDims. ( String )
 	:return: UVDims. ( Tuple )
@@ -193,7 +193,7 @@ def getComponentUVDims(component):
 
 def getMariPatchFromUVDims(uvDims):
 	"""
-	This definition returns the Mari patch of the provided component from UVDims.
+	This definition returns the Mari patch of the given component from UVDims.
 
 	:param uvDims: UVDims to convert to Mari Patch. ( Tuple )
 	:return: Mari patch. ( Integer )
@@ -204,7 +204,7 @@ def getMariPatchFromUVDims(uvDims):
 
 def getComponentsUVDims(components):
 	"""
-	This definition returns provided components UVDims.
+	This definition returns given components UVDims.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components UVDims. ( List )
@@ -219,7 +219,7 @@ def getComponentsUVDims(components):
 
 def getComponentsMariPatches(components):
 	"""
-	This definition returns provided components Mari patches.
+	This definition returns given components Mari patches.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components Mari patches. ( List )
@@ -233,7 +233,7 @@ def getComponentsMariPatches(components):
 
 def getComponentsOccupationAsUVDims(components):
 	"""
-	This definition returns provided components occupation as UVDims.
+	This definition returns given components occupation as UVDims.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components occupation. ( Tuple )
@@ -244,7 +244,7 @@ def getComponentsOccupationAsUVDims(components):
 
 def getComponentsOccupationAsMariPatches(components):
 	"""
-	This definition returns provided components occupation as Mari patches.
+	This definition returns given components occupation as Mari patches.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components occupation. ( Tuple )
@@ -285,7 +285,7 @@ def IPrintComponentsOccupationAsMariPatches():
 
 def getComponentsBoundingBox(components):
 	"""
-	This definition returns provided components Bounding Box.
+	This definition returns given components Bounding Box.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components Bounding Box. ( Tuple )
@@ -303,7 +303,7 @@ def getComponentsBoundingBox(components):
 
 def getComponentsUVsCenter(components):
 	"""
-	This definition returns provided components UVs center.
+	This definition returns given components UVs center.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components UVs center. ( Tuple )
@@ -345,7 +345,7 @@ def IPrintComponentsUvsCenterAsMariPatch():
 @stacksHandler
 def scaleComponentsUVs(components, su=1, sv=1):
 	"""
-	This definition scales provided components UVs.
+	This definition scales given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:param su: Scale U value. ( Float )
@@ -365,7 +365,7 @@ def scaleComponentsUVs(components, su=1, sv=1):
 @stacksHandler
 def centerComponentsUVs(components):
 	"""
-	This definition centers provided components UVs.
+	This definition centers given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
@@ -381,7 +381,7 @@ def centerComponentsUVs(components):
 @stacksHandler
 def scaleCenterComponentsUVs(components, coverage):
 	"""
-	This definition scales / centers provided components UVs.
+	This definition scales / centers given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
@@ -401,7 +401,7 @@ def scaleCenterComponentsUVs(components, coverage):
 @stacksHandler
 def rotateComponentsUVs(components, value, clockWise=True):
 	"""
-	This definition rotates provided components UVs.
+	This definition rotates given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:param value: Rotation value. ( Float )
@@ -420,7 +420,7 @@ def rotateComponentsUVs(components, value, clockWise=True):
 @anchorSelection
 def polyRotateComponentsUVs(components, value, clockWise=True):
 	"""
-	This definition rotates provided components UVs using Maya "polyRotateUVs" melscript ( Ugly but sadly faster ).
+	This definition rotates given components UVs using Maya "polyRotateUVs" melscript ( Ugly but sadly faster ).
 
 	:param components: Components. ( Tuple / List )
 	:param value: Rotation value. ( Float )
@@ -437,7 +437,7 @@ def polyRotateComponentsUVs(components, value, clockWise=True):
 @stacksHandler
 def moveComponentsUVs(components, u=0, v=0):
 	"""
-	This definition moves provided components UVs.
+	This definition moves given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:param u: U value. ( Float )
@@ -452,7 +452,7 @@ def moveComponentsUVs(components, u=0, v=0):
 @stacksHandler
 def mirrorComponentsUVs(components, horizontal=True):
 	"""
-	This definition mirrors provided components UVs.
+	This definition mirrors given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:param horizontal: Horizontal mirror. ( Boolean )
@@ -471,7 +471,7 @@ def mirrorComponentsUVs(components, horizontal=True):
 @stacksHandler
 def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 	"""
-	This definition stacks provided objects UVs.
+	This definition stacks given objects UVs.
 
 	:param objects: Objects. ( Tuple / List )
 	:param alignement: Alignement ( "bottom", "top", "left", "right", "center" ). ( String )
@@ -564,7 +564,7 @@ def autoRatioUVsAreas(objects):
 @stacksHandler
 def addUVsChecker(items, uRepeats=4, vRepeats=4):
 	"""
-	This definition applies UVs checkers onto provided geometry objects.
+	This definition applies UVs checkers onto given geometry objects.
 
 	:param items: Current items list. ( List )
 	:param uRepeats: U checker repeats. ( Float )

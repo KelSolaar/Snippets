@@ -50,7 +50,7 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This definition returns transform of the provided node.
+	This definition returns transform of the given node.
 
 	:param node: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -142,7 +142,7 @@ def getAverageVector(vectors):
 
 def makePlanar(components):
 	"""
-	This definition planarizes the provided Components.
+	This definition planarizes the given Components.
 
 	:param components: Components to planarizes. ( List )
 	"""

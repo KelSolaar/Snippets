@@ -59,7 +59,7 @@ class MayaLoggingHandler(logging.Handler):
 
 	def emit(self, record):
 		"""
-		This method emits the provided record.
+		This method emits the given record.
 
 		:param record: Record. ( String )
 		"""

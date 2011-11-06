@@ -58,7 +58,7 @@ def stacksHandler(object):
 
 def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
-	This definition returns shapes of the provided object.
+	This definition returns shapes of the given object.
 
 	:param object: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -220,7 +220,7 @@ def ISymmetricalInstance():
 
 def pivotsIdentity(transforms):
 	"""
-	This definition puts provided transforms pivots to origin.
+	This definition puts given transforms pivots to origin.
 
 	:param transforms: Transforms to affect pivots. ( List )
 	"""
@@ -243,7 +243,7 @@ def IPivotsIdentity():
 
 def flattenHierachy(object):
     	"""
-	This definition flattens provided object hierarchy.
+	This definition flattens given object hierarchy.
 
 	:return: Definition succes. ( Boolean )
 	"""

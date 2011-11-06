@@ -55,7 +55,7 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This definition returns transform of the provided node.
+	This definition returns transform of the given node.
 
 	:param node: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -172,7 +172,7 @@ def hasBorderEdges(object):
 
 def solidifyObject(object, height=1, divisions=2, history=True):
 	"""
-	This definition solidifies provided object.
+	This definition solidifies given object.
 
 	:param object: Object. ( String )
 	:param height: Extrusion height. ( Float )

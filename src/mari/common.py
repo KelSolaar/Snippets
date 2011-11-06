@@ -57,7 +57,7 @@ __all__ = ["unpackDefault",
 
 def unpackDefault(data, length=3, default=None):
 	"""
-	This definition unpack provided iterable data with default if needed.
+	This definition unpack given iterable data with default if needed.
 	
 	:param data: Iterable. ( String / Tuple / List )
 	:param length: Default length. ( Integer )
@@ -69,7 +69,7 @@ def unpackDefault(data, length=3, default=None):
 
 def fillPaintBuffer(color):
 	"""
-	This definition fills the paint buffer with provided color.
+	This definition fills the paint buffer with given color.
 	
 	:param color: Color. ( QColor )
 	:return: Definition success. ( Boolean )
@@ -83,7 +83,7 @@ def fillPaintBuffer(color):
 
 def projectColor(color):
 	"""
-	This definition projects the provided color.
+	This definition projects the given color.
 	
 	:param color: Color. ( QColor )
 	:return: Definition success. ( Boolean )
@@ -139,7 +139,7 @@ def displaySelectedPatches():
 
 def getPatchesFromSequence(sequence):
 	"""
-	This definition returns patches from the provided sequence.
+	This definition returns patches from the given sequence.
 
 	:param sequence: sequence. ( String )
 	:return: Patches. ( List )
@@ -158,7 +158,7 @@ def getPatchesFromSequence(sequence):
 
 def selectPatches(patches):
 	"""
-	This definition selects provided patches.
+	This definition selects given patches.
 
 	:param patches: patches. ( List )
 	:return: Definition success. ( Boolean )
@@ -209,7 +209,7 @@ def playblastTimeRange():
 
 def writeUVsMasks(directory):
 	"""
-	This definition writes UVs masks to provided output directory.
+	This definition writes UVs masks to given output directory.
 
 	:return: Definition success. ( Boolean )
 	"""
