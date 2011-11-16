@@ -146,7 +146,7 @@ def getNode(node):
 	"""
 
 	try:
-		return cmds.ls(node, fl=True)[0]
+		return cmds.ls(node, l=True)[0]
 	except:
 		pass
 
