@@ -27,7 +27,9 @@ __all__ = ["stacksHandler",
 			"pivotsIdentity",
 			"IPivotsIdentity",
 			"flattenHierarchy",
-			"IFlattenHierarchy"]
+			"IFlattenHierarchy",
+			"transfertSelection",
+			"ITransfertSelection"]
 
 def stacksHandler(object):
 	"""
@@ -271,3 +273,39 @@ def IFlattenHierachy():
 	selection = cmds.ls(sl=True, l=True)
 	for object in selection:
 		flattenHierachy(object)
+
+
+def transfertSelection():
+	"""
+	This Definition transfers a component selection to another object.
+	
+	:return: Definition succes. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, long=True)
+
+	targetObject = str()
+	for item in selection:
+		if "." not in item:
+			targetObject = item
+			break
+
+	if targetObject != "":
+		cmds.hilite(targetObject, replace=True)
+		cmds.selectMode(component=True)
+		nextSelection = []
+		for item in selection:
+			if item != targetObject:
+				if "." in item:
+					itemTokens = item.split(".")
+					nextSelection.append(targetObject + "." + itemTokens[1])
+		cmds.select(nextSelection)
+	return True
+
+@stacksHandler
+def ITransfertSelection():
+	"""
+	This definition is the transfertSelection definition Interface.
+	"""
+
+	transfertSelection()
