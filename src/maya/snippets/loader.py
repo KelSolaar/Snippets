@@ -163,7 +163,7 @@ class Module(object):
 		:param value: Attribute value. ( String )
 		"""
 
-		if value:
+		if value is not None:
 			assert type(value) in (str, unicode), "'%s' Attribute: '%s' type is not 'str' or 'unicode'!" % ("name", value)
 		self._name = value
 
@@ -195,7 +195,7 @@ class Module(object):
 		:param value: Attribute value. ( String )
 		"""
 
-		if value:
+		if value is not None:
 			assert type(value) in (str, unicode), "'%s' Attribute: '%s' type is not 'str' or 'unicode'!" % ("path", value)
 			assert os.path.exists(value), "'%s' Attribute: '%s' directory doesn't exists!" % ("path", value)
 		self._path = value
@@ -228,7 +228,7 @@ class Module(object):
 		:param value: Attribute value. ( Module )
 		"""
 
-		if value:
+		if value is not None:
 			assert type(value) is type(sys), "'%s' Attribute: '%s' type is not 'module'!" % ("import", value)
 		self._import = value
 
@@ -368,7 +368,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:param value: Attribute value. ( Dictionary )
 		"""
 
-		if value:
+		if value is not None:
 			assert type(value) is dict, "'%s' Attribute: '%s' type is not 'dict'!" % ("modules", value)
 		self._modules = value
 
