@@ -735,9 +735,21 @@ def assignMariShaders():
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
+
+	mainProgressBar = mel.eval('$tmp = $gMainProgressBar')
+	cmds.progressBar(mainProgressBar, edit=True, beginProgress=True, isInterruptable=True, status="Assigning Mari shaders ...", maxValue=len(selection))
+	
 	success = True
 	for object in selection:
+		if cmds.progressBar(mainProgressBar, query=True, isCancelled=True):
+                	break
+
+        	cmds.progressBar(mainProgressBar, edit=True, status="Assigning Mari shaders to '%s' ..." % object, step=1)
+
 		success *= assignMariShadersToObject(object)
+	
+	cmds.progressBar(mainProgressBar, edit=True, endProgress=True)
+
 	return success
 
 @stacksHandler
