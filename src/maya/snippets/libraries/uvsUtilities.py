@@ -17,9 +17,12 @@ __status__ = "Production"
 __all__ = ["RESOURCES_DIRECTORY", 
 				"CHECKER_IMAGE",
 				"DEFAULT_SCALE_COVERAGE = 0.98",
+				"MARI_NAME_FORMAT",
 				"stacksHandler",
+				"getNode",
 				"isGeometry",
 				"getUVsFromComponents",
+				"getFacesPerPatches",
 				"getObjectUVsArea",
 				"getComponentUVDims",
 				"getMariPatchFromUVDims",
@@ -49,6 +52,10 @@ __all__ = ["RESOURCES_DIRECTORY",
 				"addUVsChecker",
 				"removeUVsChecker",
 				"setUVsCheckerRepeats",
+				"getPatchShaderTree",
+				"assignMariShadersToObject",
+				"assignMariShaders",
+				"IAssignMariShaders",
 				"flipUVs_button_OnClicked",
 				"moveUpUVs_button_OnClicked",
 				"flopUVs_button_OnClicked",
@@ -78,6 +85,8 @@ RESOURCES_DIRECTORY = os.path.join(os.path.dirname("__file__" in locals().keys()
 CHECKER_IMAGE = "images/Checker.jpg"
 
 DEFAULT_SCALE_COVERAGE = 0.98
+
+MARI_NAME_FORMAT = "_%s"
 
 def stacksHandler(object):
 	"""
@@ -128,6 +137,19 @@ def anchorSelection(object):
 
 	return function
 
+def getNode(node):
+	"""
+	This definition returns given node if it exists or **None**.
+
+	:param node: Current node to retrun. ( String )
+	:return: Node. ( String )
+	"""
+
+	try:
+		return cmds.ls(node, fl=True)[0]
+	except:
+		pass
+
 def isGeometry(object):
 	"""
 	This definition returns if a node is a geometry.
@@ -155,6 +177,25 @@ def getUVsFromComponents(components, flatten=True):
 		if not re.search(pattern, component):
 			return cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=flatten)
 	return components        
+
+def getFacesPerPatches(object):
+	"""
+	This definition returns the faces per patches from given object.
+
+	:param object: Object. ( String )
+	:return: Faces per patches. ( Dictionary )
+	"""
+
+	faces = cmds.ls("%s.f[0:%s]" % (object, cmds.polyEvaluate(object, face=True)), fl=True)
+	facesPerPatches = {}
+	for face in faces:
+		map, patch = getComponentsMariPatches(face)[0]
+		if not patch in facesPerPatches.keys():
+			facesPerPatches[patch] = [face]
+			continue
+        
+		facesPerPatches[patch].append(face)
+	return facesPerPatches
 
 def getObjectUVsArea(object):
 	"""
@@ -643,6 +684,69 @@ def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
 	uRepeats and cmds.setAttr("UVsChecker_Place2dTexture.repeatU", uRepeats)
 	vRepeats and cmds.setAttr("UVsChecker_Place2dTexture.repeatV", vRepeats)
 	return True
+
+@stacksHandler
+def getPatchShaderTree(patch, nameFormat=MARI_NAME_FORMAT):
+	"""
+	This definition builds the patch shader tree of given patch.
+
+	:param patch: Patch. ( Integer )
+	:param nameFormat: Name format. ( String )
+	:return: Tree shading engine. ( String )
+	"""
+
+	name = nameFormat % patch
+	shadingEngine = getNode("%sSG" % name)
+	if not shadingEngine:
+		lambert = cmds.shadingNode("lambert", asShader=True)
+		shadingEngine = cmds.sets(renderable=True, noSurfaceShader=True, empty=True)
+		cmds.connectAttr("%s.outColor" % lambert, "%s.surfaceShader" % shadingEngine, f=True)
+       
+		cmds.rename(lambert, name)
+		shadingEngine = cmds.rename(shadingEngine, "%sSG" % name)
+	return shadingEngine
+
+@stacksHandler
+def assignMariShadersToObject(object):
+	"""
+	This definition assigns the Mari shaders to given object.
+
+	:param object: Object. ( String )
+	:return: Definition success. ( Boolean )
+	"""
+
+	patches = getComponentsOccupationAsMariPatches(object)
+	if len(patches) == 1:
+		patch = patches[0]
+		shadingEngine = getPatchShaderTree(patch)
+		cmds.sets(object, e=True, forceElement=shadingEngine)
+	else:
+		for patch, faces in getFacesPerPatches(object).items():
+			shadingEngine = getPatchShaderTree(patch)
+			cmds.sets(faces, e=True, forceElement=shadingEngine)
+	return True
+
+@stacksHandler
+def assignMariShaders():
+	"""
+	This definition assigns the Mari shaders to selected objects.
+
+	:return: Definition success. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	success = True
+	for object in selection:
+		success *= assignMariShadersToObject(object)
+	return success
+
+@stacksHandler
+def IAssignMariShaders():
+	"""
+	This definition is the assignMariShaders definition Interface.
+	"""
+
+	assignMariShaders()
 
 @stacksHandler
 def flipUVs_button_OnClicked(state=None):
