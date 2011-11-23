@@ -8,7 +8,9 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["stacksHandler",
+__all__ = ["DEFAULTS_HOTKEYS",
+			"TRANSFERT_SELECTION_HOTKEY",
+			"stacksHandler",
 			"getShapes",
 			"transfertVerticesPositionsInUvSpace",
 			"ITransfertVerticesPositionsInUvSpace",
@@ -29,7 +31,17 @@ __all__ = ["stacksHandler",
 			"flattenHierarchy",
 			"IFlattenHierarchy",
 			"transfertSelection",
-			"ITransfertSelection"]
+			"ITransfertSelection",
+			"transfertSelectionToUserTarget",
+			"pickTarget_button_OnClicked",
+			"setUnsetContextHotkeys_button_OnClicked",
+			"transfertSelection_button_OnClicked",
+			"transfertSelection_window",
+			"transfertSelectionUi",
+			"ITransfertSelectionUi"]
+
+DEFAULTS_HOTKEYS = {}
+TRANSFERT_SELECTION_HOTKEY = "t"
 
 def stacksHandler(object):
 	"""
@@ -274,10 +286,9 @@ def IFlattenHierachy():
 	for object in selection:
 		flattenHierachy(object)
 
-
 def transfertSelection():
 	"""
-	This Definition transfers a component selection to another object.
+	This definition transfers a component selection to another object.
 	
 	:return: Definition succes. ( Boolean )
 	"""
@@ -299,7 +310,7 @@ def transfertSelection():
 				if "." in item:
 					itemTokens = item.split(".")
 					nextSelection.append(targetObject + "." + itemTokens[1])
-		cmds.select(nextSelection)
+		nextSelection and cmds.select(nextSelection)
 	return True
 
 @stacksHandler
@@ -309,3 +320,113 @@ def ITransfertSelection():
 	"""
 
 	transfertSelection()
+
+@stacksHandler
+def transfertSelectionToUserTarget():
+	"""
+	This definition transfers a component selection to user target object.
+	"""
+
+	source = cmds.textField("target_textField", query=True, text=True)
+	if not source:
+		return
+
+	cmds.select(source, add=True)
+	return transfertSelection()
+
+@stacksHandler
+def pickTarget_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **pickTarget_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and cmds.textField("target_textField", edit=True, text=selection[0])
+
+@stacksHandler
+def setUnsetContextHotkeys_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **setUnsetContextHotkeys_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	sequence = TRANSFERT_SELECTION_HOTKEY
+	command = "python(\"import snippets.libraries.others as others; reload(others); others.transfertSelectionToUserTarget()\")"
+	name = "transfertSelectionNamedCommand"
+	if cmds.hotkey(sequence, query=True, name=True) != name:
+		print("%s | Assigning '%s' hotkey to '%s' command!" % (__name__, sequence, name))
+		DEFAULTS_HOTKEYS[sequence] = {"name" : cmds.hotkey(sequence, query=True, name=True),
+								"releaseName" : cmds.hotkey(sequence, query=True, releaseName=True)}
+
+		cmds.nameCommand(name, annotation="Transfert Selection", command=command)
+		cmds.hotkey(k=sequence, rcr=True, name=name)
+	else:
+		hotkey = DEFAULTS_HOTKEYS.get(sequence)
+		if hotkey:
+			print("%s | Unassigning '%s' hotkey from '%s' command!" % (__name__, sequence, name))
+			cmds.hotkey(k=sequence, name=hotkey.get("name"), releaseName=hotkey.get("releaseName"))
+
+@stacksHandler
+def transfertSelection_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **transfertSelection_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	transfertSelectionToUserTarget()
+
+def transfertSelection_window():
+	"""
+	This definition creates the 'Transfert Selection' main window.
+	"""
+
+	cmds.windowPref(enableAll=False)
+
+	if (cmds.window("transfertSelection_window", exists=True)):
+		cmds.deleteUI("transfertSelection_window")
+
+	cmds.window("transfertSelection_window",
+		title="Transfert Selection",
+		width=320)
+
+	spacing = 5
+
+	cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
+
+	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
+	cmds.text(label="Target:")
+	sources_textField = cmds.textField("target_textField")
+	cmds.button("pickTarget_button", label="Pick Target!", command=pickTarget_button_OnClicked)
+	cmds.setParent(topLevel=True)
+
+	cmds.separator(style="single")
+
+	cmds.button("setUnsetContextHotkeys_button", label="Set / Unset Context HotKeys!", command=setUnsetContextHotkeys_button_OnClicked)
+	
+	cmds.separator(style="single")
+	
+	cmds.button("transfertSelection_button", label="Transfert Selection!", command=transfertSelection_button_OnClicked)
+
+	cmds.showWindow("transfertSelection_window")
+
+	cmds.windowPref(enableAll=True)
+
+@stacksHandler
+def transfertSelectionUi():
+	"""
+	This definition launches the 'Transfert Selection' main window.
+	"""
+
+	transfertSelection_window()
+
+@stacksHandler
+def ITransfertSelectionUi():
+	"""
+	This definition is the transfertSelectionUi definition Interface.
+	"""
+
+	transfertSelectionUi()
