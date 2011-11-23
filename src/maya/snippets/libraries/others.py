@@ -346,11 +346,9 @@ def pickTarget_button_OnClicked(state=None):
 	selection and cmds.textField("target_textField", edit=True, text=selection[0])
 
 @stacksHandler
-def setUnsetContextHotkeys_button_OnClicked(state=None):
+def setUnsetContextHotkeys():
 	"""
-	This definition is triggered by the **setUnsetContextHotkeys_button** button when clicked.
-
-	:param state: Button state. ( Boolean )
+	This definition sets / unsets context hotkeys.
 	"""
 
 	sequence = TRANSFERT_SELECTION_HOTKEY
@@ -368,6 +366,7 @@ def setUnsetContextHotkeys_button_OnClicked(state=None):
 		if hotkey:
 			print("%s | Unassigning '%s' hotkey from '%s' command!" % (__name__, sequence, name))
 			cmds.hotkey(k=sequence, name=hotkey.get("name"), releaseName=hotkey.get("releaseName"))
+	return True
 
 @stacksHandler
 def transfertSelection_button_OnClicked(state=None):
@@ -404,13 +403,12 @@ def transfertSelection_window():
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")
-
-	cmds.button("setUnsetContextHotkeys_button", label="Set / Unset Context HotKeys!", command=setUnsetContextHotkeys_button_OnClicked)
-	
-	cmds.separator(style="single")
 	
 	cmds.button("transfertSelection_button", label="Transfert Selection!", command=transfertSelection_button_OnClicked)
 
+	setUnsetContextHotkeys()
+	scriptJob = cmds.scriptJob(uiDeleted=("transfertSelection_window", setUnsetContextHotkeys), runOnce=True)
+	
 	cmds.showWindow("transfertSelection_window")
 
 	cmds.windowPref(enableAll=True)
