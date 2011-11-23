@@ -101,7 +101,7 @@ RuntimeGlobals.resourcesDirectory = os.path.join(os.path.dirname(__file__), Cons
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-class Interface(core.Structure):
+class Interface(foundations.dataStructures.Structure):
 	"""
 	This is the **Interface** class.
 	"""
@@ -114,7 +114,7 @@ class Interface(core.Structure):
 		:param kwargs: name, module. ( Key / Value pairs )
 		"""
 
-		core.Structure.__init__(self, **kwargs)
+		foundations.dataStructures.Structure.__init__(self, **kwargs)
 
 class Module(object):
 	"""
