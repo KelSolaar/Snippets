@@ -57,6 +57,7 @@ _overrideDependenciesGlobals()
 #***	Internal imports.
 #**********************************************************************************************************************
 import foundations.core as core
+import foundations.dataStructures
 import foundations.exceptions
 import foundations.io as io
 import foundations.strings as strings
