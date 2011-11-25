@@ -686,16 +686,16 @@ def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
 	return True
 
 @stacksHandler
-def getPatchShaderTree(patch, nameFormat=MARI_NAME_FORMAT):
+def getPatchShaderTree(patch, prefix):
 	"""
 	This definition builds the patch shader tree of given patch.
 
 	:param patch: Patch. ( Integer )
-	:param nameFormat: Name format. ( String )
+	:param prefix: Name prefix. ( String )
 	:return: Tree shading engine. ( String )
 	"""
 
-	name = nameFormat % patch
+	name = "%s%s" % (prefix, patch)
 	shadingEngine = getNode("%sSG" % name)
 	if not shadingEngine:
 		lambert = cmds.shadingNode("lambert", asShader=True)
@@ -707,10 +707,11 @@ def getPatchShaderTree(patch, nameFormat=MARI_NAME_FORMAT):
 	return shadingEngine
 
 @stacksHandler
-def assignMariShadersToObject(object):
+def assignMariShadersToObject(object, prefix):
 	"""
 	This definition assigns the Mari shaders to given object.
 
+	:param prefix: Shader prefix name. ( String )
 	:param object: Object. ( String )
 	:return: Definition success. ( Boolean )
 	"""
@@ -718,19 +719,20 @@ def assignMariShadersToObject(object):
 	patches = getComponentsOccupationAsMariPatches(object)
 	if len(patches) == 1:
 		patch = patches[0]
-		shadingEngine = getPatchShaderTree(patch)
+		shadingEngine = getPatchShaderTree(patch, prefix)
 		cmds.sets(object, e=True, forceElement=shadingEngine)
 	else:
 		for patch, faces in getFacesPerPatches(object).items():
-			shadingEngine = getPatchShaderTree(patch)
+			shadingEngine = getPatchShaderTree(patch, prefix)
 			cmds.sets(faces, e=True, forceElement=shadingEngine)
 	return True
 
 @stacksHandler
-def assignMariShaders():
+def assignMariShaders(prefix):
 	"""
 	This definition assigns the Mari shaders to selected objects.
 
+	:param prefix: Shader prefix name. ( String )
 	:return: Definition success. ( Boolean )
 	"""
 
@@ -746,7 +748,7 @@ def assignMariShaders():
 
         	cmds.progressBar(mainProgressBar, edit=True, status="Assigning Mari shaders to '%s' ..." % object, step=1)
 
-		success *= assignMariShadersToObject(object)
+		success *= assignMariShadersToObject(object, prefix)
 	
 	cmds.progressBar(mainProgressBar, edit=True, endProgress=True)
 
@@ -758,7 +760,11 @@ def IAssignMariShaders():
 	This definition is the assignMariShaders definition Interface.
 	"""
 
-	assignMariShaders()
+	projectName = os.path.basename(os.path.dirname(cmds.workspace(q=True, fullName=True)))
+	result = cmds.promptDialog(title="Mari Shaders Prefix", message="Enter Prefix:", text=projectName, button=["OK", "Cancel"], defaultButton="OK", cancelButton="Cancel", dismissString="Cancel")
+	if result == "OK":
+		prefix = cmds.promptDialog(query=True, text=True)
+		prefix and assignMariShaders(prefix)
 
 @stacksHandler
 def flipUVs_button_OnClicked(state=None):
