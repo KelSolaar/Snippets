@@ -36,9 +36,9 @@ __all__ = ["DEFAULTS_HOTKEYS",
 			"pickTarget_button_OnClicked",
 			"setUnsetContextHotkeys_button_OnClicked",
 			"transfertSelection_button_OnClicked",
-			"transfertSelection_window",
-			"transfertSelectionUi",
-			"ITransfertSelectionUi"]
+			"transfertSelectionToTarget_window",
+			"transfertSelectionToTarget",
+			"ITransfertSelectionToTarget"]
 
 DEFAULTS_HOTKEYS = {}
 TRANSFERT_SELECTION_HOTKEY = "t"
@@ -330,6 +330,9 @@ def transfertSelectionToUserTarget():
 	source = cmds.textField("target_textField", query=True, text=True)
 	if not source:
 		return
+	
+	if not cmds.ls(source):
+		return
 
 	cmds.select(source, add=True)
 	return transfertSelection()
@@ -378,18 +381,18 @@ def transfertSelection_button_OnClicked(state=None):
 
 	transfertSelectionToUserTarget()
 
-def transfertSelection_window():
+def transfertSelectionToTarget_window():
 	"""
-	This definition creates the 'Transfert Selection' main window.
+	This definition creates the 'Transfert Selection To Target' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("transfertSelection_window", exists=True)):
-		cmds.deleteUI("transfertSelection_window")
+	if (cmds.window("transfertSelectionToTarget_window", exists=True)):
+		cmds.deleteUI("transfertSelectionToTarget_window")
 
-	cmds.window("transfertSelection_window",
-		title="Transfert Selection",
+	cmds.window("transfertSelectionToTarget_window",
+		title="Transfert Selection To Target",
 		width=320)
 
 	spacing = 5
@@ -407,24 +410,24 @@ def transfertSelection_window():
 	cmds.button("transfertSelection_button", label="Transfert Selection!", command=transfertSelection_button_OnClicked)
 
 	setUnsetContextHotkeys()
-	scriptJob = cmds.scriptJob(uiDeleted=("transfertSelection_window", setUnsetContextHotkeys), runOnce=True)
+	scriptJob = cmds.scriptJob(uiDeleted=("transfertSelectionToTarget_window", setUnsetContextHotkeys), runOnce=True)
 	
-	cmds.showWindow("transfertSelection_window")
+	cmds.showWindow("transfertSelectionToTarget_window")
 
 	cmds.windowPref(enableAll=True)
 
 @stacksHandler
-def transfertSelectionUi():
+def transfertSelectionToTarget():
 	"""
-	This definition launches the 'Transfert Selection' main window.
+	This definition launches the 'Transfert Selection To Target' main window.
 	"""
 
-	transfertSelection_window()
+	transfertSelectionToTarget_window()
 
 @stacksHandler
-def ITransfertSelectionUi():
+def ITransfertSelectionToTarget():
 	"""
-	This definition is the transfertSelectionUi definition Interface.
+	This definition is the transfertSelectionToTarget definition Interface.
 	"""
 
-	transfertSelectionUi()
+	transfertSelectionToTarget()
