@@ -728,21 +728,20 @@ def assignMariShadersToObject(object, prefix):
 	return True
 
 @stacksHandler
-def assignMariShaders(prefix):
+def assignMariShaders(objects, prefix):
 	"""
-	This definition assigns the Mari shaders to selected objects.
+	This definition assigns the Mari shaders to given objects.
 
+	:param objects: Objects. ( List )
 	:param prefix: Shader prefix name. ( String )
 	:return: Definition success. ( Boolean )
 	"""
 
-	selection = cmds.ls(sl=True, l=True)
-
 	mainProgressBar = mel.eval('$tmp = $gMainProgressBar')
-	cmds.progressBar(mainProgressBar, edit=True, beginProgress=True, isInterruptable=True, status="Assigning Mari shaders ...", maxValue=len(selection))
+	cmds.progressBar(mainProgressBar, edit=True, beginProgress=True, isInterruptable=True, status="Assigning Mari shaders ...", maxValue=len(objects))
 	
 	success = True
-	for object in selection:
+	for object in objects:
 		if cmds.progressBar(mainProgressBar, query=True, isCancelled=True):
                 	break
 
@@ -760,11 +759,15 @@ def IAssignMariShaders():
 	This definition is the assignMariShaders definition Interface.
 	"""
 
+	selection = cmds.ls(sl=True, l=True)
+	if not selection:
+		return
+
 	projectName = os.path.basename(os.path.dirname(cmds.workspace(q=True, fullName=True)))
 	result = cmds.promptDialog(title="Mari Shaders Prefix", message="Enter Prefix:", text=projectName, button=["OK", "Cancel"], defaultButton="OK", cancelButton="Cancel", dismissString="Cancel")
 	if result == "OK":
 		prefix = cmds.promptDialog(query=True, text=True)
-		prefix and assignMariShaders(prefix)
+		prefix and assignMariShaders(selection, prefix)
 
 @stacksHandler
 def flipUVs_button_OnClicked(state=None):
