@@ -180,7 +180,7 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 	:param history: Keep construction history. ( Boolean )
 	"""
 
-	if	hasBorderEdges(object):
+	if hasBorderEdges(object):
 		transform = getTransform(object)
 		vertices = cmds.ls(cmds.polyListComponentConversion(object, toVertex=True), fl=True)
 
@@ -198,7 +198,7 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 		borderEdges = cmds.polyListComponentConversion(faces, te=True, bo=True)
 		cmds.polyMapCut(borderEdges)
 		uvs = cmds.polyListComponentConversion(object + ".f[0:" + str(facesCount - 1) + "]", toUV=1)
-		cmds.polyEditUV(uvs, u=1, v=0)
+		cmds.polyEditUV(uvs, u=0, v=-5)
 
 		extendedFaces = cmds.ls(faces, fl=True)
 		for i in range(divisions):
@@ -209,7 +209,7 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 		cmds.select(borderFaces)
 		cmds.polyAutoProjection(borderFaces, t=barycenter, ry=getAngle((0, 0, 1), averageNormal), rz=getAngle((1, 0, 0), averageNormal))
 		uvs = cmds.polyListComponentConversion(borderFaces, toUV=1)
-		cmds.polyEditUV(uvs, u=2, v=0)
+		cmds.polyEditUV(uvs, u=0, v=-5)
 
 		not history and cmds.delete(object, ch=True)
 
@@ -244,7 +244,7 @@ def solidify_window():
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.floatSliderGrp("height_floatSliderGrp", label="Height", field=True, minValue= -10, maxValue=10, fieldMinValue= -65535, fieldMaxValue=65535, value=0.1)
+	cmds.floatSliderGrp("height_floatSliderGrp", label="Height", field=True, precision=3, minValue= -10, maxValue=10, fieldMinValue= -65535, fieldMaxValue=65535, value=0.1)
 	cmds.intSliderGrp("divisions_intSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
 
 	cmds.separator(style="single")

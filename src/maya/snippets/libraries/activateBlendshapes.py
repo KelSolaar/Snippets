@@ -41,7 +41,7 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["stacksHandler",
-			"weightSlider_OnValueChanged",
+			"weight_floatSliderGrp_OnValueChanged",
 			"setWeight",
 			"activateBlendshapes_window",
 			"activateBlendshapes",
@@ -77,9 +77,11 @@ def stacksHandler(object):
 
 	return stacksHandlerCall
 
-def weightSlider_OnValueChanged(value):
+def weight_floatSliderGrp_OnValueChanged(value):
 	"""
-	This definition is triggered by the 'weightSlider' slider when its value changed.
+	This definition is triggered by the 'weight_floatSliderGrp' slider when its value changed.
+
+	:param value: Value. ( Float )
 	"""
 
 	setWeight(cmds.floatSliderGrp("weight_floatSliderGrp", query=True, value=True))
@@ -94,7 +96,11 @@ def setWeight(value):
 	blendShapesNodes = cmds.ls(type="blendShape")
 	for blendShapesNode in blendShapesNodes :
 		targets = cmds.listAttr(blendShapesNode + ".w", m=True)
-		cmds.setAttr(blendShapesNode + "." + targets[0], value)
+		for target in targets:
+			try:
+				cmds.setAttr("%s.%s" % (blendShapesNode, target), value)
+			except:
+				pass
 
 def activateBlendshapes_window():
 	"""
@@ -116,7 +122,7 @@ def activateBlendshapes_window():
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.floatSliderGrp("weight_floatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, sliderStep=0.01, value=0, changeCommand=weightSlider_OnValueChanged , dragCommand=weightSlider_OnValueChanged)
+	cmds.floatSliderGrp("weight_floatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, sliderStep=0.01, value=0, changeCommand=weight_floatSliderGrp_OnValueChanged, dragCommand=weight_floatSliderGrp_OnValueChanged)
 
 	cmds.separator(height=10, style="singleDash")
 
