@@ -81,7 +81,7 @@ __all__ = ["RESOURCES_DIRECTORY",
 				"unfoldingTools",
 				"IUvsTools"]
 
-RESOURCES_DIRECTORY = os.path.join(os.path.dirname("__file__" in locals().keys() and __file__ or str()), "../resources")
+RESOURCES_DIRECTORY = os.path.join(os.path.dirname("__file__" in locals() and __file__ or str()), "../resources")
 CHECKER_IMAGE = "images/Checker.jpg"
 
 DEFAULT_SCALE_COVERAGE = 0.98
@@ -190,7 +190,7 @@ def getFacesPerPatches(object):
 	facesPerPatches = {}
 	for face in faces:
 		map, patch = getComponentsMariPatches(face)[0]
-		if not patch in facesPerPatches.keys():
+		if not patch in facesPerPatches:
 			facesPerPatches[patch] = [face]
 			continue
         

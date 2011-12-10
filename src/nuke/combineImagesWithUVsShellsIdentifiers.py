@@ -63,7 +63,7 @@ def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 
 		uvShell = search.group(0)
 		name = getSplitextBasename(element)
-		if uvShell not in uvsShellsSiblings.keys():
+		if uvShell not in uvsShellsSiblings:
 			uvsShellsSiblings[uvShell] = {name:element}
 		else:
 			uvsShellsSiblings[uvShell][name] = element
