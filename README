@@ -27,6 +27,6 @@ UI = snippets.loader.Loader(snippets.ui.ui.common.getMayaWindow())
 UI.show()
 
 - About -
-Snippets by Thomas Mansencal - 2009 - 2011
+Snippets by Thomas Mansencal - 2009 - 2012
 thomas.mansencal@gmail.com
 http://www.thomasmansencal.com/
