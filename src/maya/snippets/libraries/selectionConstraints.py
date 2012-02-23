@@ -24,6 +24,8 @@ __all__ = ["stacksHandler",
 			"ISelectHardEdges",
 			"selectNonManifoldVertices",
 			"ISelectNonManifoldVertices",
+			"selectIsolatedVertices",
+			"ISelectIsolatedVertices",
 			"selectLaminaFaces",
 			"ISelectLaminaFaces",
 			"selectZeroGeometryAreaFaces",
@@ -188,6 +190,31 @@ def ISelectNonManifoldVertices():
 	"""
 
 	selectNonManifoldVertices()
+
+def selectIsolatedVertices(components):
+	"""
+	This definition selects the isolated vertices.
+	"""
+
+	isolatedVertices = []
+	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
+	for vertex in vertices:
+		edges = cmds.ls(cmds.polyListComponentConversion(vertex, toEdge=True), flatten=True)
+		if len(edges) == 2:
+			if len(cmds.ls(cmds.polyListComponentConversion(edges, toFace=True), flatten=True)) == 1:
+				continue
+		        
+			isolatedVertices.append(vertex)
+	cmds.select(isolatedVertices)
+
+@stacksHandler
+def ISelectIsolatedVertices():
+	"""
+	This definition is the selectIsolatedVertices definition Interface.
+	"""
+	
+	selection = cmds.ls(sl=True, l=True)
+	selection and selectIsolatedVertices(selection)
 
 def selectLaminaFaces():
 	"""
