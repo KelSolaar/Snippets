@@ -196,6 +196,7 @@ def selectIsolatedVertices(components):
 	This definition selects the isolated vertices.
 	"""
 
+	cmds.select(cl=True)
 	isolatedVertices = []
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 	for vertex in vertices:
@@ -205,7 +206,7 @@ def selectIsolatedVertices(components):
 				continue
 		        
 			isolatedVertices.append(vertex)
-	cmds.select(isolatedVertices)
+	isolatedVertices and cmds.select(isolatedVertices)
 
 @stacksHandler
 def ISelectIsolatedVertices():
