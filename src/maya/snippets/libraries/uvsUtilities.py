@@ -420,7 +420,7 @@ def centerComponentsUVs(components):
 	return True
 
 @stacksHandler
-def scaleCenterComponentsUVs(components, coverage):
+def scaleCenterComponentsUVs(components, coverage=DEFAULT_SCALE_COVERAGE):
 	"""
 	This definition scales / centers given components UVs.
 
