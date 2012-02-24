@@ -63,13 +63,14 @@ import foundations.io as io
 import foundations.strings as strings
 import foundations.namespace as namespace
 import snippets.libraries.common
+import snippets.ui.common
 from foundations.environment import Environment
 from foundations.walkers import OsWalker
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.globals.uiConstants import UiConstants
-from snippets.models import Interface
-from snippets.models import InterfacesModel
-from snippets.views import Interfaces_QListView
+from snippets.ui.models import Interface
+from snippets.ui.models import InterfacesModel
+from snippets.ui.views import Interfaces_QListView
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -81,7 +82,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Categorie", "Interface", "Module", "Loader"]
+__all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Module", "Loader"]
 
 LOGGER = logging.getLogger(Constants.logger)
 
@@ -93,14 +94,16 @@ if LOGGER.handlers == []:
 	consoleHandler.setFormatter(core.LOGGING_DEFAULT_FORMATTER)
 	LOGGER.addHandler(consoleHandler)
 
-RuntimeGlobals.loaderUiFile = os.path.join(os.path.dirname(__file__), UiConstants.loaderUiFile)
+RuntimeGlobals.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
+RuntimeGlobals.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
+
+RuntimeGlobals.loaderUiFile = os.path.join(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.loaderUiFile))
 if os.path.exists(RuntimeGlobals.loaderUiFile):
 	Ui_Loader_Setup, Ui_Loader_Type = uic.loadUiType(RuntimeGlobals.loaderUiFile)
 else:
-	ui.common.messageBox("Error", "Error", "'%s' Ui file is not available!" % UiConstants.loaderUiFile)
-
-RuntimeGlobals.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
-RuntimeGlobals.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
+	error = "'%s' Ui file is not available!" % RuntimeGlobals.loaderUiFile
+	snippets.ui.common.messageBox("Error", "Error", error)
+	raise Exception(error)
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -300,13 +303,6 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		# --- Initialize Ui. ---
 		self.__initializeUI()
-
-		# -- Loader Signals / Slots. ---
-		self.connect(self.Execute_Snippet_pushButton, SIGNAL("clicked()"), self.__Execute_Snippet_pushButton__clicked)
-		self.connect(self.Reload_Snippets_pushButton, SIGNAL("clicked()"), self.__Reload_Snippets_pushButton__clicked)
-		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.__Methods_listWidget__itemSelectionChanged)
-		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.__Methods_listWidget__itemDoubleClicked)
-		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.__Search_lineEdit__textChanged)
 
 	#******************************************************************************************************************
 	#***	Attributes properties.
@@ -542,75 +538,56 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Interfaces_listView.setParent(None)
 		self.Interfaces_listView = Interfaces_QListView(self, self.__model)
 		self.Interfaces_listView.setObjectName("Interfaces_listView")
-		self.Methods_frame_gridLayout.addWidget(self.Interfaces_listView, 0, 1)
+		self.Interfaces_frame_splitter.insertWidget(0, self.Interfaces_listView)
+#		self.Methods_frame_gridLayout.addWidget(self.Interfaces_listView, 1, 0)
 		self.__view = self.Interfaces_listView
 		self.__view.setContextMenuPolicy(Qt.ActionsContextMenu)
 #		self.__view_addActions()
 
-		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
-		self.__Methods_listWidget_setActions()
+#		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
+#		self.__view_setActions()
 
 		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
 		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.searchIcon)))
 
-		self.__Methods_listWidget_setWidget()
-
 		self.Informations_textBrowser.setText(self.__defaultText)
 
-		self.Loader_splitter.setSizes([16777215, 0])
+		self.Interfaces_frame_splitter.setSizes([16777215, 0])
+
+		# Signals / Slots.
+		# TODO: New SS mechanism.
+		self.Execute_Snippet_pushButton.clicked.connect(self.__Execute_Snippet_pushButton__clicked)
+		self.Reload_Snippets_pushButton.clicked.connect(self.__Reload_Snippets_pushButton__clicked)
+#		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.__view__itemSelectionChanged)
+#		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.__view__itemDoubleClicked)
+		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.__Search_lineEdit__textChanged)
 
 	@core.executionTrace
-	def __Methods_listWidget_setWidget(self):
-		"""
-		This method sets the **Methods_listWidget** Widget.
-		"""
-
-		if self.__modules:
-			self.Methods_listWidget.clear()
-
-			listWidgetItems = set()
-			for module in self.__modules.values():
-				if module.interfaces:
-					for interface in module.interfaces:
-						text = strings.getNiceName(self.getMethodName(interface))
-						if re.search(str(self.Search_lineEdit.text()), text, flags=re.IGNORECASE):
-							listWidgetItem = QListWidgetItem(text)
-							listWidgetItem._data = Interface(name=interface, module=module)
-							LOGGER.debug("> Adding QListWidgetItem with text: '%s'." % text)
-							listWidgetItems.add(listWidgetItem)
-							listWidgetItems.add(text[0])
-
-			for listWidgetItem in listWidgetItems:
-				self.Methods_listWidget.addItem(listWidgetItem)
-
-			self.Methods_listWidget.sortItems(Qt.AscendingOrder)
-
-	@core.executionTrace
-	def __Methods_listWidget_setActions(self):
+	def __view_setActions(self):
 		"""
 		This method sets the **Methods_listWidget** Widget actions.
 		"""
 
 		editSnippetAction = QAction("Edit Snippet", self.Methods_listWidget)
-		self.connect(editSnippetAction, SIGNAL("triggered()"), self.__Methods_listWidget_editSnippetAction)
+		self.connect(editSnippetAction, SIGNAL("triggered()"), self.__view_editSnippetAction)
 		self.Methods_listWidget.addAction(editSnippetAction)
 
 		exploreSnippetFolderAction = QAction("Explore Snippet Folder", self.Methods_listWidget)
-		self.connect(exploreSnippetFolderAction, SIGNAL("triggered()"), self.__Methods_listWidget_exploreSnippetFolderAction)
+		self.connect(exploreSnippetFolderAction, SIGNAL("triggered()"), self.__view_exploreSnippetFolderAction)
 		self.Methods_listWidget.addAction(exploreSnippetFolderAction)
 
 	@core.executionTrace
-	def __Methods_listWidget_editSnippetAction(self):
+	def __view_editSnippetAction(self):
 		"""
 		This method is triggered by **editSnippet** action.
 		"""
 		listWidget = self.Methods_listWidget.currentItem()
 		if hasattr(listWidget, "_data"):
 			module = listWidget._data.module
-			self.editProvidedfile(module.import_.__file__.replace(Constants.librariesCompiledExtension, Constants.librariesExtension))
+			self.editFile(module.import_.__file__.replace(Constants.librariesCompiledExtension, Constants.librariesExtension))
 
 	@core.executionTrace
-	def __Methods_listWidget_exploreSnippetFolderAction(self):
+	def __view_exploreSnippetFolderAction(self):
 		"""
 		This method is triggered by **exploreSnippetFolder** action.
 		"""
@@ -618,28 +595,32 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		listWidget = self.Methods_listWidget.currentItem()
 		if hasattr(listWidget, "_data"):
 			module = listWidget._data.module
-			self.exploreProvidedFolder(os.path.dirname(module.import_.__file__))
+			self.exploreDirectory(os.path.dirname(module.import_.__file__))
 
 	@core.executionTrace
-	def __Execute_Snippet_pushButton__clicked(self):
+	def __Execute_Snippet_pushButton__clicked(self, checked):
 		"""
 		This method is triggered when **Execute_Snippet_pushButton** Widget is clicked.
+
+		:param checked: Checked state. ( Boolean )
 		"""
 
 		if hasattr(self.Methods_listWidget.currentItem(), "_data"):
 			self.executeSnippet()
 
 	@core.executionTrace
-	def __Reload_Snippets_pushButton__clicked(self):
+	def __Reload_Snippets_pushButton__clicked(self, checked):
 		"""
 		This method is triggered when **Reload_Snippets_pushButton** Widget is clicked.
+
+		:param checked: Checked state. ( Boolean )
 		"""
 
 		self.getModules()
-		self.__Methods_listWidget_setWidget()
+		self.setInterfaces(unicode())
 
 	@core.executionTrace
-	def __Methods_listWidget__itemSelectionChanged(self):
+	def __view__itemSelectionChanged(self):
 		"""
 		This method is triggered when **Methods_listWidget** Widget selection has changed.
 		"""
@@ -679,7 +660,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Informations_textBrowser.setText(content)
 
 	@core.executionTrace
-	def __Methods_listWidget__itemDoubleClicked(self, listWidgetItem):
+	def __view__itemDoubleClicked(self, listWidgetItem):
 		"""
 		This method is triggered when **Methods_listWidget** Widget is double clicked.
 
@@ -696,7 +677,6 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:param text: Current text value. ( QString )
 		"""
 
-		self.__Methods_listWidget_setWidget()
 		self.setInterfaces(strings.encode(self.Search_lineEdit.text()))
 
 	@core.executionTrace
@@ -810,7 +790,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, Exception)
-	def editProvidedfile(self, file):
+	def editFile(self, file):
 		"""
 		This method provides editing capability.
 
@@ -853,23 +833,23 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, Exception)
-	def exploreProvidedFolder(self, folder):
+	def exploreDirectory(self, directory):
 		"""
-		This method provides folder exploring capability.
+		This method provides directory exploring capability.
 
-		:param folder: Folder to explore. ( String )
+		:param directory: Folder to explore. ( String )
 		:return: Method success. ( Boolean )
 		"""
 
 		browserCommand = None
 
-		folder = os.path.normpath(folder)
+		directory = os.path.normpath(directory)
 		if platform.system() == "Windows" or platform.system() == "Microsoft":
-			LOGGER.info("%s | Launching 'explorer.exe' with '%s'." % (self.__class__.__name__, folder))
-			browserCommand = "explorer.exe \"%s\"" % folder
+			LOGGER.info("%s | Launching 'explorer.exe' with '%s'." % (self.__class__.__name__, directory))
+			browserCommand = "explorer.exe \"%s\"" % directory
 		elif platform.system() == "Darwin":
-			LOGGER.info("%s | Launching 'Finder' with '%s'." % (self.__class__.__name__, folder))
-			browserCommand = "open \"%s\"" % folder
+			LOGGER.info("%s | Launching 'Finder' with '%s'." % (self.__class__.__name__, directory))
+			browserCommand = "open \"%s\"" % directory
 		elif platform.system() == "Linux":
 			environmentVariable = Environment("PATH")
 			paths = environmentVariable.getValue().split(":")
@@ -880,8 +860,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 					try:
 						for path in paths:
 							if os.path.exists(os.path.join(path, browser)):
-								LOGGER.info("%s | Launching '%s' file browser with '%s'." % (self.__class__.__name__, browser, folder))
-								browserCommand = "\"%s\" \"%s\"" % (browser, folder)
+								LOGGER.info("%s | Launching '%s' file browser with '%s'." % (self.__class__.__name__, browser, directory))
+								browserCommand = "\"%s\" \"%s\"" % (browser, directory)
 								browserFound = True
 								raise StopIteration
 					except StopIteration:

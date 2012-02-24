@@ -251,6 +251,20 @@ class InterfacesModel(QAbstractListModel):
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, Exception)
+	def sort(self, order=Qt.AscendingOrder):
+		"""
+		This method sorts the Model interfaces.
+		
+		:param order: Order. ( Qt.SortOrder )
+		:return: Method success. ( Boolean )
+		"""
+
+		self.beginResetModel()
+		self.__interfaces = sorted(self.__interfaces, key=lambda x: (x.name), reverse=order)
+		self.endResetModel()
+
+	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __registerCategorie(self, categorie):
 		"""
 		This method registers given categorie.
@@ -279,19 +293,6 @@ class InterfacesModel(QAbstractListModel):
 
 			if item.name == name and count == 1:
 				self.__interfaces.remove(self[name])
-
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
-	def sortObjects(self, order=Qt.AscendingOrder):
-		"""
-		This method sorts the Model interfaces.
-		
-		:param order: Order. ( Qt.SortOrder )
-		"""
-
-		self.beginResetModel()
-		self.__interfaces = sorted(self.__interfaces, key=lambda x: (x.name), reverse=order)
-		self.endResetModel()
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -324,7 +325,7 @@ class InterfacesModel(QAbstractListModel):
 
 		self.__interfaces.append(interface)
 		self.__registerCategorie(name)
-		self.sortObjects()
+		self.sort()
 		return True
 
 	@core.executionTrace
@@ -349,5 +350,5 @@ class InterfacesModel(QAbstractListModel):
 
 			del(self.__interfaces[i])
 			self.__unregisterCategorie(name)
-			self.sortObjects()
+			self.sort()
 			return True

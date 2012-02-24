@@ -40,7 +40,7 @@ class UiConstants():
 	This class is the ui constants class.
 	"""
 
-	loaderUiFile = "ui/Loader.ui"
+	loaderUiFile = "Loader.ui"
 
-	snippetsLoaderLogo = "Snippets_Loader_Logo.png"
-	searchIcon = "Search_Icon.png"
+	snippetsLoaderLogo = "images/Snippets_Loader_Logo.png"
+	searchIcon = "images/Search_Icon.png"
