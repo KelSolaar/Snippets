@@ -539,13 +539,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Interfaces_listView = Interfaces_QListView(self, self.__model)
 		self.Interfaces_listView.setObjectName("Interfaces_listView")
 		self.Interfaces_frame_splitter.insertWidget(0, self.Interfaces_listView)
-#		self.Methods_frame_gridLayout.addWidget(self.Interfaces_listView, 1, 0)
 		self.__view = self.Interfaces_listView
 		self.__view.setContextMenuPolicy(Qt.ActionsContextMenu)
-#		self.__view_addActions()
-
-#		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
-#		self.__view_setActions()
+		self.__view_addActions()
 
 		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
 		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.searchIcon)))
@@ -558,29 +554,31 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		# TODO: New SS mechanism.
 		self.Execute_Snippet_pushButton.clicked.connect(self.__Execute_Snippet_pushButton__clicked)
 		self.Reload_Snippets_pushButton.clicked.connect(self.__Reload_Snippets_pushButton__clicked)
+		self.__view.selectionModel().selectionChanged.connect(self.__view_selectionModel__selectionChanged)
 #		self.connect(self.Methods_listWidget, SIGNAL("itemSelectionChanged()"), self.__view__itemSelectionChanged)
 #		self.connect(self.Methods_listWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.__view__itemDoubleClicked)
 		self.connect(self.Search_lineEdit, SIGNAL("textChanged( const QString & )"), self.__Search_lineEdit__textChanged)
 
 	@core.executionTrace
-	def __view_setActions(self):
+	def __view_addActions(self):
 		"""
-		This method sets the **Methods_listWidget** Widget actions.
+		This method sets the View actions.
 		"""
 
-		editSnippetAction = QAction("Edit Snippet", self.Methods_listWidget)
+		editSnippetAction = QAction("Edit Snippet", self.__view)
 		self.connect(editSnippetAction, SIGNAL("triggered()"), self.__view_editSnippetAction)
-		self.Methods_listWidget.addAction(editSnippetAction)
+		self.__view.addAction(editSnippetAction)
 
-		exploreSnippetFolderAction = QAction("Explore Snippet Folder", self.Methods_listWidget)
+		exploreSnippetFolderAction = QAction("Explore Snippet Folder", self.__view)
 		self.connect(exploreSnippetFolderAction, SIGNAL("triggered()"), self.__view_exploreSnippetFolderAction)
-		self.Methods_listWidget.addAction(exploreSnippetFolderAction)
+		self.__view.addAction(exploreSnippetFolderAction)
 
 	@core.executionTrace
 	def __view_editSnippetAction(self):
 		"""
-		This method is triggered by **editSnippet** action.
+		This method is triggered by **editSnippetAction** action.
 		"""
+
 		listWidget = self.Methods_listWidget.currentItem()
 		if hasattr(listWidget, "_data"):
 			module = listWidget._data.module
@@ -589,7 +587,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def __view_exploreSnippetFolderAction(self):
 		"""
-		This method is triggered by **exploreSnippetFolder** action.
+		This method is triggered by **exploreSnippetFolderAction** action.
 		"""
 
 		listWidget = self.Methods_listWidget.currentItem()
@@ -620,15 +618,21 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.setInterfaces(unicode())
 
 	@core.executionTrace
-	def __view__itemSelectionChanged(self):
+	def __view_selectionModel__selectionChanged(self, selectedItems, deselectedItems):
 		"""
-		This method is triggered when **Methods_listWidget** Widget selection has changed.
+		This method sets the **Informations_textBrowser** Widget.
+
+		:param selectedItems: Selected items. ( QItemSelection )
+		:param deselectedItems: Deselected items. ( QItemSelection )
 		"""
 
-		if hasattr(self.Methods_listWidget.currentItem(), "_data"):
-			data = self.Methods_listWidget.currentItem()._data
-			method = self.getMethodName(data.name)
-			arguments = inspect.getargspec(data.module.import_.__dict__[method])
+		items = [self.__model.getInterface(index) for index in selectedItems.indexes()]
+		interface = items and items[0]
+		if not interface:
+			return
+
+		if hasattr(interface, "attribute"):
+			arguments = inspect.getargspec(interface.module.import_.__dict__[interface.attribute])
 			content = """
 					<h4><center>%s</center></h4>
 					<p>
@@ -652,11 +656,20 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 					<p>
 					<b>Documentation:</b> %s
 					</p>
-					""" % (strings.getNiceName(method), data.module.name, os.path.normpath(data.module.import_.__file__), method, data.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, data.module.import_.__dict__[method].__doc__)
+					""" % (interface.name,
+						interface.module.name,
+						os.path.normpath(interface.module.import_.__file__),
+						interface.attribute,
+						interface.name,
+						arguments.args,
+						arguments.defaults,
+						arguments.varargs,
+						arguments.keywords,
+						interface.module.import_.__dict__[interface.attribute].__doc__)
 		else:
 			content = self.__defaultText
 
-		LOGGER.debug("> Update 'Informations_textBrowser' Widget content: '%s'." % content)
+		LOGGER.debug("> Update 'Informations_textBrowser' Widget content: '{0}'.".format(content))
 		self.Informations_textBrowser.setText(content)
 
 	@core.executionTrace

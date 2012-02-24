@@ -264,6 +264,18 @@ class InterfacesModel(QAbstractListModel):
 		self.endResetModel()
 
 	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def getInterface(self, index):
+		"""
+		This method returns the interface with given index.
+		
+		:param index: Interface index. ( QModelIndex )
+		:return: Interface. ( Interface )
+		"""
+
+		return self.__interfaces[index.row()]
+
+	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __registerCategorie(self, categorie):
 		"""
@@ -293,18 +305,6 @@ class InterfacesModel(QAbstractListModel):
 
 			if item.name == name and count == 1:
 				self.__interfaces.remove(self[name])
-
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def getInterface(self, name):
-		"""
-		This method returns the interface with given name.
-		
-		:param name: Interface name. ( String )
-		:return: Interface. ( Interface )
-		"""
-
-		return self[name]
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
