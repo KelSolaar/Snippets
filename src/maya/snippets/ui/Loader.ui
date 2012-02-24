@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>Loader_MainWindow</class>
  <widget class="QMainWindow" name="Loader_MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>306</width>
+    <height>623</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Snippets Loader</string>
   </property>
@@ -53,7 +61,7 @@
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="Methods_frame_gridLayout">
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QSplitter" name="Loader_splitter">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -75,6 +83,9 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QListView" name="Interfaces_listView"/>
        </item>
       </layout>
      </widget>

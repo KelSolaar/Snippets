@@ -67,6 +67,9 @@ from foundations.environment import Environment
 from foundations.walkers import OsWalker
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.globals.uiConstants import UiConstants
+from snippets.models import Interface
+from snippets.models import InterfacesModel
+from snippets.views import Interfaces_QListView
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -78,7 +81,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Interface", "Module", "Loader"]
+__all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Categorie", "Interface", "Module", "Loader"]
 
 LOGGER = logging.getLogger(Constants.logger)
 
@@ -102,21 +105,6 @@ RuntimeGlobals.resourcesDirectory = os.path.join(os.path.dirname(__file__), Cons
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-class Interface(foundations.dataStructures.Structure):
-	"""
-	This is the **Interface** class.
-	"""
-
-	@core.executionTrace
-	def __init__(self, **kwargs):
-		"""
-		This method initializes the class.
-
-		:param kwargs: name, module. ( Key / Value pairs )
-		"""
-
-		foundations.dataStructures.Structure.__init__(self, **kwargs)
-
 class Module(object):
 	"""
 	This class is the **Module** class.
@@ -134,13 +122,13 @@ class Module(object):
 		LOGGER.debug("> Initializing '%s()' class." % (self.__class__.__name__))
 
 		# --- Setting class attributes. ---
-		self._name = None
+		self.__name = None
 		self.name = name
 		self.path = None
-		self._path = path
+		self.__path = path
 
 		self._import = None
-		self._interfaces = None
+		self.__interfaces = None
 
 	#******************************************************************************************************************
 	#***	Attributes properties.
@@ -148,31 +136,31 @@ class Module(object):
 	@property
 	def name(self):
 		"""
-		This method is the property for **self.__name** attribute.
+		This method is the property for **self.___name** attribute.
 
-		:return: self._name. ( String )
+		:return: self.__name. ( String )
 		"""
 
-		return self._name
+		return self.__name
 
 	@name.setter
 	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
 	def name(self, value):
 		"""
-		This method is the setter method for **self.__name** attribute.
+		This method is the setter method for **self.___name** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
 
 		if value is not None:
 			assert type(value) in (str, unicode), "'%s' Attribute: '%s' type is not 'str' or 'unicode'!" % ("name", value)
-		self._name = value
+		self.__name = value
 
 	@name.deleter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def name(self):
 		"""
-		This method is the deleter method for **self.__name** attribute.
+		This method is the deleter method for **self.___name** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "name")
@@ -180,18 +168,18 @@ class Module(object):
 	@property
 	def path(self):
 		"""
-		This method is the property for **self.__path** attribute.
+		This method is the property for **self.___path** attribute.
 
-		:return: self._path. ( String )
+		:return: self.__path. ( String )
 		"""
 
-		return self._path
+		return self.__path
 
 	@path.setter
 	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
 	def path(self, value):
 		"""
-		This method is the setter method for **self.__path** attribute.
+		This method is the setter method for **self.___path** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -199,13 +187,13 @@ class Module(object):
 		if value is not None:
 			assert type(value) in (str, unicode), "'%s' Attribute: '%s' type is not 'str' or 'unicode'!" % ("path", value)
 			assert os.path.exists(value), "'%s' Attribute: '%s' directory doesn't exists!" % ("path", value)
-		self._path = value
+		self.__path = value
 
 	@path.deleter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def path(self):
 		"""
-		This method is the deleter method for **self.__path** attribute.
+		This method is the deleter method for **self.___path** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "path")
@@ -247,10 +235,10 @@ class Module(object):
 		"""
 		This method is the property for **self.__interfaces** attribute.
 
-		:return: self._interfaces. ( Object )
+		:return: self.__interfaces. ( Object )
 		"""
 
-		return self._interfaces
+		return self.__interfaces
 
 	@interfaces.setter
 	def interfaces(self, value):
@@ -260,7 +248,7 @@ class Module(object):
 		:param value: Attribute value. ( Object )
 		"""
 
-		self._interfaces = value
+		self.__interfaces = value
 
 	@interfaces.deleter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -296,18 +284,21 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.setupUi(self)
 
 		# --- Setting class attributes. ---
-		self._container = container
-		self._modules = None
+		self.__container = container
+		self.__modules = None
 
-		self._Informations_textBrowser_defaultText = "<center><br/><br/><h4>* * *</h4>Select a Snippet to display related informations!<h4>* * *</h4></center>"
+		self.__model = None
+		self.__view = None
 
-		self._linuxTextEditors = ("gedit", "kwrite", "nedit", "mousepad")
-		self._linuxBrowsers = ("nautilus", "dolphin", "konqueror", "thunar")
+		self.__defaultText = "<center><br/><br/><h4>* * *</h4>Select a Snippet to display related informations!<h4>* * *</h4></center>"
+
+		self.__linuxTextEditors = ("gedit", "kwrite", "nedit", "mousepad")
+		self.__linuxBrowsers = ("nautilus", "dolphin", "konqueror", "thunar")
 
 		# --- Gathering modules. ---
 		self.getModules()
 
-		# --- Setting up ui. ---
+		# --- Initialize Ui. ---
 		self.__initializeUI()
 
 		# -- Loader Signals / Slots. ---
@@ -325,10 +316,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the property for **self.__container** attribute.
 
-		:return: self._container. ( QObject )
+		:return: self.__container. ( QObject )
 		"""
 
-		return self._container
+		return self.__container
 
 	@container.setter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -355,10 +346,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the property for **self.__modules** attribute.
 
-		:return: self._modules. ( Dictionary )
+		:return: self.__modules. ( Dictionary )
 		"""
 
-		return self._modules
+		return self.__modules
 
 	@modules.setter
 	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
@@ -371,7 +362,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		if value is not None:
 			assert type(value) is dict, "'%s' Attribute: '%s' type is not 'dict'!" % ("modules", value)
-		self._modules = value
+		self.__modules = value
 
 	@modules.deleter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -383,44 +374,108 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "modules")
 
 	@property
-	def Informations_textBrowser_defaultText(self):
+	def model(self):
 		"""
-		This method is the property for **self.__Informations_textBrowser_defaultText** attribute.
+		This method is the property for **self.__model** attribute.
 
-		:return: self._Informations_textBrowser_defaultText. ( String )
+		:return: self.__model. ( TemplatesModel )
 		"""
 
-		return self._Informations_textBrowser_defaultText
+		return self.__model
 
-	@Informations_textBrowser_defaultText.setter
+	@model.setter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def Informations_textBrowser_defaultText(self, value):
+	def model(self, value):
 		"""
-		This method is the setter method for **self.__Informations_textBrowser_defaultText** attribute.
+		This method is the setter method for **self.__model** attribute.
+
+		:param value: Attribute value. ( TemplatesModel )
+		"""
+
+		raise foundations.exceptions.ProgrammingError(
+		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "model"))
+
+	@model.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def model(self):
+		"""
+		This method is the deleter method for **self.__model** attribute.
+		"""
+
+		raise foundations.exceptions.ProgrammingError(
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "model"))
+
+	@property
+	def view(self):
+		"""
+		This method is the property for **self.__view** attribute.
+
+		:return: self.__view. ( QWidget )
+		"""
+
+		return self.__view
+
+	@view.setter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def view(self, value):
+		"""
+		This method is the setter method for **self.__view** attribute.
+
+		:param value: Attribute value. ( QWidget )
+		"""
+
+		raise foundations.exceptions.ProgrammingError(
+		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "view"))
+
+	@view.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def view(self):
+		"""
+		This method is the deleter method for **self.__view** attribute.
+		"""
+
+		raise foundations.exceptions.ProgrammingError(
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "view"))
+
+	@property
+	def defaultText(self):
+		"""
+		This method is the property for **self.__defaultText** attribute.
+
+		:return: self.__defaultText. ( String )
+		"""
+
+		return self.__defaultText
+
+	@defaultText.setter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def defaultText(self, value):
+		"""
+		This method is the setter method for **self.__defaultText** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'%s' Attribute is read only!" % "Informations_textBrowser_defaultText")
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute is read only!" % "defaultText")
 
-	@Informations_textBrowser_defaultText.deleter
+	@defaultText.deleter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def Informations_textBrowser_defaultText(self):
+	def defaultText(self):
 		"""
-		This method is the deleter method for **self.__Informations_textBrowser_defaultText** attribute.
+		This method is the deleter method for **self.__defaultText** attribute.
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "Informations_textBrowser_defaultText")
+		raise foundations.exceptions.ProgrammingError("'%s' Attribute is not deletable!" % "defaultText")
 
 	@property
 	def linuxTextEditors(self):
 		"""
 		This method is the property for **self.__linuxTextEditors** attribute.
 
-		:return: self._linuxTextEditors. ( Tuple )
+		:return: self.__linuxTextEditors. ( Tuple )
 		"""
 
-		return self._linuxTextEditors
+		return self.__linuxTextEditors
 
 	@linuxTextEditors.setter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -447,10 +502,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is the property for **self.__linuxBrowsers** attribute.
 
-		:return: self._linuxBrowsers. ( QObject )
+		:return: self.__linuxBrowsers. ( QObject )
 		"""
 
-		return self._linuxBrowsers
+		return self.__linuxBrowsers
 
 	@linuxBrowsers.setter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -481,6 +536,17 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This method triggers the **Methods_listWidget** Widget.
 		"""
 
+		self.__model = InterfacesModel(self)
+		self.setInterfaces(unicode())
+
+		self.Interfaces_listView.setParent(None)
+		self.Interfaces_listView = Interfaces_QListView(self, self.__model)
+		self.Interfaces_listView.setObjectName("Interfaces_listView")
+		self.Methods_frame_gridLayout.addWidget(self.Interfaces_listView, 0, 1)
+		self.__view = self.Interfaces_listView
+		self.__view.setContextMenuPolicy(Qt.ActionsContextMenu)
+#		self.__view_addActions()
+
 		self.Methods_listWidget.setContextMenuPolicy(Qt.ActionsContextMenu)
 		self.__Methods_listWidget_setActions()
 
@@ -489,7 +555,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		self.__Methods_listWidget_setWidget()
 
-		self.Informations_textBrowser.setText(self._Informations_textBrowser_defaultText)
+		self.Informations_textBrowser.setText(self.__defaultText)
 
 		self.Loader_splitter.setSizes([16777215, 0])
 
@@ -499,11 +565,11 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This method sets the **Methods_listWidget** Widget.
 		"""
 
-		if self._modules:
+		if self.__modules:
 			self.Methods_listWidget.clear()
 
 			listWidgetItems = set()
-			for module in self._modules.values():
+			for module in self.__modules.values():
 				if module.interfaces:
 					for interface in module.interfaces:
 						text = strings.getNiceName(self.getMethodName(interface))
@@ -607,7 +673,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 					</p>
 					""" % (strings.getNiceName(method), data.module.name, os.path.normpath(data.module.import_.__file__), method, data.name, arguments.args, arguments.defaults, arguments.varargs, arguments.keywords, data.module.import_.__dict__[method].__doc__)
 		else:
-			content = self._Informations_textBrowser_defaultText
+			content = self.__defaultText
 
 		LOGGER.debug("> Update 'Informations_textBrowser' Widget content: '%s'." % content)
 		self.Informations_textBrowser.setText(content)
@@ -631,6 +697,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 
 		self.__Methods_listWidget_setWidget()
+		self.setInterfaces(strings.encode(self.Search_lineEdit.text()))
 
 	@core.executionTrace
 	def getMethodName(self, name):
@@ -652,12 +719,12 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		osWalker = OsWalker(RuntimeGlobals.librariesDirectory)
 		modules = osWalker.walk(filtersIn=("\.%s$" % Constants.librariesExtension,))
 
-		self._modules = {}
+		self.__modules = {}
 		for name, path in modules.items():
 			module = Module()
 			module.name = namespace.getNamespace(name, rootOnly=True)
 			module.path = os.path.dirname(path)
-			self._modules[module.name] = module
+			self.__modules[module.name] = module
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, ImportError)
@@ -668,7 +735,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:return: Method success. ( Boolean )
 		"""
 
-		for module in self._modules.values():
+		for module in self.__modules.values():
 			if module.path not in sys.path:
 				sys.path.append(module.path)
 			if module.name in sys.modules:
@@ -693,6 +760,34 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		self.gatherLibraries()
 		self.getInterfaces()
+		return True
+
+	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
+	def setInterfaces(self, pattern, flags=re.IGNORECASE):
+		"""
+		This method sets the Model interfaces.
+
+		:param pattern: Interface name. ( String )
+		:param flags: Regex filtering flags. ( Integer )
+		:return: Method success. ( Boolean )
+		"""
+
+		try:
+			pattern = re.compile(pattern, flags)
+		except Exception:
+			return
+
+		self.__model.clear()
+
+		for module in self.__modules.values():
+			if not module.interfaces:
+				continue
+
+			for interface in module.interfaces:
+				name = strings.getNiceName(self.getMethodName(interface))
+				if re.search(pattern, name):
+					self.__model.registerInterface(Interface(name=name, attribute=interface, module=module))
 		return True
 
 	@core.executionTrace
@@ -737,7 +832,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			paths = environmentVariable.getValue().split(":")
 
 			editorFound = False
-			for editor in self._linuxTextEditors:
+			for editor in self.__linuxTextEditors:
 				if not editorFound:
 					try:
 						for path in paths:
@@ -780,7 +875,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			paths = environmentVariable.getValue().split(":")
 
 			browserFound = False
-			for browser in self._linuxBrowsers:
+			for browser in self.__linuxBrowsers:
 				if not browserFound:
 					try:
 						for path in paths:
