@@ -42,5 +42,7 @@ class RuntimeGlobals():
 
 	loaderUiFile = None
 
+	modulesManager = None
+
 	librariesDirectory = None
 	resourcesDirectory = None

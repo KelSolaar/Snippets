@@ -8,7 +8,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	This module defines the :class:`` class Models.
+	This module defines the :class:`snippets.loader.Loader` class Models.
 
 **Others:**
 

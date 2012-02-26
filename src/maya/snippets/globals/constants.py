@@ -44,8 +44,8 @@ class Constants():
 	verbosityLevel = 3
 	loggingSeparators = "*" * 96
 
-	librariesExtension = "py"
-	librariesCompiledExtension = "pyc"
+	libraryExtension = "py"
+	libraryCompiledExtension = "pyc"
 
 	librariesDirectory = "libraries"
 	resourcesDirectory = "resources"
