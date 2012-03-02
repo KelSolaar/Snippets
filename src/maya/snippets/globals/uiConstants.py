@@ -41,6 +41,7 @@ class UiConstants():
 	"""
 
 	loaderUiFile = "Loader.ui"
+	popupUiFile = "Popup.ui"
 
 	snippetsLoaderLogo = "images/Snippets_Loader_Logo.png"
 	searchIcon = "images/Search_Icon.png"

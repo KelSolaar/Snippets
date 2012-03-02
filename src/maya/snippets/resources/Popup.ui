@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Popup_Form</class>
+ <widget class="QWidget" name="Popup_Form">
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="Popup_Form_gridLayout">
+   <item row="0" column="0">
+    <widget class="QLineEdit" name="Interfaces_lineEdit"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

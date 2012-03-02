@@ -34,10 +34,9 @@ from PyQt4.QtGui import QToolButton
 #**********************************************************************************************************************
 import foundations.core as core
 import foundations.exceptions
-import foundations.strings as strings
-import umbra.ui.common
-from umbra.globals.constants import Constants
-from umbra.ui.widgets.active_QLabel import Active_QLabel
+import snippets.ui.common
+from snippets.globals.constants import Constants
+from snippets.ui.widgets.active_QLabel import Active_QLabel
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -85,14 +84,14 @@ class Search_QLineEdit(QLineEdit):
 
 		# --- Setting class attributes. ---
 		self.__uiSearchImage = None
-		self.uiSearchImage = uiSearchImage or umbra.ui.common.getResourcePath("images/Search_Glass.png")
+		self.uiSearchImage = uiSearchImage or snippets.ui.common.getResourcePath("images/Search_Glass.png")
 		self.__uiSearchClickedImage = None
-		self.uiSearchClickedImage = uiSearchClickedImage or umbra.ui.common.getResourcePath(
+		self.uiSearchClickedImage = uiSearchClickedImage or snippets.ui.common.getResourcePath(
 		"images/Search_Glass_Clicked.png")
 		self.__uiClearImage = None
-		self.uiClearImage = uiClearImage or umbra.ui.common.getResourcePath("images/Search_Clear.png")
+		self.uiClearImage = uiClearImage or snippets.ui.common.getResourcePath("images/Search_Clear.png")
 		self.__uiClearClickedImage = None
-		self.uiClearClickedImage = uiClearClickedImage or umbra.ui.common.getResourcePath(
+		self.uiClearClickedImage = uiClearClickedImage or snippets.ui.common.getResourcePath(
 		"images/Search_Clear_Clicked.png")
 
 		self.__searchActiveLabel = Active_QLabel(self,

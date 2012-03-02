@@ -30,7 +30,6 @@ import maya.mel as mel
 import os
 import platform
 import re
-import sys
 from PyQt4 import uic
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -57,21 +56,18 @@ _overrideDependenciesGlobals()
 #***	Internal imports.
 #**********************************************************************************************************************
 import foundations.core as core
-import foundations.dataStructures
 import foundations.exceptions
-import foundations.io as io
 import foundations.strings as strings
-import foundations.namespace as namespace
 import snippets.libraries.common
 import snippets.ui.common
 from foundations.environment import Environment
-from foundations.walkers import OsWalker
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.globals.uiConstants import UiConstants
 from snippets.modulesManager import ModulesManager
 from snippets.ui.models import Interface
 from snippets.ui.models import InterfacesModel
 from snippets.ui.views import Interfaces_QListView
+from snippets.ui.widgets.search_QLineEdit import Search_QLineEdit
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -83,7 +79,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Module", "Loader"]
+__all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Loader"]
 
 LOGGER = logging.getLogger(Constants.logger)
 
@@ -98,7 +94,7 @@ if LOGGER.handlers == []:
 RuntimeGlobals.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
 RuntimeGlobals.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
 
-RuntimeGlobals.loaderUiFile = os.path.join(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.loaderUiFile))
+RuntimeGlobals.loaderUiFile = snippets.ui.common.getResourcePath(UiConstants.loaderUiFile)
 if os.path.exists(RuntimeGlobals.loaderUiFile):
 	Ui_Loader_Setup, Ui_Loader_Type = uic.loadUiType(RuntimeGlobals.loaderUiFile)
 else:
@@ -106,196 +102,52 @@ else:
 	snippets.ui.common.messageBox("Error", "Error", error)
 	raise Exception(error)
 
-RuntimeGlobals.modulesManager = ModulesManager([RuntimeGlobals.librariesDirectory])
-RuntimeGlobals.modulesManager.registerModules()
-RuntimeGlobals.modulesManager.registerInterfaces()
+RuntimeGlobals.popupUiFile = snippets.ui.common.getResourcePath(UiConstants.popupUiFile)
+if os.path.exists(RuntimeGlobals.popupUiFile):
+	Ui_Popup_Setup, Ui_Popup_Type = uic.loadUiType(RuntimeGlobals.popupUiFile)
+else:
+	error = "'{0}' Ui file is not available!".format(RuntimeGlobals.popupUiFile)
+	snippets.ui.common.messageBox("Error", "Error", error)
+	raise Exception(error)
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-class Module(object):
+def _setModulesManager():
 	"""
-	This class is the **Module** class.
+	This definition sets the global modules manager instance.
 	"""
 
-	@core.executionTrace
-	def __init__(self, name=None, path=None):
-		"""
-		This method initializes the class.
+	if not isinstance(RuntimeGlobals.modulesManager, ModulesManager):
+		RuntimeGlobals.modulesManager = ModulesManager([RuntimeGlobals.librariesDirectory])
+		RuntimeGlobals.modulesManager.registerModules()
+		RuntimeGlobals.modulesManager.registerInterfaces()
 
-		:param name: Name of the Component. ( String )
-		:param path: Path of the Component. ( String )
-		"""
-
-		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
-
-		# --- Setting class attributes. ---
-		self.__name = None
-		self.name = name
-		self.path = None
-		self.__path = path
-
-		self._import = None
-		self.__interfaces = None
-
-	#******************************************************************************************************************
-	#***	Attributes properties.
-	#******************************************************************************************************************
-	@property
-	def name(self):
-		"""
-		This method is the property for **self.___name** attribute.
-
-		:return: self.__name. ( String )
-		"""
-
-		return self.__name
-
-	@name.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
-	def name(self, value):
-		"""
-		This method is the setter method for **self.___name** attribute.
-
-		:param value: Attribute value. ( String )
-		"""
-
-		if value is not None:
-			assert type(value) in (str, unicode), "'{0}' Attribute: '{1}' type is not 'str' or 'unicode'!".format("name",
-																												value)
-		self.__name = value
-
-	@name.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def name(self):
-		"""
-		This method is the deleter method for **self.___name** attribute.
-		"""
-
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("name"))
-
-	@property
-	def path(self):
-		"""
-		This method is the property for **self.___path** attribute.
-
-		:return: self.__path. ( String )
-		"""
-
-		return self.__path
-
-	@path.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
-	def path(self, value):
-		"""
-		This method is the setter method for **self.___path** attribute.
-
-		:param value: Attribute value. ( String )
-		"""
-
-		if value is not None:
-			assert type(value) in (str, unicode), "'{0}' Attribute: '{1}' type is not 'str' or 'unicode'!".format("path",
-																												value)
-			assert os.path.exists(value), "'{0}' Attribute: '{1}' directory doesn't exists!".format("path", value)
-		self.__path = value
-
-	@path.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def path(self):
-		"""
-		This method is the deleter method for **self.___path** attribute.
-		"""
-
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("path"))
-
-	@property
-	def import_(self):
-		"""
-		This method is the property for **self.__import_** attribute.
-
-		:return: self._import. ( Module )
-		"""
-
-		return self._import
-
-	@import_.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
-	def import_(self, value):
-		"""
-		This method is the setter method for **self.__import_** attribute.
-
-		:param value: Attribute value. ( Module )
-		"""
-
-		if value is not None:
-			assert type(value) is type(sys), "'{0}' Attribute: '{1}' type is not 'module'!".format("import", value)
-		self._import = value
-
-	@import_.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def import_(self):
-		"""
-		This method is the deleter method for **self.__import_** attribute.
-		"""
-
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("import"))
-
-	@property
-	def interfaces(self):
-		"""
-		This method is the property for **self.__interfaces** attribute.
-
-		:return: self.__interfaces. ( Object )
-		"""
-
-		return self.__interfaces
-
-	@interfaces.setter
-	def interfaces(self, value):
-		"""
-		This method is the setter method for **self.__interfaces** attribute.
-
-		:param value: Attribute value. ( Object )
-		"""
-
-		self.__interfaces = value
-
-	@interfaces.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def interfaces(self):
-		"""
-		This method is the deleter method for **self.__interfaces** attribute.
-		"""
-
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("interfaces"))
+_setModulesManager()
 
 class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	"""
-	This class is the Main class for loader.
 	"""
 
-	#******************************************************************************************************************
-	#***	Initialization..
-	#******************************************************************************************************************
-
 	@core.executionTrace
-	def __init__(self, container=None):
+	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
 		"""
 		This method initializes the class.
-
-		:param identity: Current reports id. ( String )
+		
+		:param parent: Parent object. ( QObject )
+		:param modulesManager: Modules Manager. ( ModulesManager )
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
 
-		Ui_Loader_Type.__init__(self, container)
+		Ui_Loader_Type.__init__(self, parent)
 		Ui_Loader_Setup.__init__(self)
 
 		self.setupUi(self)
 
 		# --- Setting class attributes. ---
-		self.__container = container
-		self.__modules = None
+		self.__container = parent
+		self.__modulesManager = modulesManager
 
 		self.__model = None
 		self.__view = None
@@ -304,9 +156,6 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		self.__linuxTextEditors = ("gedit", "kwrite", "nedit", "mousepad")
 		self.__linuxBrowsers = ("nautilus", "dolphin", "konqueror", "thunar")
-
-		# --- Gathering modules. ---
-		self.getModules()
 
 		# --- Initialize Ui. ---
 		self.__initializeUI()
@@ -345,36 +194,34 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("container"))
 
 	@property
-	def modules(self):
+	def modulesManager(self):
 		"""
-		This method is the property for **self.__modules** attribute.
+		This method is the property for **self.__modulesManager** attribute.
 
-		:return: self.__modules. ( Dictionary )
-		"""
-
-		return self.__modules
-
-	@modules.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
-	def modules(self, value):
-		"""
-		This method is the setter method for **self.__modules** attribute.
-
-		:param value: Attribute value. ( Dictionary )
+		:return: self.__modulesManager. ( QObject )
 		"""
 
-		if value is not None:
-			assert type(value) is dict, "'{0}' Attribute: '{1}' type is not 'dict'!".format("modules", value)
-		self.__modules = value
+		return self.__modulesManager
 
-	@modules.deleter
+	@modulesManager.setter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def modules(self):
+	def modulesManager(self, value):
 		"""
-		This method is the deleter method for **self.__modules** attribute.
+		This method is the setter method for **self.__modulesManager** attribute.
+
+		:param value: Attribute value. ( QObject )
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modules"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modulesManager"))
+
+	@modulesManager.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def modulesManager(self):
+		"""
+		This method is the deleter method for **self.__modulesManager** attribute.
+		"""
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modulesManager"))
 
 	@property
 	def model(self):
@@ -550,15 +397,16 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.__view.setContextMenuPolicy(Qt.ActionsContextMenu)
 		self.__view_addActions()
 
-		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.snippetsLoaderLogo)))
-		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory, UiConstants.searchIcon)))
+		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory,
+																	UiConstants.snippetsLoaderLogo)))
+		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory,
+															UiConstants.searchIcon)))
 
 		self.Informations_textBrowser.setText(self.__defaultText)
 
 		self.Interfaces_frame_splitter.setSizes([16777215, 0])
 
 		# Signals / Slots.
-		# TODO: New SS mechanism.
 		self.Execute_Snippet_pushButton.clicked.connect(self.__Execute_Snippet_pushButton__clicked)
 		self.Reload_Snippets_pushButton.clicked.connect(self.__Reload_Snippets_pushButton__clicked)
 		self.__view.selectionModel().selectionChanged.connect(self.__view_selectionModel__selectionChanged)
@@ -623,7 +471,6 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:param checked: Checked state. ( Boolean )
 		"""
 
-		self.getModules()
 		self.setInterfaces(unicode())
 
 	@core.executionTrace
@@ -712,59 +559,6 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		return "{0}{1}".format(name[1].lower(), name[2:])
 
 	@core.executionTrace
-	def gatherLibraries(self):
-		"""
-		This method gathers the libraries.
-		"""
-
-		osWalker = OsWalker(RuntimeGlobals.librariesDirectory)
-		modules = osWalker.walk(filtersIn=(r"\.{0}$".format(Constants.libraryExtension),))
-
-		self.__modules = {}
-		for name, path in modules.items():
-			module = Module()
-			module.name = namespace.getNamespace(name, rootOnly=True)
-			module.path = os.path.dirname(path)
-			self.__modules[module.name] = module
-
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, ImportError)
-	def getInterfaces(self):
-		"""
-		This method gets the interfaces.
-
-		:return: Method success. ( Boolean )
-		"""
-
-		for module in self.__modules.values():
-			if module.path not in sys.path:
-				sys.path.append(module.path)
-			if module.name in sys.modules:
-				del(sys.modules[module.name])
-
-			module.import_ = __import__(module.name)
-
-			interfaces = [object_ for object_ in module.import_.__dict__ if re.search(r"^I[A-Z]\w+", object_)]
-			if interfaces:
-				LOGGER.info("{0} | Registering '{1}' Interfaces from '{2}' Module!".format(self.__class__.__name__,
-																							interfaces, module.name))
-				module.interfaces = interfaces
-		return True
-
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
-	def getModules(self):
-		"""
-		This method gets the Modules.
-	
-		:return: Method success. ( Boolean )
-		"""
-
-		self.gatherLibraries()
-		self.getInterfaces()
-		return True
-
-	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def setInterfaces(self, pattern, flags=re.IGNORECASE):
 		"""
@@ -782,7 +576,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		self.__model.clear()
 
-		for module in self.__modules.values():
+		for name, module in self.__modulesManager:
 			if not module.interfaces:
 				continue
 
@@ -913,3 +707,163 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			browserProcess = QProcess()
 			browserProcess.startDetached(browserCommand)
 		return True
+
+class Popup(Ui_Popup_Type, Ui_Popup_Setup):
+	"""
+	"""
+
+	@core.executionTrace
+	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
+		"""
+		This method initializes the class.
+		
+		:param parent: Parent object. ( QObject )
+		:param modulesManager: Modules Manager. ( ModulesManager )
+		"""
+
+		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
+
+		Ui_Popup_Type.__init__(self, parent)
+		Ui_Popup_Setup.__init__(self)
+
+		self.setupUi(self)
+
+		# --- Setting class attributes. ---
+		self.__container = parent
+		self.__modulesManager = modulesManager
+
+		self.__model = None
+		self.__view = None
+
+		# --- Initialize Ui. ---
+		self.__initializeUI()
+
+	#******************************************************************************************************************
+	#***	Attributes properties.
+	#******************************************************************************************************************
+	@property
+	def container(self):
+		"""
+		This method is the property for **self.__container** attribute.
+
+		:return: self.__container. ( QObject )
+		"""
+
+		return self.__container
+
+	@container.setter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def container(self, value):
+		"""
+		This method is the setter method for **self.__container** attribute.
+
+		:param value: Attribute value. ( QObject )
+		"""
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("container"))
+
+	@container.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def container(self):
+		"""
+		This method is the deleter method for **self.__container** attribute.
+		"""
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("container"))
+
+	@property
+	def modulesManager(self):
+		"""
+		This method is the property for **self.__modulesManager** attribute.
+
+		:return: self.__modulesManager. ( QObject )
+		"""
+
+		return self.__modulesManager
+
+	@modulesManager.setter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def modulesManager(self, value):
+		"""
+		This method is the setter method for **self.__modulesManager** attribute.
+
+		:param value: Attribute value. ( QObject )
+		"""
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modulesManager"))
+
+	@modulesManager.deleter
+	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	def modulesManager(self):
+		"""
+		This method is the deleter method for **self.__modulesManager** attribute.
+		"""
+
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modulesManager"))
+
+	#******************************************************************************************************************
+	#***	Class methods.
+	#******************************************************************************************************************
+	@core.executionTrace
+	def __initializeUI(self):
+		"""
+		This method triggers the **Methods_listWidget** Widget.
+		"""
+
+		self.Interfaces_lineEdit.setParent(None)
+		self.Interfaces_lineEdit = Search_QLineEdit(self)
+		self.Interfaces_lineEdit.setObjectName("Interfaces_lineEdit")
+		self.Interfaces_lineEdit.setPlaceholderText("Type stuff...")
+		self.Popup_Form_gridLayout.addWidget(self.Interfaces_lineEdit)
+
+		self.setInterfaces(unicode())
+
+		self.Interfaces_lineEdit.textChanged.connect(self.__Interfaces_lineEdit__textChanged)
+
+	@core.executionTrace
+	def __Interfaces_lineEdit__textChanged(self, text):
+		"""
+		This method is triggered when **Interfaces_lineEdit** text changes.
+
+		:param text: Current text value. ( QString )
+		"""
+
+		self.setInterfaces(strings.encode(text))
+
+	@core.executionTrace
+	def setInterfaces(self, pattern, flags=re.IGNORECASE):
+		"""
+		This method sets the Widget interfaces.
+
+		:param pattern: Interface name. ( String )
+		:param flags: Regex filtering flags. ( Integer )
+		:return: Method success. ( Boolean )
+		"""
+
+		try:
+			pattern = re.compile(pattern, flags)
+		except Exception:
+			return
+
+		interfaces = []
+		for name, module in self.__modulesManager:
+			if not module.interfaces:
+				continue
+
+			for interface in module.interfaces:
+				name = strings.getNiceName(self.getMethodName(interface))
+				re.search(pattern, name) and interfaces.append(name)
+
+		# Signals / Slots.
+		self.Interfaces_lineEdit.completer.setModel(QStringListModel(sorted(interfaces)))
+
+	@core.executionTrace
+	def getMethodName(self, name):
+		"""
+		This method gets the method name from the Interface.
+
+		:param name: Interface name. ( String )
+		:return: Method name. ( String )
+		"""
+
+		return "{0}{1}".format(name[1].lower(), name[2:])

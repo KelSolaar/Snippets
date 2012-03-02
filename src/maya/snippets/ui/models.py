@@ -18,12 +18,10 @@
 #***	External imports.
 #**********************************************************************************************************************
 import logging
-import re
 from PyQt4.QtCore import QAbstractListModel
 from PyQt4.QtCore import QModelIndex
 from PyQt4.QtCore import QVariant
 from PyQt4.QtCore import Qt
-from PyQt4.QtCore import pyqtSignal
 
 #**********************************************************************************************************************
 #***	Internal imports.

@@ -24,6 +24,7 @@
 #***	External imports.
 #**********************************************************************************************************************
 import logging
+import os
 import platform
 import maya.OpenMayaUI as OpenMayaUI
 from PyQt4.QtCore import *
@@ -33,8 +34,10 @@ import sip
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
+import foundations.common
 import foundations.core as core
 from snippets.globals.constants import Constants
+from snippets.globals.runtimeGlobals import RuntimeGlobals
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -46,12 +49,42 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-LOGGER = logging.getLogger( Constants.logger )
+LOGGER = logging.getLogger(Constants.logger)
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
 @core.executionTrace
+@foundations.exceptions.exceptionsHandler(None, False, Exception)
+def getResourcePath(name):
+	"""
+	This definition returns the resource file path matching the given name.
+
+	:param name: Resource name. ( String )
+	:return: Resource path. ( String )
+	"""
+
+	path = os.path.join(RuntimeGlobals.resourcesDirectory, name)
+	if foundations.common.pathExists(path):
+		LOGGER.debug("> '{0}' resource path: '{1}'.".format(name, path))
+		return path
+
+@core.executionTrace
+@foundations.exceptions.exceptionsHandler(None, False, Exception)
+def parentsWalker(object):
+	"""
+	This definition is a generator used to retrieve the chain of parents of the given :class:`QObject` instance.
+
+	:param object: Provided path. ( QObject )
+	:yield: Object parent. ( QObject )
+	"""
+
+	while object.parent():
+		object = object.parent()
+		yield object
+
+@core.executionTrace
+@foundations.exceptions.exceptionsHandler(None, False, Exception)
 def getMayaWindow():
 	"""
 	This method returns Maya window as QObject.
@@ -60,10 +93,11 @@ def getMayaWindow():
 	"""
 
 	pointer = OpenMayaUI.MQtUtil.mainWindow()
-	return sip.wrapinstance( long( pointer ), QObject )
+	return sip.wrapinstance(long(pointer), QObject)
 
 @core.executionTrace
-def messageBox( messageType, title, message ):
+@foundations.exceptions.exceptionsHandler(None, False, Exception)
+def messageBox(messageType, title, message):
 	"""
 	This definition provides a fast gui message box.
 
@@ -72,54 +106,56 @@ def messageBox( messageType, title, message ):
 	:param message: Message content. ( String )
 	"""
 
-	LOGGER.debug( "> Launching messagebox()." )
-	LOGGER.debug( "> Message type: '%s'.", messageType )
-	LOGGER.debug( "> Title: '%s'.", title )
-	LOGGER.debug( "> Message: '%s'.", message )
+	LOGGER.debug("> Launching messagebox().")
+	LOGGER.debug("> Message type: '%s'.", messageType)
+	LOGGER.debug("> Title: '%s'.", title)
+	LOGGER.debug("> Message: '%s'.", message)
 
 	messageBox = QMessageBox()
-	messageBox.setWindowTitle( "Message | " + title )
-	messageBox.setText( message )
+	messageBox.setWindowTitle("Message | " + title)
+	messageBox.setText(message)
 
 	if messageType == "Critical":
-		messageBox.setIcon( QMessageBox.Critical )
-		LOGGER.critical( "'%s'.", "MessageBox | " + message )
+		messageBox.setIcon(QMessageBox.Critical)
+		LOGGER.critical("'%s'.", "MessageBox | " + message)
 	elif messageType == "Error":
-		messageBox.setIcon( QMessageBox.Critical )
-		LOGGER.error( "'%s'.", "MessageBox | " + message )
+		messageBox.setIcon(QMessageBox.Critical)
+		LOGGER.error("'%s'.", "MessageBox | " + message)
 	elif messageType == "Warning":
-		messageBox.setIcon( QMessageBox.Warning )
-		LOGGER.warning( "'%s'.", "MessageBox | " + message )
+		messageBox.setIcon(QMessageBox.Warning)
+		LOGGER.warning("'%s'.", "MessageBox | " + message)
 	elif messageType == "Information":
-		messageBox.setIcon( QMessageBox.Information )
-		LOGGER.info( "'%s'.", "MessageBox | " + message )
+		messageBox.setIcon(QMessageBox.Information)
+		LOGGER.info("'%s'.", "MessageBox | " + message)
 
-	messageBox.setWindowFlags( Qt.WindowStaysOnTopHint )
+	messageBox.setWindowFlags(Qt.WindowStaysOnTopHint)
 
 	if platform.system() == "Linux":
 		messageBox.show()
-		centerWidgetOnScreen( messageBox )
+		centerWidgetOnScreen(messageBox)
 
 	messageBox.exec_()
 
 @core.executionTrace
-def centerWidgetOnScreen( widget ):
+@foundations.exceptions.exceptionsHandler(None, False, Exception)
+def centerWidgetOnScreen(widget):
 	"""
 	This definition centers given Widget middle of the screen.
 
 	:param widget: Current Widget. ( QWidget )
 	"""
 
-	widget.move( QApplication.desktop().width() / 2 - widget.width() / 2, QApplication.desktop().height() / 2 - widget.height() / 2 )
+	widget.move(QApplication.desktop().width() / 2 - widget.width() / 2, QApplication.desktop().height() / 2 - widget.height() / 2)
 
 @core.executionTrace
-def resizeWidget( widget, size_x, size_y ):
+@foundations.exceptions.exceptionsHandler(None, False, Exception)
+def resizeWidget(widget, sizeX, sizeY):
 	"""
 	This definition resize given Widget.
 
 	:param widget: Current Widget. ( QWidget )
-	:param size_x: Size x. ( Integer )
-	:param size_y: Size y. ( Integer )
+	:param sizeX: Size x. ( Integer )
+	:param sizeY: Size y. ( Integer )
 	"""
 
-	widget.resize( int( size_x ), int( size_y ) )
+	widget.resize(int(sizeX), int(sizeY))

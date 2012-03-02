@@ -474,9 +474,3 @@ class ModulesManager(object):
 
 		for name, module in self:
 			self.registerModuleInterfaces(module)
-
-if __name__ == "__main__":
-	PATH = "/Users/KelSolaar/Documents/Developement/Snippets/src/maya/snippets/libraries"
-	manager = ModulesManager((PATH,))
-	manager.registerModules()
-	#manager.getInterfaces()
