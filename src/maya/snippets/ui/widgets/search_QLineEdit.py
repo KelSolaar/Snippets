@@ -435,7 +435,7 @@ class Search_QLineEdit(QLineEdit):
 		 					max(self.minimumSizeHint().height(), self.__clearButton.sizeHint().height() + frameWidth * 2))
 
 		self.__completer.setCaseSensitivity(Qt.CaseInsensitive)
-		self.__completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
+		self.__completer.setCompletionMode(QCompleter.PopupCompletion)
 		self.__completer.setMaxVisibleItems(self.__completerVisibleItemsCount)
 
 	@core.executionTrace

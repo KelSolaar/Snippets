@@ -2,8 +2,16 @@
 <ui version="4.0">
  <class>Popup_Form</class>
  <widget class="QWidget" name="Popup_Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>260</width>
+    <height>46</height>
+   </rect>
+  </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Snippets Popup</string>
   </property>
   <layout class="QGridLayout" name="Popup_Form_gridLayout">
    <item row="0" column="0">

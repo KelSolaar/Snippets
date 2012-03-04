@@ -14,7 +14,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	Loader Module.
+	Loader module.
 
 **Others:**
 
@@ -31,26 +31,10 @@ import os
 import platform
 import re
 from PyQt4 import uic
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-
-#**********************************************************************************************************************
-#***	Dependencies globals manipulation.
-#**********************************************************************************************************************
-import foundations.globals.constants
-from snippets.globals.constants import Constants
-
-def _overrideDependenciesGlobals():
-	"""
-	This definition overrides dependencies globals.
-
-	:return: Definition success. ( Boolean )
-	"""
-
-	foundations.globals.constants.Constants.logger = Constants.logger
-	return True
-
-_overrideDependenciesGlobals()
+from PyQt4.QtCore import QProcess
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QAction
+from PyQt4.QtGui import QPixmap
 
 #**********************************************************************************************************************
 #***	Internal imports.
@@ -58,16 +42,14 @@ _overrideDependenciesGlobals()
 import foundations.core as core
 import foundations.exceptions
 import foundations.strings as strings
-import snippets.libraries.common
 import snippets.ui.common
 from foundations.environment import Environment
+from snippets.globals.constants import Constants
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.globals.uiConstants import UiConstants
-from snippets.modulesManager import ModulesManager
 from snippets.ui.models import Interface
 from snippets.ui.models import InterfacesModel
 from snippets.ui.views import Interfaces_QListView
-from snippets.ui.widgets.search_QLineEdit import Search_QLineEdit
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -83,48 +65,17 @@ __all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Loader"]
 
 LOGGER = logging.getLogger(Constants.logger)
 
-# Remove existing handlers.
-del logging.root.handlers[:]
-
-if LOGGER.handlers == []:
-	consoleHandler = snippets.libraries.common.MayaLoggingHandler()
-	consoleHandler.setFormatter(core.LOGGING_DEFAULT_FORMATTER)
-	LOGGER.addHandler(consoleHandler)
-
-RuntimeGlobals.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
-RuntimeGlobals.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
-
 RuntimeGlobals.loaderUiFile = snippets.ui.common.getResourcePath(UiConstants.loaderUiFile)
-if os.path.exists(RuntimeGlobals.loaderUiFile):
+if foundations.common.pathExists(RuntimeGlobals.loaderUiFile):
 	Ui_Loader_Setup, Ui_Loader_Type = uic.loadUiType(RuntimeGlobals.loaderUiFile)
 else:
 	error = "'{0}' Ui file is not available!".format(RuntimeGlobals.loaderUiFile)
 	snippets.ui.common.messageBox("Error", "Error", error)
 	raise Exception(error)
 
-RuntimeGlobals.popupUiFile = snippets.ui.common.getResourcePath(UiConstants.popupUiFile)
-if os.path.exists(RuntimeGlobals.popupUiFile):
-	Ui_Popup_Setup, Ui_Popup_Type = uic.loadUiType(RuntimeGlobals.popupUiFile)
-else:
-	error = "'{0}' Ui file is not available!".format(RuntimeGlobals.popupUiFile)
-	snippets.ui.common.messageBox("Error", "Error", error)
-	raise Exception(error)
-
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-def _setModulesManager():
-	"""
-	This definition sets the global modules manager instance.
-	"""
-
-	if not isinstance(RuntimeGlobals.modulesManager, ModulesManager):
-		RuntimeGlobals.modulesManager = ModulesManager([RuntimeGlobals.librariesDirectory])
-		RuntimeGlobals.modulesManager.registerModules()
-		RuntimeGlobals.modulesManager.registerInterfaces()
-
-_setModulesManager()
-
 class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	"""
 	"""
@@ -387,7 +338,6 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 
 		self.__model = InterfacesModel(self)
-		self.setInterfaces(unicode())
 
 		self.Interfaces_listView.setParent(None)
 		self.Interfaces_listView = Interfaces_QListView(self, self.__model)
@@ -405,6 +355,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Informations_textBrowser.setText(self.__defaultText)
 
 		self.Interfaces_frame_splitter.setSizes([16777215, 0])
+
+		self.setInterfaces(unicode())
 
 		# Signals / Slots.
 		self.Execute_Snippet_pushButton.clicked.connect(self.__Execute_Snippet_pushButton__clicked)
@@ -461,7 +413,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 
 		if hasattr(self.Methods_listWidget.currentItem(), "_data"):
-			self.executeSnippet()
+			self.executeInterface()
 
 	@core.executionTrace
 	def __Reload_Snippets_pushButton__clicked(self, checked):
@@ -471,7 +423,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:param checked: Checked state. ( Boolean )
 		"""
 
-		self.setInterfaces(unicode())
+		self.setInterfaces()
 
 	@core.executionTrace
 	def __view_selectionModel__selectionChanged(self, selectedItems, deselectedItems):
@@ -535,7 +487,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:param index: Current index. ( QModelIndex )
 		"""
 
-		self.executeSnippet()
+		self.executeInterface()
 
 	@core.executionTrace
 	def __Search_lineEdit__textChanged(self, text):
@@ -560,7 +512,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, Exception)
-	def setInterfaces(self, pattern, flags=re.IGNORECASE):
+	def setInterfaces(self, pattern=".*", flags=re.IGNORECASE):
 		"""
 		This method sets the Model interfaces.
 
@@ -599,9 +551,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, Exception)
-	def executeSnippet(self):
+	def executeInterface(self):
 		"""
-		This method triggers the selected Snippet execution.
+		This method triggers the selected Interface execution.
 		
 		:return: Method success. ( Boolean )
 		"""
@@ -613,7 +565,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		module = interface.module
 		method = interface.attribute
 
-		LOGGER.info("{0} | Executing '{1}' Snippet from '{2}' Module!".format(self.__class__.__name__,
+		LOGGER.info("{0} | Executing '{1}' Interface from '{2}' Module!".format(self.__class__.__name__,
 																			method,
 																			module.name))
 		module.import_.__dict__[method]()
@@ -707,163 +659,3 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 			browserProcess = QProcess()
 			browserProcess.startDetached(browserCommand)
 		return True
-
-class Popup(Ui_Popup_Type, Ui_Popup_Setup):
-	"""
-	"""
-
-	@core.executionTrace
-	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
-		"""
-		This method initializes the class.
-		
-		:param parent: Parent object. ( QObject )
-		:param modulesManager: Modules Manager. ( ModulesManager )
-		"""
-
-		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
-
-		Ui_Popup_Type.__init__(self, parent)
-		Ui_Popup_Setup.__init__(self)
-
-		self.setupUi(self)
-
-		# --- Setting class attributes. ---
-		self.__container = parent
-		self.__modulesManager = modulesManager
-
-		self.__model = None
-		self.__view = None
-
-		# --- Initialize Ui. ---
-		self.__initializeUI()
-
-	#******************************************************************************************************************
-	#***	Attributes properties.
-	#******************************************************************************************************************
-	@property
-	def container(self):
-		"""
-		This method is the property for **self.__container** attribute.
-
-		:return: self.__container. ( QObject )
-		"""
-
-		return self.__container
-
-	@container.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def container(self, value):
-		"""
-		This method is the setter method for **self.__container** attribute.
-
-		:param value: Attribute value. ( QObject )
-		"""
-
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("container"))
-
-	@container.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def container(self):
-		"""
-		This method is the deleter method for **self.__container** attribute.
-		"""
-
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("container"))
-
-	@property
-	def modulesManager(self):
-		"""
-		This method is the property for **self.__modulesManager** attribute.
-
-		:return: self.__modulesManager. ( QObject )
-		"""
-
-		return self.__modulesManager
-
-	@modulesManager.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def modulesManager(self, value):
-		"""
-		This method is the setter method for **self.__modulesManager** attribute.
-
-		:param value: Attribute value. ( QObject )
-		"""
-
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modulesManager"))
-
-	@modulesManager.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
-	def modulesManager(self):
-		"""
-		This method is the deleter method for **self.__modulesManager** attribute.
-		"""
-
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modulesManager"))
-
-	#******************************************************************************************************************
-	#***	Class methods.
-	#******************************************************************************************************************
-	@core.executionTrace
-	def __initializeUI(self):
-		"""
-		This method triggers the **Methods_listWidget** Widget.
-		"""
-
-		self.Interfaces_lineEdit.setParent(None)
-		self.Interfaces_lineEdit = Search_QLineEdit(self)
-		self.Interfaces_lineEdit.setObjectName("Interfaces_lineEdit")
-		self.Interfaces_lineEdit.setPlaceholderText("Type stuff...")
-		self.Popup_Form_gridLayout.addWidget(self.Interfaces_lineEdit)
-
-		self.setInterfaces(unicode())
-
-		self.Interfaces_lineEdit.textChanged.connect(self.__Interfaces_lineEdit__textChanged)
-
-	@core.executionTrace
-	def __Interfaces_lineEdit__textChanged(self, text):
-		"""
-		This method is triggered when **Interfaces_lineEdit** text changes.
-
-		:param text: Current text value. ( QString )
-		"""
-
-		self.setInterfaces(strings.encode(text))
-
-	@core.executionTrace
-	def setInterfaces(self, pattern, flags=re.IGNORECASE):
-		"""
-		This method sets the Widget interfaces.
-
-		:param pattern: Interface name. ( String )
-		:param flags: Regex filtering flags. ( Integer )
-		:return: Method success. ( Boolean )
-		"""
-
-		try:
-			pattern = re.compile(pattern, flags)
-		except Exception:
-			return
-
-		interfaces = []
-		for name, module in self.__modulesManager:
-			if not module.interfaces:
-				continue
-
-			for interface in module.interfaces:
-				name = strings.getNiceName(self.getMethodName(interface))
-				re.search(pattern, name) and interfaces.append(name)
-
-		# Signals / Slots.
-		self.Interfaces_lineEdit.completer.setModel(QStringListModel(sorted(interfaces)))
-
-	@core.executionTrace
-	def getMethodName(self, name):
-		"""
-		This method gets the method name from the Interface.
-
-		:param name: Interface name. ( String )
-		:return: Method name. ( String )
-		"""
-
-		return "{0}{1}".format(name[1].lower(), name[2:])

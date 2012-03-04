@@ -47,3 +47,5 @@ class RuntimeGlobals():
 
 	librariesDirectory = None
 	resourcesDirectory = None
+
+	popupPattern = None

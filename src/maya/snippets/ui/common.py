@@ -64,6 +64,9 @@ def getResourcePath(name):
 	:return: Resource path. ( String )
 	"""
 
+	if not foundations.common.pathExists(RuntimeGlobals.resourcesDirectory):
+		return
+
 	path = os.path.join(RuntimeGlobals.resourcesDirectory, name)
 	if foundations.common.pathExists(path):
 		LOGGER.debug("> '{0}' resource path: '{1}'.".format(name, path))
