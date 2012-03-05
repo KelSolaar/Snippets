@@ -373,17 +373,19 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 
 		editSnippetAction = QAction("Edit Snippet", self.__view)
-		self.connect(editSnippetAction, SIGNAL("triggered()"), self.__view_editSnippetAction)
+		editSnippetAction.triggered.connect(self.__view_editSnippetAction)
 		self.__view.addAction(editSnippetAction)
 
 		exploreSnippetFolderAction = QAction("Explore Snippet Folder", self.__view)
-		self.connect(exploreSnippetFolderAction, SIGNAL("triggered()"), self.__view_exploreSnippetFolderAction)
+		exploreSnippetFolderAction.triggered.connect(self.__view_exploreSnippetFolderAction)
 		self.__view.addAction(exploreSnippetFolderAction)
 
 	@core.executionTrace
-	def __view_editSnippetAction(self):
+	def __view_editSnippetAction(self, checked):
 		"""
 		This method is triggered by **editSnippetAction** action.
+
+		:param checked: Checked state. ( Boolean )
 		"""
 
 		interface = self.getSelectedInterface()
@@ -394,9 +396,11 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		Constants.libraryCompiledExtension, Constants.libraryExtension))
 
 	@core.executionTrace
-	def __view_exploreSnippetFolderAction(self):
+	def __view_exploreSnippetFolderAction(self, checked):
 		"""
 		This method is triggered by **exploreSnippetFolderAction** action.
+
+		:param checked: Checked state. ( Boolean )
 		"""
 
 		interface = self.getSelectedInterface()

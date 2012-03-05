@@ -107,7 +107,8 @@ class Search_QLineEdit(QLineEdit):
 		self.setCompleter(self.__completer)
 		self.__completerVisibleItemsCount = 16
 
-		Search_QLineEdit.__initializeUi(self)
+		# TODO: Rollback to Search_QLineEdit.__initializeUi(self) whenever MPC changes it's PyQt version.
+		self.__initializeUi()
 		self.__setClearButtonVisibility(self.text())
 
 		# Signals / Slots.
@@ -436,7 +437,8 @@ class Search_QLineEdit(QLineEdit):
 
 		self.__completer.setCaseSensitivity(Qt.CaseInsensitive)
 		self.__completer.setCompletionMode(QCompleter.PopupCompletion)
-		self.__completer.setMaxVisibleItems(self.__completerVisibleItemsCount)
+		# TODO: Restore next line whnever MPC changes it's PyQt version.
+		# self.__completer.setMaxVisibleItems(self.__completerVisibleItemsCount)
 
 	@core.executionTrace
 	def __setClearButtonVisibility(self, text):

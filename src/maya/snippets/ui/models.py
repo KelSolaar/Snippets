@@ -27,6 +27,7 @@ from PyQt4.QtCore import Qt
 #***	Internal imports.
 #**********************************************************************************************************************
 import foundations.core as core
+import foundations.dataStructures
 import foundations.exceptions
 from snippets.globals.constants import Constants
 
@@ -128,9 +129,11 @@ class InterfacesModel(QAbstractListModel):
 			assert type(value) is list, "'{0}' attribute: '{1}' type is not 'list'!".format("interfaces", value)
 			for element in value:
 				assert type(element) is Interface, "'{0}' attribute: '{1}' type is not 'Interface'!".format("interfaces", element)
-		self.beginResetModel()
+		# TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.	
+		self.modelAboutToBeReset.emit()
 		self.__interfaces = value
-		self.endResetModel()
+		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
+		self.modelReset.emit()
 
 	@interfaces.deleter
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
@@ -243,9 +246,11 @@ class InterfacesModel(QAbstractListModel):
 		:return: Method success. ( Boolean )
 		"""
 
-		self.beginResetModel()
+		# TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.
+		self.modelAboutToBeReset.emit()
 		self.__interfaces = []
-		self.endResetModel()
+		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
+		self.modelReset.emit()
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, Exception)
@@ -257,9 +262,11 @@ class InterfacesModel(QAbstractListModel):
 		:return: Method success. ( Boolean )
 		"""
 
-		self.beginResetModel()
+		# TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.
+		self.modelAboutToBeReset.emit()
 		self.__interfaces = sorted(self.__interfaces, key=lambda x: (x.name), reverse=order)
-		self.endResetModel()
+		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
+		self.modelReset.emit()
 
 	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
