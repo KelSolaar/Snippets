@@ -31,6 +31,7 @@ from PyQt4 import uic
 from PyQt4.QtCore import QString
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QStringListModel
+from PyQt4.QtGui import QCursor
 
 #**********************************************************************************************************************
 #***	Internal imports.
@@ -61,7 +62,6 @@ __all__ = ["LOGGER", "Ui_Popup_Type", "Ui_Popup_Setup", "Popup"]
 
 LOGGER = logging.getLogger(Constants.logger)
 
-print RuntimeGlobals.resourcesDirectory
 RuntimeGlobals.popupUiFile = snippets.ui.common.getResourcePath(UiConstants.popupUiFile)
 if foundations.common.pathExists(RuntimeGlobals.popupUiFile):
 	Ui_Popup_Setup, Ui_Popup_Type = uic.loadUiType(RuntimeGlobals.popupUiFile)
@@ -207,10 +207,11 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		This method reimplements the :meth:`QWidget.show` method.
 		"""
-
-		super(Popup, self).show()
+		
+		self.move(QCursor.pos().x() - self.width() / 2, QCursor.pos().y() - self.height() / 2)
 		self.Interfaces_lineEdit.setText(RuntimeGlobals.popupPattern or QString())
 		self.Interfaces_lineEdit.setFocus()
+		super(Popup, self).show()
 
 	@core.executionTrace
 	def __initializeUI(self):
@@ -232,6 +233,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 		# Signals / Slots.
 		self.Interfaces_lineEdit.returnPressed.connect(self.__Interfaces_lineEdit__returnPressed)
+		self.Interfaces_lineEdit.completer.activated.connect(self.__Interfaces_lineEdit_completer__activated)
 
 	@core.executionTrace
 	def __Interfaces_lineEdit__returnPressed(self):
@@ -239,7 +241,27 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		This method is triggered when **Interfaces_lineEdit** Widget when return is pressed.
 		"""
 
-		pattern = RuntimeGlobals.popupPattern = self.Interfaces_lineEdit.text()
+		self.__triggerInterface(self.Interfaces_lineEdit.text())
+
+	@core.executionTrace
+	def __Interfaces_lineEdit_completer__activated(self, text):
+		"""
+		This method is triggered when **Interfaces_lineEdit** completer Widget is activated.
+		
+		:param text: Completer text. ( QString )
+		"""
+
+		self.__triggerInterface(text)
+
+	@core.executionTrace
+	def __triggerInterface(self, name):
+		"""
+		This method triggers the Interface with given name execution.
+		
+		:param name: Interface name. ( String )
+		"""
+		
+		pattern = RuntimeGlobals.popupPattern = name
 		interface = self.getInterface(strings.encode("^{0}$".format(pattern)))
 		if not interface:
 			return
