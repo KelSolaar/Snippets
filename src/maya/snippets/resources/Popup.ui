@@ -7,13 +7,16 @@
     <x>0</x>
     <y>0</y>
     <width>260</width>
-    <height>46</height>
+    <height>38</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Snippets Popup</string>
   </property>
   <layout class="QGridLayout" name="Popup_Form_gridLayout">
+   <property name="margin">
+    <number>8</number>
+   </property>
    <item row="0" column="0">
     <widget class="QLineEdit" name="Interfaces_lineEdit"/>
    </item>
