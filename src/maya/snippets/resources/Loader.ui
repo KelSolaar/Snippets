@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>Loader_MainWindow</class>
  <widget class="QMainWindow" name="Loader_MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>306</width>
+    <height>623</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Snippets Loader</string>
   </property>
@@ -45,23 +53,14 @@
      </layout>
     </item>
     <item row="2" column="0" colspan="2">
-     <widget class="QFrame" name="Methods_frame">
+     <widget class="QFrame" name="Interfaces_frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QGridLayout" name="Methods_frame_gridLayout">
-       <item row="1" column="0">
-        <widget class="QSplitter" name="Loader_splitter">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <widget class="QListWidget" name="Methods_listWidget"/>
-         <widget class="QTextBrowser" name="Informations_textBrowser"/>
-        </widget>
-       </item>
+      <layout class="QGridLayout" name="Interfaces_frame_gridLayout">
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="Search_horizontalLayout">
          <item>
@@ -75,6 +74,15 @@
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QSplitter" name="Interfaces_frame_splitter">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <widget class="QListView" name="Interfaces_listView"/>
+         <widget class="QTextBrowser" name="Informations_textBrowser"/>
+        </widget>
        </item>
       </layout>
      </widget>

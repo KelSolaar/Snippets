@@ -30,7 +30,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["RuntimeConstants"]
+__all__ = ["RuntimeGlobals"]
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -41,6 +41,11 @@ class RuntimeGlobals():
 	"""
 
 	loaderUiFile = None
+	popupUiFile = None
+
+	modulesManager = None
 
 	librariesDirectory = None
 	resourcesDirectory = None
+
+	popupPattern = None
