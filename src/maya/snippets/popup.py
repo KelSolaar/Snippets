@@ -14,7 +14,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	Popup module.
+	This module defines the :class:`Popup` class.
 
 **Others:**
 
@@ -75,6 +75,7 @@ else:
 #**********************************************************************************************************************
 class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	"""
+	This class defines the simple Maya Interfaces loader widget.
 	"""
 
 	@core.executionTrace
@@ -218,7 +219,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 
 		self.setWindowFlags(Qt.Popup)
-		self.setAttribute(Qt.WA_TranslucentBackground)
 
 		self.__model = InterfacesModel(self)
 

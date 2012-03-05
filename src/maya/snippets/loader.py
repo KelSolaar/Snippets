@@ -14,7 +14,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	Loader module.
+	This module defines the :class:`Loader` class.
 
 **Others:**
 
@@ -78,6 +78,7 @@ else:
 #**********************************************************************************************************************
 class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	"""
+	This class defines the complex Maya Interfaces loader widget.
 	"""
 
 	@core.executionTrace
