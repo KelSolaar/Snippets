@@ -1,4 +1,5 @@
 import maya.cmds as cmds
+import operator
 
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2010 - 2012 - Thomas Mansencal"
@@ -29,7 +30,12 @@ __all__ = ["stacksHandler",
 			"selectLaminaFaces",
 			"ISelectLaminaFaces",
 			"selectZeroGeometryAreaFaces",
-			"ISelectZeroGeometryAreaFaces"]
+			"ISelectZeroGeometryAreaFaces",
+			"selectSideVertices",
+			"selectLeftVertices",
+			"ISelectLeftVertices",
+			"selectRightVertices",
+			"ISelectRightVertices"]
 
 def stacksHandler(object):
 	"""
@@ -248,3 +254,52 @@ def ISelectZeroGeometryAreaFaces():
 	"""
 
 	selectZeroGeometryAreaFaces()
+
+def selectSideVertices(object, positive=True):
+	"""
+	This definition selects given side geometry vertices.
+	
+	:param object: Object to select vertices. ( String )
+	:param positive: Select positive vertices. ( Boolean )
+	"""
+	
+	comparison = positive and operator.gt or operator.lt
+	verticesCount = cmds.polyEvaluate(object, vertex=True)
+	vertices = cmds.ls(object + ".vtx[0:{0}]".format(str(verticesCount - 1)), fl=True, l=True)
+	cmds.select(filter(lambda x: comparison(cmds.xform(x, q=True, t=True, ws=True)[0], 0), vertices))
+
+def selectLeftVertices(object):
+	"""
+	This definition selects left side geometry vertices.
+	
+	:param object: Object to select left vertices. ( String )
+	"""
+
+	selectSideVertices(object)
+
+@stacksHandler
+def ISelectLeftVertices():
+	"""
+	This definition is the selectLeftVertices definition Interface.
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and selectLeftVertices(selection[0])
+
+def selectRightVertices(object):
+	"""
+	This definition selects right side geometry vertices.
+	
+	:param object: Object to select right vertices. ( String )
+	"""
+
+	selectSideVertices(object, positive=False)
+
+@stacksHandler
+def ISelectRightVertices():
+	"""
+	This definition is the selectRightVertices definition Interface.
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and selectRightVertices(selection[0])

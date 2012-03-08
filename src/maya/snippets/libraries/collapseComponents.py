@@ -91,7 +91,7 @@ def collapseComponents(components, axis=("X", "Y", "Z")):
 
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 	barycenters = []
-	barycenters.extend((cmds.xform(vertice, q=True, t=True, ws=True) for vertice in vertices))
+	barycenters.extend((cmds.xform(vertex, q=True, t=True, ws=True) for vertex in vertices))
 	barycenter = getAverageVector(barycenters)
 	for vertex in vertices:
 		xValue = "X" in axis and barycenter[0] or cmds.xform(vertex, q=True, t=True, ws=True)[0]
