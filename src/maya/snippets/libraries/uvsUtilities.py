@@ -14,7 +14,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["RESOURCES_DIRECTORY", 
+__all__ = ["RESOURCES_DIRECTORY",
 				"CHECKER_IMAGE",
 				"DEFAULT_SCALE_COVERAGE = 0.98",
 				"MARI_NAME_FORMAT",
@@ -171,12 +171,12 @@ def getUVsFromComponents(components, flatten=True):
 	:param flatten: Flatten components list. ( Boolean )
 	:return: Components UVs. ( List )
 	"""
-    	
+
 	pattern = re.compile(r"map\[\d+\]")
-   	for component in components:
+	for component in components:
 		if not re.search(pattern, component):
 			return cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=flatten)
-	return components        
+	return components
 
 def getFacesPerPatches(object):
 	"""
@@ -193,7 +193,7 @@ def getFacesPerPatches(object):
 		if not patch in facesPerPatches:
 			facesPerPatches[patch] = [face]
 			continue
-        
+
 		facesPerPatches[patch].append(face)
 	return facesPerPatches
 
@@ -213,7 +213,7 @@ def getObjectUVsArea(object):
 	meshPolygonIterator = OpenMaya.MItMeshPolygon(dagPath)
 	scriptUtil = OpenMaya.MScriptUtil()
 	scriptUtil.createFromDouble(0.0)
-	areaPointer = scriptUtil.asDoublePtr() 
+	areaPointer = scriptUtil.asDoublePtr()
 	uvsArea = 0
 	while not meshPolygonIterator.isDone():
 		meshPolygonIterator.getUVArea(areaPointer)
@@ -241,7 +241,7 @@ def getMariPatchFromUVDims(uvDims):
 	"""
 
 	uDim, vDim = uvDims
-	return 1000 + uDim + 1 + vDim *10
+	return 1000 + uDim + 1 + vDim * 10
 
 def getComponentsUVDims(components):
 	"""
@@ -331,10 +331,10 @@ def getComponentsBoundingBox(components):
 	:param components: Components. ( Tuple / List )
 	:return: Components Bounding Box. ( Tuple )
 	"""
-	
+
 	uvs = getUVsFromComponents(components)
-	uMin, vMin, uMax, vMax = 2**8, 2**8, -2**8, -2**8
-	for uv in uvs:	
+	uMin, vMin, uMax, vMax = 2 ** 8, 2 ** 8, -2 ** 8, -2 ** 8
+	for uv in uvs:
 		u, v = cmds.polyEditUV(uv, q=True, uValue=True, vValue=True)
 		uMin = min(u, uMin)
 		uMax = max(u, uMax)
@@ -349,7 +349,7 @@ def getComponentsUVsCenter(components):
 	:param components: Components. ( Tuple / List )
 	:return: Components UVs center. ( Tuple )
 	"""
-	
+
 	uMin, vMin, uMax, vMax = getComponentsBoundingBox(components)
 	return (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
 
@@ -393,7 +393,7 @@ def scaleComponentsUVs(components, su=1, sv=1):
 	:param sv: Scale V value. ( Float )
 	:return: Definition succes. ( Boolean )
 	"""
-	
+
 	if su == 0.0:
 		su = 1e-15
 	if sv == 0.0:
@@ -411,7 +411,7 @@ def centerComponentsUVs(components):
 	:param components: Components. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
 	"""
-	
+
 	uvs = getUVsFromComponents(components)
 	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
 	uCenter, vCenter = (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
@@ -427,7 +427,7 @@ def scaleCenterComponentsUVs(components, coverage=DEFAULT_SCALE_COVERAGE):
 	:param components: Components. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
 	"""
-	
+
 	uvs = getUVsFromComponents(components)
 	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
 	uCenter, vCenter = (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
@@ -449,12 +449,12 @@ def rotateComponentsUVs(components, value, clockWise=True):
 	:param clockWise: Rotation direction. ( Boolean )
 	:return: Definition succes. ( Boolean )
 	"""
-	
+
 	uvs = getUVsFromComponents(components)
 	uCenter, vCenter = getComponentsUVsCenter(uvs)
 	if not clockWise:
 		value = -value
-	cmds.polyEditUV(uvs, pu=uCenter, pv=vCenter, a=-value)		
+	cmds.polyEditUV(uvs, pu=uCenter, pv=vCenter, a= -value)
 	return True
 
 @stacksHandler
@@ -468,10 +468,10 @@ def polyRotateComponentsUVs(components, value, clockWise=True):
 	:param clockWise: Rotation direction. ( Boolean )
 	:return: Definition succes. ( Boolean )
 	"""
-	
+
 	if clockWise:
-		value = -value	
-	
+		value = -value
+
 	mel.eval("polyRotateUVs %s" % value)
 	return True
 
@@ -487,7 +487,7 @@ def moveComponentsUVs(components, u=0, v=0):
 	"""
 
 	uvs = getUVsFromComponents(components, flatten=False)
-	cmds.polyEditUV(uvs, u=u, v=v)	
+	cmds.polyEditUV(uvs, u=u, v=v)
 	return True
 
 @stacksHandler
@@ -503,9 +503,9 @@ def mirrorComponentsUVs(components, horizontal=True):
 	uvs = getUVsFromComponents(components)
 	uCenter, vCenter = (math.floor(value) for value in getComponentsUVsCenter(uvs))
 	if horizontal:
-		cmds.polyEditUV(uvs, pu=uCenter + 0.5, pv=vCenter + 0.5, su=-1)	
+		cmds.polyEditUV(uvs, pu=uCenter + 0.5, pv=vCenter + 0.5, su= -1)
 	else:
-		cmds.polyEditUV(uvs, pu=uCenter + 0.5, pv=vCenter + 0.5, sv=-1)	
+		cmds.polyEditUV(uvs, pu=uCenter + 0.5, pv=vCenter + 0.5, sv= -1)
 	return True
 
 
@@ -519,17 +519,17 @@ def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 	:param horizontal: Horizontal stack. ( Boolean )
 	:return: Definition succes. ( Boolean )
 	"""
-	
+
 	if not objects:
 		return
 
-	uvs = getUVsFromComponents(objects.pop(0))	
+	uvs = getUVsFromComponents(objects.pop(0))
 	uCenter, vCenter = getComponentsUVsCenter(uvs)
 	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
 	uBorder = uMax - uMin + uMin
 	vBorder = vMax - vMin + vMin
 	for object in objects:
-		uvs = getUVsFromComponents(object)		
+		uvs = getUVsFromComponents(object)
 		currentUMin, currentVMin, currentUMax, currentVMax = getComponentsBoundingBox(uvs)
 		if horizontal:
 			offsetU = uBorder - currentUMin + margin
@@ -549,7 +549,7 @@ def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 			elif alignement == "right":
 				offsetU = uMax - currentUMax
 			vBorder = vBorder + currentVMax - currentVMin + margin
-		cmds.polyEditUV(uvs, u=offsetU, v=offsetV)	
+		cmds.polyEditUV(uvs, u=offsetU, v=offsetV)
 	return True
 
 @stacksHandler
@@ -560,23 +560,23 @@ def prescaleUVsShells(object):
 	:param objects: Object. ( String )
 	:return: Definition succes. ( Boolean )
 	"""
-	
-	uvs = getUVsFromComponents(object)	
+
+	uvs = getUVsFromComponents(object)
 	uMin, vMin, uMax, vMax = getComponentsBoundingBox(uvs)
 	uCenter, vCenter = (uMin + uMax) / 2.0, (vMin + vMax) / 2.0
 	width, height = uMax - uMin, vMax - vMin
 	scale = max(width, height)
-	
+
 	cmds.polyMultiLayoutUV(object, lm=0, sc=1, rbf=0, fr=False, ps=0.2, l=2, psc=True)
 
 	currentUMin, currentVMin, currentUMax, currentVMax = getComponentsBoundingBox(uvs)
 	currentUCenter, currentVCenter = (currentUMin + currentUMax) / 2.0, (currentVMin + currentVMax) / 2.0
 	currentWidth, currentHeight = currentUMax - currentUMin, currentVMax - currentVMin
 	currentScale = max(currentWidth, currentHeight)
-	
+
 	scaleFactor = scale / currentScale
 
-	cmds.polyEditUV(uvs, u=uCenter - currentUCenter, v=vCenter - currentVCenter)		
+	cmds.polyEditUV(uvs, u=uCenter - currentUCenter, v=vCenter - currentVCenter)
 	scaleComponentsUVs(uvs, su=scaleFactor, sv=scaleFactor)
 	return True
 
@@ -588,7 +588,7 @@ def autoRatioUVsAreas(objects):
 	:param objects: Objects. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
 	"""
-	
+
 	if not objects:
 		return
 	baseObject = objects.pop(0)
@@ -666,7 +666,7 @@ def removeUVsChecker():
 
 	if cmds.objExists("UVsChecker_Place2dTexture"):
 		cmds.delete("UVsChecker_Place2dTexture")
-	return True	
+	return True
 
 @stacksHandler
 def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
@@ -680,7 +680,7 @@ def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
 
 	if not cmds.objExists("UVsChecker_Place2dTexture"):
 		return
-	
+
 	uRepeats and cmds.setAttr("UVsChecker_Place2dTexture.repeatU", uRepeats)
 	vRepeats and cmds.setAttr("UVsChecker_Place2dTexture.repeatV", vRepeats)
 	return True
@@ -701,7 +701,7 @@ def getPatchShaderTree(patch, prefix):
 		lambert = cmds.shadingNode("lambert", asShader=True)
 		shadingEngine = cmds.sets(renderable=True, noSurfaceShader=True, empty=True)
 		cmds.connectAttr("%s.outColor" % lambert, "%s.surfaceShader" % shadingEngine, f=True)
-       
+
 		cmds.rename(lambert, name)
 		shadingEngine = cmds.rename(shadingEngine, "%sSG" % name)
 	return shadingEngine
@@ -739,16 +739,15 @@ def assignMariShaders(objects, prefix):
 
 	mainProgressBar = mel.eval('$tmp = $gMainProgressBar')
 	cmds.progressBar(mainProgressBar, edit=True, beginProgress=True, isInterruptable=True, status="Assigning Mari shaders ...", maxValue=len(objects))
-	
+
 	success = True
 	for object in objects:
 		if cmds.progressBar(mainProgressBar, query=True, isCancelled=True):
-                	break
+					break
 
-        	cmds.progressBar(mainProgressBar, edit=True, status="Assigning Mari shaders to '%s' ..." % object, step=1)
-
+		cmds.progressBar(mainProgressBar, edit=True, status="Assigning Mari shaders to '%s' ..." % object, step=1)
 		success *= assignMariShadersToObject(object, prefix)
-	
+
 	cmds.progressBar(mainProgressBar, edit=True, endProgress=True)
 
 	return success
@@ -811,7 +810,7 @@ def moveLeftUVs_button_OnClicked(state=None):
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and moveComponentsUVs(selection, u=-cmds.floatField("moveFactor_floatField", q=True, value=True))
+	selection and moveComponentsUVs(selection, u= -cmds.floatField("moveFactor_floatField", q=True, value=True))
 
 @stacksHandler
 def fitUVs_button_OnClicked(state=None):
@@ -855,7 +854,7 @@ def moveDownUVs_button_OnClicked(state=None):
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and moveComponentsUVs(selection, v=-cmds.floatField("moveFactor_floatField", q=True, value=True))
+	selection and moveComponentsUVs(selection, v= -cmds.floatField("moveFactor_floatField", q=True, value=True))
 
 @stacksHandler
 def scaleUVs_button_OnClicked(state=None):
@@ -996,7 +995,7 @@ def uRepeat_floatField_OnChanged(value=None):
 
 	:param value: Field value. ( Float )
 	"""
-		
+
 	setUVsCheckerRepeats(uRepeats=value)
 
 @stacksHandler
@@ -1006,7 +1005,7 @@ def vRepeat_floatField_OnChanged(value=None):
 
 	:param value: Field value. ( Float )
 	"""
-		
+
 	setUVsCheckerRepeats(vRepeats=value)
 
 def unfoldingTools_window():
@@ -1024,16 +1023,16 @@ def unfoldingTools_window():
 		width=320)
 
 	spacing = 0
-	
+
 	columnsWidth = (106, 106, 106)
 	columnsAttach = [(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)]
-	
+
 	cmds.columnLayout()
 
 	cmds.frameLayout(label="UVs Move / Scale", collapsable=True, borderStyle="etchedIn")
 
 	cmds.columnLayout()
-	
+
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.button("flipUVs_button", label="Flip", command=flipUVs_button_OnClicked)
 	cmds.button("moveUpUVs_button", label="Move Up", command=moveUpUVs_button_OnClicked)
@@ -1051,28 +1050,28 @@ def unfoldingTools_window():
 	cmds.button("moveDownUVs_button", label="Move Down", command=moveDownUVs_button_OnClicked)
 	cmds.button("scaleUVs_button", label="Scale", command=scaleUVs_button_OnClicked)
 	cmds.setParent(upLevel=True)
-	
+
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Coverage %:")
 	cmds.intField("coverage_intField", minValue=0, maxValue=100, value=98)
 	cmds.setParent(upLevel=True)
-	
+
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Move Factor:")
 	cmds.floatField("moveFactor_floatField", minValue=0, maxValue=10, value=1)
 	cmds.setParent(upLevel=True)
-	
+
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Scale U / V:")
-	cmds.floatField("uScale_floatField", minValue=-10, maxValue=10, value=1)
-	cmds.floatField("vScale_floatField", minValue=-10, maxValue=10, value=1)
+	cmds.floatField("uScale_floatField", minValue= -10, maxValue=10, value=1)
+	cmds.floatField("vScale_floatField", minValue= -10, maxValue=10, value=1)
 	cmds.setParent(upLevel=True)
 
 	cmds.setParent(upLevel=True)
 	cmds.setParent(upLevel=True)
 
 	cmds.frameLayout(label="UVs Rotation", collapsable=True, borderStyle="etchedIn")
-	
+
 	cmds.columnLayout()
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
@@ -1080,17 +1079,17 @@ def unfoldingTools_window():
 	cmds.button(label="", enable=False)
 	cmds.button("rotateClockWiseUVs_button", label="Rotate CWZ", command=rotateClockWiseUVs_button_OnClicked)
 	cmds.setParent(upLevel=True)
-	
+
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Angle:")
-	cmds.floatField("rotation_floatField", minValue=-360, maxValue=360, value=45)
+	cmds.floatField("rotation_floatField", minValue= -360, maxValue=360, value=45)
 	cmds.setParent(upLevel=True)
-	
+
 	cmds.setParent(upLevel=True)
 	cmds.setParent(upLevel=True)
 
 	cmds.frameLayout(label="UVs Alignement", collapsable=True, borderStyle="etchedIn")
-	
+
 	cmds.columnLayout()
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
@@ -1104,10 +1103,10 @@ def unfoldingTools_window():
 	cmds.button("straightenUVs_button", label="Straigthen", command=lambda state: mel.eval("warning \"Not implemented yet!\";"))
 	cmds.button("alignUVsMaximumU_button", label="Align Max. U", command=lambda state: mel.eval("alignUV 1 0 0 0;"))
 	cmds.setParent(upLevel=True)
-	
+
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.button(label="", enable=False)
-	cmds.button("alignUVsMinimumV_button", label="Align Min. V", command=lambda state: mel.eval("alignUV 0 0 1 1;"))	
+	cmds.button("alignUVsMinimumV_button", label="Align Min. V", command=lambda state: mel.eval("alignUV 0 0 1 1;"))
 	cmds.button(label="", enable=False)
 	cmds.setParent(upLevel=True)
 
@@ -1115,7 +1114,7 @@ def unfoldingTools_window():
 	cmds.setParent(upLevel=True)
 
 	cmds.frameLayout(label="UVs Stacks", collapsable=True, borderStyle="etchedIn")
-	
+
 	cmds.columnLayout()
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
@@ -1132,14 +1131,14 @@ def unfoldingTools_window():
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.text(label="Margin:")
-	cmds.floatField("margin_floatField", minValue= 0, maxValue=10, value=0.001)
+	cmds.floatField("margin_floatField", minValue=0, maxValue=10, value=0.001)
 	cmds.setParent(upLevel=True)
 
 	cmds.setParent(upLevel=True)
 	cmds.setParent(upLevel=True)
 
 	cmds.frameLayout(label="UVs Auto Ratio", collapsable=True, borderStyle="etchedIn")
-	
+
 	cmds.columnLayout()
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
@@ -1152,7 +1151,7 @@ def unfoldingTools_window():
 	cmds.setParent(upLevel=True)
 
 	cmds.frameLayout(label="UVs Verbose", collapsable=True, borderStyle="etchedIn")
-	
+
 	cmds.columnLayout()
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
@@ -1165,7 +1164,7 @@ def unfoldingTools_window():
 	cmds.setParent(upLevel=True)
 
 	cmds.frameLayout(label="UVs Checker", collapsable=True, borderStyle="etchedIn")
-	
+
 	cmds.columnLayout()
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
