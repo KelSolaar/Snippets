@@ -9,22 +9,29 @@ Adobe Photoshop scripts must be installed into the Adobe Photoshop scripting fol
 	Mac Os X: /Applications/Adobe Photoshop CS*/Presets/Scripts/
 	Windows: C:\Program Files\Adobe\Adobe Photoshop CS*\Presets\Scripts\
 
-Alternatively, on Maya, a Snippets Loader is provided, it requries PyQt.
+Alternatively, on Maya, a Snippets Loader is provided, it requries PyQt and Foundations package available from Github: https://github.com/KelSolaar/Foundations.
 Launching it is done issuing the following Python code:
 
 import sys
+
+FOUNDATIONS_PATH = "Path/To/Foundations/Folder/Foundations/src/"
+
+if FOUNDATIONS_PATH not in sys.path:
+	sys.path.append(FOUNDATIONS_PATH)
 
 LOADER_PATH = "Path/To/Snippets/Folder/Snippets/src/maya"
 
 if LOADER_PATH not in sys.path:
 	sys.path.append(LOADER_PATH)
 
-import snippets.loader
-reload(snippets.loader)
+import snippets.engine
+snippets.engine.run()
 
+import snippets.loader
 import snippets.ui.common
-UI = snippets.loader.Loader(snippets.ui.ui.common.getMayaWindow())
-UI.show()
+
+LOADER = snippets.loader.Loader(snippets.ui.common.getMayaWindow())
+LOADER.show()
 
 - About -
 Snippets by Thomas Mansencal - 2009 - 2012
