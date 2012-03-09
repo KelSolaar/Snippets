@@ -51,7 +51,7 @@ import foundations.core as core
 import foundations.exceptions
 import snippets.libraries.common
 from snippets.globals.runtimeGlobals import RuntimeGlobals
-from snippets.modulesManager import ModulesManager
+from snippets.managers.modulesManager import ModulesManager
 
 #**********************************************************************************************************************
 #***	Module attributes.
