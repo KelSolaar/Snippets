@@ -204,6 +204,7 @@ def importDefaultObject():
 		cmds.select([node for node in list(set(cmds.ls()).difference(set(nodesBefore))) if cmds.nodeType(node) == "transform"])
 	else:
 		mel.eval("warning(\"%s | '%s' file does't exists!\")" % (__name__, name))
+
 @stacksHandler
 def IImportDefaultObject():
 	"""
