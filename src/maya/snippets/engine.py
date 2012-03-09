@@ -86,8 +86,7 @@ def _setModulesManager():
 
 	if not isinstance(RuntimeGlobals.modulesManager, ModulesManager):
 		RuntimeGlobals.modulesManager = ModulesManager([RuntimeGlobals.librariesDirectory])
-		RuntimeGlobals.modulesManager.registerModules()
-		RuntimeGlobals.modulesManager.registerInterfaces()
+		RuntimeGlobals.modulesManager.registerAll()
 
 @core.executionTrace
 @foundations.exceptions.exceptionsHandler(None, False, Exception)

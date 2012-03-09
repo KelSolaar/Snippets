@@ -50,6 +50,7 @@ from snippets.globals.uiConstants import UiConstants
 from snippets.ui.models import Interface
 from snippets.ui.models import InterfacesModel
 from snippets.ui.views import Interfaces_QListView
+from snippets.ui.widgets.search_QLineEdit import Search_QLineEdit
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -338,6 +339,12 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		This method triggers the **Methods_listWidget** Widget.
 		"""
 
+		self.Search_lineEdit.setParent(None)
+		self.Search_lineEdit = Search_QLineEdit(self)
+		self.Search_lineEdit.setObjectName("Search_lineEdit")
+		self.Search_lineEdit.setPlaceholderText("Enter Interface Name...")
+		self.Search_horizontalLayout.addWidget(self.Search_lineEdit)
+
 		self.__model = InterfacesModel(self)
 
 		self.Interfaces_listView.setParent(None)
@@ -350,8 +357,6 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory,
 																	UiConstants.snippetsLoaderLogo)))
-		self.Search_Icon_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory,
-															UiConstants.searchIcon)))
 
 		self.Informations_textBrowser.setText(self.__defaultText)
 
@@ -428,6 +433,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:param checked: Checked state. ( Boolean )
 		"""
 
+		self.__modulesManager.reloadAll()
 		self.setInterfaces()
 
 	@core.executionTrace

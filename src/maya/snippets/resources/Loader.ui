@@ -66,13 +66,6 @@
          <item>
           <widget class="QLineEdit" name="Search_lineEdit"/>
          </item>
-         <item>
-          <widget class="QLabel" name="Search_Icon_label">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
        <item row="1" column="0">

@@ -387,6 +387,17 @@ class ModulesManager(object):
 		return len(self.__modules)
 
 	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
+	def listModules(self):
+		"""
+		This method lists the registered modules.
+
+		:return: Modules list. ( List )
+		"""
+
+		return [module.name for module in self.iterkeys()]
+
+	@core.executionTrace
 	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def registerModule(self, name, path):
 		"""
@@ -464,7 +475,7 @@ class ModulesManager(object):
 			return True
 
 	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, ImportError)
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def registerInterfaces(self):
 		"""
 		This method registers modules interfaces.
@@ -474,3 +485,42 @@ class ModulesManager(object):
 
 		for name, module in self:
 			self.registerModuleInterfaces(module)
+		return True
+
+	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
+	def unregisterAll(self):
+		"""
+		This method unregisters modules and their interfaces.
+
+		:return: Method success. ( Boolean )
+		"""
+
+		self.__modules = {}
+		return True
+
+	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
+	def registerAll(self):
+		"""
+		This method registers modules and their interfaces.
+
+		:return: Method success. ( Boolean )
+		"""
+
+		self.registerModules()
+		self.registerInterfaces()
+		return True
+
+	@core.executionTrace
+	@foundations.exceptions.exceptionsHandler(None, False, Exception)
+	def reloadAll(self):
+		"""
+		This method reloads all modules and their interfaces.
+
+		:return: Method success. ( Boolean )
+		"""
+
+		self.unregisterAll()
+		self.registerAll()
+		return True
