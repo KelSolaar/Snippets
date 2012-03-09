@@ -141,6 +141,7 @@ def toggleSelectionHighlight():
 		cmds.modelEditor(panel, e=True, sel=not cmds.modelEditor(panel, q=True, sel=True))
 	except:
 		pass
+
 @stacksHandler
 def IToggleSelectionHighlight():
 	"""
@@ -162,6 +163,7 @@ def toggleGeometriesVisibility():
 		cmds.modelEditor(panel, e=True, subdivSurfaces=not cmds.modelEditor(panel, q=True, subdivSurfaces=True))
 	except:
 		pass
+
 @stacksHandler
 def IToggleGeometriesVisibility():
 	"""
@@ -189,7 +191,26 @@ def IToggleGeometriesShadingOverride():
 	"""
 
 	selection = cmds.ls(sl=True, l=True, type="transform")
-	selection = toggleGeometriesShadingOverride(selection)
+	selection and toggleGeometriesShadingOverride(selection)
+
+def isolateSelection():
+	"""
+	This definition isolates current selection.
+	"""
+
+	panel = cmds.getPanel(withFocus=True)
+	try:
+		cmds.isolateSelect(panel, state=not cmds.isolateSelect(panel, q=True, state=True))
+	except:
+		pass
+
+@stacksHandler
+def IIsolateSelection():
+	"""
+	This definition is the isolateSelection definition Interface.
+	"""
+
+	isolateSelection()
 
 def splitRingMiddle(nodes):
 	"""
@@ -330,7 +351,7 @@ def transfertSelectionToUserTarget():
 	source = cmds.textField("target_textField", query=True, text=True)
 	if not source:
 		return
-	
+
 	if not cmds.ls(source):
 		return
 
@@ -406,12 +427,12 @@ def transfertSelectionToTarget_window():
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")
-	
+
 	cmds.button("transfertSelection_button", label="Transfert Selection!", command=transfertSelection_button_OnClicked)
 
 	setUnsetContextHotkeys()
 	scriptJob = cmds.scriptJob(uiDeleted=("transfertSelectionToTarget_window", setUnsetContextHotkeys), runOnce=True)
-	
+
 	cmds.showWindow("transfertSelectionToTarget_window")
 
 	cmds.windowPref(enableAll=True)
