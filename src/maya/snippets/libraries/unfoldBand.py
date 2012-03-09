@@ -1,5 +1,6 @@
 import maya.cmds as cmds
 import maya.mel as mel
+import re
 
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2010 - 2012 - Thomas Mansencal"
@@ -13,7 +14,9 @@ __all__ = ["stacksHandler",
 			"unfoldBand_button_OnClicked",
 			"unfoldBand_window",
 			"unfoldBand",
-			"IUnfoldBand"]
+			"IUnfoldBand",
+			"unfoldBandRegular",
+			"IUnfoldBandRegular"]
 
 def stacksHandler(object):
 	"""
@@ -44,7 +47,7 @@ def stacksHandler(object):
 
 def unfoldBandUVs(object, divisions=1, history=True):
 	"""
-	This definition unfold object band UVs.
+	This definition unfolds object band UVs.
 
 	:param object: Object. ( String )
 	:param divisions: Extrusion divisions. ( Integer )
@@ -134,3 +137,34 @@ def IUnfoldBand():
 	"""
 
 	unfoldBand()
+
+def unfoldBandRegular(seamsEdges, history=False):
+	"""
+	This definition unfolds object band UVs using given seamsEdges.
+	
+	:param seamsEdges: Seams edges. ( List )
+	:param history: Keep construction history. ( Boolean )
+	"""
+
+	seamsEdges = filter(lambda x: re.search(r"e\[\d+\]", x), cmds.ls(seamsEdges, fl=True, l=True))
+	if not seamsEdges:
+		return
+
+	object = seamsEdges[0].split(".")[0]
+	edgesCount = cmds.polyEvaluate(object, edge=True)
+	edges = cmds.ls(object + ".e[0:{0}]".format(str(edgesCount - 1)), fl=True, l=True)
+	cmds.polyForceUV(object, unitize=True)
+	print edges, seamsEdges
+	cmds.select(list(set(edges).difference(seamsEdges)))
+	cmds.polyMapSewMove(list(set(edges).difference(seamsEdges)), ch=True)
+
+	not history and cmds.delete(object, ch=True)
+
+@stacksHandler
+def IUnfoldBandRegular():
+	"""
+	This definition is the unfoldBandRegular definition Interface.
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and unfoldBandRegular(selection)
