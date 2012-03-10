@@ -22,6 +22,8 @@ __all__ = ["DEFAULTS_HOTKEYS",
 			"IToggleGeometriesVisibility",
 			"toggleGeometriesShadingOverride",
 			"IToggleGeometriesShadingOverride",
+			"isolateSelection",
+			"IIsolateSelection",
 			"splitRingMiddle",
 			"ISplitRingMiddle",
 			"symmetricalInstance",
@@ -200,7 +202,7 @@ def isolateSelection():
 
 	panel = cmds.getPanel(withFocus=True)
 	try:
-		cmds.isolateSelect(panel, state=not cmds.isolateSelect(panel, q=True, state=True))
+		mel.eval("enableIsolateSelect {0} {1};".format(panel, str(not cmds.isolateSelect(panel, q=True, state=True)).lower()))
 	except:
 		pass
 
@@ -277,9 +279,9 @@ def IPivotsIdentity():
 
 
 def flattenHierachy(object):
-    	"""
+	"""
 	This definition flattens given object hierarchy.
-
+	
 	:return: Definition succes. ( Boolean )
 	"""
 
