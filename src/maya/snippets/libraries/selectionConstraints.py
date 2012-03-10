@@ -210,7 +210,7 @@ def selectIsolatedVertices(components):
 		if len(edges) == 2:
 			if len(cmds.ls(cmds.polyListComponentConversion(edges, toFace=True), flatten=True)) == 1:
 				continue
-		        
+
 			isolatedVertices.append(vertex)
 	isolatedVertices and cmds.select(isolatedVertices)
 
@@ -219,7 +219,7 @@ def ISelectIsolatedVertices():
 	"""
 	This definition is the selectIsolatedVertices definition Interface.
 	"""
-	
+
 	selection = cmds.ls(sl=True, l=True)
 	selection and selectIsolatedVertices(selection)
 
@@ -262,7 +262,7 @@ def selectSideVertices(object, positive=True):
 	:param object: Object to select vertices. ( String )
 	:param positive: Select positive vertices. ( Boolean )
 	"""
-	
+
 	comparison = positive and operator.gt or operator.lt
 	verticesCount = cmds.polyEvaluate(object, vertex=True)
 	vertices = cmds.ls(object + ".vtx[0:{0}]".format(str(verticesCount - 1)), fl=True, l=True)
