@@ -336,7 +336,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@core.executionTrace
 	def __initializeUI(self):
 		"""
-		This method initializez the Widget.
+		This method initializes the Widget.
 		"""
 
 		self.Search_lineEdit.setParent(None)
