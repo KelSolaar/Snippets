@@ -423,8 +423,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:param checked: Checked state. ( Boolean )
 		"""
 
-		if hasattr(self.Methods_listWidget.currentItem(), "_data"):
-			self.executeInterface()
+		self.executeInterface()
 
 	@core.executionTrace
 	def __Reload_Snippets_pushButton__clicked(self, checked):
