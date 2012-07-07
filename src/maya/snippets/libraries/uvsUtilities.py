@@ -56,6 +56,10 @@ __all__ = ["RESOURCES_DIRECTORY",
 				"assignMariShadersToObject",
 				"assignMariShaders",
 				"IAssignMariShaders",
+				"getMariAffixes",
+				"getPreviewMariTexturesBranches",
+				"assignMariPreviewTextures",
+				"IAssignMariPreviewTextures",
 				"flipUVs_button_OnClicked",
 				"moveUpUVs_button_OnClicked",
 				"flopUVs_button_OnClicked",
@@ -762,11 +766,77 @@ def IAssignMariShaders():
 	if not selection:
 		return
 
+	relatives = cmds.listRelatives(selection, allDescendents=True, fullPath=True, type="mesh")
+
 	projectName = os.path.basename(os.path.dirname(cmds.workspace(q=True, fullName=True)))
 	result = cmds.promptDialog(title="Mari Shaders Prefix", message="Enter Prefix:", text=projectName, button=["OK", "Cancel"], defaultButton="OK", cancelButton="Cancel", dismissString="Cancel")
 	if result == "OK":
 		prefix = cmds.promptDialog(query=True, text=True)
-		prefix and assignMariShaders(selection, prefix)
+		prefix and assignMariShaders(relatives, prefix)
+
+def getMariAffixes(name):
+	"""
+	This definition returns given name Mari affixes.
+
+	:param name: Name. ( String )
+	:return: Affixes. ( Tuple )
+	"""
+
+	prefix, suffix = os.path.splitext(os.path.basename(name))
+	prefix = re.match(r"([\w\.]+)\d{4}", prefix)
+	return prefix and (prefix.groups()[0], suffix.replace(".", str())) or None
+
+@stacksHandler
+def getPreviewMariTexturesBranches(directory, prefix, extension, shader="lambert"):
+	"""
+	This definition creates Mari preview textures branches.
+
+	:param directory: Source directory. ( String )
+	:param prefix: Files prefix. ( String )
+	:param extension: Files extension. ( String )
+	:param shader: Shader type. ( String )
+	:return: Definition success. ( Boolean )
+	"""
+
+	for shader in filter(lambda x: re.search(r"\w+[0-9]{4}", x), cmds.ls(type=shader)):
+		textureName = os.path.join(directory, "{0}{1}.{2}".format(prefix, re.search(r"[0-9]{4}", shader).group(0), extension))
+		if not os.path.exists(textureName):
+			print("'{0}' file doesn't exists!".format(textureName))
+			continue
+	
+		fileNode = cmds.shadingNode("file", asTexture=True)
+		cmds.setAttr("{0}.fileTextureName".format(fileNode), textureName, type="string")
+		cmds.connectAttr("{0}.outColor".format(fileNode), "{0}.color".format(shader), force=True)
+		cmds.rename(fileNode, "{0}_file".format(shader))
+	return True
+
+@stacksHandler
+def assignMariPreviewTextures():
+	"""
+	This definition assigns the Mari preview textures.
+
+	:return: Definition success. ( Boolean )
+	"""
+
+	file = cmds.fileDialog2(fileFilter="All files (*.*)", fm=1, dialogStyle=2)
+	file = file and file[0] or None    
+	if not file:
+		return    
+
+	prefix, suffix = getMariAffixes(file)
+	if not prefix or not suffix:
+		return
+
+	directory = os.path.dirname(file)
+	return getPreviewMariTexturesBranches(directory, prefix, suffix)
+	
+@stacksHandler
+def IAssignMariPreviewTextures():
+	"""
+	This definition is the assignMariPreviewTextures definition Interface.
+	"""
+
+	assignMariPreviewTextures()
 
 @stacksHandler
 def flipUVs_button_OnClicked(state=None):
