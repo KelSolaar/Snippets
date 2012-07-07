@@ -342,6 +342,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Search_lineEdit.setParent(None)
 		self.Search_lineEdit = Search_QLineEdit(self)
 		self.Search_lineEdit.setObjectName("Search_lineEdit")
+		hasattr(self.Search_lineEdit, "setPlaceholderText") and \
 		self.Search_lineEdit.setPlaceholderText("Enter Interface Name...")
 		self.Search_horizontalLayout.addWidget(self.Search_lineEdit)
 
