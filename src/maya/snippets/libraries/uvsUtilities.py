@@ -221,7 +221,7 @@ def getObjectUVsArea(object):
 	uvsArea = 0
 	while not meshPolygonIterator.isDone():
 		meshPolygonIterator.getUVArea(areaPointer)
-		uvsArea += OpenMaya.MScriptUtil(areaPointer).asDouble()
+		uvsArea += OpenMaya.MScriptUtil().getDouble(areaPointer)
 		meshPolygonIterator.next()
 	return uvsArea
 
