@@ -12,10 +12,12 @@ __all__ = ["DEFAULTS_HOTKEYS",
 			"TRANSFERT_SELECTION_HOTKEY",
 			"stacksHandler",
 			"getShapes",
-			"transfertVerticesPositionsInUvSpace",
-			"ITransfertVerticesPositionsInUvSpace",
+			"transfertVerticesPositionsInUvsSpace",
+			"ITransfertVerticesPositionsInUvsSpace",
 			"transfertVerticesPositionsInWorldSpace",
 			"ITransfertVerticesPositionsInWorldSpace",
+			"transfertUvsInTopologySpace",
+			"ITransfertUvsInTopologySpace",
 			"toggleSelectionHighlight",
 			"IToggleSelectionHighlight",
 			"toggleGeometriesVisibility",
@@ -89,40 +91,39 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 
 	return objectShapes
 
-def transfertVerticesPositionsInUvSpace(sources, target):
+def transfertVerticesPositionsInUvsSpace(targets, source):
 	"""
-	This definition transferts vertices positions from sources to target object in UVs space.
+	This definition transferts vertices positions from source to targets object in UVs space.
 
-	:param sources: Sources objects. ( List )
-	:param target: Target object. ( String )
-	:param searchMethod: Current search method. ( Integer )
+	:param targets: Sources objects. ( List )
+	:param source: Target object. ( String )
 	"""
 
-	for source in sources:
-		cmds.transferAttributes(target, source, transferPositions=1, sampleSpace=3)
-		cmds.delete(target, ch=True)
+	for target in targets:
+		cmds.transferAttributes(source, target, transferPositions=1, sampleSpace=3)
+		cmds.delete(source, ch=True)
 
 @stacksHandler
-def ITransfertVerticesPositionsInUvSpace():
+def ITransfertVerticesPositionsInUvsSpace():
 	"""
-	This definition is the transfertVerticesPositionsInUvSpace definition Interface.
+	This definition is the transfertVerticesPositionsInUvsSpace definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and transfertVerticesPositionsInUvSpace(selection[:-1], selection[-1])
+	selection and transfertVerticesPositionsInUvsSpace(selection[:-1], selection[-1])
 
-def transfertVerticesPositionsInWorldSpace(sources, target, searchMethod=0):
+def transfertVerticesPositionsInWorldSpace(targets, source, searchMethod=0):
 	"""
-	This definition transferts vertices positions from sources to target object in world space.
+	This definition transferts vertices positions from source to targets object in world space.
 
-	:param sources: Sources objects. ( List )
-	:param target: Target object. ( String )
+	:param targets: Sources objects. ( List )
+	:param source: Target object. ( String )
 	:param searchMethod: Current search method. ( Integer )
 	"""
 
-	for source in sources:
-		cmds.transferAttributes(target, source, transferPositions=1, sampleSpace=0, searchMethod=3)
-		cmds.delete(target, ch=True)
+	for target in targets:
+		cmds.transferAttributes(source, target, transferPositions=1, sampleSpace=0, searchMethod=3)
+		cmds.delete(source, ch=True)
 
 @stacksHandler
 def ITransfertVerticesPositionsInWorldSpace():
@@ -132,6 +133,27 @@ def ITransfertVerticesPositionsInWorldSpace():
 
 	selection = cmds.ls(sl=True, l=True)
 	selection and transfertVerticesPositionsInWorldSpace(selection[:-1], selection[-1], 0)
+
+def transfertUvsInTopologySpace(targets, source):
+	"""
+	This definition transferts UVs from source to targets object in topology space.
+
+	:param targets: Sources objects. ( List )
+	:param source: Target object. ( String )
+	"""
+
+	for target in targets:
+		cmds.transferAttributes(source, target, transferUVs=2, sampleSpace=5)
+		cmds.delete(source, ch=True)
+
+@stacksHandler
+def ITransfertUvsInTopologySpace():
+	"""
+	This definition is the transfertUvsInTopologySpace definition Interface.
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and transfertUvsInTopologySpace(selection[:-1], selection[-1])
 
 def toggleSelectionHighlight():
 	"""
