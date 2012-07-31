@@ -34,7 +34,7 @@ import sys
 import foundations.core as core
 import foundations.exceptions
 import foundations.namespace as namespace
-from foundations.walkers import OsWalker
+from foundations.walkers import FilesWalker
 from snippets.globals.constants import Constants
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.globals.uiConstants import UiConstants
@@ -442,8 +442,8 @@ class ModulesManager(object):
 		"""
 
 		for directory in self.__paths:
-			osWalker = OsWalker(directory)
-			modules = osWalker.walk(filtersIn=(r"\.{0}$".format(self.__libraryExtension),))
+			filesWalker = FilesWalker(directory)
+			modules = filesWalker.walk(filtersIn=(r"\.{0}$".format(self.__libraryExtension),))
 
 			for name, path in modules.iteritems():
 				self.registerModule(name, path)
