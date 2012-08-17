@@ -2,37 +2,43 @@ import re
 
 import snippets.libraries.utilities
 
-def getDefaultNodeName(node):
+NODES_NAMES_MAPPING_TABLE = {"PrmanShadingNode" : "PrmanSN"}
+
+def getDefaultNodeName(node, mappingTable=NODES_NAMES_MAPPING_TABLE):
 	"""
 	This definition returns given node default name.
 
 	:param nodes: Node to get the default name. ( Node )
+	:param mappingTable: Names mapping table. ( Dictionary )
 	:return: Node default name. ( String )
 	"""
-
-	if node.getType() == "PrmanShadingNode":
+	
+	nodeType = node.getType()
+	name = mappingTable.get(nodeType, nodeType)
+	if nodeType == "PrmanShadingNode":
 		coShader = re.sub(r":.*", str(), node.getParameter("nodeType").getValue(0))
-		return "{0}_{1}".format(coShader, node.getType())
+		return "{0}_{1}".format( mappingTable.get(coShader, coShader), name)
 	else:
-		return node.getType()
+		return name
 		
-def setNodeNames(nodes, prefix, traverse=True):
+def setNodeNames(nodes, prefix, mappingTable=NODES_NAMES_MAPPING_TABLE, traverse=True):
 	"""
 	This definition sets given nodes names using given prefix.
 
 	:param nodes: Nodes to search and replace. ( List )
 	:param prefix: Prefix. ( String )
+	:param mappingTable: Names mapping table. ( Dictionary )
 	:param traverse: Traverse nodes children. ( Boolean )
 	:return: Definition success. ( Boolean )
 	"""
 
 	for node in nodes:
-		node.setName("{0}{1}".format(prefix, getDefaultNodeName(node)))
+		node.setName("{0}{1}".format(prefix, getDefaultNodeName(node, mappingTable)))
 		if not traverse:
 			continue
 
 		for childNode in snippets.libraries.utilities.nodesWalker(node):
-			childNode.setName("{0}{1}".format(prefix, getDefaultNodeName(childNode)))
+			childNode.setName("{0}{1}".format(prefix, getDefaultNodeName(childNode, mappingTable)))
 	return True
 
 def searchAndReplaceNodesNames(nodes, searchPattern, replacementPattern, flags=0, traverse=True):
