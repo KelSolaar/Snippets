@@ -20,5 +20,8 @@ def nodesWalker(node, ascendants=False):
 		if not hasattr(element, attribute):
 			continue
 
+		if not getattr(element, attribute):
+			continue
+
 		for subElement in nodesWalker(element, ascendants=ascendants):
 			yield subElement
