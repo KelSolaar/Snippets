@@ -2,7 +2,6 @@ import ast
 import re
 
 import snippets.libraries.utilities
-reload(snippets.libraries.utilities)
 
 NODES_NAMES_MAPPING_TABLE = {"ArnoldShadingNode" : "ArnoldSN",
 							"PrmanShadingNode" : "PrmanSN"}
