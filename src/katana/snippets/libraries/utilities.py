@@ -1,9 +1,20 @@
 import ast
 import re
 
+def consolePrint(*args):
+	"""
+	This definition prints given message to KatanaConsole.
+
+	:param \*args: Arguments. ( \* )
+	"""
+
+	import UI4
+	print args
+	UI4.App.Tabs.FindTopTab("Python").printMessage(" ".join(map(str, args)))
+
 def listNode(node, indentation="\t", tabLevel= -1):
 	"""
-	This method lists the current node and its children.
+	This definition lists the current node and its children.
 
 	:param node: Node to list. ( Object )
 	:param indentation: Indentation character. ( String )
@@ -33,7 +44,7 @@ def listNode(node, indentation="\t", tabLevel= -1):
 
 def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 	"""
-	This method lists given node and children hints parameters.
+	This definition lists given node and children hints parameters.
 
 	:param node: Node to list hint parameters. ( Object )
 	:param outputAsTree: Output as groups outputAsTree. ( Boolean )
