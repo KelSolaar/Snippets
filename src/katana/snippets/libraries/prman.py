@@ -1,11 +1,10 @@
 import NodegraphAPI
+import RenderingAPI
 import os
 import re
 import sys
 
 import snippets.libraries.utilities
-
-COSHADERS_ROOT_DIRECTORY =  "/software/tools/rman/16.0/core4/shaders/coshader"
 
 def getGiggleMetaData(path):
 	"""
@@ -53,7 +52,7 @@ def listGiggleMetaData(metaData, indentation="\t"):
 			entryCounter +=1
 	return output
 
-def getCoshaderSloFile(coshader, coshadersRootDirectory=COSHADERS_ROOT_DIRECTORY):
+def getCoshaderSloFile(coshader):
 	"""
 	This definition returns gviven coshader '.slo' file path.
 
@@ -61,8 +60,9 @@ def getCoshaderSloFile(coshader, coshadersRootDirectory=COSHADERS_ROOT_DIRECTORY
 	:return: Coshader '.slo' file path. ( String )
 	"""
 
-	name, version = coshader.split(":")
-	return "{0}.slo".format(os.path.join(COSHADERS_ROOT_DIRECTORY, name, version, name))
+	rendererInfo = RenderingAPI.RenderPlugins.GetInfoPluginName('prman')
+	plugin = RenderingAPI.RendererInfo.GetPlugin(rendererInfo)
+	return plugin.getRendererObjectInfo(coshader).getFullPath()
 
 def listNodeGiggleMetaData(node):
 	"""
