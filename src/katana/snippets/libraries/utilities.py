@@ -65,11 +65,11 @@ def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 		for node in nodes:
 			for parameter in filterNodeParameters(node, "^hints$"):
 				value = ast.literal_eval(parameter.getValue(time))
-				group = value.get("dstPage")
+				group = value.get("dstPage", "Undefined")
 				if not hints.get(group):
 					hints[group] = []
 
-				hints[group].append((node.getName(), parameter.getParent().getName(), value.get("dstName")))
+				hints[group].append((node.getName(), parameter.getParent().getName(), value.get("dstName", "Undefined")))
 
 		for group, children in sorted(hints.items()):
 			output += "{0}:\n".format(group)
@@ -82,8 +82,8 @@ def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 			for parameter in filterNodeParameters(node, "^hints$"):
 				value = ast.literal_eval(parameter.getValue(time))
 				output += "{0}.{1}:\n".format(node.getName(), parameter.getParent().getName())
-				output += "{0}Group: {1}\n".format(indentation, value.pop("dstPage"))
-				output += "{0}Name: {1}\n".format(indentation, value.pop("dstName"))
+				output += "{0}Group: {1}\n".format(indentation, value.pop("dstPage", "Undefined"))
+				output += "{0}Name: {1}\n".format(indentation, value.pop("dstName", "Undefined"))
 				for name, hint in sorted(value.items()):
 					output += "{0}{1}: {2}\n".format(indentation, name.title(), hint)
 				output += "\n"
