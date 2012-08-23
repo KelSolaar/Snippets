@@ -1,4 +1,8 @@
+import Katana
+import NodegraphAPI
+import UI4
 import ast
+import os
 import re
 
 def consolePrint(*args):
@@ -8,8 +12,6 @@ def consolePrint(*args):
 	:param \*args: Arguments. ( \* )
 	"""
 
-	import UI4
-	print args
 	UI4.App.Tabs.FindTopTab("Python").printMessage(" ".join(map(str, args)))
 
 def listNode(node, indentation="\t", tabLevel= -1):
@@ -135,3 +137,22 @@ def filterNodeParameters(node, pattern, flags=0):
 
 	return [parameter for parameter in parametersWalker(node.getParameters()) \
 	if re.search(pattern, parameter.getName(), flags)]
+
+def importScriptNode(path):
+	"""
+	This definition imports given path script node.
+
+	:param path: Script node path. ( String )
+	:return: Definition success. ( Boolean )
+	"""
+	
+	if not os.path.exists(path):
+		return
+
+	nodes = NodegraphAPI.GetAllSelectedNodes()
+	Katana.KatanaFile.Import(path)
+	scriptNode = NodegraphAPI.GetAllSelectedNodes().pop()
+	NodegraphAPI.SetAllSelectedNodes(nodes)
+	for node in NodegraphAPI.GetAllEditedNodes():
+		NodegraphAPI.SetNodeEdited(node, False)
+	NodegraphAPI.SetNodeEdited(scriptNode, True)
