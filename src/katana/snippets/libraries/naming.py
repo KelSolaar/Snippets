@@ -123,6 +123,9 @@ def searchAndReplaceHintsParameter(parameter, searchPattern, replacementPattern,
 		if keys and key not in keys:
 			continue
 
+		if not isinstance(value, str):
+			continue
+
 		data[key] = re.sub(searchPattern, replacementPattern, value, flags)
 	parameter.setValue(str(data), time)
 	return True

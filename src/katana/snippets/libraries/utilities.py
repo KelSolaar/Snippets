@@ -143,7 +143,7 @@ def importScriptNode(path):
 	This definition imports given path script node.
 
 	:param path: Script node path. ( String )
-	:return: Definition success. ( Boolean )
+	:return: Script node success. ( Object )
 	"""
 	
 	if not os.path.exists(path):
@@ -156,3 +156,24 @@ def importScriptNode(path):
 	for node in NodegraphAPI.GetAllEditedNodes():
 		NodegraphAPI.SetNodeEdited(node, False)
 	NodegraphAPI.SetNodeEdited(scriptNode, True)
+	return scriptNode
+
+def singleShotScriptNode(path, parameter):
+	"""
+	This definition executes given path script node parameter.
+
+	:param path: Script node path. ( String )
+	:return: Definition success. ( Boolean )
+	"""
+	
+	if not os.path.exists(path):
+		return
+		
+	editedNodes = NodegraphAPI.GetAllEditedNodes()
+	scriptNode = importScriptNode(path)
+	NodegraphAPI.UserParameters.ExecuteButton(scriptNode, parameter)
+	scriptNode.delete() 
+	for node in editedNodes:
+		NodegraphAPI.SetNodeEdited(node, True)
+	return True
+	
