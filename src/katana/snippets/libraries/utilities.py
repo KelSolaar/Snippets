@@ -125,11 +125,11 @@ def nodesWalker(node, ascendants=False):
 
 parametersWalker = nodesWalker
 
-def filterNodeParameters(node, pattern, flags=0):
+def filterNodeParameters(node, pattern=r".*", flags=0):
 	"""
 	This definition filters given nodes parameters using given pattern.
 
-	:param nodes: Nodes to search and replace. ( List )
+	:param nodes: Nodes parameters to search and replace. ( List )
 	:param pattern: Matching pattern. ( String )
 	:param flags: Matching regex flags. ( Integer )
 	:return: Definition success. ( Boolean )
@@ -137,6 +137,20 @@ def filterNodeParameters(node, pattern, flags=0):
 
 	return [parameter for parameter in parametersWalker(node.getParameters()) \
 	if re.search(pattern, parameter.getName(), flags)]
+
+def resetNodeParameters(node, pattern=r".*", flags=0):
+	"""
+	This definition resets given nodes parameters using given pattern.
+
+	:param nodes: Nodes parameters to search and replace. ( List )
+	:param pattern: Matching pattern. ( String )
+	:param flags: Matching regex flags. ( Integer )
+	:return: Definition success. ( Boolean )
+	"""
+
+	for parameter in filterNodeParameters(node, pattern, flags):
+		parameter.setUseNodeDefault(True)
+	return True	
 
 def importScriptNode(path):
 	"""
