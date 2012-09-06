@@ -76,7 +76,6 @@ def renameUdimToMariNames(parameters, arguments):
 	"""
 	This definition renames Udim matched files to Mari patch number files.
 
-	:param udim: Udim to convert. ( String )
 	:param parameters: Command line parameters. ( Object )
 	:param arguments: Command line arguments. ( Object )
 	:return: Definition success. ( Boolean )
@@ -94,7 +93,7 @@ def renameUdimToMariNames(parameters, arguments):
 			else:
 				name = re.sub(r"({0})".format(UDIM_FILTER), str(patchNumber), file)
 			
-			print("'{0}' | Rename '{1}' file to '{2}'.".format(inspect.getmodulename(__file__),file, name))
+			print("'{0}' | Rename '{1}' file to '{2}'.".format(inspect.getmodulename(__file__), file, name))
 			os.rename(file, name)
 		return True
 
