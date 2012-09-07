@@ -1,9 +1,9 @@
 """
-NAME: prefixNodesNames_Script
+NAME: searchAndReplaceNodesNames_Script
 ICON: icon.png
 DROP_TYPES: 
 SCOPE:
-Prefix Nodes Names
+Enter Description Here
 
 """
 
@@ -22,9 +22,9 @@ Prefix Nodes Names
 
 import sys
 
-SNIPPETS_PATH = "/usr/people/thomas-ma/Developement/Snippets/src/katana"
+SNIPPETS_PATH = "/usr/people/thomas-ma/Developement/Snippets/katana"
 not SNIPPETS_PATH in sys. path and sys.path.append(SNIPPETS_PATH)
 
 import snippets.libraries.utilities
 
-snippets.libraries.utilities.importScriptNode("/usr/people/thomas-ma/Developement/Snippets/src/katana/snippets/resources/recipes/prefixNodesNames_Script_vLatest.katana")
+snippets.libraries.utilities.importScriptNode("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/searchAndReplaceNodesNames_Script_vLatest.katana")

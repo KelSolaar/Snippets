@@ -1,5 +1,5 @@
 """
-NAME: searchAndReplaceHintsParameters_Script
+NAME: removeNodesNamesTrailingNumbers_Script
 ICON: icon.png
 DROP_TYPES: 
 SCOPE:
@@ -22,9 +22,9 @@ Enter Description Here
 
 import sys
 
-SNIPPETS_PATH = "/usr/people/thomas-ma/Developement/Snippets/src/katana"
+SNIPPETS_PATH = "/usr/people/thomas-ma/Developement/Snippets/katana"
 not SNIPPETS_PATH in sys. path and sys.path.append(SNIPPETS_PATH)
 
 import snippets.libraries.utilities
 
-snippets.libraries.utilities.importScriptNode("/usr/people/thomas-ma/Developement/Snippets/src/katana/snippets/resources/recipes/searchAndReplaceHintsParameters_Script_vLatest.katana")
+snippets.libraries.utilities.singleShotScriptNode("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/removeNodesNamesTrailingNumbers_Script_vLatest.katana", "removeNodesNamesTrailingNumbers")

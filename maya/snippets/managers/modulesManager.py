@@ -33,8 +33,8 @@ import sys
 #**********************************************************************************************************************
 import foundations.core as core
 import foundations.exceptions
-import foundations.namespace as namespace
-from foundations.walkers import FilesWalker
+import foundations.strings as strings
+import foundations.walkers
 from snippets.globals.constants import Constants
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.globals.uiConstants import UiConstants
@@ -442,11 +442,8 @@ class ModulesManager(object):
 		"""
 
 		for directory in self.__paths:
-			filesWalker = FilesWalker(directory)
-			modules = filesWalker.walk(filtersIn=(r"\.{0}$".format(self.__libraryExtension),))
-
-			for name, path in modules.iteritems():
-				self.registerModule(name, path)
+			for path in foundations.walkers.filesWalker(directory, filtersIn=(r"\.{0}$".format(self.__libraryExtension),)):
+				self.registerModule(strings.getSplitextBasename(path), path)
 		return True
 
 	@core.executionTrace

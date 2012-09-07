@@ -6,4 +6,4 @@
 
 *.pyc
 
-src/maya/resources/builders/
+maya/snippets/resources/images/builders/
