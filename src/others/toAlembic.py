@@ -97,7 +97,7 @@ def toAlembic(parameters, arguments):
 		sys.stderr.write("!> {0} | '{1}' file doesn't exists'!\n".format(inspect.getmodulename(__file__), inputFile))
 		return
 
-	outputFile = os.path.abspath(parameters.outputFile) if parameters.outputFile else inputFile.replace("obj", "abc")
+	outputFile = os.path.abspath(parameters.outputFile if parameters.outputFile else re.sub(r"\.\w+$", ".abc", inputFile))
 
 	exportAll = parameters.exportAll
 
@@ -113,7 +113,7 @@ def toAlembic(parameters, arguments):
 	cmds.file(inputFile, o=True)
 
 	# Processing ".obj" file normals.
-	if re.search(r"\.obj$", inputFile, flags=re.IGNORECASE):	
+	if re.search(r"\.obj$", inputFile, flags=re.IGNORECASE):
 		for mesh in cmds.ls(type="mesh", long=True):
 			cmds.polyNormalPerVertex(mesh, ufn=True)
 			cmds.polySoftEdge(mesh, a=180, ch=False)
@@ -122,7 +122,7 @@ def toAlembic(parameters, arguments):
 		jobCommand = "-frameRange {0} {1} -uvWrite -file {2}".format(frameIn, frameOut, outputFile)
 	else:
 		rootNodes = list(set([getRoot(mesh) for mesh in cmds.ls(type="mesh", long=True)]))
-		rootFlags = str().join(["-root {0}".format(rootNode) for rootNode in rootNodes])
+		rootFlags = " ".join(["-root {0}".format(rootNode) for rootNode in rootNodes])
 		jobCommand = "-frameRange {0} {1} -uvWrite {2} -file {3}".format(frameIn, frameOut, rootFlags, outputFile)
 	
 	sys.stderr.write("{0} | Exporting to 'Alembic' with following job command: '{1}'\n".format(inspect.getmodulename(__file__), jobCommand))
