@@ -60,7 +60,7 @@ def getCoshaderSloFile(coshader):
 	:return: Coshader '.slo' file path. ( String )
 	"""
 
-	rendererInfo = RenderingAPI.RenderPlugins.GetInfoPluginName('prman')
+	rendererInfo = RenderingAPI.RenderPlugins.GetInfoPluginName("prman")
 	plugin = RenderingAPI.RendererInfo.GetPlugin(rendererInfo)
 	return plugin.getRendererObjectInfo(coshader).getFullPath()
 
@@ -98,3 +98,12 @@ def listNodesGiggleMetaData(nodes, traverse=True):
 		for childNode in snippets.libraries.utilities.nodesWalker(node):
 			output += listNodeGiggleMetaData(childNode)
 	return output
+	
+def lisObjectNames():
+	"""
+	This definition lists PRMan object names ( Shaders ).
+
+	:return: PRMan Object names. ( List )
+	"""
+	
+	return snippets.libraries.utilities.listRendererObjectNames("prman")

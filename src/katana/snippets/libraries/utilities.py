@@ -14,6 +14,18 @@ def consolePrint(*args):
 
 	UI4.App.Tabs.FindTopTab("Python").printMessage(" ".join(map(str, args)))
 
+def listRendererObjectNames(renderer):
+	"""
+	This definition lists given render object names ( Shaders ).
+
+	:param renderer: Renderer to list the object names. ( String )
+	:return: Object names. ( List )
+	"""
+	
+	rendererInfo = RenderingAPI.RenderPlugins.GetInfoPluginName(renderer)
+	plugin = RenderingAPI.RendererInfo.GetPlugin(rendererInfo)
+	return plugin.getRendererObjectNames()
+
 def listNode(node, indentation="\t", tabLevel= -1):
 	"""
 	This definition lists the current node and its children.
