@@ -47,8 +47,7 @@ _overrideDependenciesGlobals()
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
-import foundations.core as core
-import foundations.exceptions
+import foundations.verbose
 import snippets.libraries.common
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 from snippets.managers.modulesManager import ModulesManager
@@ -65,20 +64,16 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Loader"]
 
-LOGGER = logging.getLogger(Constants.logger)
+LOGGER = foundations.verbose.installLogger()
 
 # Remove existing handlers.
 del logging.root.handlers[:]
 
-if LOGGER.handlers == []:
-	consoleHandler = snippets.libraries.common.MayaLoggingHandler()
-	consoleHandler.setFormatter(core.LOGGING_DEFAULT_FORMATTER)
-	LOGGER.addHandler(consoleHandler)
+foundations.verbose.getLoggingConsoleHandler()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-@core.executionTrace
 def _setModulesManager():
 	"""
 	This definition sets the global modules manager instance.
@@ -88,8 +83,6 @@ def _setModulesManager():
 		RuntimeGlobals.modulesManager = ModulesManager([RuntimeGlobals.librariesDirectory])
 		RuntimeGlobals.modulesManager.registerAll()
 
-@core.executionTrace
-@foundations.exceptions.exceptionsHandler(None, False, Exception)
 def run():
 	"""
 	This definition starts the Application.

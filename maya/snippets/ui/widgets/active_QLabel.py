@@ -17,7 +17,6 @@
 #**********************************************************************************************************************
 #***	External imports.
 #**********************************************************************************************************************
-import logging
 from PyQt4.QtCore import pyqtSignal
 from PyQt4.QtGui import QCursor
 from PyQt4.QtGui import QLabel
@@ -26,10 +25,9 @@ from PyQt4.QtGui import QPixmap
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
-import foundations.core as core
 import foundations.exceptions
-import snippets.ui.common
-from snippets.globals.constants import Constants
+import foundations.verbose
+import umbra.ui.common
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -43,7 +41,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Active_QLabel"]
 
-LOGGER = logging.getLogger(Constants.logger)
+LOGGER = foundations.verbose.installLogger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -77,7 +75,6 @@ class Active_QLabel(QLabel):
 	:return: Current checked state. ( Boolean )	
 	"""
 
-	@core.executionTrace
 	def __init__(self,
 				parent=None,
 				defaultPixmap=None,
@@ -115,7 +112,10 @@ class Active_QLabel(QLabel):
 
 		self.__menu = None
 
-		self.__checked and self.setPixmap(self.__activePixmap) or self.setPixmap(self.__defaultPixmap)
+		if self.__checked:
+			self.setPixmap(self.__activePixmap)
+		else:
+			self.setPixmap(self.__defaultPixmap)
 
 	#******************************************************************************************************************
 	#***	Attributes properties.
@@ -131,7 +131,7 @@ class Active_QLabel(QLabel):
 		return self.__defaultPixmap
 
 	@defaultPixmap.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def defaultPixmap(self, value):
 		"""
 		This method is the setter method for **self.__defaultPixmap** attribute.
@@ -144,7 +144,7 @@ class Active_QLabel(QLabel):
 		self.__defaultPixmap = value
 
 	@defaultPixmap.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def defaultPixmap(self):
 		"""
 		This method is the deleter method for **self.__defaultPixmap** attribute.
@@ -164,7 +164,7 @@ class Active_QLabel(QLabel):
 		return self.__hoverPixmap
 
 	@hoverPixmap.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def hoverPixmap(self, value):
 		"""
 		This method is the setter method for **self.__hoverPixmap** attribute.
@@ -177,7 +177,7 @@ class Active_QLabel(QLabel):
 		self.__hoverPixmap = value
 
 	@hoverPixmap.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def hoverPixmap(self):
 		"""
 		This method is the deleter method for **self.__hoverPixmap** attribute.
@@ -197,7 +197,7 @@ class Active_QLabel(QLabel):
 		return self.__activePixmap
 
 	@activePixmap.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def activePixmap(self, value):
 		"""
 		This method is the setter method for **self.__activePixmap** attribute.
@@ -210,7 +210,7 @@ class Active_QLabel(QLabel):
 		self.__activePixmap = value
 
 	@activePixmap.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def activePixmap(self):
 		"""
 		This method is the deleter method for **self.__activePixmap** attribute.
@@ -230,7 +230,7 @@ class Active_QLabel(QLabel):
 		return self.__checkable
 
 	@checkable.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def checkable(self, value):
 		"""
 		This method is the setter method for **self.__checkable** attribute.
@@ -243,7 +243,7 @@ class Active_QLabel(QLabel):
 		self.__checkable = value
 
 	@checkable.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def checkable(self):
 		"""
 		This method is the deleter method for **self.__checkable** attribute.
@@ -263,7 +263,7 @@ class Active_QLabel(QLabel):
 		return self.__checked
 
 	@checked.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def checked(self, value):
 		"""
 		This method is the setter method for **self.__checked** attribute.
@@ -276,7 +276,7 @@ class Active_QLabel(QLabel):
 		self.setChecked(value)
 
 	@checked.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def checked(self):
 		"""
 		This method is the deleter method for **self.__checked** attribute.
@@ -296,7 +296,7 @@ class Active_QLabel(QLabel):
 		return self.__menu
 
 	@menu.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def menu(self, value):
 		"""
 		This method is the setter method for **self.__menu** attribute.
@@ -308,7 +308,7 @@ class Active_QLabel(QLabel):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "menu"))
 
 	@menu.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def menu(self):
 		"""
 		This method is the deleter method for **self.__menu** attribute.
@@ -320,7 +320,6 @@ class Active_QLabel(QLabel):
 	#******************************************************************************************************************
 	#***	Class methods.
 	#******************************************************************************************************************
-	@core.executionTrace
 	def enterEvent(self, event):
 		"""
 		This method reimplements the :meth:`QLabel.enterEvent` method.
@@ -333,7 +332,6 @@ class Active_QLabel(QLabel):
 		else:
 			self.setPixmap(self.__hoverPixmap)
 
-	@core.executionTrace
 	def leaveEvent(self, event):
 		"""
 		This method reimplements the :meth:`QLabel.leaveEvent` method.
@@ -346,7 +344,6 @@ class Active_QLabel(QLabel):
 		else:
 			self.setPixmap(self.__defaultPixmap)
 
-	@core.executionTrace
 	def mousePressEvent(self, event):
 		"""
 		This method reimplements the :meth:`QLabel.mousePressEvent` method.
@@ -358,7 +355,6 @@ class Active_QLabel(QLabel):
 		self.__menu and self.__menu.exec_(QCursor.pos())
 		self.pressed.emit()
 
-	@core.executionTrace
 	def mouseReleaseEvent(self, event):
 		"""
 		This method reimplements the :meth:`QLabel.mouseReleaseEvent` method.
@@ -368,16 +364,14 @@ class Active_QLabel(QLabel):
 
 		if self.underMouse():
 			if self.__checkable:
-				self.setChecked(True)
+				self.setChecked(not self.__checked)
 			else:
 				self.setPixmap(self.__activePixmap)
-			self.clicked.emit()
 		else:
 			self.setPixmap(self.__defaultPixmap)
-			self.released.emit()
+		self.released.emit()
+		self.clicked.emit()
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def setChecked(self, state):
 		"""
 		This method sets the Widget checked state.
@@ -387,7 +381,7 @@ class Active_QLabel(QLabel):
 		"""
 
 		if not self.__checkable:
-			return
+			return False
 
 		if state:
 			self.__checked = True
@@ -398,19 +392,6 @@ class Active_QLabel(QLabel):
 		self.toggled.emit(state)
 		return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
-	def isChecked(self):
-		"""
-		This method returns the Widget checked state.
-
-		:return: Checked state. ( Boolean )
-		"""
-
-		return self.__checked
-
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def setMenu(self, menu):
 		"""
 		This method sets the Widget menu.
@@ -422,9 +403,39 @@ class Active_QLabel(QLabel):
 		self.__menu = menu
 
 		if not self.parent():
-			return
+			return False
 
-		parent = [parent for parent in snippets.ui.common.parentsWalker(self)].pop()
+		parent = [parent for parent in umbra.ui.common.parentsWalker(self)].pop()
 		for action in self.__menu.actions():
 			not action.shortcut().isEmpty() and parent.addAction(action)
 		return True
+
+if __name__ == "__main__":
+	import sys
+	from PyQt4.QtGui import QGridLayout
+	from PyQt4.QtGui import QWidget
+
+	from umbra.globals.uiConstants import UiConstants
+
+	application = umbra.ui.common.getApplicationInstance()
+
+	widget = QWidget()
+
+	gridLayout = QGridLayout()
+	widget.setLayout(gridLayout)
+
+	activeLabelA = Active_QLabel(widget, QPixmap(umbra.ui.common.getResourcePath(UiConstants.developmentIcon)),
+									QPixmap(umbra.ui.common.getResourcePath(UiConstants.developmentHoverIcon)),
+									QPixmap(umbra.ui.common.getResourcePath(UiConstants.developmentActiveIcon)))
+	activeLabelB = Active_QLabel(widget, QPixmap(umbra.ui.common.getResourcePath(UiConstants.preferencesIcon)),
+									QPixmap(umbra.ui.common.getResourcePath(UiConstants.preferencesHoverIcon)),
+									QPixmap(umbra.ui.common.getResourcePath(UiConstants.preferencesActiveIcon)),
+									checkable=True,
+									checked=True)
+	for activeLabel in (activeLabelA, activeLabelB):
+		gridLayout.addWidget(activeLabel)
+
+	widget.show()
+	widget.raise_()
+
+	sys.exit(application.exec_())

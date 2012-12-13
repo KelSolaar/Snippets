@@ -1,5 +1,0 @@
-/* CMV - Stylesheet */
-
-QToolBox {
-  background-color: rgb(68, 68, 68);
-}

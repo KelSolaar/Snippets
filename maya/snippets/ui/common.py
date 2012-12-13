@@ -35,7 +35,7 @@ import sip
 #***	Internal imports.
 #**********************************************************************************************************************
 import foundations.common
-import foundations.core as core
+import foundations.verbose
 from snippets.globals.constants import Constants
 from snippets.globals.runtimeGlobals import RuntimeGlobals
 
@@ -49,13 +49,11 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-LOGGER = logging.getLogger(Constants.logger)
+LOGGER = foundations.verbose.installLogger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-@core.executionTrace
-@foundations.exceptions.exceptionsHandler(None, False, Exception)
 def getResourcePath(name):
 	"""
 	This definition returns the resource file path matching the given name.
@@ -72,8 +70,6 @@ def getResourcePath(name):
 		LOGGER.debug("> '{0}' resource path: '{1}'.".format(name, path))
 		return path
 
-@core.executionTrace
-@foundations.exceptions.exceptionsHandler(None, False, Exception)
 def parentsWalker(object):
 	"""
 	This definition is a generator used to retrieve the chain of parents of the given :class:`QObject` instance.
@@ -86,8 +82,6 @@ def parentsWalker(object):
 		object = object.parent()
 		yield object
 
-@core.executionTrace
-@foundations.exceptions.exceptionsHandler(None, False, Exception)
 def getMayaWindow():
 	"""
 	This method returns Maya window as QObject.
@@ -98,8 +92,6 @@ def getMayaWindow():
 	pointer = OpenMayaUI.MQtUtil.mainWindow()
 	return sip.wrapinstance(long(pointer), QObject)
 
-@core.executionTrace
-@foundations.exceptions.exceptionsHandler(None, False, Exception)
 def messageBox(messageType, title, message):
 	"""
 	This definition provides a fast gui message box.
@@ -139,8 +131,6 @@ def messageBox(messageType, title, message):
 
 	messageBox.exec_()
 
-@core.executionTrace
-@foundations.exceptions.exceptionsHandler(None, False, Exception)
 def centerWidgetOnScreen(widget):
 	"""
 	This definition centers given Widget middle of the screen.
@@ -150,8 +140,6 @@ def centerWidgetOnScreen(widget):
 
 	widget.move(QApplication.desktop().width() / 2 - widget.width() / 2, QApplication.desktop().height() / 2 - widget.height() / 2)
 
-@core.executionTrace
-@foundations.exceptions.exceptionsHandler(None, False, Exception)
 def resizeWidget(widget, sizeX, sizeY):
 	"""
 	This definition resize given Widget.

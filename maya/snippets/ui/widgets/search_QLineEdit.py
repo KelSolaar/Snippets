@@ -18,7 +18,6 @@
 #***	External imports.
 #**********************************************************************************************************************
 import functools
-import logging
 import os
 from PyQt4.QtCore import QString
 from PyQt4.QtCore import Qt
@@ -32,11 +31,10 @@ from PyQt4.QtGui import QToolButton
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
-import foundations.core as core
 import foundations.exceptions
-import snippets.ui.common
-from snippets.globals.constants import Constants
-from snippets.ui.widgets.active_QLabel import Active_QLabel
+import foundations.verbose
+import umbra.ui.common
+from umbra.ui.widgets.active_QLabel import Active_QLabel
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -50,7 +48,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Search_QLineEdit"]
 
-LOGGER = logging.getLogger(Constants.logger)
+LOGGER = foundations.verbose.installLogger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -61,7 +59,6 @@ class Search_QLineEdit(QLineEdit):
 	a search field with clearing capabilities.
 	"""
 
-	@core.executionTrace
 	def __init__(self,
 				parent=None,
 				uiSearchImage=None,
@@ -84,14 +81,14 @@ class Search_QLineEdit(QLineEdit):
 
 		# --- Setting class attributes. ---
 		self.__uiSearchImage = None
-		self.uiSearchImage = uiSearchImage or snippets.ui.common.getResourcePath("images/Search_Glass.png")
+		self.uiSearchImage = uiSearchImage or umbra.ui.common.getResourcePath("images/Search_Glass.png")
 		self.__uiSearchClickedImage = None
-		self.uiSearchClickedImage = uiSearchClickedImage or snippets.ui.common.getResourcePath(
+		self.uiSearchClickedImage = uiSearchClickedImage or umbra.ui.common.getResourcePath(
 		"images/Search_Glass_Clicked.png")
 		self.__uiClearImage = None
-		self.uiClearImage = uiClearImage or snippets.ui.common.getResourcePath("images/Search_Clear.png")
+		self.uiClearImage = uiClearImage or umbra.ui.common.getResourcePath("images/Search_Clear.png")
 		self.__uiClearClickedImage = None
-		self.uiClearClickedImage = uiClearClickedImage or snippets.ui.common.getResourcePath(
+		self.uiClearClickedImage = uiClearClickedImage or umbra.ui.common.getResourcePath(
 		"images/Search_Clear_Clicked.png")
 
 		self.__searchActiveLabel = Active_QLabel(self,
@@ -99,6 +96,10 @@ class Search_QLineEdit(QLineEdit):
 												QPixmap(self.__uiSearchImage),
 												QPixmap(self.__uiSearchClickedImage))
 		self.__searchActiveLabel.setObjectName("Search_Field_activeLabel")
+		self.__searchActiveLabel.showEvent = lambda event: reduce(lambda *args: None,
+		(self.__setStyleSheet(), Active_QLabel.showEvent(self.__searchActiveLabel, event)))
+		self.__searchActiveLabel.hideEvent = lambda event: reduce(lambda *args: None,
+		(self.__setStyleSheet(), Active_QLabel.hideEvent(self.__searchActiveLabel, event)))
 
 		self.__clearButton = QToolButton(self)
 		self.__clearButton.setObjectName("Clear_Field_button")
@@ -107,8 +108,7 @@ class Search_QLineEdit(QLineEdit):
 		self.setCompleter(self.__completer)
 		self.__completerVisibleItemsCount = 16
 
-		# TODO: Rollback to Search_QLineEdit.__initializeUi(self) whenever MPC changes it's PyQt version.
-		self.__initializeUi()
+		Search_QLineEdit.__initializeUi(self)
 		self.__setClearButtonVisibility(self.text())
 
 		# Signals / Slots.
@@ -129,7 +129,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__uiSearchImage
 
 	@uiSearchImage.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def uiSearchImage(self, value):
 		"""
 		This method is the setter method for **self.__uiSearchImage** attribute.
@@ -144,7 +144,7 @@ class Search_QLineEdit(QLineEdit):
 		self.__uiSearchImage = value
 
 	@uiSearchImage.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def uiSearchImage(self):
 		"""
 		This method is the deleter method for **self.__uiSearchImage** attribute.
@@ -164,7 +164,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__uiSearchClickedImage
 
 	@uiSearchClickedImage.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def uiSearchClickedImage(self, value):
 		"""
 		This method is the setter method for **self.__uiSearchClickedImage** attribute.
@@ -180,7 +180,7 @@ class Search_QLineEdit(QLineEdit):
 		self.__uiSearchClickedImage = value
 
 	@uiSearchClickedImage.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def uiSearchClickedImage(self):
 		"""
 		This method is the deleter method for **self.__uiSearchClickedImage** attribute.
@@ -200,7 +200,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__uiClearImage
 
 	@uiClearImage.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def uiClearImage(self, value):
 		"""
 		This method is the setter method for **self.__uiClearImage** attribute.
@@ -216,7 +216,7 @@ class Search_QLineEdit(QLineEdit):
 		self.__uiClearImage = value
 
 	@uiClearImage.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def uiClearImage(self):
 		"""
 		This method is the deleter method for **self.__uiClearImage** attribute.
@@ -236,7 +236,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__uiClearClickedImage
 
 	@uiClearClickedImage.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def uiClearClickedImage(self, value):
 		"""
 		This method is the setter method for **self.__uiClearClickedImage** attribute.
@@ -252,7 +252,7 @@ class Search_QLineEdit(QLineEdit):
 		self.__uiClearClickedImage = value
 
 	@uiClearClickedImage.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def uiClearClickedImage(self):
 		"""
 		This method is the deleter method for **self.__uiClearClickedImage** attribute.
@@ -272,7 +272,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__searchActiveLabel
 
 	@searchActiveLabel.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def searchActiveLabel(self, value):
 		"""
 		This method is the setter method for **self.__searchActiveLabel** attribute.
@@ -284,7 +284,7 @@ class Search_QLineEdit(QLineEdit):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "searchActiveLabel"))
 
 	@searchActiveLabel.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def searchActiveLabel(self):
 		"""
 		This method is the deleter method for **self.__searchActiveLabel** attribute.
@@ -304,7 +304,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__clearButton
 
 	@clearButton.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def clearButton(self, value):
 		"""
 		This method is the setter method for **self.__clearButton** attribute.
@@ -316,7 +316,7 @@ class Search_QLineEdit(QLineEdit):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "clearButton"))
 
 	@clearButton.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def clearButton(self):
 		"""
 		This method is the deleter method for **self.__clearButton** attribute.
@@ -336,7 +336,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__completer
 
 	@completer.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def completer(self, value):
 		"""
 		This method is the setter method for **self.__completer** attribute.
@@ -348,7 +348,7 @@ class Search_QLineEdit(QLineEdit):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "completer"))
 
 	@completer.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def completer(self):
 		"""
 		This method is the deleter method for **self.__completer** attribute.
@@ -368,7 +368,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__completerVisibleItemsCount
 
 	@completerVisibleItemsCount.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def completerVisibleItemsCount(self, value):
 		"""
 		This method is the setter method for **self.__completerVisibleItemsCount** attribute.
@@ -380,7 +380,7 @@ class Search_QLineEdit(QLineEdit):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "completerVisibleItemsCount"))
 
 	@completerVisibleItemsCount.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def completerVisibleItemsCount(self):
 		"""
 		This method is the deleter method for **self.__completerVisibleItemsCount** attribute.
@@ -392,7 +392,6 @@ class Search_QLineEdit(QLineEdit):
 	#******************************************************************************************************************
 	#***	Class methods.
 	#******************************************************************************************************************
-	@core.executionTrace
 	def resizeEvent(self, event):
 		"""
 		This method reimplements the :meth:`QLineEdit.QResizeEvent` method.
@@ -408,7 +407,6 @@ class Search_QLineEdit(QLineEdit):
 		self.__clearButton.move(self.rect().right() - frameWidth - clearButtonSize.width(),
 		(self.rect().bottom() - clearButtonSize.height()) / 2 + frameWidth / 2)
 
-	@core.executionTrace
 	def __initializeUi(self):
 		"""
 		This method initializes the Widget ui.
@@ -418,7 +416,6 @@ class Search_QLineEdit(QLineEdit):
 		if self.__uiClearImage and self.__uiClearClickedImage:
 			pixmap = QPixmap(self.__uiClearImage)
 			clickedPixmap = QPixmap(self.__uiClearClickedImage)
-			self.__clearButton.setStyleSheet("QToolButton { border: none; padding: 0px; }")
 			self.__clearButton.setIcon(QIcon(pixmap))
 			self.__clearButton.setMaximumSize(pixmap.size())
 
@@ -428,19 +425,27 @@ class Search_QLineEdit(QLineEdit):
 		else:
 			self.__clearButton.setText("Clear")
 
-		frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
-		self.setStyleSheet(QString("QLineEdit {{ padding-left: {0}px; padding-right: {1}px; }}".format(
-		self.__searchActiveLabel.sizeHint().width() + frameWidth, self.__clearButton.sizeHint().width() + frameWidth)))
+		self.__setStyleSheet()
 
+		frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
 		self.setMinimumSize(max(self.minimumSizeHint().width(), self.__clearButton.sizeHint().height() + frameWidth * 2),
 		 					max(self.minimumSizeHint().height(), self.__clearButton.sizeHint().height() + frameWidth * 2))
 
 		self.__completer.setCaseSensitivity(Qt.CaseInsensitive)
-		self.__completer.setCompletionMode(QCompleter.PopupCompletion)
-		# TODO: Restore next line whnever MPC changes it's PyQt version.
+		self.__completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
 		# self.__completer.setMaxVisibleItems(self.__completerVisibleItemsCount)
 
-	@core.executionTrace
+	def __setStyleSheet(self):
+		"""
+		This method sets the Widget stylesheet.
+		"""
+
+		frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
+		self.setStyleSheet(QString(
+		"QLineEdit {{ padding-left: {0}px; padding-right: {1}px; }}\nQToolButton {{ border: none; padding: 0px; }}".format(
+		self.__searchActiveLabel.sizeHint().width() if self.__searchActiveLabel.isVisible() else 0 + frameWidth,
+		self.__clearButton.sizeHint().width() + frameWidth)))
+
 	def __setClearButtonVisibility(self, text):
 		"""
 		This method sets the clear button visibility.
@@ -452,3 +457,32 @@ class Search_QLineEdit(QLineEdit):
 			self.__clearButton.show()
 		else:
 			self.__clearButton.hide()
+
+if __name__ == "__main__":
+	import sys
+	from PyQt4.QtGui import QGridLayout
+	from PyQt4.QtGui import QStringListModel
+	from PyQt4.QtGui import QWidget
+
+	application = umbra.ui.common.getApplicationInstance()
+
+	widget = QWidget()
+
+	gridLayout = QGridLayout()
+	widget.setLayout(gridLayout)
+
+	search_QLineEditA = Search_QLineEdit()
+	gridLayout.addWidget(search_QLineEditA)
+
+	search_QLineEditA.completer.setModel(QStringListModel([(letter * 8).title() for letter in map(chr, range(97, 123))]))
+	search_QLineEditA.setPlaceholderText("Search...")
+
+	search_QLineEditB = Search_QLineEdit()
+	search_QLineEditB.searchActiveLabel.hide()
+	gridLayout.addWidget(search_QLineEditB)
+
+	widget.show()
+	widget.raise_()
+
+	sys.exit(application.exec_())
+

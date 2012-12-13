@@ -15,17 +15,17 @@ Adobe Photoshop scripts must be installed into the Adobe Photoshop scripting fol
 -  Mac Os X: /Applications/Adobe Photoshop CS*/Presets/Scripts/
 -  Windows: C:\Program Files\Adobe\Adobe Photoshop CS*\Presets\Scripts\
 
-Alternatively, on Maya, a Snippets Loader is provided, it requries PyQt and Foundations package available from Github: https://github.com/KelSolaar/Foundations.
+Alternatively, on Maya, a Snippets Loader is provided, it requries PyQt, Foundations package available from Github: https://github.com/KelSolaar/Foundations and ordereddict Package from Pypi: http://pypi.python.org/pypi/ordereddict.
 Launching it is done issuing the following Python code::
 
    import sys
    
-   FOUNDATIONS_PATH = "Path/To/Foundations/Folder/Foundations/src/"
+   FOUNDATIONS_PATH = "Path/To/Foundations/Folder/Foundations/"
    
    if FOUNDATIONS_PATH not in sys.path:
    	sys.path.append(FOUNDATIONS_PATH)
    
-   LOADER_PATH = "Path/To/Snippets/Folder/Snippets/src/maya"
+   LOADER_PATH = "Path/To/Snippets/Folder/Snippets/maya"
    
    if LOADER_PATH not in sys.path:
    	sys.path.append(LOADER_PATH)
@@ -38,6 +38,11 @@ Launching it is done issuing the following Python code::
    
    LOADER = snippets.loader.Loader(snippets.ui.common.getMayaWindow())
    LOADER.show()
+
+A simple popup list that you can assign to a shortcut is available by replacing the previous code two last lines with::
+
+   POPUP = snippets.popup.Popup()
+   POPUP.show()
 
 About
 -----

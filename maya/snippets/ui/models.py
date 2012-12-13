@@ -26,9 +26,9 @@ from PyQt4.QtCore import Qt
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
-import foundations.core as core
 import foundations.dataStructures
 import foundations.exceptions
+import foundations.verbose
 from snippets.globals.constants import Constants
 
 #**********************************************************************************************************************
@@ -46,7 +46,7 @@ __all__ = ["LOGGER",
 			"Interface",
 			"InterfacesModel"]
 
-LOGGER = logging.getLogger(Constants.logger)
+LOGGER = foundations.verbose.installLogger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -56,7 +56,6 @@ class Categorie(foundations.dataStructures.Structure):
 	This is the **Interface** class.
 	"""
 
-	@core.executionTrace
 	def __init__(self, **kwargs):
 		"""
 		This method initializes the class.
@@ -71,7 +70,6 @@ class Interface(foundations.dataStructures.Structure):
 	This is the **Interface** class.
 	"""
 
-	@core.executionTrace
 	def __init__(self, **kwargs):
 		"""
 		This method initializes the class.
@@ -86,7 +84,6 @@ class InterfacesModel(QAbstractListModel):
 	This class is a `QAbstractListModel <http://doc.qt.nokia.com/qabstractListmodel.html>`_ subclass.
 	"""
 
-	@core.executionTrace
 	def __init__(self, parent=None, interfaces=None):
 		"""
 		This method initializes the class.
@@ -117,7 +114,7 @@ class InterfacesModel(QAbstractListModel):
 		return self.__interfaces
 
 	@interfaces.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def interfaces(self, value):
 		"""
 		This method is the setter method for **self.__interfaces** attribute.
@@ -136,7 +133,7 @@ class InterfacesModel(QAbstractListModel):
 		self.modelReset.emit()
 
 	@interfaces.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def interfaces(self):
 		"""
 		This method is the deleter method for **self.__interfaces** attribute.
@@ -148,8 +145,6 @@ class InterfacesModel(QAbstractListModel):
 	#******************************************************************************************************************
 	#***	Class methods.
 	#******************************************************************************************************************
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def __getitem__(self, name):
 		"""
 		This method reimplements the :meth:`object.__getitem__` method.
@@ -162,8 +157,6 @@ class InterfacesModel(QAbstractListModel):
 			if item.name == name:
 				return item
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __iter__(self):
 		"""
 		This method reimplements the :meth:`object.__iter__` method.
@@ -173,8 +166,6 @@ class InterfacesModel(QAbstractListModel):
 
 		return iter(self.__interfaces)
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __reversed__(self):
 		"""
 		This method reimplements the :meth:`object.__reversed__` method.
@@ -184,8 +175,6 @@ class InterfacesModel(QAbstractListModel):
 
 		return reversed(self.__interfaces)
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __contains__(self, name):
 		"""
 		This method reimplements the :meth:`object.__contains__` method.
@@ -196,8 +185,6 @@ class InterfacesModel(QAbstractListModel):
 
 		return self[name] and True or False
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __len__(self):
 		"""
 		This method reimplements the :meth:`object.__len__` method.
@@ -207,8 +194,6 @@ class InterfacesModel(QAbstractListModel):
 
 		return len(self.__interfaces)
 
-	# @core.executionTrace
-	# @foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def rowCount(self, parent=QModelIndex()):
 		"""
 		This method reimplements the :meth:`QAbstractListModel.rowCount` method.
@@ -219,8 +204,6 @@ class InterfacesModel(QAbstractListModel):
 
 		return len(self.__interfaces)
 
-	# @core.executionTrace
-	# @foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def data(self, index, role=Qt.DisplayRole):
 		"""
 		This method reimplements the :meth:`QAbstractListModel.data` method.
@@ -237,8 +220,6 @@ class InterfacesModel(QAbstractListModel):
 			return QVariant(self.__interfaces[index.row()].name)
 		return QVariant()
 
-	# @core.executionTrace
-	# @foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def clear(self):
 		"""
 		This method clears the Model.
@@ -252,8 +233,6 @@ class InterfacesModel(QAbstractListModel):
 		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
 		self.modelReset.emit()
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def sort(self, order=Qt.AscendingOrder):
 		"""
 		This method sorts the Model interfaces.
@@ -268,8 +247,6 @@ class InterfacesModel(QAbstractListModel):
 		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
 		self.modelReset.emit()
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
 	def getInterface(self, index):
 		"""
 		This method returns the interface with given index.
@@ -280,8 +257,6 @@ class InterfacesModel(QAbstractListModel):
 
 		return self.__interfaces[index.row()]
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __registerCategorie(self, categorie):
 		"""
 		This method registers given categorie.
@@ -293,8 +268,6 @@ class InterfacesModel(QAbstractListModel):
 		if not name in self:
 			self.__interfaces.append(Categorie(name=name))
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __unregisterCategorie(self, name):
 		"""
 		This method unregisters categorie with given name.
@@ -311,8 +284,7 @@ class InterfacesModel(QAbstractListModel):
 			if item.name == name and count == 1:
 				self.__interfaces.remove(self[name])
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def registerInterface(self, interface):
 		"""
 		This method registers given interface.
@@ -333,8 +305,7 @@ class InterfacesModel(QAbstractListModel):
 		self.sort()
 		return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def unregisterInterface(self, name):
 		"""
 		This method unregisters interface with given name.

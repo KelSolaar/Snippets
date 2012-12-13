@@ -37,9 +37,9 @@ from PyQt4.QtGui import QCursor
 #***	Internal imports.
 #**********************************************************************************************************************
 import foundations.common
-import foundations.core as core
 import foundations.exceptions
-import foundations.strings as strings
+import foundations.strings
+import foundations.verbose
 import snippets.ui.common
 from snippets.globals.constants import Constants
 from snippets.globals.runtimeGlobals import RuntimeGlobals
@@ -60,7 +60,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Ui_Popup_Type", "Ui_Popup_Setup", "Popup"]
 
-LOGGER = logging.getLogger(Constants.logger)
+LOGGER = foundations.verbose.installLogger()
 
 RuntimeGlobals.popupUiFile = snippets.ui.common.getResourcePath(UiConstants.popupUiFile)
 if foundations.common.pathExists(RuntimeGlobals.popupUiFile):
@@ -78,7 +78,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	This class defines the simple Maya Interfaces loader widget.
 	"""
 
-	@core.executionTrace
 	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
 		"""
 		This method initializes the class.
@@ -118,7 +117,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		return self.__container
 
 	@container.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def container(self, value):
 		"""
 		This method is the setter method for **self.__container** attribute.
@@ -129,7 +128,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("container"))
 
 	@container.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def container(self):
 		"""
 		This method is the deleter method for **self.__container** attribute.
@@ -148,7 +147,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		return self.__modulesManager
 
 	@modulesManager.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def modulesManager(self, value):
 		"""
 		This method is the setter method for **self.__modulesManager** attribute.
@@ -159,7 +158,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modulesManager"))
 
 	@modulesManager.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def modulesManager(self):
 		"""
 		This method is the deleter method for **self.__modulesManager** attribute.
@@ -178,7 +177,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		return self.__model
 
 	@model.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def model(self, value):
 		"""
 		This method is the setter method for **self.__model** attribute.
@@ -190,7 +189,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "model"))
 
 	@model.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def model(self):
 		"""
 		This method is the deleter method for **self.__model** attribute.
@@ -202,18 +201,16 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	#******************************************************************************************************************
 	#***	Class methods.
 	#******************************************************************************************************************
-	@core.executionTrace
 	def show(self):
 		"""
 		This method reimplements the :meth:`QWidget.show` method.
 		"""
-		
+
 		self.move(QCursor.pos().x() - self.width() / 2, QCursor.pos().y() - self.height() / 2)
 		self.Interfaces_lineEdit.setText(RuntimeGlobals.popupPattern or QString())
 		self.Interfaces_lineEdit.setFocus()
 		super(Popup, self).show()
 
-	@core.executionTrace
 	def __initializeUI(self):
 		"""
 		This method triggers the **Methods_listWidget** Widget.
@@ -235,7 +232,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		self.Interfaces_lineEdit.returnPressed.connect(self.__Interfaces_lineEdit__returnPressed)
 		self.Interfaces_lineEdit.completer.activated.connect(self.__Interfaces_lineEdit_completer__activated)
 
-	@core.executionTrace
 	def __Interfaces_lineEdit__returnPressed(self):
 		"""
 		This method is triggered when **Interfaces_lineEdit** Widget when return is pressed.
@@ -243,7 +239,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 		self.__triggerInterface(self.Interfaces_lineEdit.text())
 
-	@core.executionTrace
 	def __Interfaces_lineEdit_completer__activated(self, text):
 		"""
 		This method is triggered when **Interfaces_lineEdit** completer Widget is activated.
@@ -253,24 +248,21 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 		self.__triggerInterface(text)
 
-	@core.executionTrace
 	def __triggerInterface(self, name):
 		"""
 		This method triggers the Interface with given name execution.
 		
 		:param name: Interface name. ( String )
 		"""
-		
+
 		pattern = RuntimeGlobals.popupPattern = name
-		interface = self.getInterface(strings.encode("^{0}$".format(pattern)))
+		interface = self.getInterface(foundations.strings.encode("^{0}$".format(pattern)))
 		if not interface:
 			return
 
 		self.executeInterface(interface)
 		self.close()
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def setInterfaces(self, pattern=".*", flags=re.IGNORECASE):
 		"""
 		This method sets the Model interfaces.
@@ -293,14 +285,13 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 				continue
 
 			for interface in module.interfaces:
-				name = strings.getNiceName(self.getMethodName(interface))
+				name = foundations.strings.getNiceName(self.getMethodName(interface))
 				if re.search(pattern, name):
 					interfaces.append(name)
 					self.__model.registerInterface(Interface(name=name, attribute=interface, module=module))
 		self.Interfaces_lineEdit.completer.setModel(QStringListModel(sorted(interfaces)))
 		return True
 
-	@core.executionTrace
 	def getMethodName(self, name):
 		"""
 		This method gets the method name from the Interface.
@@ -311,7 +302,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 		return "{0}{1}".format(name[1].lower(), name[2:])
 
-	@core.executionTrace
 	def getInterface(self, pattern):
 		"""
 		This method returns the Interface with given name.
@@ -328,8 +318,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 			if re.search(pattern, interface.name):
 				return interface
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def executeInterface(self, interface):
 		"""
 		This method executes the object associated with given Interface.

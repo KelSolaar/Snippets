@@ -23,8 +23,7 @@ from PyQt4.QtGui import QListView
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
-import foundations.core as core
-import foundations.exceptions
+import foundations.verbose
 from snippets.globals.constants import Constants
 
 #**********************************************************************************************************************
@@ -39,7 +38,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Interfaces_QListView"]
 
-LOGGER = logging.getLogger(Constants.logger)
+LOGGER = foundations.verbose.installLogger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -49,7 +48,6 @@ class Interfaces_QListView(QListView):
 	This class is used to display modules interfaces.
 	"""
 
-	@core.executionTrace
 	def __init__(self, parent=None, model=None):
 		"""
 		This method initializes the class.

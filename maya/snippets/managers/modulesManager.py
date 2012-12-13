@@ -31,9 +31,10 @@ import sys
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
-import foundations.core as core
 import foundations.exceptions
-import foundations.strings as strings
+import foundations.namespace
+import foundations.strings
+import foundations.verbose
 import foundations.walkers
 from snippets.globals.constants import Constants
 from snippets.globals.runtimeGlobals import RuntimeGlobals
@@ -51,7 +52,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Module", "ModulesManager"]
 
-LOGGER = logging.getLogger(Constants.logger)
+LOGGER = foundations.verbose.installLogger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -61,7 +62,6 @@ class Module(object):
 	This class is the **Module** class.
 	"""
 
-	@core.executionTrace
 	def __init__(self, name=None, path=None):
 		"""
 		This method initializes the class.
@@ -95,7 +95,7 @@ class Module(object):
 		return self.__name
 
 	@name.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def name(self, value):
 		"""
 		This method is the setter method for **self.___name** attribute.
@@ -109,7 +109,7 @@ class Module(object):
 		self.__name = value
 
 	@name.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def name(self):
 		"""
 		This method is the deleter method for **self.___name** attribute.
@@ -128,7 +128,7 @@ class Module(object):
 		return self.__paths
 
 	@path.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def path(self, value):
 		"""
 		This method is the setter method for **self.__paths** attribute.
@@ -143,7 +143,7 @@ class Module(object):
 		self.__paths = value
 
 	@path.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def path(self):
 		"""
 		This method is the deleter method for **self.__paths** attribute.
@@ -162,7 +162,7 @@ class Module(object):
 		return self.__import
 
 	@import_.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def import_(self, value):
 		"""
 		This method is the setter method for **self.___import_** attribute.
@@ -175,7 +175,7 @@ class Module(object):
 		self.__import = value
 
 	@import_.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def import_(self):
 		"""
 		This method is the deleter method for **self.___import_** attribute.
@@ -204,7 +204,7 @@ class Module(object):
 		self.__interfaces = value
 
 	@interfaces.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def interfaces(self):
 		"""
 		This method is the deleter method for **self.__interfaces** attribute.
@@ -217,7 +217,6 @@ class ModulesManager(object):
 	This class is the **ModulesManager** class.
 	"""
 
-	@core.executionTrace
 	def __init__(self, paths=None):
 		"""
 		This method initializes the class.
@@ -248,7 +247,7 @@ class ModulesManager(object):
 		return self.__paths
 
 	@paths.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def paths(self, value):
 		"""
 		This method is the setter method for **self.__paths** attribute.
@@ -263,7 +262,7 @@ class ModulesManager(object):
 		self.__paths = value
 
 	@paths.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def paths(self):
 		"""
 		This method is the deleter method for **self.__paths** attribute.
@@ -282,7 +281,7 @@ class ModulesManager(object):
 		return self.__modules
 
 	@modules.setter
-	@foundations.exceptions.exceptionsHandler(None, False, AssertionError)
+	@foundations.exceptions.handleExceptions(AssertionError)
 	def modules(self, value):
 		"""
 		This method is the setter method for **self.__modules** attribute.
@@ -295,7 +294,7 @@ class ModulesManager(object):
 		self.__modules = value
 
 	@modules.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def modules(self):
 		"""
 		This method is the deleter method for **self.__modules** attribute.
@@ -314,7 +313,7 @@ class ModulesManager(object):
 		return self.__libraryExtension
 
 	@libraryExtension.setter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def libraryExtension(self, value):
 		"""
 		This method is the setter method for **self.__libraryExtension** attribute.
@@ -326,7 +325,7 @@ class ModulesManager(object):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "libraryExtension"))
 
 	@libraryExtension.deleter
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def libraryExtension(self):
 		"""
 		This method is the deleter method for **self.__libraryExtension** attribute.
@@ -338,8 +337,6 @@ class ModulesManager(object):
 	#******************************************************************************************************************
 	#***	Class methods.
 	#******************************************************************************************************************
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __getitem__(self, name):
 		"""
 		This method reimplements the :meth:`object.__getitem__` method.
@@ -352,8 +349,6 @@ class ModulesManager(object):
 			if module.name == name:
 				return module
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __iter__(self):
 		"""
 		This method reimplements the :meth:`object.__iter__` method.
@@ -363,8 +358,6 @@ class ModulesManager(object):
 
 		return self.__modules.iteritems()
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __contains__(self, name):
 		"""
 		This method reimplements the :meth:`object.__contains__` method.
@@ -375,8 +368,6 @@ class ModulesManager(object):
 
 		return self[name] and True or False
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def __len__(self):
 		"""
 		This method reimplements the :meth:`object.__len__` method.
@@ -386,8 +377,6 @@ class ModulesManager(object):
 
 		return len(self.__modules)
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def listModules(self):
 		"""
 		This method lists the registered modules.
@@ -397,8 +386,7 @@ class ModulesManager(object):
 
 		return [module.name for module in self.iterkeys()]
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def registerModule(self, name, path):
 		"""
 		This method registers given module.
@@ -412,12 +400,10 @@ class ModulesManager(object):
 			raise foundations.exceptions.ProgrammingError("{0} | '{1}' module is already registered!".format(
 			self.__class__.__name__, name))
 
-		name = namespace.getNamespace(name, rootOnly=True)
 		self.__modules[name] = Module(name=name, path=os.path.dirname(path))
 		return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def unregisterModule(self, name):
 		"""
 		This method unregisters given module.
@@ -433,8 +419,6 @@ class ModulesManager(object):
 		del(self.__modules[name])
 		return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def registerModules(self):
 		"""
 		This method gathers the modules.
@@ -443,11 +427,9 @@ class ModulesManager(object):
 
 		for directory in self.__paths:
 			for path in foundations.walkers.filesWalker(directory, filtersIn=(r"\.{0}$".format(self.__libraryExtension),)):
-				self.registerModule(strings.getSplitextBasename(path), path)
+				self.registerModule(foundations.strings.getSplitextBasename(path), path)
 		return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, ImportError)
 	def registerModuleInterfaces(self, module):
 		"""
 		This method instantiates given module interfaces.
@@ -471,8 +453,6 @@ class ModulesManager(object):
 			module.interfaces = interfaces
 			return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def registerInterfaces(self):
 		"""
 		This method registers modules interfaces.
@@ -484,8 +464,6 @@ class ModulesManager(object):
 			self.registerModuleInterfaces(module)
 		return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def unregisterAll(self):
 		"""
 		This method unregisters modules and their interfaces.
@@ -496,8 +474,6 @@ class ModulesManager(object):
 		self.__modules = {}
 		return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def registerAll(self):
 		"""
 		This method registers modules and their interfaces.
@@ -509,8 +485,6 @@ class ModulesManager(object):
 		self.registerInterfaces()
 		return True
 
-	@core.executionTrace
-	@foundations.exceptions.exceptionsHandler(None, False, Exception)
 	def reloadAll(self):
 		"""
 		This method reloads all modules and their interfaces.
