@@ -39,8 +39,25 @@ Launching it is done issuing the following Python code::
    LOADER = snippets.loader.Loader(snippets.ui.common.getMayaWindow())
    LOADER.show()
 
-A simple popup list that you can assign to a shortcut is available by replacing the previous code two last lines with::
+A simple popup list ( Similar to Nuke "tab" key one ) is available by using the following Python code ( You can bind it to a shortcut )::
 
+   import sys
+   
+   FOUNDATIONS_PATH = "Path/To/Foundations/Folder/Foundations/"
+   
+   if FOUNDATIONS_PATH not in sys.path:
+   	sys.path.append(FOUNDATIONS_PATH)
+   
+   LOADER_PATH = "Path/To/Snippets/Folder/Snippets/maya"
+   
+   if LOADER_PATH not in sys.path:
+   	sys.path.append(LOADER_PATH)
+   
+   import snippets.engine
+   snippets.engine.run()
+   
+   import snippets.POPUP  
+   
    POPUP = snippets.popup.Popup()
    POPUP.show()
 
