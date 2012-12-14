@@ -56,7 +56,7 @@ A simple popup list ( Similar to Nuke "tab" key one ) is available by using the 
    import snippets.engine
    snippets.engine.run()
    
-   import snippets.POPUP  
+   import snippets.popup  
    
    POPUP = snippets.popup.Popup()
    POPUP.show()
