@@ -8,6 +8,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
+	This module defines the :def:`renameTextures` definition and other related objects.
 
 **Others:**
 """
@@ -15,7 +16,6 @@
 #**********************************************************************************************************************
 #***	External imports.
 #**********************************************************************************************************************
-import glob
 import inspect
 import os
 import optparse
@@ -32,7 +32,12 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["UDIM_PATTERN", "PATCH_PATTERN", "getPatchFromUdim", "getCommandLineParametersParser", "renameTextures"]
+__all__ = ["UDIM_PATTERN",
+		"PATCH_PATTERN",
+		"getPatchFromUdim",
+		"getUdimFromPatch",
+		"getCommandLineParametersParser",
+		"renameTextures"]
 
 UDIM_PATTERN = "u\d+_v\d+"
 PATCH_PATTERN = "\d{4,}"
@@ -48,7 +53,7 @@ def getPatchFromUdim(udim):
 	:return: Patch. ( Integer )
 	"""
 
-	return 1000 + udim[0] + 1 + udim[1] * 10 
+	return 1000 + udim[0] + 1 + udim[1] * 10
 
 def getUdimFromPatch(patch):
 	"""
@@ -77,7 +82,7 @@ def getCommandLineParametersParser():
 	parser.add_option("-o", "--output", action="store", type="string", dest="output", default="mari", help="'Output format'.")
 	parser.add_option("-n", "--name", action="store", type="string", dest="name", help="'Name prefix.")
 	parser.add_option("-p", "--preview", action="store_true", default=False, dest="preview", help="'Preview changes only.")
-	
+
 	return parser
 
 def renameTextures(files, input="zbrush", output="mari", prefix=None, preview=False):
@@ -128,7 +133,7 @@ def renameTextures(files, input="zbrush", output="mari", prefix=None, preview=Fa
 		 	path = os.path.join(os.path.dirname(file), "{0}{1}{2}".format(prefix, outputAffix, os.path.splitext(file)[-1]))
 		else:
 			path = re.sub(r"({0})".format(pattern), str(outputAffix), file)
-		
+
 		print("'{0}' | {1} '{2}' file to '{3}'.".format(
 		inspect.getmodulename(__file__), "Rename ('Preview')" if preview else "Rename", file, path,))
 		not preview and os.rename(file, path)
