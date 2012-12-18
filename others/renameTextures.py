@@ -111,7 +111,8 @@ def renameTextures(files, input="zbrush", output="mari", prefix=None, preview=Fa
 			print("'{0}' | '{1}' file doesn't exists!".format(inspect.getmodulename(__file__), file))
 			continue
 
-		search = re.search(r"({0})".format(pattern), file)
+		basename = os.path.basename(file)
+		search = re.search(r"({0})".format(pattern), basename)
 		if not search:
 			print("'{0}' | '{1}' file doesn't match '{2}' pattern!".format(inspect.getmodulename(__file__), file, inputMethod.title()))
 	 		continue
@@ -120,7 +121,7 @@ def renameTextures(files, input="zbrush", output="mari", prefix=None, preview=Fa
 		 	udim = [int(value[1:]) for value in search.group(0).split("_")]
 		elif inputMethod == "patch":
 			udim = getUdimFromPatch(int(search.group(0)))
-
+		
 		udim = offsetUdim(udim, -1) if input == "mudbox" else udim
 		udim = offsetUdim(udim, 1) if output == "mudbox" else udim
 
