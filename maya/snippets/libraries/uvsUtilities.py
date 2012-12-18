@@ -16,7 +16,7 @@ __status__ = "Production"
 
 __all__ = ["RESOURCES_DIRECTORY",
 				"CHECKER_IMAGE",
-				"DEFAULT_SCALE_COVERAGE = 0.98",
+				"DEFAULT_SCALE_COVERAGE",
 				"MARI_NAME_FORMAT",
 				"stacksHandler",
 				"getNode",
@@ -784,7 +784,7 @@ def getMariAffixes(name):
 
 	prefix, suffix = os.path.splitext(os.path.basename(name))
 	prefix = re.match(r"([\w\.]+)\d{4}", prefix)
-	return prefix and (prefix.groups()[0], suffix.replace(".", str())) or None
+	return prefix.groups()[0] if prefix else str(), suffix.replace(".", str())
 
 @stacksHandler
 def getPreviewMariTexturesBranches(directory, prefix, extension, shader="lambert"):
@@ -822,9 +822,9 @@ def assignMariPreviewTextures():
 	file = file and file[0] or None    
 	if not file:
 		return    
-
+	
 	prefix, suffix = getMariAffixes(file)
-	if not prefix or not suffix:
+	if not suffix:
 		return
 
 	directory = os.path.dirname(file)
