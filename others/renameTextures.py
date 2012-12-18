@@ -64,10 +64,9 @@ def getUdimFromPatch(patch):
 	"""
 
 	u = (patch - 1000) % 10
-	u = 10 if u == 0 else u
-	v = (patch - 1000) / 10
-	return u - 1, v
-
+	v = (patch - 1000) / 10  
+	return 9 if u == 0 else u -1, v - 1 if u % 10 == 0 else v      
+	
 def getCommandLineParametersParser():
 	"""
 	This definition returns the command line parameters parser.
