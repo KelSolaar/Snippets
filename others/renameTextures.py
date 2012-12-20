@@ -135,7 +135,9 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 		basename = os.path.basename(texture)
 		search = re.search(r"({0})".format(pattern), basename)
 		if not search:
-			print("'{0}' | '{1}' file doesn't match '{2}' pattern!".format(inspect.getmodulename(__file__), texture, inputMethod.title()))
+			print("'{0}' | '{1}' file doesn't match '{2}' pattern!".format(inspect.getmodulename(__file__),
+																		texture,
+																		inputMethod.title()))
 	 		continue
 
 		if inputMethod == "udim":
@@ -152,7 +154,9 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 			outputAffix = getPatchFromUdim(udim)
 
 		if prefix is not None:
-		 	path = os.path.join(os.path.dirname(texture), "{0}{1}{2}".format(prefix, outputAffix, os.path.splitext(texture)[-1]))
+		 	path = os.path.join(os.path.dirname(texture), "{0}{1}{2}".format(prefix,
+																			outputAffix,
+																			os.path.splitext(texture)[-1]))
 		else:
 			path = re.sub(r"({0})".format(pattern), str(outputAffix), texture)
 
@@ -167,13 +171,42 @@ def getCommandLineParametersParser():
 	:return: Parser. ( Parser )
 	"""
 
-	parser = optparse.OptionParser(formatter=optparse.IndentedHelpFormatter (indent_increment=2, max_help_position=8, width=128, short_first=1), add_help_option=None)
+	parser = optparse.OptionParser(formatter=optparse.IndentedHelpFormatter(indent_increment=2,
+																		max_help_position=8,
+																		width=128,
+																		short_first=1),
+								add_help_option=None)
 
-	parser.add_option("-h", "--help", action="help", help="'Display this help message and exit.'")
-	parser.add_option("-i", "--input", action="store", type="string", dest="input", default="zbrush", help="'Input format'.")
-	parser.add_option("-o", "--output", action="store", type="string", dest="output", default="mari", help="'Output format'.")
-	parser.add_option("-n", "--name", action="store", type="string", dest="name", help="'Name prefix.")
-	parser.add_option("-p", "--preview", action="store_true", default=False, dest="preview", help="'Preview changes only.")
+	parser.add_option("-h",
+					"--help",
+					action="help",
+					help="'Display this help message and exit.'")
+	parser.add_option("-i",
+					"--input",
+					action="store",
+					type="string",
+					dest="input",
+					default="zbrush",
+					help="'Input textures format ( mari, zbrush, mudbox )'.")
+	parser.add_option("-o",
+					"--output",
+					action="store",
+					type="string",
+					dest="output",
+					default="mari",
+					help="'Output textures format ( mari, zbrush, mudbox )'.")
+	parser.add_option("-n",
+					"--name",
+					action="store",
+					type="string",
+					dest="name",
+					help="'Name prefix ( \"\" to strip name ).")
+	parser.add_option("-p",
+					"--preview",
+					action="store_true",
+					default=False,
+					dest="preview",
+					help="'Preview changes only.")
 
 	return parser
 
