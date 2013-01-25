@@ -15,75 +15,81 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["RESOURCES_DIRECTORY",
-				"CHECKER_IMAGE",
-				"DEFAULT_SCALE_COVERAGE",
-				"MARI_NAME_FORMAT",
-				"stacksHandler",
-				"getNode",
-				"isGeometry",
-				"getUVsFromComponents",
-				"getFacesPerPatches",
-				"getObjectUVsArea",
-				"getComponentUVDims",
-				"getMariPatchFromUVDims",
-				"getComponentsUVDims",
-				"getComponentsMariPatches",
-				"getComponentsOccupationAsUVDims",
-				"getComponentsOccupationAsMariPatches",
-				"printComponentsOccupationAsUvDims",
-				"IPrintComponentsOccupationAsUvDims",
-				"printComponentsOccupationAsMariPatches",
-				"IPrintComponentsOccupationAsMariPatches",
-				"getComponentsBoundingBox",
-				"getComponentsUVsCenter",
-				"printComponentsUvsCenterAsUvDims",
-				"IPrintComponentsUvsCenterAsUvDims",
-				"printComponentsUvsCenterAsMariPatch",
-				"IPrintComponentsUvsCenterAsMariPatch",
-				"scaleComponentsUVs",
-				"centerComponentsUVs",
-				"scaleCenterComponentsUVs",
-				"rotateComponentsUVs",
-				"moveComponentsUVs",
-				"mirrorComponentsUVs",
-				"stackObjectsUVs",
-				"prescaleUVsShells",
-				"autoRatioUVsAreas",
-				"addUVsChecker",
-				"removeUVsChecker",
-				"setUVsCheckerRepeats",
-				"getPatchShaderTree",
-				"assignMariShadersToObject",
-				"assignMariShaders",
-				"IAssignMariShaders",
-				"getMariAffixes",
-				"getPreviewMariTexturesBranches",
-				"assignMariPreviewTextures",
-				"IAssignMariPreviewTextures",
-				"flipUVs_button_OnClicked",
-				"moveUpUVs_button_OnClicked",
-				"flopUVs_button_OnClicked",
-				"moveLeftUVs_button_OnClicked",
-				"fitUVs_button_OnClicked",
-				"moveRightUVs_button_OnClicked",
-				"centerUVs_button_OnClicked",
-				"moveDownUVs_button_OnClicked",
-				"scaleUVs_button_OnClicked",
-				"rotateCounterClockWiseUVs_button_OnClicked",
-				"rotateClockWiseUVs_button_OnClicked",
-				"stackUVsOnUBottom_button_OnClicked",
-				"stackUVsOnUCenter_button_OnClicked",
-				"stackUVsOnUTop_button_OnClicked",
-				"stackUVsOnVLeft_button_OnClicked",
-				"stackUVsOnVCenter_button_OnClicked",
-				"stackUVsOnVRight_button_OnClicked",
-				"autoRatioUVsAreas_button_OnClicked",
-				"addUVsChecker_button_OnClicked",
-				"uRepeat_floatField_OnChanged",
-				"vRepeat_floatField_OnChanged",
-				"unfoldingTools_window",
-				"unfoldingTools",
-				"IUvsTools"]
+		"CHECKER_IMAGE",
+		"DEFAULT_SCALE_COVERAGE",
+		"MARI_NAME_FORMAT",
+		"stacksHandler",
+		"anchorSelection",
+		"getFirstItem",
+		"getShapes",
+		"getNode",
+		"isGeometry",
+		"getConnections",
+		"getAttachedShaders",
+		"getUVsFromComponents",
+		"getFacesPerPatches",
+		"getObjectUVsArea",
+		"getComponentUVDims",
+		"getMariPatchFromUVDims",
+		"getComponentsUVDims",
+		"getComponentsMariPatches",
+		"getComponentsOccupationAsUVDims",
+		"getComponentsOccupationAsMariPatches",
+		"printComponentsOccupationAsUvDims",
+		"IPrintComponentsOccupationAsUvDims",
+		"printComponentsOccupationAsMariPatches",
+		"IPrintComponentsOccupationAsMariPatches",
+		"getComponentsBoundingBox",
+		"getComponentsUVsCenter",
+		"printComponentsUvsCenterAsUvDims",
+		"IPrintComponentsUvsCenterAsUvDims",
+		"printComponentsUvsCenterAsMariPatch",
+		"IPrintComponentsUvsCenterAsMariPatch",
+		"scaleComponentsUVs",
+		"centerComponentsUVs",
+		"scaleCenterComponentsUVs",
+		"rotateComponentsUVs",
+		"moveComponentsUVs",
+		"mirrorComponentsUVs",
+		"stackObjectsUVs",
+		"prescaleUVsShells",
+		"autoRatioUVsAreas",
+		"addUVsChecker",
+		"removeUVsChecker",
+		"setUVsCheckerRepeats",
+		"getPatchShaderTree",
+		"assignMariShadersToObject",
+		"assignMariShaders",
+		"IAssignMariShaders",
+		"getMariAffixes",
+		"getPreviewMariTexturesBranches",
+		"assignMariPreviewTextures",
+		"IAssignMariPreviewTextures",
+		"flipUVs_button_OnClicked",
+		"moveUpUVs_button_OnClicked",
+		"flopUVs_button_OnClicked",
+		"moveLeftUVs_button_OnClicked",
+		"fitUVs_button_OnClicked",
+		"moveRightUVs_button_OnClicked",
+		"centerUVs_button_OnClicked",
+		"moveDownUVs_button_OnClicked",
+		"scaleUVs_button_OnClicked",
+		"rotateCounterClockWiseUVs_button_OnClicked",
+		"rotateClockWiseUVs_button_OnClicked",
+		"stackUVsOnUBottom_button_OnClicked",
+		"stackUVsOnUCenter_button_OnClicked",
+		"stackUVsOnUTop_button_OnClicked",
+		"stackUVsOnVLeft_button_OnClicked",
+		"stackUVsOnVCenter_button_OnClicked",
+		"stackUVsOnVRight_button_OnClicked",
+		"autoRatioUVsAreas_button_OnClicked",
+		"addUVsChecker_button_OnClicked",
+		"removeUVsChecker_button_OnClicked",
+		"uRepeat_floatField_OnChanged",
+		"vRepeat_floatField_OnChanged",
+		"unfoldingTools_window",
+		"unfoldingTools",
+		"IUvsTools"]
 
 RESOURCES_DIRECTORY = os.path.join(os.path.dirname("__file__" in locals() and __file__ or str()), "../resources")
 CHECKER_IMAGE = "images/Checker.jpg"
@@ -141,6 +147,38 @@ def anchorSelection(object):
 
 	return function
 
+def getFirstItem(iterable, default=None):
+    """
+    This definition returns the first item of given iterable.
+
+    :param iterable: Iterable. ( Object )
+    :param default: Default value. ( Object )
+    :return: First iterable item. ( Object )
+    """
+
+    if not iterable:
+        return default
+
+    for item in iterable:
+        return item
+
+def getShapes(object, fullPathState=False, noIntermediateState=True):
+    """
+    This definition returns shapes of the given object.
+
+    :param object: Current object. ( String )
+    :param fullPath: Current full path state. ( Boolean )
+    :param noIntermediate: Current no intermediate state. ( Boolean )
+    :return: Objects shapes. ( List )
+    """
+
+    objectShapes = []
+    shapes = cmds.listRelatives(object, fullPath=fullPathState, shapes=True, noIntermediate=noIntermediateState)
+    if shapes != None:
+        objectShapes = shapes
+
+    return objectShapes
+
 def getNode(node):
 	"""
 	This definition returns given node if it exists or **None**.
@@ -166,6 +204,39 @@ def isGeometry(object):
 		return True
 	else:
 		return False
+
+def getConnections(node):
+    """
+    This definition returns the connections of given node.
+
+    :param node: Node. ( String )
+    :return: Connections. ( List )
+    """
+
+    connections = cmds.listConnections(node, c=True)
+    return [(connections[i + 1], connections[i]) for i in range(0, len(connections), 2)]
+
+def getAttachedShaders(object):
+    """
+    This definition returns the shaders attached to given objects.
+
+    :param object: Current object. ( String )
+    :return: Attached shaders. ( List )
+    """
+
+    shape = getFirstItem(getShapes(object))
+    if not shape:
+        return tuple()
+
+    shadingEngine = getFirstItem(cmds.listConnections(shape, t="shadingEngine"))
+    if not shadingEngine:
+        return tuple()
+
+    shader = getFirstItem(filter(lambda x: re.search("\.surfaceShader$", x[1]), getConnections(shadingEngine)))
+    if not shader:
+        return tuple()
+
+    return (getFirstItem(shader),)
 
 def getUVsFromComponents(components, flatten=True):
 	"""
@@ -606,70 +677,84 @@ def autoRatioUVsAreas(objects):
 		scaleComponentsUVs(object, su=scaleFactor, sv=scaleFactor)
 	return True
 
+def getConnections(node):
+    """
+    This definition returns the connections of given node.
+
+    :param node: Node. ( String )
+    :return: Connections. ( List )
+    """
+
+    connections = cmds.listConnections(node, c=True)
+    return [(connections[i + 1], connections[i]) for i in range(0, len(connections), 2)]
+
+def getAttachedShaders(object):
+    """
+    This definition returns the shaders attached to given objects.
+
+    :param object: Current object. ( String )
+    :return: Attached shaders. ( List )
+    """
+
+    shape = getFirstItem(getShapes(object))
+    if not shape:
+        return tuple()
+
+    shadingEngine = getFirstItem(cmds.listConnections(shape, t="shadingEngine"))
+    if not shadingEngine:
+        return tuple()
+
+    shader = getFirstItem(filter(lambda x: re.search("\.surfaceShader$", x[1]), getConnections(shadingEngine)))
+    if not shader:
+        return tuple()
+
+    return (getFirstItem(shader),)
+
 @stacksHandler
-def addUVsChecker(items, uRepeats=4, vRepeats=4):
+def addUVsChecker(objects, uRepeats=4, vRepeats=4):
 	"""
 	This definition applies UVs checkers onto given geometry objects.
 
-	:param items: Current items list. ( List )
+	:param objects: Current objects list. ( List )
 	:param uRepeats: U checker repeats. ( Float )
 	:param vRepeats: V checker repeats. ( Float )
 	:return: Definition succes. ( Boolean )
 	"""
 
-	# Removing previous UVs checkers shaders.
-	removeUVsChecker()
+	for object in objects:
+		for shader in getAttachedShaders(object):
+			file = getFirstItem(filter(lambda x: re.search("\.color$", x[1]), getConnections(shader)))
+			if file is not None:
+				if "UVsChecker" in getFirstItem(file):
+					continue
 
-	lambertSE = cmds.sets(renderable=True, noSurfaceShader=True, empty=True)
-	lambert = cmds.shadingNode("lambert", asShader=True)
-	cmds.connectAttr(lambert + ".outColor", lambertSE + ".surfaceShader", force=True)
+			file = cmds.shadingNode("file", asTexture=True)
+			cmds.setAttr("{0}.fileTextureName".format(file), os.path.normpath(os.path.join(RESOURCES_DIRECTORY, CHECKER_IMAGE)), type="string")
+			place2dTexture = cmds.shadingNode("place2dTexture", asUtility=True)
+			cmds.setAttr("{0}.repeatU".format(place2dTexture), uRepeats)
+			cmds.setAttr("{0}.repeatV".format(place2dTexture), vRepeats)
+			for uvAttribute in ("coverage", "translateFrame", "rotateFrame", "mirrorU", "mirrorV", "stagger", "wrapU", "wrapV" , "repeatUV" , "vertexUvOne" , "vertexUvTwo" , "vertexUvThree" , "vertexCameraOne", "noiseUV", "offset", "rotateUV"):
+				cmds.connectAttr("{0}.{1}".format(place2dTexture, uvAttribute), "{0}.{1}".format(file, uvAttribute), force=True)
 
-	file = cmds.shadingNode("file", asTexture=True)
-	cmds.setAttr(file + ".fileTextureName", os.path.normpath(os.path.join(RESOURCES_DIRECTORY, CHECKER_IMAGE)), type="string")
-	place2dTexture = cmds.shadingNode("place2dTexture", asUtility=True)
-	cmds.setAttr(place2dTexture + ".repeatU", uRepeats)
-	cmds.setAttr(place2dTexture + ".repeatV", vRepeats)
-	uvAttributes = ("coverage", "translateFrame", "rotateFrame", "mirrorU", "mirrorV", "stagger", "wrapU", "wrapV" , "repeatUV" , "vertexUvOne" , "vertexUvTwo" , "vertexUvThree" , "vertexCameraOne", "noiseUV", "offset", "rotateUV")
-	for uvAttribute in uvAttributes:
-		cmds.connectAttr(place2dTexture + "." + uvAttribute, file + "." + uvAttribute, force=True)
+			cmds.connectAttr("{0}.outColor".format(file), "{0}.color".format(shader), force=True)
+			cmds.rename(file, "UVsChecker_{0}_file".format(shader))
+			cmds.rename(place2dTexture, "UVsChecker_{0}_place2dTexture".format(shader))
 
-	cmds.connectAttr(file + ".outColor", lambert + ".color", force=True)
-
-	for item in items:
-		if "." in item:
-			continue
-		cmds.sets(item, edit=True, forceElement=lambertSE)
-
-	cmds.rename(lambert, "UVsChecker_Lambert")
-	cmds.rename(lambertSE, "UVsChecker_ShadingEngine")
-	cmds.rename(file, "UVsChecker_File")
-	cmds.rename(place2dTexture, "UVsChecker_Place2dTexture")
 	return True
 
 @stacksHandler
-def removeUVsChecker():
+def removeUVsChecker(objects):
 	"""
-	This definition removes UVs checkers from the scene.
+	:param objects: Current objects list. ( List )
 	:return: Definition succes. ( Boolean )
 	"""
 
-	if cmds.objExists("UVsChecker_ShadingEngine"):
-		connections = cmds.listHistory("UVsChecker_ShadingEngine")
-
-		for connection in connections:
-			if isGeometry(connection):
-				cmds.sets(connection, edit=True, forceElement="initialShadingGroup")
-
-		cmds.delete("UVsChecker_ShadingEngine")
-
-	if cmds.objExists("UVsChecker_Lambert"):
-		cmds.delete("UVsChecker_Lambert")
-
-	if cmds.objExists("UVsChecker_File"):
-		cmds.delete("UVsChecker_File")
-
-	if cmds.objExists("UVsChecker_Place2dTexture"):
-		cmds.delete("UVsChecker_Place2dTexture")
+	for object in objects:
+		for shader in getAttachedShaders(object):
+			file = getFirstItem(filter(lambda x: re.search("\.color$", x[1]), getConnections(shader)))
+			if file is not None:
+				file = getFirstItem(file)
+				"UVsChecker" in file and cmds.delete(cmds.listHistory(file))
 	return True
 
 @stacksHandler
@@ -682,11 +767,9 @@ def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
 	:return: Definition succes. ( Boolean )
 	"""
 
-	if not cmds.objExists("UVsChecker_Place2dTexture"):
-		return
-
-	uRepeats and cmds.setAttr("UVsChecker_Place2dTexture.repeatU", uRepeats)
-	vRepeats and cmds.setAttr("UVsChecker_Place2dTexture.repeatV", vRepeats)
+	for file in cmds.ls("UVsChecker_*_place2dTexture"):
+		uRepeats and cmds.setAttr("{0}.repeatU".format(file), uRepeats)
+		vRepeats and cmds.setAttr("{0}.repeatV".format(file), vRepeats)
 	return True
 
 @stacksHandler
@@ -803,7 +886,7 @@ def getPreviewMariTexturesBranches(directory, prefix, extension, shader="lambert
 		if not os.path.exists(textureName):
 			print("'{0}' file doesn't exists!".format(textureName))
 			continue
-	
+
 		fileNode = cmds.shadingNode("file", asTexture=True)
 		cmds.setAttr("{0}.fileTextureName".format(fileNode), textureName, type="string")
 		cmds.connectAttr("{0}.outColor".format(fileNode), "{0}.color".format(shader), force=True)
@@ -819,17 +902,17 @@ def assignMariPreviewTextures():
 	"""
 
 	file = cmds.fileDialog2(fileFilter="All files (*.*)", fm=1, dialogStyle=2)
-	file = file and file[0] or None    
+	file = file and file[0] or None
 	if not file:
-		return    
-	
+		return
+
 	prefix, suffix = getMariAffixes(file)
 	if not suffix:
 		return
 
 	directory = os.path.dirname(file)
 	return getPreviewMariTexturesBranches(directory, prefix, suffix)
-	
+
 @stacksHandler
 def IAssignMariPreviewTextures():
 	"""
@@ -1059,6 +1142,17 @@ def addUVsChecker_button_OnClicked(state=None):
 	selection and addUVsChecker(selection)
 
 @stacksHandler
+def removeUVsChecker_button_OnClicked(state=None):
+	"""
+	This definition is triggered by the **removeUVsChecker_button** button when clicked.
+
+	:param state: Button state. ( Boolean )
+	"""
+
+	selection = cmds.ls(sl=True, l=True)
+	selection and removeUVsChecker(selection)
+
+@stacksHandler
 def uRepeat_floatField_OnChanged(value=None):
 	"""
 	This definition is triggered by the **uRepeat_floatField** button when changed.
@@ -1240,7 +1334,7 @@ def unfoldingTools_window():
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
 	cmds.button("addUVsChecker_button", label="Add Checker", command=addUVsChecker_button_OnClicked)
 	cmds.button(label="", enable=False)
-	cmds.button("removeUVsChecker_button", label="Remove Checker", command=lambda state: removeUVsChecker())
+	cmds.button("removeUVsChecker_button", label="Remove Checker", command=removeUVsChecker_button_OnClicked)
 	cmds.setParent(upLevel=True)
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
