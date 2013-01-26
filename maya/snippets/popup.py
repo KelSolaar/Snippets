@@ -230,7 +230,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 		# Signals / Slots.
 		self.Interfaces_lineEdit.returnPressed.connect(self.__Interfaces_lineEdit__returnPressed)
-		self.Interfaces_lineEdit.completer.activated.connect(self.__Interfaces_lineEdit_completer__activated)
 
 	def __Interfaces_lineEdit__returnPressed(self):
 		"""
@@ -238,15 +237,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 
 		self.__triggerInterface(self.Interfaces_lineEdit.text())
-
-	def __Interfaces_lineEdit_completer__activated(self, text):
-		"""
-		This method is triggered when **Interfaces_lineEdit** completer Widget is activated.
-		
-		:param text: Completer text. ( QString )
-		"""
-
-		self.__triggerInterface(text)
 
 	def __triggerInterface(self, name):
 		"""
