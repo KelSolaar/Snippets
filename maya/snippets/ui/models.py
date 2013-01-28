@@ -150,7 +150,7 @@ class InterfacesModel(QAbstractListModel):
 		This method reimplements the :meth:`object.__getitem__` method.
 		
 		:param name: Item name. ( String )
-		:return: Item. ( Interface / Catorie )
+		:return: Item. ( Interface ) 
 		"""
 
 		for item in self.__interfaces:
