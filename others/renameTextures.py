@@ -157,8 +157,8 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 		 	path = os.path.join(os.path.dirname(texture), "{0}{1}{2}".format(prefix,
 																			outputAffix,
 																			os.path.splitext(texture)[-1]))
-		else:
-			path = re.sub(r"({0})".format(pattern), str(outputAffix), texture)
+		else:			
+			path = os.path.join(os.path.dirname(texture), re.sub(r"({0})".format(pattern), str(outputAffix), basename))
 
 		texturesMapping.append((texture, path))
 
@@ -175,7 +175,7 @@ def getCommandLineParametersParser():
 																		max_help_position=8,
 																		width=128,
 																		short_first=1),
-								add_help_option=None)
+																		add_help_option=None)
 
 	parser.add_option("-h",
 					"--help",
