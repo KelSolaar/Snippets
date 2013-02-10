@@ -340,7 +340,7 @@ def transfertSelection():
 
 	selection = cmds.ls(sl=True, long=True)
 
-	targetObject = str()
+	targetObject = ""
 	for item in selection:
 		if "." not in item:
 			targetObject = item

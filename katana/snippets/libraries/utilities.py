@@ -38,7 +38,7 @@ def listNode(node, indentation="\t", tabLevel= -1):
 
 	attribute = "getChildren"
 
-	output = str()
+	output = ""
 	tabLevel += 1
 
 	for i in range(tabLevel):
@@ -70,7 +70,7 @@ def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 	nodes = [node]
 	nodes.extend(list(nodesWalker(node)))
 
-	output = str()
+	output = ""
 
 	if outputAsTree:
 		hints = {}

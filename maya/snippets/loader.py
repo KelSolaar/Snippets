@@ -21,6 +21,11 @@
 """
 
 #**********************************************************************************************************************
+#***	Future imports.
+#**********************************************************************************************************************
+from __future__ import unicode_literals
+
+#**********************************************************************************************************************
 #***	External imports.
 #**********************************************************************************************************************
 import inspect
@@ -361,7 +366,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		self.Interfaces_frame_splitter.setSizes([16777215, 0])
 
-		self.setInterfaces(unicode())
+		self.setInterfaces("")
 
 		# Signals / Slots.
 		self.Execute_Snippet_pushButton.clicked.connect(self.__Execute_Snippet_pushButton__clicked)

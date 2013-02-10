@@ -14,6 +14,11 @@
 """
 
 #**********************************************************************************************************************
+#***	Future imports.
+#**********************************************************************************************************************
+from __future__ import unicode_literals
+
+#**********************************************************************************************************************
 #***	External imports.
 #**********************************************************************************************************************
 import doctest
@@ -109,7 +114,7 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 		[('Diffuse_1001.exr', 'Diffuse_u0_v0.exr'), ('Diffuse_1010.exr', 'Diffuse_u9_v0.exr')]
 		>>> getTexturesNames(["Diffuse_1001.exr", "Diffuse_1010.exr"], "mari", "mudbox")
 		[('Diffuse_1001.exr', 'Diffuse_u1_v1.exr'), ('Diffuse_1010.exr', 'Diffuse_u10_v1.exr')]
-		>>> getTexturesNames(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], prefix=str())
+		>>> getTexturesNames(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], prefix="")
 		[('Diffuse_u0_v0.exr', '1001.exr'), ('Diffuse_u9_v0.exr', '1010.exr')]
 		>>> getTexturesNames(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], prefix="Color_")
 		[('Diffuse_u0_v0.exr', 'Color_1001.exr'), ('Diffuse_u9_v0.exr', 'Color_1010.exr')]
