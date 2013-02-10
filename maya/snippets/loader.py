@@ -503,7 +503,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:param text: Current text value. ( QString )
 		"""
 
-		self.setInterfaces(foundations.strings.encode(text))
+		self.setInterfaces(foundations.strings.toUnicode(text))
 
 	def getMethodName(self, name):
 		"""
