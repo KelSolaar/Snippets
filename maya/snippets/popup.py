@@ -251,7 +251,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 
 		pattern = RuntimeGlobals.popupPattern = name
-		interface = self.getInterface(foundations.strings.toUnicode("^{0}$".format(pattern)))
+		interface = self.getInterface(foundations.strings.toString("^{0}$".format(pattern)))
 		if not interface:
 			return
 
