@@ -15,7 +15,7 @@ Adobe Photoshop scripts must be installed into the Adobe Photoshop scripting fol
 -  Mac Os X: /Applications/Adobe Photoshop CS*/Presets/Scripts/
 -  Windows: C:\Program Files\Adobe\Adobe Photoshop CS*\Presets\Scripts\
 
-Alternatively, on Maya, a Snippets Loader is provided, it requries PyQt, Foundations package available from Github: https://github.com/KelSolaar/Foundations and ordereddict Package from Pypi: http://pypi.python.org/pypi/ordereddict.
+Alternatively, on Maya, a Snippets Loader is provided, it requries PyQt, Foundations package available from Github: https://github.com/KelSolaar/Foundations, Umbra package available from Github: https://github.com/KelSolaar/Umbra and ordereddict Package from Pypi: http://pypi.python.org/pypi/ordereddict.
 Launching it is done issuing the following Python code::
 
    import sys
