@@ -17,6 +17,7 @@
 #***	External imports.
 #**********************************************************************************************************************
 import doctest
+import glob
 import inspect
 import os
 import optparse
@@ -237,6 +238,9 @@ def renameTextures(textures, input="zbrush", output="mari", prefix=None, preview
 #*** Launcher.
 #**********************************************************************************************************************
 if __name__ == "__main__":
+	if "*" in sys.argv[-1]:
+		sys.argv[-1:] = glob.glob(sys.argv[-1])
+
 	parameters, arguments = getCommandLineParametersParser().parse_args(sys.argv)
 	renameTextures([os.path.join(os.getcwd(), texture) for texture in arguments[1:]],
 					parameters.input.lower(),
