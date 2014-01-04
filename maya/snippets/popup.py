@@ -310,9 +310,9 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 	def executeInterface(self, interface):
 		"""
-		This method executes the object associated with given Interface.
+		This method executes the object associated with given interface.
 		
-		:param interface: Interface. ( interface )
+		:param interface: Interface. ( Interface )
 		:return: Method success. ( Boolean )
 		"""
 
