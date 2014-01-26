@@ -73,10 +73,15 @@ def snapObjectsOnSupport(objects, support):
 
 	allAxis = ("X", "Y", "Z")
 	for object in objects:
-		for axis in allAxis:
-			cmds.setAttr(nearestPointOnMesh + ".inPosition" + axis, cmds.getAttr(object + ".translate" + axis))
-		for axis in allAxis:
-			cmds.setAttr(object + ".translate" + axis, cmds.getAttr(nearestPointOnMesh + ".position" + axis))
+		position = cmds.xform(object, q=True, rp=True, ws=True, a=True)
+		for i, axis in enumerate(allAxis):
+			cmds.setAttr(nearestPointOnMesh + ".inPosition" + axis, position[i])
+
+		cmds.select(object)
+		cmds.move(cmds.getAttr(nearestPointOnMesh + ".positionX"),
+				cmds.getAttr(nearestPointOnMesh + ".positionY"),
+				cmds.getAttr(nearestPointOnMesh + ".positionZ"),
+				rpr=True)
 
 	cmds.delete(nearestPointOnMesh)
 
