@@ -5,7 +5,7 @@ import maya.OpenMaya as OpenMaya
 import re
 
 __author__ = "Thomas Mansencal"
-__copyright__ = "Copyright (C) 2010 - 2013 - Thomas Mansencal"
+__copyright__ = "Copyright (C) 2010 - 2014 - Thomas Mansencal"
 __license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
 __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
