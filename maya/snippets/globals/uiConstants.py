@@ -37,7 +37,7 @@ __all__ = ["UiConstants"]
 #**********************************************************************************************************************
 class UiConstants():
 	"""
-	This class is the ui constants class.
+	Defines the ui constants class.
 	"""
 
 	loaderUiFile = "Loader.ui"

@@ -37,7 +37,7 @@ __all__ = ["RuntimeGlobals"]
 #**********************************************************************************************************************
 class RuntimeGlobals():
 	"""
-	This class is the runtime globals class.
+	Defines the runtime globals class.
 	"""
 
 	loaderUiFile = None

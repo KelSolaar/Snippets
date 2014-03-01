@@ -48,7 +48,7 @@ LOGGER = foundations.verbose.installLogger()
 #**********************************************************************************************************************
 class Active_QLabel(QLabel):
 	"""
-	This class is a `QLabel <http://doc.qt.nokia.com/qlabel.html>`_ subclass providing
+	Defines a `QLabel <http://doc.qt.nokia.com/qlabel.html>`_ subclass providing
 	a clickable label with hovering capabilities.
 	"""
 

@@ -55,7 +55,7 @@ LOGGER = foundations.verbose.installLogger()
 #**********************************************************************************************************************
 class Search_QLineEdit(QLineEdit):
 	"""
-	This class is a `QLineEdit <http://doc.qt.nokia.com/qlinedit.html>`_ subclass providing
+	Defines a `QLineEdit <http://doc.qt.nokia.com/qlinedit.html>`_ subclass providing
 	a search field with clearing capabilities.
 	"""
 

@@ -79,7 +79,7 @@ else:
 #**********************************************************************************************************************
 class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	"""
-	This class defines the complex Maya Interfaces loader widget.
+	Defines the complex Maya Interfaces loader widget.
 	"""
 
 	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):

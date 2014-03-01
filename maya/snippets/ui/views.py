@@ -45,7 +45,7 @@ LOGGER = foundations.verbose.installLogger()
 #**********************************************************************************************************************
 class Interfaces_QListView(QListView):
 	"""
-	This class is used to display modules interfaces.
+	Defines the view for modules interfaces.
 	"""
 
 	def __init__(self, parent=None, model=None):

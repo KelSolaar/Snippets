@@ -37,7 +37,7 @@ __all__ = ["Constants"]
 #**********************************************************************************************************************
 class Constants():
 	"""
-	This class is the **Constants** class.
+	Defines the **Constants** class.
 	"""
 
 	logger = "Snippets_Logger"

@@ -59,7 +59,7 @@ LOGGER = foundations.verbose.installLogger()
 #**********************************************************************************************************************
 class Module(object):
 	"""
-	This class is the **Module** class.
+	Defines the **Module** class.
 	"""
 
 	def __init__(self, name=None, path=None):
@@ -214,7 +214,7 @@ class Module(object):
 
 class ModulesManager(object):
 	"""
-	This class is the **ModulesManager** class.
+	Defines the **ModulesManager** class.
 	"""
 
 	def __init__(self, paths=None):

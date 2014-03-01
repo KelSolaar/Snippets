@@ -54,7 +54,7 @@ LOGGER = logging.getLogger(Constants.logger)
 #**********************************************************************************************************************
 class MayaLoggingHandler(logging.Handler):
 	"""
-	This class provides a Maya friendly logging handler.
+	Defines a Maya friendly logging handler.
 	"""
 
 	def emit(self, record):

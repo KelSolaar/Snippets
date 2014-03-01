@@ -81,7 +81,7 @@ class Interface(foundations.dataStructures.Structure):
 
 class InterfacesModel(QAbstractListModel):
 	"""
-	This class is a `QAbstractListModel <http://doc.qt.nokia.com/qabstractListmodel.html>`_ subclass.
+	Defines a `QAbstractListModel <http://doc.qt.nokia.com/qabstractListmodel.html>`_ subclass.
 	"""
 
 	def __init__(self, parent=None, interfaces=None):

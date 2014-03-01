@@ -75,7 +75,7 @@ else:
 #**********************************************************************************************************************
 class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	"""
-	This class defines the simple Maya Interfaces loader widget.
+	Defines the simple Maya Interfaces loader widget.
 	"""
 
 	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
