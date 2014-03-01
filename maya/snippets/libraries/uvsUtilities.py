@@ -100,7 +100,7 @@ MARI_NAME_FORMAT = "_%s"
 
 def stacksHandler(object):
 	"""
-	This decorator is used to handle various Maya stacks.
+	Handles Maya stacks.
 
 	:param object: Python object. ( Object )
 	:return: Python function. ( Function )
@@ -108,7 +108,7 @@ def stacksHandler(object):
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This decorator is used to handle various Maya stacks.
+		Handles Maya stacks.
 
 		:return: Python object. ( Python )
 		"""
@@ -127,7 +127,7 @@ def stacksHandler(object):
 
 def anchorSelection(object):
 	"""
-	This decorator is used to anchor current selection.
+	Anchors current selection.
 
 	:param object: Python object. ( Object )
 	:return: Python function. ( Function )
@@ -135,7 +135,7 @@ def anchorSelection(object):
 
 	def function(*args, **kwargs):
 		"""
-		This decorator is used to anchor current selection.
+		Anchors current selection.
 
 		:return: Python object. ( Python )
 		"""

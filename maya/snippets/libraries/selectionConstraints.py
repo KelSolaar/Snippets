@@ -39,7 +39,7 @@ __all__ = ["stacksHandler",
 
 def stacksHandler(object):
 	"""
-	This decorator is used to handle various Maya stacks.
+	Handles Maya stacks.
 
 	:param object: Python object. ( Object )
 	:return: Python function. ( Function )
@@ -47,7 +47,7 @@ def stacksHandler(object):
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This decorator is used to handle various Maya stacks.
+		Handles Maya stacks.
 
 		:return: Python object. ( Python )
 		"""

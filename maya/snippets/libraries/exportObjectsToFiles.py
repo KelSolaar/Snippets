@@ -36,7 +36,7 @@ FILE_TYPES = {"Obj" : {"extension" : "obj", "type" : "OBJexport", "options" : "g
 
 def stacksHandler(object):
 	"""
-	This decorator is used to handle various Maya stacks.
+	Handles Maya stacks.
 
 	:param object: Python object. ( Object )
 	:return: Python function. ( Function )
@@ -44,7 +44,7 @@ def stacksHandler(object):
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
-		This decorator is used to handle various Maya stacks.
+		Handles Maya stacks.
 
 		:return: Python object. ( Python )
 		"""
