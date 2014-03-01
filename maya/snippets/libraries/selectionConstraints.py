@@ -66,7 +66,7 @@ def stacksHandler(object):
 
 def selectStarVertices():
 	"""
-	This definition selects star vertices.
+	Selects star vertices.
 	"""
 
 	cmds.polySelectConstraint(m=3, t=1, order=True, orb=(5, 65535))
@@ -75,14 +75,14 @@ def selectStarVertices():
 @stacksHandler
 def ISelectStarVertices():
 	"""
-	This definition is the selectStarVertices definition Interface.
+	Defines the selectStarVertices definition Interface.
 	"""
 
 	selectStarVertices()
 
 def selectTrianglesFaces():
 	"""
-	This definition selects triangles faces.
+	Selects triangles faces.
 	"""
 
 	cmds.polySelectConstraint(m=3, t=8, sz=1)
@@ -91,14 +91,14 @@ def selectTrianglesFaces():
 @stacksHandler
 def ISelectTrianglesFaces():
 	"""
-	This definition is the selectTrianglesFaces definition Interface.
+	Defines the selectTrianglesFaces definition Interface.
 	"""
 
 	selectTrianglesFaces()
 
 def selectNsidesFaces():
 	"""
-	This definition selects nsides faces.
+	Selects nsides faces.
 	"""
 
 	cmds.polySelectConstraint(m=3, t=8, sz=3)
@@ -107,14 +107,14 @@ def selectNsidesFaces():
 @stacksHandler
 def ISelectNsidesFaces():
 	"""
-	This definition is the selectNsidesFaces definition Interface.
+	Defines the selectNsidesFaces definition Interface.
 	"""
 
 	selectNsidesFaces()
 
 def selectBoundaryEdges(components):
 	"""
-	This definition selects selection boundaries edges.
+	Selects selection boundaries edges.
 	"""
 
 	cmds.select(cmds.polyListComponentConversion(components, te=True, bo=True))
@@ -122,7 +122,7 @@ def selectBoundaryEdges(components):
 @stacksHandler
 def ISelectBoundaryEdges():
 	"""
-	This definition is the selectBoundaryEdges definition Interface.
+	Defines the selectBoundaryEdges definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -130,7 +130,7 @@ def ISelectBoundaryEdges():
 
 def selectBorderEdges():
 	"""
-	This definition selects the border edges.
+	Selects the border edges.
 	"""
 
 	cmds.polySelectConstraint(m=3, t=0x8000, w=1)
@@ -139,14 +139,14 @@ def selectBorderEdges():
 @stacksHandler
 def ISelectBorderEdges():
 	"""
-	This definition is the selectBorderEdges definition Interface.
+	Defines the selectBorderEdges definition Interface.
 	"""
 
 	selectBorderEdges()
 
 def selectCreasesEdges(object):
 	"""
-	This definition cleans Maya hierarchical polygonal conversion.
+	Cleans Maya hierarchical polygonal conversion.
 
 	:param object: Object to select creases edges. ( String )
 	"""
@@ -159,7 +159,7 @@ def selectCreasesEdges(object):
 @stacksHandler
 def ISelectCreasesEdges():
 	"""
-	This definition is the selectCreasesEdges definition Interface.
+	Defines the selectCreasesEdges definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -167,7 +167,7 @@ def ISelectCreasesEdges():
 
 def selectHardEdges():
 	"""
-	This definition selects the hard edges.
+	Selects the hard edges.
 	"""
 
 	cmds.polySelectConstraint(m=3, t=0x8000, sm=1)
@@ -176,14 +176,14 @@ def selectHardEdges():
 @stacksHandler
 def ISelectHardEdges():
 	"""
-	This definition is the selectHardEdges definition Interface.
+	Defines the selectHardEdges definition Interface.
 	"""
 
 	selectHardEdges()
 
 def selectNonManifoldVertices():
 	"""
-	This definition selects the non manifold vertices.
+	Selects the non manifold vertices.
 	"""
 
 	cmds.polySelectConstraint(m=3, t=1, nonmanifold=True)
@@ -192,14 +192,14 @@ def selectNonManifoldVertices():
 @stacksHandler
 def ISelectNonManifoldVertices():
 	"""
-	This definition is the selectNonManifoldVertices definition Interface.
+	Defines the selectNonManifoldVertices definition Interface.
 	"""
 
 	selectNonManifoldVertices()
 
 def selectIsolatedVertices(components):
 	"""
-	This definition selects the isolated vertices.
+	Selects the isolated vertices.
 	"""
 
 	cmds.select(cl=True)
@@ -217,7 +217,7 @@ def selectIsolatedVertices(components):
 @stacksHandler
 def ISelectIsolatedVertices():
 	"""
-	This definition is the selectIsolatedVertices definition Interface.
+	Defines the selectIsolatedVertices definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -225,7 +225,7 @@ def ISelectIsolatedVertices():
 
 def selectLaminaFaces():
 	"""
-	This definition selects the lamina faces.
+	Selects the lamina faces.
 	"""
 
 	cmds.polySelectConstraint(m=3, t=8, tp=2)
@@ -234,14 +234,14 @@ def selectLaminaFaces():
 @stacksHandler
 def ISelectLaminaFaces():
 	"""
-	This definition is the selectLaminaFaces definition Interface.
+	Defines the selectLaminaFaces definition Interface.
 	"""
 
 	selectLaminaFaces()
 
 def selectZeroGeometryAreaFaces():
 	"""
-	This definition selects the zero geometry area faces.
+	Selects the zero geometry area faces.
 	"""
 
 	cmds.polySelectConstraint(m=3, t=8, ga=True, gab=(0, 0.001))
@@ -250,14 +250,14 @@ def selectZeroGeometryAreaFaces():
 @stacksHandler
 def ISelectZeroGeometryAreaFaces():
 	"""
-	This definition is the selectZeroGeometryAreaFaces definition Interface.
+	Defines the selectZeroGeometryAreaFaces definition Interface.
 	"""
 
 	selectZeroGeometryAreaFaces()
 
 def selectSideVertices(object, positive=True):
 	"""
-	This definition selects given side geometry vertices.
+	Selects given side geometry vertices.
 	
 	:param object: Object to select vertices. ( String )
 	:param positive: Select positive vertices. ( Boolean )
@@ -270,7 +270,7 @@ def selectSideVertices(object, positive=True):
 
 def selectLeftVertices(object):
 	"""
-	This definition selects left side geometry vertices.
+	Selects left side geometry vertices.
 	
 	:param object: Object to select left vertices. ( String )
 	"""
@@ -280,7 +280,7 @@ def selectLeftVertices(object):
 @stacksHandler
 def ISelectLeftVertices():
 	"""
-	This definition is the selectLeftVertices definition Interface.
+	Defines the selectLeftVertices definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -288,7 +288,7 @@ def ISelectLeftVertices():
 
 def selectRightVertices(object):
 	"""
-	This definition selects right side geometry vertices.
+	Selects right side geometry vertices.
 	
 	:param object: Object to select right vertices. ( String )
 	"""
@@ -298,7 +298,7 @@ def selectRightVertices(object):
 @stacksHandler
 def ISelectRightVertices():
 	"""
-	This definition is the selectRightVertices definition Interface.
+	Defines the selectRightVertices definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)

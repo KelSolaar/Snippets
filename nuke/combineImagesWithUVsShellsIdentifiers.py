@@ -48,7 +48,7 @@ SHELLS_FILTER = "u[0-9]+_v[0-9]+"
 #**********************************************************************************************************************
 def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 	"""
-	This definition gets UVs shells siblings from given elements.
+	Gets UVs shells siblings from given elements.
 
 	:param elements: Elements to filter. ( List )
 	:param filter: Shells identifier regex filter. ( String )
@@ -71,7 +71,7 @@ def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 
 def _getReadNode(name="", file=None):
 	"""
-	This definition gets a Nuke **Read** node.
+	Gets a Nuke **Read** node.
 
 	:param name: Node name. ( String )
 	:param file: Node file parameter. ( String )
@@ -82,7 +82,7 @@ def _getReadNode(name="", file=None):
 
 def _getMerge2Node(name="", nodes=None, useMask=True):
 	"""
-	This definition gets a Nuke **Merge2** node.
+	Gets a Nuke **Merge2** node.
 
 	:param name: Node name. ( String )
 	:param nodes: Inputs nodes list. ( List )
@@ -100,7 +100,7 @@ def _getMerge2Node(name="", nodes=None, useMask=True):
 
 def _getWriteNode(name="", file=None, node=None):
 	"""
-	This definition gets a Nuke **Write** node.
+	Gets a Nuke **Write** node.
 
 	:param name: Node name. ( String )
 	:param file: Node file parameter. ( String )
@@ -114,7 +114,7 @@ def _getWriteNode(name="", file=None, node=None):
 
 def getSplitextBasename(path):
 	"""
-	This definition gets the basename of a path without its extension.
+	Gets the basename of a path without its extension.
 
 	:param path: Path to extract the basename without extension. ( String )
 	:return: Splitext basename. ( String )
@@ -146,7 +146,7 @@ def getUVsShellsSiblingsTrees(elements, outputDirectory, outputFileFormat, outpu
 
 def combineImagesWithUVsShellsIdentifiers():
 	"""
-	This definition combines images with UVs shells identifiers.
+	Combines images with UVs shells identifiers.
 
 	:return: Definition success. ( Boolean )
 	"""

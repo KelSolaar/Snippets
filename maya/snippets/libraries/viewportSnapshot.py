@@ -38,7 +38,7 @@ def stacksHandler(object):
 
 def viewportSnapshot():
 	"""
-	This definition does a viewport snapshot.
+	Does a viewport snapshot.
 	"""
 
 	filter = "Tif files (*.tif)"
@@ -53,7 +53,7 @@ def viewportSnapshot():
 @stacksHandler
 def IViewportSnapshot():
 	"""
-	This definition is the viewportSnapshot definition Interface.
+	Defines the viewportSnapshot definition Interface.
 	"""
 
 	viewportSnapshot()

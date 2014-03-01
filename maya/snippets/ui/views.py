@@ -50,7 +50,7 @@ class Interfaces_QListView(QListView):
 
 	def __init__(self, parent=None, model=None):
 		"""
-		This method initializes the class.
+		Initializes the class.
 
 		:param parent: Object parent. ( QObject )
 		"""

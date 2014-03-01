@@ -56,7 +56,7 @@ LOGGER = foundations.verbose.installLogger()
 #**********************************************************************************************************************
 def getResourcePath(name):
 	"""
-	This definition returns the resource file path matching the given name.
+	Returns the resource file path matching the given name.
 
 	:param name: Resource name. ( String )
 	:return: Resource path. ( String )
@@ -72,7 +72,7 @@ def getResourcePath(name):
 
 def parentsWalker(object):
 	"""
-	This definition is a generator used to retrieve the chain of parents of the given :class:`QObject` instance.
+	Defines a generator used to retrieve the chain of parents of the given :class:`QObject` instance.
 
 	:param object: Provided path. ( QObject )
 	:yield: Object parent. ( QObject )
@@ -84,7 +84,7 @@ def parentsWalker(object):
 
 def getMayaWindow():
 	"""
-	This method returns Maya window as QObject.
+	Returns Maya window as QObject.
 
 	:return: Maya window. ( QObject )
 	"""
@@ -94,7 +94,7 @@ def getMayaWindow():
 
 def messageBox(messageType, title, message):
 	"""
-	This definition provides a fast gui message box.
+	Provides a fast gui message box.
 
 	:param messageType: Message type. ( String )
 	:param title: Message box title. ( String )
@@ -133,7 +133,7 @@ def messageBox(messageType, title, message):
 
 def centerWidgetOnScreen(widget):
 	"""
-	This definition centers given Widget middle of the screen.
+	Centers given Widget middle of the screen.
 
 	:param widget: Current Widget. ( QWidget )
 	"""
@@ -142,7 +142,7 @@ def centerWidgetOnScreen(widget):
 
 def resizeWidget(widget, sizeX, sizeY):
 	"""
-	This definition resize given Widget.
+	Resize given Widget.
 
 	:param widget: Current Widget. ( QWidget )
 	:param sizeX: Size x. ( Integer )

@@ -46,7 +46,7 @@ def stacksHandler(object):
 
 def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=False, asInstance=False, deleteTargets=True):
 	"""
-	This definition replaces the targets with sources.
+	Replaces the targets with sources.
 
 	:param sources: Sources. ( List )
 	:param targets: Targets. ( List )
@@ -88,7 +88,7 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 @stacksHandler
 def pickSources_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **pickSources_button** button when clicked.
+	Defines the slot triggered by **pickSources_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -98,7 +98,7 @@ def pickSources_button_OnClicked(state=None):
 @stacksHandler
 def pickTargets_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **pickTargets_button** button when clicked.
+	Defines the slot triggered by **pickTargets_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -108,7 +108,7 @@ def pickTargets_button_OnClicked(state=None):
 @stacksHandler
 def replaceObjects_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **replaceObjects_button** button when clicked.
+	Defines the slot triggered by **replaceObjects_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -120,7 +120,7 @@ def replaceObjects_button_OnClicked(state=None):
 
 def replaceObjects_window():
 	"""
-	This definition creates the 'Replace Objects' main window.
+	Creates the 'Replace Objects' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -167,7 +167,7 @@ def replaceObjects_window():
 
 def replaceObjects():
 	"""
-	This definition launches the 'Replace Objects' main window.
+	Launches the 'Replace Objects' main window.
 	"""
 
 	replaceObjects_window()
@@ -175,7 +175,7 @@ def replaceObjects():
 @stacksHandler
 def IReplaceObjects():
 	"""
-	This definition is the replaceObjects definition Interface.
+	Defines the replaceObjects definition Interface.
 	"""
 
 	replaceObjects()

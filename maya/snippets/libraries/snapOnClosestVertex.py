@@ -88,7 +88,7 @@ def stacksHandler(object):
 
 def getMPoint(point):
 	"""
-	This definition returns an MPoint.
+	Returns an MPoint.
 
 	:param point: Point. ( List )
 	:return: MPoint ( MVector )
@@ -98,7 +98,7 @@ def getMPoint(point):
 
 def norme(pointA, pointB):
 	"""
-	This definition returns the norme of a vector.
+	Returns the norme of a vector.
 
 	:param pointA: Point A. ( List )
 	:param pointB: Point B. ( List )
@@ -112,7 +112,7 @@ def norme(pointA, pointB):
 
 def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
-	This definition returns shapes of the given object.
+	Returns shapes of the given object.
 
 	:param object: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -130,7 +130,7 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 @stacksHandler
 def getReferenceObject_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **getReferenceObject_button** button when clicked.
+	Defines the slot triggered by **getReferenceObject_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -201,7 +201,7 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 @stacksHandler
 def snapIt_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **snapIt_button** button when clicked.
+	Defines the slot triggered by **snapIt_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -215,7 +215,7 @@ def snapIt_button_OnClicked(state=None):
 
 def snapOnClosestVertex_window():
 	"""
-	This definition creates the 'Snap On Closest Vertex' vertex window.
+	Creates the 'Snap On Closest Vertex' vertex window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -246,7 +246,7 @@ def snapOnClosestVertex_window():
 
 def snapOnClosestVertex():
 	"""
-	This definition launches the 'Snap On Closest Vertex' main window.
+	Launches the 'Snap On Closest Vertex' main window.
 	"""
 
 	snapOnClosestVertex_window()
@@ -254,7 +254,7 @@ def snapOnClosestVertex():
 @stacksHandler
 def ISnapOnClosestVertex():
 	"""
-	This definition is the snapOnClosestVertex definition Interface.
+	Defines the snapOnClosestVertex definition Interface.
 	"""
 
 	snapOnClosestVertex()

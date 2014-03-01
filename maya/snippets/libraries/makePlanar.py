@@ -50,7 +50,7 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This definition returns transform of the given node.
+	Returns transform of the given node.
 
 	:param node: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -65,7 +65,7 @@ def getTransform(node, fullPath=True):
 
 def getMVector(vector):
 	"""
-	This definition returns an MVector.
+	Returns an MVector.
 
 	:param vector: Vector. ( List )
 	:return: MVector ( MVector )
@@ -75,7 +75,7 @@ def getMVector(vector):
 
 def getMMatrix(matrix):
 	"""
-	This definition returns an MMatrix.
+	Returns an MMatrix.
 
 	:param matrix: matrix. ( List )
 	:return: MMatrix ( MMatrix )
@@ -87,7 +87,7 @@ def getMMatrix(matrix):
 
 def normalize(vector):
 	"""
-	This definition returns the normalized vector.
+	Returns the normalized vector.
 
 	:param vector: Vector. ( List )
 	:return: Normalized vector ( Tuple )
@@ -99,7 +99,7 @@ def normalize(vector):
 
 def vectorMatrixMultiplication(vector, matrix):
 	"""
-	This definition returns the vector multiplication between a Vector And a matrix.
+	Returns the vector multiplication between a Vector And a matrix.
 
 	:param vector: Vector. ( List )
 	:param matrix: matrix. ( List )
@@ -113,7 +113,7 @@ def vectorMatrixMultiplication(vector, matrix):
 
 def dot(vectorA, vectorB):
 	"""
-	This definition returns the dot product between two vectors.
+	Returns the dot product between two vectors.
 
 	:param vectorA: Vector A. ( List )
 	:param vectorB: Vector B. ( List )
@@ -126,7 +126,7 @@ def dot(vectorA, vectorB):
 
 def getAverageVector(vectors):
 	"""
-	This definition returns the average vector from a list of vectors.
+	Returns the average vector from a list of vectors.
 
 	:param vectors: Vectors to get the average one. ( List )
 	:return: Average vector. ( List )
@@ -142,7 +142,7 @@ def getAverageVector(vectors):
 
 def makePlanar(components):
 	"""
-	This definition planarizes the given Components.
+	Planarizes the given Components.
 
 	:param components: Components to planarizes. ( List )
 	"""
@@ -169,7 +169,7 @@ def makePlanar(components):
 @stacksHandler
 def IMakePlanar():
 	"""
-	This definition is the makePlanar definition Interface.
+	Defines the makePlanar definition Interface.
 	"""
 
 	makePlanar(cmds.ls(sl=True))

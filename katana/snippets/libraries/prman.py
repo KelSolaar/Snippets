@@ -8,7 +8,7 @@ import snippets.libraries.utilities
 
 def getGiggleMetaData(path):
 	"""
-	This definition returns the Giggle metaData of give '.slo' file path.
+	Returns the Giggle metaData of give '.slo' file path.
 
 	:param path: File get the MetaData from. ( String )
 	:return: MetaData. ( List )
@@ -25,7 +25,7 @@ def getGiggleMetaData(path):
 
 def listGiggleMetaData(metaData, indentation="\t"):
 	"""
-	This definition lists given metaData.
+	Lists given metaData.
 
 	:param metaData: MetaData to list. ( List )
 	:return: Formated metaData. ( String )
@@ -54,7 +54,7 @@ def listGiggleMetaData(metaData, indentation="\t"):
 
 def getCoshaderSloFile(coshader):
 	"""
-	This definition returns gviven coshader '.slo' file path.
+	Returns gviven coshader '.slo' file path.
 
 	:param coshader: Coshader name. ( String )
 	:return: Coshader '.slo' file path. ( String )
@@ -66,7 +66,7 @@ def getCoshaderSloFile(coshader):
 
 def listNodeGiggleMetaData(node):
 	"""
-	This definition lists given node metaData.
+	Lists given node metaData.
 
 	:param node: Node to list metaData. ( Object )
 	:return: Formated metaData list. ( String )
@@ -82,7 +82,7 @@ def listNodeGiggleMetaData(node):
 
 def listNodesGiggleMetaData(nodes, traverse=True):
 	"""
-	This definition lists given nodes metaData.
+	Lists given nodes metaData.
 
 	:param node: Node to list metaData. ( Object )
 	:param traverse: Traverse nodes children. ( Boolean )
@@ -101,7 +101,7 @@ def listNodesGiggleMetaData(nodes, traverse=True):
 	
 def lisObjectNames():
 	"""
-	This definition lists PRMan object names ( Shaders ).
+	Lists PRMan object names ( Shaders ).
 
 	:return: PRMan Object names. ( List )
 	"""

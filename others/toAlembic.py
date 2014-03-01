@@ -51,7 +51,7 @@ __all__ = ["ascendantsWalker" , "getRoot", "toAlembic", "getCommandLineParameter
 #**********************************************************************************************************************
 def ascendantsWalker(path, visitor=None):
 	"""
-	This definition returns the parents of given Dag path.
+	Returns the parents of given Dag path.
 	
 	:param path: Dag path. ( String )
 	:param visitor: Visitor. ( Object )
@@ -70,7 +70,7 @@ def ascendantsWalker(path, visitor=None):
 
 def getRoot(path):
 	"""
-	This definition returns the root path of given Dag path.
+	Returns the root path of given Dag path.
 	
 	:param path: Dag path. ( String )
 	:return: Root path. ( String )
@@ -81,7 +81,7 @@ def getRoot(path):
 	
 def toAlembic(parameters, arguments):
 	"""
-	This definition converts an Obj file to Alembic file.
+	Converts an Obj file to Alembic file.
 	
 	:param parameters: Command line parameters. ( Object )
 	:param arguments: Command line arguments. ( Object )
@@ -131,7 +131,7 @@ def toAlembic(parameters, arguments):
 
 def getCommandLineParameters(argv):
 	"""
-	This definition returns the command line parameters parser.
+	Returns the command line parameters parser.
 
 	:param argv: Command line parameters. ( String )
 	:return: Settings, arguments ( Parser Instance )

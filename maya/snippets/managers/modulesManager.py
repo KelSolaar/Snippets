@@ -64,7 +64,7 @@ class Module(object):
 
 	def __init__(self, name=None, path=None):
 		"""
-		This method initializes the class.
+		Initializes the class.
 
 		:param name: Name of the Component. ( String )
 		:param path: Path of the Component. ( String )
@@ -87,7 +87,7 @@ class Module(object):
 	@property
 	def name(self):
 		"""
-		This method is the property for **self.___name** attribute.
+		Property for **self.___name** attribute.
 
 		:return: self.__name. ( String )
 		"""
@@ -98,7 +98,7 @@ class Module(object):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def name(self, value):
 		"""
-		This method is the setter method for **self.___name** attribute.
+		Setter for **self.___name** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -112,7 +112,7 @@ class Module(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def name(self):
 		"""
-		This method is the deleter method for **self.___name** attribute.
+		Deleter for **self.___name** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("name"))
@@ -120,7 +120,7 @@ class Module(object):
 	@property
 	def path(self):
 		"""
-		This method is the property for **self.__paths** attribute.
+		Property for **self.__paths** attribute.
 
 		:return: self.__paths. ( String )
 		"""
@@ -131,7 +131,7 @@ class Module(object):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def path(self, value):
 		"""
-		This method is the setter method for **self.__paths** attribute.
+		Setter for **self.__paths** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -146,7 +146,7 @@ class Module(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def path(self):
 		"""
-		This method is the deleter method for **self.__paths** attribute.
+		Deleter for **self.__paths** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("path"))
@@ -154,7 +154,7 @@ class Module(object):
 	@property
 	def import_(self):
 		"""
-		This method is the property for **self.___import_** attribute.
+		Property for **self.___import_** attribute.
 
 		:return: self.__import. ( Module )
 		"""
@@ -165,7 +165,7 @@ class Module(object):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def import_(self, value):
 		"""
-		This method is the setter method for **self.___import_** attribute.
+		Setter for **self.___import_** attribute.
 
 		:param value: Attribute value. ( Module )
 		"""
@@ -178,7 +178,7 @@ class Module(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def import_(self):
 		"""
-		This method is the deleter method for **self.___import_** attribute.
+		Deleter for **self.___import_** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("import"))
@@ -186,7 +186,7 @@ class Module(object):
 	@property
 	def interfaces(self):
 		"""
-		This method is the property for **self.__interfaces** attribute.
+		Property for **self.__interfaces** attribute.
 
 		:return: self.__interfaces. ( Object )
 		"""
@@ -196,7 +196,7 @@ class Module(object):
 	@interfaces.setter
 	def interfaces(self, value):
 		"""
-		This method is the setter method for **self.__interfaces** attribute.
+		Setter for **self.__interfaces** attribute.
 
 		:param value: Attribute value. ( Object )
 		"""
@@ -207,7 +207,7 @@ class Module(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def interfaces(self):
 		"""
-		This method is the deleter method for **self.__interfaces** attribute.
+		Deleter for **self.__interfaces** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("interfaces"))
@@ -219,7 +219,7 @@ class ModulesManager(object):
 
 	def __init__(self, paths=None):
 		"""
-		This method initializes the class.
+		Initializes the class.
 
 		:param path: Paths of the modules. ( Tuple / List )
 		"""
@@ -239,7 +239,7 @@ class ModulesManager(object):
 	@property
 	def paths(self):
 		"""
-		This method is the property for **self.__paths** attribute.
+		Property for **self.__paths** attribute.
 
 		:return: self.__paths. ( List )
 		"""
@@ -250,7 +250,7 @@ class ModulesManager(object):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def paths(self, value):
 		"""
-		This method is the setter method for **self.__paths** attribute.
+		Setter for **self.__paths** attribute.
 
 		:param value: Attribute value. ( Tuple / List )
 		"""
@@ -265,7 +265,7 @@ class ModulesManager(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def paths(self):
 		"""
-		This method is the deleter method for **self.__paths** attribute.
+		Deleter for **self.__paths** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("paths"))
@@ -273,7 +273,7 @@ class ModulesManager(object):
 	@property
 	def modules(self):
 		"""
-		This method is the property for **self.__modules** attribute.
+		Property for **self.__modules** attribute.
 
 		:return: self.__modules. ( Dictionary )
 		"""
@@ -284,7 +284,7 @@ class ModulesManager(object):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def modules(self, value):
 		"""
-		This method is the setter method for **self.__modules** attribute.
+		Setter for **self.__modules** attribute.
 
 		:param value: Attribute value. ( Dictionary )
 		"""
@@ -297,7 +297,7 @@ class ModulesManager(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def modules(self):
 		"""
-		This method is the deleter method for **self.__modules** attribute.
+		Deleter for **self.__modules** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modules"))
@@ -305,7 +305,7 @@ class ModulesManager(object):
 	@property
 	def libraryExtension(self):
 		"""
-		This method is the property for **self.__libraryExtension** attribute.
+		Property for **self.__libraryExtension** attribute.
 
 		:return: self.__libraryExtension. ( String )
 		"""
@@ -316,7 +316,7 @@ class ModulesManager(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def libraryExtension(self, value):
 		"""
-		This method is the setter method for **self.__libraryExtension** attribute.
+		Setter for **self.__libraryExtension** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -328,7 +328,7 @@ class ModulesManager(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def libraryExtension(self):
 		"""
-		This method is the deleter method for **self.__libraryExtension** attribute.
+		Deleter for **self.__libraryExtension** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -339,7 +339,7 @@ class ModulesManager(object):
 	#******************************************************************************************************************
 	def __getitem__(self, name):
 		"""
-		This method reimplements the :meth:`object.__getitem__` method.
+		Reimplements the :meth:`object.__getitem__` method.
 
 		:param name: Module name. ( String )
 		:return: Module. ( Module )
@@ -351,7 +351,7 @@ class ModulesManager(object):
 
 	def __iter__(self):
 		"""
-		This method reimplements the :meth:`object.__iter__` method.
+		Reimplements the :meth:`object.__iter__` method.
 		
 		:return: Modules iterator. ( Object )
 		"""
@@ -360,7 +360,7 @@ class ModulesManager(object):
 
 	def __contains__(self, name):
 		"""
-		This method reimplements the :meth:`object.__contains__` method.
+		Reimplements the :meth:`object.__contains__` method.
 
 		:param name: Module name. ( String )
 		:return: Module existence. ( Boolean )
@@ -370,7 +370,7 @@ class ModulesManager(object):
 
 	def __len__(self):
 		"""
-		This method reimplements the :meth:`object.__len__` method.
+		Reimplements the :meth:`object.__len__` method.
 
 		:return: Modules count. ( Integer )
 		"""
@@ -379,7 +379,7 @@ class ModulesManager(object):
 
 	def listModules(self):
 		"""
-		This method lists the registered modules.
+		Lists the registered modules.
 
 		:return: Modules list. ( List )
 		"""
@@ -389,7 +389,7 @@ class ModulesManager(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def registerModule(self, name, path):
 		"""
-		This method registers given module.
+		Registers given module.
 
 		:param name: Module name. ( String )
 		:param path: Module path. ( Layout )
@@ -406,7 +406,7 @@ class ModulesManager(object):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def unregisterModule(self, name):
 		"""
-		This method unregisters given module.
+		Unregisters given module.
 
 		:param name: Module name. ( String )
 		:return: Method success. ( Boolean )
@@ -421,7 +421,7 @@ class ModulesManager(object):
 
 	def registerModules(self):
 		"""
-		This method gathers the modules.
+		Gathers the modules.
 		:return: Method success. ( Boolean )
 		"""
 
@@ -432,7 +432,7 @@ class ModulesManager(object):
 
 	def registerModuleInterfaces(self, module):
 		"""
-		This method instantiates given module interfaces.
+		Instantiates given module interfaces.
 
 		:param module: Module. ( Module )
 		:return: Method success. ( Boolean )
@@ -455,7 +455,7 @@ class ModulesManager(object):
 
 	def registerInterfaces(self):
 		"""
-		This method registers modules interfaces.
+		Registers modules interfaces.
 
 		:return: Method success. ( Boolean )
 		"""
@@ -466,7 +466,7 @@ class ModulesManager(object):
 
 	def unregisterAll(self):
 		"""
-		This method unregisters modules and their interfaces.
+		Unregisters modules and their interfaces.
 
 		:return: Method success. ( Boolean )
 		"""
@@ -476,7 +476,7 @@ class ModulesManager(object):
 
 	def registerAll(self):
 		"""
-		This method registers modules and their interfaces.
+		Registers modules and their interfaces.
 
 		:return: Method success. ( Boolean )
 		"""
@@ -487,7 +487,7 @@ class ModulesManager(object):
 
 	def reloadAll(self):
 		"""
-		This method reloads all modules and their interfaces.
+		Reloads all modules and their interfaces.
 
 		:return: Method success. ( Boolean )
 		"""

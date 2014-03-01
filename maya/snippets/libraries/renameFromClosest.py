@@ -49,7 +49,7 @@ def stacksHandler(object):
 
 def getMPoint(point):
 	"""
-	This definition returns an MPoint.
+	Returns an MPoint.
 
 	:param point: Point. ( List )
 	:return: MPoint ( MVector )
@@ -59,7 +59,7 @@ def getMPoint(point):
 
 def norme(pointA, pointB):
 	"""
-	This definition returns the norme of a vector.
+	Returns the norme of a vector.
 
 	:param pointA: Point A. ( List )
 	:param pointB: Point B. ( List )
@@ -73,7 +73,7 @@ def norme(pointA, pointB):
 
 def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
 	"""
-	This definition renames the targets from closest sources.
+	Renames the targets from closest sources.
 
 	:param sources: Sources. ( List )
 	:param targets: Targets. ( List )
@@ -91,7 +91,7 @@ def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
 @stacksHandler
 def pickSources_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **pickSources_button** button when clicked.
+	Defines the slot triggered by **pickSources_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -101,7 +101,7 @@ def pickSources_button_OnClicked(state=None):
 @stacksHandler
 def pickTargets_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **pickTargets_button** button when clicked.
+	Defines the slot triggered by **pickTargets_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -111,7 +111,7 @@ def pickTargets_button_OnClicked(state=None):
 @stacksHandler
 def renameFromClosest_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **renameFromClosest_button** button when clicked.
+	Defines the slot triggered by **renameFromClosest_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -123,7 +123,7 @@ def renameFromClosest_button_OnClicked(state=None):
 
 def renameFromClosest_window():
 	"""
-	This definition creates the 'Rename From Closest' main window.
+	Creates the 'Rename From Closest' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -161,7 +161,7 @@ def renameFromClosest_window():
 
 def renameFromClosest():
 	"""
-	This definition launches the 'Rename From Closest' main window.
+	Launches the 'Rename From Closest' main window.
 	"""
 
 	renameFromClosest_window()
@@ -169,7 +169,7 @@ def renameFromClosest():
 @stacksHandler
 def IRenameFromClosest():
 	"""
-	This definition is the renameFromClosest definition Interface.
+	Defines the renameFromClosest definition Interface.
 	"""
 
 	renameFromClosest()

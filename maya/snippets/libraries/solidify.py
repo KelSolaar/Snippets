@@ -55,7 +55,7 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This definition returns transform of the given node.
+	Returns transform of the given node.
 
 	:param node: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -70,7 +70,7 @@ def getTransform(node, fullPath=True):
 
 def getMVector(vector):
 	"""
-	This definition returns an MVector.
+	Returns an MVector.
 
 	:param vector: Vector. ( List )
 	:return: MVector ( MVector )
@@ -80,7 +80,7 @@ def getMVector(vector):
 
 def getMMatrix(matrix):
 	"""
-	This definition returns an MMatrix.
+	Returns an MMatrix.
 
 	:param matrix: matrix. ( List )
 	:return: MMatrix ( MMatrix )
@@ -92,7 +92,7 @@ def getMMatrix(matrix):
 
 def normalize(vector):
 	"""
-	This definition returns the normalized vector.
+	Returns the normalized vector.
 
 	:param vector: Vector. ( List )
 	:return: Normalized vector ( Tuple )
@@ -104,7 +104,7 @@ def normalize(vector):
 
 def vectorMatrixMultiplication(vector, matrix):
 	"""
-	This definition returns the vector multiplication between a Vector And a matrix.
+	Returns the vector multiplication between a Vector And a matrix.
 
 	:param vector: Vector. ( List )
 	:param matrix: matrix. ( List )
@@ -118,7 +118,7 @@ def vectorMatrixMultiplication(vector, matrix):
 
 def dot(vectorA, vectorB):
 	"""
-	This definition returns the dot product between two vectors.
+	Returns the dot product between two vectors.
 
 	:param vectorA: Vector A. ( List )
 	:param vectorB: Vector B. ( List )
@@ -131,7 +131,7 @@ def dot(vectorA, vectorB):
 
 def getAverageVector(vectors):
 	"""
-	This definition returns the average vector from a list of vectors.
+	Returns the average vector from a list of vectors.
 
 	:param vectors: Vectors to get the average one. ( List )
 	:return: Average vector. ( List )
@@ -147,7 +147,7 @@ def getAverageVector(vectors):
 
 def getAngle(vectorA, vectorB):
 	"""
-	This definition returns the angle between two vectors.
+	Returns the angle between two vectors.
 
 	:param vectorA: Vector A. ( List )
 	:param vectorB: Vector B. ( List )
@@ -158,7 +158,7 @@ def getAngle(vectorA, vectorB):
 
 def hasBorderEdges(object):
 	"""
-	This definition returns if an object has border edges.
+	Returns if an object has border edges.
 
 	:param object: Object. ( String )
 	:return: Has object border edges. ( Boolean )
@@ -172,7 +172,7 @@ def hasBorderEdges(object):
 
 def solidifyObject(object, height=1, divisions=2, history=True):
 	"""
-	This definition solidifies given object.
+	Solidifies given object.
 
 	:param object: Object. ( String )
 	:param height: Extrusion height. ( Float )
@@ -216,7 +216,7 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 @stacksHandler
 def solidify_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **solidify_button** button when clicked.
+	Defines the slot triggered by **solidify_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -226,7 +226,7 @@ def solidify_button_OnClicked(state=None):
 
 def solidify_window():
 	"""
-	This definition creates the 'Solidify' main window.
+	Creates the 'Solidify' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -263,7 +263,7 @@ def solidify_window():
 
 def solidify():
 	"""
-	This definition launches the 'Solidify' main window.
+	Launches the 'Solidify' main window.
 	"""
 
 	solidify_window()
@@ -271,7 +271,7 @@ def solidify():
 @stacksHandler
 def ISolidify():
 	"""
-	This definition is the solidify definition Interface.
+	Defines the solidify definition Interface.
 	"""
 
 	solidify()

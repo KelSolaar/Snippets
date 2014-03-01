@@ -76,7 +76,7 @@ def stacksHandler(object):
 
 def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
-	This definition returns shapes of the given object.
+	Returns shapes of the given object.
 
 	:param object: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -93,7 +93,7 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 
 def transfertVerticesPositionsInUvsSpace(targets, source):
 	"""
-	This definition transferts vertices positions from source to targets object in UVs space.
+	Transferts vertices positions from source to targets object in UVs space.
 
 	:param targets: Sources objects. ( List )
 	:param source: Target object. ( String )
@@ -106,7 +106,7 @@ def transfertVerticesPositionsInUvsSpace(targets, source):
 @stacksHandler
 def ITransfertVerticesPositionsInUvsSpace():
 	"""
-	This definition is the transfertVerticesPositionsInUvsSpace definition Interface.
+	Defines the transfertVerticesPositionsInUvsSpace definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -114,7 +114,7 @@ def ITransfertVerticesPositionsInUvsSpace():
 
 def transfertVerticesPositionsInWorldSpace(targets, source, searchMethod=0):
 	"""
-	This definition transferts vertices positions from source to targets object in world space.
+	Transferts vertices positions from source to targets object in world space.
 
 	:param targets: Sources objects. ( List )
 	:param source: Target object. ( String )
@@ -128,7 +128,7 @@ def transfertVerticesPositionsInWorldSpace(targets, source, searchMethod=0):
 @stacksHandler
 def ITransfertVerticesPositionsInWorldSpace():
 	"""
-	This definition is the transfertVerticesPositionsInWorldSpace definition Interface.
+	Defines the transfertVerticesPositionsInWorldSpace definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -136,7 +136,7 @@ def ITransfertVerticesPositionsInWorldSpace():
 
 def transfertUvsInTopologySpace(targets, source):
 	"""
-	This definition transferts UVs from source to targets object in topology space.
+	Transferts UVs from source to targets object in topology space.
 
 	:param targets: Sources objects. ( List )
 	:param source: Target object. ( String )
@@ -149,7 +149,7 @@ def transfertUvsInTopologySpace(targets, source):
 @stacksHandler
 def ITransfertUvsInTopologySpace():
 	"""
-	This definition is the transfertUvsInTopologySpace definition Interface.
+	Defines the transfertUvsInTopologySpace definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -157,7 +157,7 @@ def ITransfertUvsInTopologySpace():
 
 def toggleSelectionHighlight():
 	"""
-	This definition toggles active modeling panel selection highlight.
+	Toggles active modeling panel selection highlight.
 	"""
 
 	panel = cmds.getPanel(withFocus=True)
@@ -169,14 +169,14 @@ def toggleSelectionHighlight():
 @stacksHandler
 def IToggleSelectionHighlight():
 	"""
-	This definition is the toggleSelectionHighlight definition Interface.
+	Defines the toggleSelectionHighlight definition Interface.
 	"""
 
 	toggleSelectionHighlight()
 
 def toggleGeometriesVisibility():
 	"""
-	This definition toggles active modeling panel geometries visibility highlight.
+	Toggles active modeling panel geometries visibility highlight.
 	"""
 
 	panel = cmds.getPanel(withFocus=True)
@@ -191,14 +191,14 @@ def toggleGeometriesVisibility():
 @stacksHandler
 def IToggleGeometriesVisibility():
 	"""
-	This definition is the toggleGeometriesVisibility definition Interface.
+	Defines the toggleGeometriesVisibility definition Interface.
 	"""
 
 	toggleGeometriesVisibility()
 
 def toggleGeometriesShadingOverride(nodes):
 	"""
-	This definition toggles geometries shading override.
+	Toggles geometries shading override.
 	
 	:param nodes: Nodes to toggle shading override on. ( List )
 	"""
@@ -211,7 +211,7 @@ def toggleGeometriesShadingOverride(nodes):
 @stacksHandler
 def IToggleGeometriesShadingOverride():
 	"""
-	This definition is the toggleGeometriesShadingOverride definition Interface.
+	Defines the toggleGeometriesShadingOverride definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True, type="transform")
@@ -219,7 +219,7 @@ def IToggleGeometriesShadingOverride():
 
 def isolateSelection():
 	"""
-	This definition isolates current selection.
+	Isolates current selection.
 	"""
 
 	panel = cmds.getPanel(withFocus=True)
@@ -231,14 +231,14 @@ def isolateSelection():
 @stacksHandler
 def IIsolateSelection():
 	"""
-	This definition is the isolateSelection definition Interface.
+	Defines the isolateSelection definition Interface.
 	"""
 
 	isolateSelection()
 
 def splitRingMiddle(nodes):
 	"""
-	This definition sets the polysplitring nodes weights to 0.5.
+	Sets the polysplitring nodes weights to 0.5.
 
 	:param nodes: Nodes to retrieve history from. ( List )
 	"""
@@ -251,7 +251,7 @@ def splitRingMiddle(nodes):
 @stacksHandler
 def ISplitRingMiddle():
 	"""
-	This definition is the splitRingMiddle definition Interface.
+	Defines the splitRingMiddle definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -259,7 +259,7 @@ def ISplitRingMiddle():
 
 def symmetricalInstance(object):
 	"""
-	This definition creates a symmetrical instance.
+	Creates a symmetrical instance.
 
 	:param object: Object to symmetrical instantiate. ( String )
 	"""
@@ -270,7 +270,7 @@ def symmetricalInstance(object):
 @stacksHandler
 def ISymmetricalInstance():
 	"""
-	This definition is the symmetricalInstance definition Interface.
+	Defines the symmetricalInstance definition Interface.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -279,7 +279,7 @@ def ISymmetricalInstance():
 
 def pivotsIdentity(transforms):
 	"""
-	This definition puts given transforms pivots to origin.
+	Puts given transforms pivots to origin.
 
 	:param transforms: Transforms to affect pivots. ( List )
 	"""
@@ -293,7 +293,7 @@ def pivotsIdentity(transforms):
 @stacksHandler
 def IPivotsIdentity():
 	"""
-	This definition is the pivotsIdentity definition Interface.
+	Defines the pivotsIdentity definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True, type="transform")
@@ -302,7 +302,7 @@ def IPivotsIdentity():
 
 def flattenHierachy(object):
 	"""
-	This definition flattens given object hierarchy.
+	Flattens given object hierarchy.
 	
 	:return: Definition succes. ( Boolean )
 	"""
@@ -324,7 +324,7 @@ def flattenHierachy(object):
 @stacksHandler
 def IFlattenHierachy():
 	"""
-	This definition is the flattenHierachy definition Interface.
+	Defines the flattenHierachy definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -333,7 +333,7 @@ def IFlattenHierachy():
 
 def transfertSelection():
 	"""
-	This definition transfers a component selection to another object.
+	Transfers a component selection to another object.
 	
 	:return: Definition succes. ( Boolean )
 	"""
@@ -361,7 +361,7 @@ def transfertSelection():
 @stacksHandler
 def ITransfertSelection():
 	"""
-	This definition is the transfertSelection definition Interface.
+	Defines the transfertSelection definition Interface.
 	"""
 
 	transfertSelection()
@@ -369,7 +369,7 @@ def ITransfertSelection():
 @stacksHandler
 def transfertSelectionToUserTarget():
 	"""
-	This definition transfers a component selection to user target object.
+	Transfers a component selection to user target object.
 	"""
 
 	source = cmds.textField("target_textField", query=True, text=True)
@@ -385,7 +385,7 @@ def transfertSelectionToUserTarget():
 @stacksHandler
 def pickTarget_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **pickTarget_button** button when clicked.
+	Defines the slot triggered by **pickTarget_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -396,7 +396,7 @@ def pickTarget_button_OnClicked(state=None):
 @stacksHandler
 def setUnsetContextHotkeys():
 	"""
-	This definition sets / unsets context hotkeys.
+	Sets / unsets context hotkeys.
 	"""
 
 	sequence = TRANSFERT_SELECTION_HOTKEY
@@ -419,7 +419,7 @@ def setUnsetContextHotkeys():
 @stacksHandler
 def transfertSelection_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **transfertSelection_button** button when clicked.
+	Defines the slot triggered by **transfertSelection_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -428,7 +428,7 @@ def transfertSelection_button_OnClicked(state=None):
 
 def transfertSelectionToTarget_window():
 	"""
-	This definition creates the 'Transfert Selection To Target' main window.
+	Creates the 'Transfert Selection To Target' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -464,7 +464,7 @@ def transfertSelectionToTarget_window():
 @stacksHandler
 def transfertSelectionToTarget():
 	"""
-	This definition launches the 'Transfert Selection To Target' main window.
+	Launches the 'Transfert Selection To Target' main window.
 	"""
 
 	transfertSelectionToTarget_window()
@@ -472,7 +472,7 @@ def transfertSelectionToTarget():
 @stacksHandler
 def ITransfertSelectionToTarget():
 	"""
-	This definition is the transfertSelectionToTarget definition Interface.
+	Defines the transfertSelectionToTarget definition Interface.
 	"""
 
 	transfertSelectionToTarget()

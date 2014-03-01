@@ -41,7 +41,7 @@ def stacksHandler(object):
 
 def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
-	This definition returns shapes of the given object.
+	Returns shapes of the given object.
 
 	:param object: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -58,7 +58,7 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 
 def snapObjectsOnSupport(objects, support):
 	"""
-	This definition snaps objects on support.
+	Snaps objects on support.
 
 	:param objects: Objects to snap. ( List )
 	:param value: Support. ( String )
@@ -88,7 +88,7 @@ def snapObjectsOnSupport(objects, support):
 @stacksHandler
 def ISnapObjectsOnSupport():
 	"""
-	This definition is the snapObjectsOnSupport definition Interface.
+	Defines the snapObjectsOnSupport definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)

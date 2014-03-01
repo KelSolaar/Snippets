@@ -55,7 +55,7 @@ def stacksHandler(object):
 
 def getMVector(vector):
 	"""
-	This definition returns an MVector.
+	Returns an MVector.
 
 	:param vector: Vector. ( List )
 	:return: MVector ( MVector )
@@ -65,7 +65,7 @@ def getMVector(vector):
 
 def normalize(vector):
 	"""
-	This definition returns the normalized vector.
+	Returns the normalized vector.
 
 	:param vector: Vector. ( List )
 	:return: Normalized vector ( Tuple )
@@ -77,7 +77,7 @@ def normalize(vector):
 
 def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", "Z")):
 	"""
-	This definition aligns given Components between the two anchors.
+	Aligns given Components between the two anchors.
 
 	:param anchorA: Anchor a. ( String )
 	:param anchorB: Anchor b. ( String )
@@ -109,7 +109,7 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 @stacksHandler
 def selectAnchors_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **selectAnchors_button** button when clicked.
+	Defines the slot triggered by **selectAnchors_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -125,7 +125,7 @@ def selectAnchors_button_OnClicked(state=None):
 @stacksHandler
 def alignSelection_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **alignSelection_button** button when clicked.
+	Defines the slot triggered by **alignSelection_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -137,7 +137,7 @@ def alignSelection_button_OnClicked(state=None):
 @stacksHandler
 def alignSelectionOnXAxis_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **alignSelectionOnXAxis_button** button when clicked.
+	Defines the slot triggered by **alignSelectionOnXAxis_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -149,7 +149,7 @@ def alignSelectionOnXAxis_button_OnClicked(state=None):
 @stacksHandler
 def alignSelectionOnYAxis_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **alignSelectionOnYAxis_button** button when clicked.
+	Defines the slot triggered by **alignSelectionOnYAxis_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -161,7 +161,7 @@ def alignSelectionOnYAxis_button_OnClicked(state=None):
 @stacksHandler
 def alignSelectionOnZAxis_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **alignSelectionOnZAxis_button** button when clicked.
+	Defines the slot triggered by **alignSelectionOnZAxis_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -172,7 +172,7 @@ def alignSelectionOnZAxis_button_OnClicked(state=None):
 
 def alignComponents_window():
 	"""
-	This definition creates the 'Align Components' main window.
+	Creates the 'Align Components' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -206,7 +206,7 @@ def alignComponents_window():
 
 def alignComponents():
 	"""
-	This definition launches the 'Align Components' main window.
+	Launches the 'Align Components' main window.
 	"""
 
 	alignComponents_window()
@@ -214,7 +214,7 @@ def alignComponents():
 @stacksHandler
 def IAlignComponents():
 	"""
-	This definition is the alignComponents definition Interface.
+	Defines the alignComponents definition Interface.
 	"""
 
 	alignComponents()

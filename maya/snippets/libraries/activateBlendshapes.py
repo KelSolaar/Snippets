@@ -79,7 +79,7 @@ def stacksHandler(object):
 
 def weight_floatSliderGrp_OnValueChanged(value):
 	"""
-	This definition is triggered by the 'weight_floatSliderGrp' slider when its value changed.
+	Defines the slot triggered by 'weight_floatSliderGrp' slider when value changed.
 
 	:param value: Value. ( Float )
 	"""
@@ -88,7 +88,7 @@ def weight_floatSliderGrp_OnValueChanged(value):
 
 def setWeight(value):
 	"""
-	This definition activates every first blendshape node slot in the scene.
+	Activates every first blendshape node slot in the scene.
 
 	:param value: Activation value. ( Float )
 	"""
@@ -104,7 +104,7 @@ def setWeight(value):
 
 def activateBlendshapes_window():
 	"""
-	This definition creates the 'Activate Blendshapes' main window.
+	Creates the 'Activate Blendshapes' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -132,7 +132,7 @@ def activateBlendshapes_window():
 
 def activateBlendshapes():
 	"""
-	This definition launches the 'Activate Blendshapes' main window.
+	Launches the 'Activate Blendshapes' main window.
 	"""
 
 	activateBlendshapes_window()
@@ -140,7 +140,7 @@ def activateBlendshapes():
 @stacksHandler
 def IActivateBlendshapes():
 	"""
-	This definition is the activateBlendshapes definition Interface.
+	Defines the activateBlendshapes definition Interface.
 	"""
 
 	activateBlendshapes()

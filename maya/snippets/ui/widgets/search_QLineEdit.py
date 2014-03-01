@@ -66,7 +66,7 @@ class Search_QLineEdit(QLineEdit):
 				uiClearImage=None,
 				uiClearClickedImage=None):
 		"""
-		This method initializes the class.
+		Initializes the class.
 
 		:param parent: Widget parent. ( QObject )
 		:param uiSearchImage: Search button image path. ( String )
@@ -121,7 +121,7 @@ class Search_QLineEdit(QLineEdit):
 	@property
 	def uiSearchImage(self):
 		"""
-		This method is the property for **self.__uiSearchImage** attribute.
+		Property for **self.__uiSearchImage** attribute.
 
 		:return: self.__uiSearchImage. ( String )
 		"""
@@ -132,7 +132,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def uiSearchImage(self, value):
 		"""
-		This method is the setter method for **self.__uiSearchImage** attribute.
+		Setter for **self.__uiSearchImage** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -147,7 +147,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def uiSearchImage(self):
 		"""
-		This method is the deleter method for **self.__uiSearchImage** attribute.
+		Deleter for **self.__uiSearchImage** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -156,7 +156,7 @@ class Search_QLineEdit(QLineEdit):
 	@property
 	def uiSearchClickedImage(self):
 		"""
-		This method is the property for **self.__uiSearchClickedImage** attribute.
+		Property for **self.__uiSearchClickedImage** attribute.
 
 		:return: self.__uiSearchClickedImage. ( String )
 		"""
@@ -167,7 +167,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def uiSearchClickedImage(self, value):
 		"""
-		This method is the setter method for **self.__uiSearchClickedImage** attribute.
+		Setter for **self.__uiSearchClickedImage** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -183,7 +183,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def uiSearchClickedImage(self):
 		"""
-		This method is the deleter method for **self.__uiSearchClickedImage** attribute.
+		Deleter for **self.__uiSearchClickedImage** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -192,7 +192,7 @@ class Search_QLineEdit(QLineEdit):
 	@property
 	def uiClearImage(self):
 		"""
-		This method is the property for **self.__uiClearImage** attribute.
+		Property for **self.__uiClearImage** attribute.
 
 		:return: self.__uiClearImage. ( String )
 		"""
@@ -203,7 +203,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def uiClearImage(self, value):
 		"""
-		This method is the setter method for **self.__uiClearImage** attribute.
+		Setter for **self.__uiClearImage** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -219,7 +219,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def uiClearImage(self):
 		"""
-		This method is the deleter method for **self.__uiClearImage** attribute.
+		Deleter for **self.__uiClearImage** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -228,7 +228,7 @@ class Search_QLineEdit(QLineEdit):
 	@property
 	def uiClearClickedImage(self):
 		"""
-		This method is the property for **self.__uiClearClickedImage** attribute.
+		Property for **self.__uiClearClickedImage** attribute.
 
 		:return: self.__uiClearClickedImage. ( String )
 		"""
@@ -239,7 +239,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def uiClearClickedImage(self, value):
 		"""
-		This method is the setter method for **self.__uiClearClickedImage** attribute.
+		Setter for **self.__uiClearClickedImage** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -255,7 +255,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def uiClearClickedImage(self):
 		"""
-		This method is the deleter method for **self.__uiClearClickedImage** attribute.
+		Deleter for **self.__uiClearClickedImage** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -264,7 +264,7 @@ class Search_QLineEdit(QLineEdit):
 	@property
 	def searchActiveLabel(self):
 		"""
-		This method is the property for **self.__searchActiveLabel** attribute.
+		Property for **self.__searchActiveLabel** attribute.
 
 		:return: self.__searchActiveLabel. ( QPushButton )
 		"""
@@ -275,7 +275,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def searchActiveLabel(self, value):
 		"""
-		This method is the setter method for **self.__searchActiveLabel** attribute.
+		Setter for **self.__searchActiveLabel** attribute.
 
 		:param value: Attribute value. ( QPushButton )
 		"""
@@ -287,7 +287,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def searchActiveLabel(self):
 		"""
-		This method is the deleter method for **self.__searchActiveLabel** attribute.
+		Deleter for **self.__searchActiveLabel** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -296,7 +296,7 @@ class Search_QLineEdit(QLineEdit):
 	@property
 	def clearButton(self):
 		"""
-		This method is the property for **self.__clearButton** attribute.
+		Property for **self.__clearButton** attribute.
 
 		:return: self.__clearButton. ( QPushButton )
 		"""
@@ -307,7 +307,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def clearButton(self, value):
 		"""
-		This method is the setter method for **self.__clearButton** attribute.
+		Setter for **self.__clearButton** attribute.
 
 		:param value: Attribute value. ( QPushButton )
 		"""
@@ -319,7 +319,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def clearButton(self):
 		"""
-		This method is the deleter method for **self.__clearButton** attribute.
+		Deleter for **self.__clearButton** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -328,7 +328,7 @@ class Search_QLineEdit(QLineEdit):
 	@property
 	def completer(self):
 		"""
-		This method is the property for **self.__completer** attribute.
+		Property for **self.__completer** attribute.
 
 		:return: self.__completer. ( QCompleter )
 		"""
@@ -339,7 +339,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def completer(self, value):
 		"""
-		This method is the setter method for **self.__completer** attribute.
+		Setter for **self.__completer** attribute.
 
 		:param value: Attribute value. ( QCompleter )
 		"""
@@ -351,7 +351,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def completer(self):
 		"""
-		This method is the deleter method for **self.__completer** attribute.
+		Deleter for **self.__completer** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -360,7 +360,7 @@ class Search_QLineEdit(QLineEdit):
 	@property
 	def completerVisibleItemsCount(self):
 		"""
-		This method is the property for **self.__completerVisibleItemsCount** attribute.
+		Property for **self.__completerVisibleItemsCount** attribute.
 
 		:return: self.__completerVisibleItemsCount. ( Integer )
 		"""
@@ -371,7 +371,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def completerVisibleItemsCount(self, value):
 		"""
-		This method is the setter method for **self.__completerVisibleItemsCount** attribute.
+		Setter for **self.__completerVisibleItemsCount** attribute.
 
 		:param value: Attribute value. ( Integer )
 		"""
@@ -383,7 +383,7 @@ class Search_QLineEdit(QLineEdit):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def completerVisibleItemsCount(self):
 		"""
-		This method is the deleter method for **self.__completerVisibleItemsCount** attribute.
+		Deleter for **self.__completerVisibleItemsCount** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -394,7 +394,7 @@ class Search_QLineEdit(QLineEdit):
 	#******************************************************************************************************************
 	def resizeEvent(self, event):
 		"""
-		This method reimplements the :meth:`QLineEdit.QResizeEvent` method.
+		Reimplements the :meth:`QLineEdit.QResizeEvent` method.
 
 		:param event: Resize event. ( QResizeEvent )
 		"""
@@ -409,7 +409,7 @@ class Search_QLineEdit(QLineEdit):
 
 	def __initializeUi(self):
 		"""
-		This method initializes the Widget ui.
+		Initializes the Widget ui.
 		"""
 
 		self.__clearButton.setCursor(Qt.ArrowCursor)
@@ -437,7 +437,7 @@ class Search_QLineEdit(QLineEdit):
 
 	def __setStyleSheet(self):
 		"""
-		This method sets the Widget stylesheet.
+		Sets the Widget stylesheet.
 		"""
 
 		frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
@@ -448,7 +448,7 @@ class Search_QLineEdit(QLineEdit):
 
 	def __setClearButtonVisibility(self, text):
 		"""
-		This method sets the clear button visibility.
+		Sets the clear button visibility.
 
 		:param text: Current field text. ( QString )
 		"""

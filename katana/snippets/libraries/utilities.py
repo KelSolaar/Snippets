@@ -7,7 +7,7 @@ import re
 
 def consolePrint(*args):
 	"""
-	This definition prints given message to KatanaConsole.
+	Prints given message to KatanaConsole.
 
 	:param \*args: Arguments. ( \* )
 	"""
@@ -16,7 +16,7 @@ def consolePrint(*args):
 
 def listRendererObjectNames(renderer):
 	"""
-	This definition lists given render object names ( Shaders ).
+	Lists given render object names ( Shaders ).
 
 	:param renderer: Renderer to list the object names. ( String )
 	:return: Object names. ( List )
@@ -28,7 +28,7 @@ def listRendererObjectNames(renderer):
 
 def listNode(node, indentation="\t", tabLevel= -1):
 	"""
-	This definition lists the current node and its children.
+	Lists the current node and its children.
 
 	:param node: Node to list. ( Object )
 	:param indentation: Indentation character. ( String )
@@ -58,7 +58,7 @@ def listNode(node, indentation="\t", tabLevel= -1):
 
 def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 	"""
-	This definition lists given node and children hints parameters.
+	Lists given node and children hints parameters.
 
 	:param node: Node to list hint parameters. ( Object )
 	:param outputAsTree: Output as groups outputAsTree. ( Boolean )
@@ -103,7 +103,7 @@ def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 
 def nodesWalker(node, ascendants=False):
 	"""
-	This definition is a generator used to walk into nodes hierarchy.
+	Defines a generator used to walk into nodes hierarchy.
 
 	:param node: Node to walk. ( Object )
 	:param ascendants: Ascendants instead of descendants will be yielded. ( Boolean )
@@ -139,7 +139,7 @@ parametersWalker = nodesWalker
 
 def filterNodeParameters(node, pattern=r".*", flags=0):
 	"""
-	This definition filters given nodes parameters using given pattern.
+	Filters given nodes parameters using given pattern.
 
 	:param nodes: Nodes parameters to search and replace. ( List )
 	:param pattern: Matching pattern. ( String )
@@ -152,7 +152,7 @@ def filterNodeParameters(node, pattern=r".*", flags=0):
 
 def resetNodeParameters(node, pattern=r".*", flags=0):
 	"""
-	This definition resets given nodes parameters using given pattern.
+	Resets given nodes parameters using given pattern.
 
 	:param nodes: Nodes parameters to search and replace. ( List )
 	:param pattern: Matching pattern. ( String )
@@ -166,7 +166,7 @@ def resetNodeParameters(node, pattern=r".*", flags=0):
 
 def importScriptNode(path):
 	"""
-	This definition imports given path script node.
+	Imports given path script node.
 
 	:param path: Script node path. ( String )
 	:return: Script node success. ( Object )
@@ -186,7 +186,7 @@ def importScriptNode(path):
 
 def singleShotScriptNode(path, parameter):
 	"""
-	This definition executes given path script node parameter.
+	Executes given path script node parameter.
 
 	:param path: Script node path. ( String )
 	:return: Definition success. ( Boolean )

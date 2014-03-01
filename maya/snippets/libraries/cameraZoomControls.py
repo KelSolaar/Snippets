@@ -47,7 +47,7 @@ def stacksHandler(object):
 
 def getActiveCamera():
 	"""
-	This definition returns the current active camera.
+	Returns the current active camera.
 
 	:return: Active camera. ( String )
 	"""
@@ -61,7 +61,7 @@ def getActiveCamera():
 
 def overscan_floatSliderGrp_OnValueChanged(value):
 	"""
-	This definition is triggered by the 'overscan_floatSliderGrp' slider when its value changed.
+	Defines the slot triggered by 'overscan_floatSliderGrp' slider when value changed.
 
 	:param value: Value. ( Float )
 	"""
@@ -76,7 +76,7 @@ def overscan_floatSliderGrp_OnValueChanged(value):
 
 def horizontalOffset_floatSliderGrp_OnValueChanged(value):
 	"""
-	This definition is triggered by the 'horizontalOffset_floatSliderGrp' slider when its value changed.
+	Defines the slot triggered by 'horizontalOffset_floatSliderGrp' slider when value changed.
 
 	:param value: Value. ( Float )
 	"""
@@ -91,7 +91,7 @@ def horizontalOffset_floatSliderGrp_OnValueChanged(value):
 
 def verticalOffset_floatSliderGrp_OnValueChanged(value):
 	"""
-	This definition is triggered by the 'verticalOffset_floatSliderGrp' slider when its value changed.
+	Defines the slot triggered by 'verticalOffset_floatSliderGrp' slider when value changed.
 
 	:param value: Value. ( Float )
 	"""
@@ -106,7 +106,7 @@ def verticalOffset_floatSliderGrp_OnValueChanged(value):
 
 def resetZoomControls_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **resetZoomControls_button** button when clicked.
+	Defines the slot triggered by **resetZoomControls_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -124,7 +124,7 @@ def resetZoomControls_button_OnClicked(state=None):
 
 def cameraZoomControls_window():
 	"""
-	This definition creates the 'Camera Zoom Controls' main window.
+	Creates the 'Camera Zoom Controls' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -154,7 +154,7 @@ def cameraZoomControls_window():
 	
 def cameraZoomControls():
 	"""
-	This definition launches the 'Camera Zoom Controls' main window.
+	Launches the 'Camera Zoom Controls' main window.
 	"""
 
 	cameraZoomControls_window()
@@ -162,7 +162,7 @@ def cameraZoomControls():
 @stacksHandler
 def ICameraZoomControls():
 	"""
-	This definition is the cameraZoomControls definition Interface.
+	Defines the cameraZoomControls definition Interface.
 	"""
 
 	cameraZoomControls()

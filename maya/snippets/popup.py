@@ -80,7 +80,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
 		"""
-		This method initializes the class.
+		Initializes the class.
 		
 		:param parent: Parent object. ( QObject )
 		:param modulesManager: Modules Manager. ( ModulesManager )
@@ -109,7 +109,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@property
 	def container(self):
 		"""
-		This method is the property for **self.__container** attribute.
+		Property for **self.__container** attribute.
 
 		:return: self.__container. ( QObject )
 		"""
@@ -120,7 +120,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def container(self, value):
 		"""
-		This method is the setter method for **self.__container** attribute.
+		Setter for **self.__container** attribute.
 
 		:param value: Attribute value. ( QObject )
 		"""
@@ -131,7 +131,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def container(self):
 		"""
-		This method is the deleter method for **self.__container** attribute.
+		Deleter for **self.__container** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("container"))
@@ -139,7 +139,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@property
 	def modulesManager(self):
 		"""
-		This method is the property for **self.__modulesManager** attribute.
+		Property for **self.__modulesManager** attribute.
 
 		:return: self.__modulesManager. ( QObject )
 		"""
@@ -150,7 +150,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def modulesManager(self, value):
 		"""
-		This method is the setter method for **self.__modulesManager** attribute.
+		Setter for **self.__modulesManager** attribute.
 
 		:param value: Attribute value. ( QObject )
 		"""
@@ -161,7 +161,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def modulesManager(self):
 		"""
-		This method is the deleter method for **self.__modulesManager** attribute.
+		Deleter for **self.__modulesManager** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modulesManager"))
@@ -169,7 +169,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@property
 	def model(self):
 		"""
-		This method is the property for **self.__model** attribute.
+		Property for **self.__model** attribute.
 
 		:return: self.__model. ( TemplatesModel )
 		"""
@@ -180,7 +180,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def model(self, value):
 		"""
-		This method is the setter method for **self.__model** attribute.
+		Setter for **self.__model** attribute.
 
 		:param value: Attribute value. ( TemplatesModel )
 		"""
@@ -192,7 +192,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def model(self):
 		"""
-		This method is the deleter method for **self.__model** attribute.
+		Deleter for **self.__model** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -203,7 +203,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	#******************************************************************************************************************
 	def show(self):
 		"""
-		This method reimplements the :meth:`QWidget.show` method.
+		Reimplements the :meth:`QWidget.show` method.
 		"""
 
 		self.move(QCursor.pos().x() - self.width() / 2, QCursor.pos().y() - self.height() / 2)
@@ -213,7 +213,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 	def __initializeUI(self):
 		"""
-		This method triggers the **Methods_listWidget** Widget.
+		Triggers the **Methods_listWidget** Widget.
 		"""
 
 		self.setWindowFlags(Qt.Popup)
@@ -233,14 +233,14 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 	def __Interfaces_lineEdit__returnPressed(self):
 		"""
-		This method is triggered when **Interfaces_lineEdit** Widget when return is pressed.
+		Defines the slot triggered by **Interfaces_lineEdit** Widget when return pressed.
 		"""
 
 		self.__triggerInterface(self.Interfaces_lineEdit.text())
 
 	def __triggerInterface(self, name):
 		"""
-		This method triggers the Interface with given name execution.
+		Triggers the Interface with given name execution.
 		
 		:param name: Interface name. ( String )
 		"""
@@ -255,7 +255,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 	def setInterfaces(self, pattern=".*", flags=re.IGNORECASE):
 		"""
-		This method sets the Model interfaces.
+		Sets the Model interfaces.
 
 		:param pattern: Interface name. ( String )
 		:param flags: Regex filtering flags. ( Integer )
@@ -284,7 +284,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 	def getMethodName(self, name):
 		"""
-		This method gets the method name from the Interface.
+		Gets the method name from the Interface.
 
 		:param name: Interface name. ( String )
 		:return: Method name. ( String )
@@ -294,7 +294,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 	def getInterface(self, pattern):
 		"""
-		This method returns the Interface with given name.
+		Returns the Interface with given name.
 
 		:param pattern: Interface name. ( String )
 		:param flags: Regex filtering flags. ( Integer )
@@ -310,7 +310,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 	def executeInterface(self, interface):
 		"""
-		This method executes the object associated with given interface.
+		Executes the object associated with given interface.
 		
 		:param interface: Interface. ( Interface )
 		:return: Method success. ( Boolean )

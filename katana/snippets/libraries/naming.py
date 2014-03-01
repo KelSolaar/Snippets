@@ -8,7 +8,7 @@ NODES_NAMES_MAPPING_TABLE = {"ArnoldShadingNode" : "ArnoldSN",
 
 def getDefaultNodeName(node, mappingTable=NODES_NAMES_MAPPING_TABLE):
 	"""
-	This definition returns given node default name.
+	Returns given node default name.
 
 	:param nodes: Node to get the default name. ( Node )
 	:param mappingTable: Names mapping table. ( Dictionary )
@@ -25,7 +25,7 @@ def getDefaultNodeName(node, mappingTable=NODES_NAMES_MAPPING_TABLE):
 
 def setNodeName(node, name):
 	"""
-	This definition sets given node name.
+	Sets given node name.
 
 	:param node: Node to set the name. ( Object )
 	:param name: Node name. ( String )
@@ -42,7 +42,7 @@ def setNodeName(node, name):
 
 def setNodeNames(nodes, prefix, mappingTable=NODES_NAMES_MAPPING_TABLE, traverse=True):
 	"""
-	This definition sets given nodes names using given prefix.
+	Sets given nodes names using given prefix.
 
 	:param nodes: Nodes to set the names. ( List )
 	:param prefix: Prefix. ( String )
@@ -62,7 +62,7 @@ def setNodeNames(nodes, prefix, mappingTable=NODES_NAMES_MAPPING_TABLE, traverse
 
 def searchAndReplaceNodesNames(nodes, searchPattern, replacementPattern, flags=0, traverse=True):
 	"""
-	This definition search and replace given nodes names.
+	Search and replace given nodes names.
 
 	:param nodes: Nodes to search and replace. ( List )
 	:param searchPattern: Search pattern. ( String )
@@ -84,7 +84,7 @@ def searchAndReplaceNodesNames(nodes, searchPattern, replacementPattern, flags=0
 
 def removeNodesNamesTrailingNumbers(nodes, traverse=True):
 	"""
-	This definition removes given nodes names trailing numbers.
+	Removes given nodes names trailing numbers.
 
 	:param nodes: Nodes to search and replace. ( List )
 	:param traverse: Traverse nodes children. ( Boolean )
@@ -95,7 +95,7 @@ def removeNodesNamesTrailingNumbers(nodes, traverse=True):
 
 def prefixNodesNames(nodes, prefix, traverse=True):
 	"""
-	This definition prefixes given nodes names using given prefix.
+	Prefixes given nodes names using given prefix.
 
 	:param nodes: Nodes to search and replace. ( List )
 	:param prefix: Prefix. ( String )
@@ -107,7 +107,7 @@ def prefixNodesNames(nodes, prefix, traverse=True):
 
 def searchAndReplaceHintsParameter(parameter, searchPattern, replacementPattern, flags=0, time=0, keys=None):
 	"""
-	This definition search and replace given hint parameter.
+	Search and replace given hint parameter.
 
 	:param parameter: Hint parameter to search and replace. ( Object )
 	:param searchPattern: Search pattern. ( String )
@@ -132,7 +132,7 @@ def searchAndReplaceHintsParameter(parameter, searchPattern, replacementPattern,
 
 def searchAndReplaceHintsParameters(nodes, searchPattern, replacementPattern, flags=0, time=0, keys=None, traverse=True):
 	"""
-	This definition search and replace given nodes hints parameters.
+	Search and replace given nodes hints parameters.
 
 	:param nodes: Nodes to search and replace. ( List )
 	:param searchPattern: Search pattern. ( String )

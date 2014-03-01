@@ -149,7 +149,7 @@ def anchorSelection(object):
 
 def getFirstItem(iterable, default=None):
     """
-    This definition returns the first item of given iterable.
+    Returns the first item of given iterable.
 
     :param iterable: Iterable. ( Object )
     :param default: Default value. ( Object )
@@ -164,7 +164,7 @@ def getFirstItem(iterable, default=None):
 
 def getShapes(object, fullPathState=False, noIntermediateState=True):
     """
-    This definition returns shapes of the given object.
+    Returns shapes of the given object.
 
     :param object: Current object. ( String )
     :param fullPath: Current full path state. ( Boolean )
@@ -181,7 +181,7 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 
 def getNode(node):
 	"""
-	This definition returns given node if it exists or **None**.
+	Returns given node if it exists or **None**.
 
 	:param node: Current node to retrun. ( String )
 	:return: Node. ( String )
@@ -194,7 +194,7 @@ def getNode(node):
 
 def isGeometry(object):
 	"""
-	This definition returns if a node is a geometry.
+	Returns if a node is a geometry.
 
 	:param object: Current object to check. ( String )
 	:return: Geometry object state. ( Boolean )
@@ -207,7 +207,7 @@ def isGeometry(object):
 
 def getConnections(node):
     """
-    This definition returns the connections of given node.
+    Returns the connections of given node.
 
     :param node: Node. ( String )
     :return: Connections. ( List )
@@ -218,7 +218,7 @@ def getConnections(node):
 
 def getAttachedShaders(object):
     """
-    This definition returns the shaders attached to given objects.
+    Returns the shaders attached to given objects.
 
     :param object: Current object. ( String )
     :return: Attached shaders. ( List )
@@ -240,7 +240,7 @@ def getAttachedShaders(object):
 
 def getUVsFromComponents(components, flatten=True):
 	"""
-	This definition returns the uvs from given components.
+	Returns the uvs from given components.
 
 	:param components: Components. ( List )
 	:param flatten: Flatten components list. ( Boolean )
@@ -255,7 +255,7 @@ def getUVsFromComponents(components, flatten=True):
 
 def getFacesPerPatches(object):
 	"""
-	This definition returns the faces per patches from given object.
+	Returns the faces per patches from given object.
 
 	:param object: Object. ( String )
 	:return: Faces per patches. ( Dictionary )
@@ -274,7 +274,7 @@ def getFacesPerPatches(object):
 
 def getObjectUVsArea(object):
 	"""
-	This definition returns given object UVs area.
+	Returns given object UVs area.
 
 	:param object: Object to retrieve UVs area. ( String )
 	:return: UVs area. ( Integer )
@@ -298,7 +298,7 @@ def getObjectUVsArea(object):
 
 def getComponentUVDims(component):
 	"""
-	This definition returns the UVDims of the given component.
+	Returns the UVDims of the given component.
 
 	:param component: Component to retrieve the UVDims. ( String )
 	:return: UVDims. ( Tuple )
@@ -309,7 +309,7 @@ def getComponentUVDims(component):
 
 def getMariPatchFromUVDims(uvDims):
 	"""
-	This definition returns the Mari patch of the given component from UVDims.
+	Returns the Mari patch of the given component from UVDims.
 
 	:param uvDims: UVDims to convert to Mari Patch. ( Tuple )
 	:return: Mari patch. ( Integer )
@@ -320,7 +320,7 @@ def getMariPatchFromUVDims(uvDims):
 
 def getComponentsUVDims(components):
 	"""
-	This definition returns given components UVDims.
+	Returns given components UVDims.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components UVDims. ( List )
@@ -335,7 +335,7 @@ def getComponentsUVDims(components):
 
 def getComponentsMariPatches(components):
 	"""
-	This definition returns given components Mari patches.
+	Returns given components Mari patches.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components Mari patches. ( List )
@@ -349,7 +349,7 @@ def getComponentsMariPatches(components):
 
 def getComponentsOccupationAsUVDims(components):
 	"""
-	This definition returns given components occupation as UVDims.
+	Returns given components occupation as UVDims.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components occupation. ( Tuple )
@@ -360,7 +360,7 @@ def getComponentsOccupationAsUVDims(components):
 
 def getComponentsOccupationAsMariPatches(components):
 	"""
-	This definition returns given components occupation as Mari patches.
+	Returns given components occupation as Mari patches.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components occupation. ( Tuple )
@@ -371,7 +371,7 @@ def getComponentsOccupationAsMariPatches(components):
 
 def printComponentsOccupationAsUvDims():
 	"""
-	This definition prints selected components occupation as UVDims.
+	Prints selected components occupation as UVDims.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -379,14 +379,14 @@ def printComponentsOccupationAsUvDims():
 
 def IPrintComponentsOccupationAsUvDims():
 	"""
-	This definition is the printComponentsOccupationAsUvDims definition Interface.
+	Defines the printComponentsOccupationAsUvDims definition Interface.
 	"""
 
 	printComponentsOccupationAsUvDims()
 
 def printComponentsOccupationAsMariPatches():
 	"""
-	This definition prints selected components occupation as Mari patches.
+	Prints selected components occupation as Mari patches.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -394,14 +394,14 @@ def printComponentsOccupationAsMariPatches():
 
 def IPrintComponentsOccupationAsMariPatches():
 	"""
-	This definition is the printComponentsOccupationAsMariPatches definition Interface.
+	Defines the printComponentsOccupationAsMariPatches definition Interface.
 	"""
 
 	printComponentsOccupationAsMariPatches()
 
 def getComponentsBoundingBox(components):
 	"""
-	This definition returns given components Bounding Box.
+	Returns given components Bounding Box.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components Bounding Box. ( Tuple )
@@ -419,7 +419,7 @@ def getComponentsBoundingBox(components):
 
 def getComponentsUVsCenter(components):
 	"""
-	This definition returns given components UVs center.
+	Returns given components UVs center.
 
 	:param components: Components. ( Tuple / List )
 	:return: Components UVs center. ( Tuple )
@@ -430,7 +430,7 @@ def getComponentsUVsCenter(components):
 
 def printComponentsUvsCenterAsUvDims():
 	"""
-	This definition prints selected components Uvs center as UVDims
+	Prints selected components Uvs center as UVDims
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -438,14 +438,14 @@ def printComponentsUvsCenterAsUvDims():
 
 def IPrintComponentsUvsCenterAsUvDims():
 	"""
-	This definition is the printComponentsUvsCenterAsUvDims definition Interface.
+	Defines the printComponentsUvsCenterAsUvDims definition Interface.
 	"""
 
 	printComponentsUvsCenterAsUvDims()
 
 def printComponentsUvsCenterAsMariPatch():
 	"""
-	This definition prints selected components Uvs center as Mari Patch.
+	Prints selected components Uvs center as Mari Patch.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -453,7 +453,7 @@ def printComponentsUvsCenterAsMariPatch():
 
 def IPrintComponentsUvsCenterAsMariPatch():
 	"""
-	This definition is the printComponentsUvsCenterAsMariPatch definition Interface.
+	Defines the printComponentsUvsCenterAsMariPatch definition Interface.
 	"""
 
 	printComponentsUvsCenterAsMariPatch()
@@ -461,7 +461,7 @@ def IPrintComponentsUvsCenterAsMariPatch():
 @stacksHandler
 def scaleComponentsUVs(components, su=1, sv=1):
 	"""
-	This definition scales given components UVs.
+	Scales given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:param su: Scale U value. ( Float )
@@ -481,7 +481,7 @@ def scaleComponentsUVs(components, su=1, sv=1):
 @stacksHandler
 def centerComponentsUVs(components):
 	"""
-	This definition centers given components UVs.
+	Centers given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
@@ -497,7 +497,7 @@ def centerComponentsUVs(components):
 @stacksHandler
 def scaleCenterComponentsUVs(components, coverage=DEFAULT_SCALE_COVERAGE):
 	"""
-	This definition scales / centers given components UVs.
+	Scales / centers given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
@@ -517,7 +517,7 @@ def scaleCenterComponentsUVs(components, coverage=DEFAULT_SCALE_COVERAGE):
 @stacksHandler
 def rotateComponentsUVs(components, value, clockWise=True):
 	"""
-	This definition rotates given components UVs.
+	Rotates given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:param value: Rotation value. ( Float )
@@ -536,7 +536,7 @@ def rotateComponentsUVs(components, value, clockWise=True):
 @anchorSelection
 def polyRotateComponentsUVs(components, value, clockWise=True):
 	"""
-	This definition rotates given components UVs using Maya "polyRotateUVs" melscript ( Ugly but sadly faster ).
+	Rotates given components UVs using Maya "polyRotateUVs" melscript ( Ugly but sadly faster ).
 
 	:param components: Components. ( Tuple / List )
 	:param value: Rotation value. ( Float )
@@ -553,7 +553,7 @@ def polyRotateComponentsUVs(components, value, clockWise=True):
 @stacksHandler
 def moveComponentsUVs(components, u=0, v=0):
 	"""
-	This definition moves given components UVs.
+	Moves given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:param u: U value. ( Float )
@@ -568,7 +568,7 @@ def moveComponentsUVs(components, u=0, v=0):
 @stacksHandler
 def mirrorComponentsUVs(components, horizontal=True):
 	"""
-	This definition mirrors given components UVs.
+	Mirrors given components UVs.
 
 	:param components: Components. ( Tuple / List )
 	:param horizontal: Horizontal mirror. ( Boolean )
@@ -587,7 +587,7 @@ def mirrorComponentsUVs(components, horizontal=True):
 @stacksHandler
 def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 	"""
-	This definition stacks given objects UVs.
+	Stacks given objects UVs.
 
 	:param objects: Objects. ( Tuple / List )
 	:param alignement: Alignement ( "bottom", "top", "left", "right", "center" ). ( String )
@@ -630,7 +630,7 @@ def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 @stacksHandler
 def prescaleUVsShells(object):
 	"""
-	This definition prescales object UVs shells.
+	Prescales object UVs shells.
 
 	:param objects: Object. ( String )
 	:return: Definition succes. ( Boolean )
@@ -658,7 +658,7 @@ def prescaleUVsShells(object):
 @stacksHandler
 def autoRatioUVsAreas(objects):
 	"""
-	This definition scales objects UVs depending their worldspace areas.
+	Scales objects UVs depending their worldspace areas.
 
 	:param objects: Objects. ( Tuple / List )
 	:return: Definition succes. ( Boolean )
@@ -679,7 +679,7 @@ def autoRatioUVsAreas(objects):
 
 def getConnections(node):
     """
-    This definition returns the connections of given node.
+    Returns the connections of given node.
 
     :param node: Node. ( String )
     :return: Connections. ( List )
@@ -690,7 +690,7 @@ def getConnections(node):
 
 def getAttachedShaders(object):
     """
-    This definition returns the shaders attached to given objects.
+    Returns the shaders attached to given objects.
 
     :param object: Current object. ( String )
     :return: Attached shaders. ( List )
@@ -713,7 +713,7 @@ def getAttachedShaders(object):
 @stacksHandler
 def addUVsChecker(objects, uRepeats=4, vRepeats=4):
 	"""
-	This definition applies UVs checkers onto given geometry objects.
+	Applies UVs checkers onto given geometry objects.
 
 	:param objects: Current objects list. ( List )
 	:param uRepeats: U checker repeats. ( Float )
@@ -760,7 +760,7 @@ def removeUVsChecker(objects):
 @stacksHandler
 def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
 	"""
-	This definition sets UVs checkers repeats.
+	Sets UVs checkers repeats.
 
 	:param uRepeats: U checker repeats. ( Float )
 	:param vRepeats: V checker repeats. ( Float )
@@ -775,7 +775,7 @@ def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
 @stacksHandler
 def getPatchShaderTree(patch, prefix):
 	"""
-	This definition builds the patch shader tree of given patch.
+	Builds the patch shader tree of given patch.
 
 	:param patch: Patch. ( Integer )
 	:param prefix: Name prefix. ( String )
@@ -796,7 +796,7 @@ def getPatchShaderTree(patch, prefix):
 @stacksHandler
 def assignMariShadersToObject(object, prefix):
 	"""
-	This definition assigns the Mari shaders to given object.
+	Assigns the Mari shaders to given object.
 
 	:param prefix: Shader prefix name. ( String )
 	:param object: Object. ( String )
@@ -817,7 +817,7 @@ def assignMariShadersToObject(object, prefix):
 @stacksHandler
 def assignMariShaders(objects, prefix):
 	"""
-	This definition assigns the Mari shaders to given objects.
+	Assigns the Mari shaders to given objects.
 
 	:param objects: Objects. ( List )
 	:param prefix: Shader prefix name. ( String )
@@ -842,7 +842,7 @@ def assignMariShaders(objects, prefix):
 @stacksHandler
 def IAssignMariShaders():
 	"""
-	This definition is the assignMariShaders definition Interface.
+	Defines the assignMariShaders definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -859,7 +859,7 @@ def IAssignMariShaders():
 
 def getMariAffixes(name):
 	"""
-	This definition returns given name Mari affixes.
+	Returns given name Mari affixes.
 
 	:param name: Name. ( String )
 	:return: Affixes. ( Tuple )
@@ -872,7 +872,7 @@ def getMariAffixes(name):
 @stacksHandler
 def getPreviewMariTexturesBranches(directory, prefix, extension, shader="lambert"):
 	"""
-	This definition creates Mari preview textures branches.
+	Creates Mari preview textures branches.
 
 	:param directory: Source directory. ( String )
 	:param prefix: Files prefix. ( String )
@@ -896,7 +896,7 @@ def getPreviewMariTexturesBranches(directory, prefix, extension, shader="lambert
 @stacksHandler
 def assignMariPreviewTextures():
 	"""
-	This definition assigns the Mari preview textures.
+	Assigns the Mari preview textures.
 
 	:return: Definition success. ( Boolean )
 	"""
@@ -916,7 +916,7 @@ def assignMariPreviewTextures():
 @stacksHandler
 def IAssignMariPreviewTextures():
 	"""
-	This definition is the assignMariPreviewTextures definition Interface.
+	Defines the assignMariPreviewTextures definition Interface.
 	"""
 
 	assignMariPreviewTextures()
@@ -924,7 +924,7 @@ def IAssignMariPreviewTextures():
 @stacksHandler
 def flipUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **flipUVs_button** button when clicked.
+	Defines the slot triggered by **flipUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -935,7 +935,7 @@ def flipUVs_button_OnClicked(state=None):
 @stacksHandler
 def moveUpUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **moveUpUVs_button** button when clicked.
+	Defines the slot triggered by **moveUpUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -946,7 +946,7 @@ def moveUpUVs_button_OnClicked(state=None):
 @stacksHandler
 def flopUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **flopUVs_button** button when clicked.
+	Defines the slot triggered by **flopUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -957,7 +957,7 @@ def flopUVs_button_OnClicked(state=None):
 @stacksHandler
 def moveLeftUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **moveLeftUVs_button** button when clicked.
+	Defines the slot triggered by **moveLeftUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -968,7 +968,7 @@ def moveLeftUVs_button_OnClicked(state=None):
 @stacksHandler
 def fitUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **fitUVs_button** button when clicked.
+	Defines the slot triggered by **fitUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -979,7 +979,7 @@ def fitUVs_button_OnClicked(state=None):
 @stacksHandler
 def moveRightUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **moveRightUVs_button** button when clicked.
+	Defines the slot triggered by **moveRightUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -990,7 +990,7 @@ def moveRightUVs_button_OnClicked(state=None):
 @stacksHandler
 def centerUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **centerUVs_button** button when clicked.
+	Defines the slot triggered by **centerUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1001,7 +1001,7 @@ def centerUVs_button_OnClicked(state=None):
 @stacksHandler
 def moveDownUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **moveDownUVs_button** button when clicked.
+	Defines the slot triggered by **moveDownUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1012,7 +1012,7 @@ def moveDownUVs_button_OnClicked(state=None):
 @stacksHandler
 def scaleUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **scaleUVs_button** button when clicked.
+	Defines the slot triggered by **scaleUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1023,7 +1023,7 @@ def scaleUVs_button_OnClicked(state=None):
 @stacksHandler
 def rotateCounterClockWiseUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **rotateCounterClockWiseUVs_button** button when clicked.
+	Defines the slot triggered by **rotateCounterClockWiseUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1034,7 +1034,7 @@ def rotateCounterClockWiseUVs_button_OnClicked(state=None):
 @stacksHandler
 def rotateClockWiseUVs_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **rotateClockWiseUVs_button** button when clicked.
+	Defines the slot triggered by **rotateClockWiseUVs_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1045,7 +1045,7 @@ def rotateClockWiseUVs_button_OnClicked(state=None):
 @stacksHandler
 def stackUVsOnUBottom_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **stackUVsOnUBottom_button** button when clicked.
+	Defines the slot triggered by **stackUVsOnUBottom_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1056,7 +1056,7 @@ def stackUVsOnUBottom_button_OnClicked(state=None):
 @stacksHandler
 def stackUVsOnUCenter_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **stackUVsOnUCenter_button** button when clicked.
+	Defines the slot triggered by **stackUVsOnUCenter_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1067,7 +1067,7 @@ def stackUVsOnUCenter_button_OnClicked(state=None):
 @stacksHandler
 def stackUVsOnUTop_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **stackUVsOnUTop_button** button when clicked.
+	Defines the slot triggered by **stackUVsOnUTop_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1077,7 +1077,7 @@ def stackUVsOnUTop_button_OnClicked(state=None):
 @stacksHandler
 def stackUVsOnVLeft_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **stackUVsOnVLeft_button** button when clicked.
+	Defines the slot triggered by **stackUVsOnVLeft_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1088,7 +1088,7 @@ def stackUVsOnVLeft_button_OnClicked(state=None):
 @stacksHandler
 def stackUVsOnVCenter_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **stackUVsOnVCenter_button** button when clicked.
+	Defines the slot triggered by **stackUVsOnVCenter_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1099,7 +1099,7 @@ def stackUVsOnVCenter_button_OnClicked(state=None):
 @stacksHandler
 def stackUVsOnVRight_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **stackUVsOnVRight_button** button when clicked.
+	Defines the slot triggered by **stackUVsOnVRight_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1110,7 +1110,7 @@ def stackUVsOnVRight_button_OnClicked(state=None):
 @stacksHandler
 def prescaleUVsShells_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **prescaleUVsShells_button** button when clicked.
+	Defines the slot triggered by **prescaleUVsShells_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1122,7 +1122,7 @@ def prescaleUVsShells_button_OnClicked(state=None):
 @stacksHandler
 def autoRatioUVsAreas_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **autoRatioUVsAreas_button** button when clicked.
+	Defines the slot triggered by **autoRatioUVsAreas_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1133,7 +1133,7 @@ def autoRatioUVsAreas_button_OnClicked(state=None):
 @stacksHandler
 def addUVsChecker_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **addUVsChecker_button** button when clicked.
+	Defines the slot triggered by **addUVsChecker_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1144,7 +1144,7 @@ def addUVsChecker_button_OnClicked(state=None):
 @stacksHandler
 def removeUVsChecker_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **removeUVsChecker_button** button when clicked.
+	Defines the slot triggered by **removeUVsChecker_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -1155,7 +1155,7 @@ def removeUVsChecker_button_OnClicked(state=None):
 @stacksHandler
 def uRepeat_floatField_OnChanged(value=None):
 	"""
-	This definition is triggered by the **uRepeat_floatField** button when changed.
+	Defines the slot triggered by **uRepeat_floatField** button when changed.
 
 	:param value: Field value. ( Float )
 	"""
@@ -1165,7 +1165,7 @@ def uRepeat_floatField_OnChanged(value=None):
 @stacksHandler
 def vRepeat_floatField_OnChanged(value=None):
 	"""
-	This definition is triggered by the **vRepeat_floatField** button when changed.
+	Defines the slot triggered by **vRepeat_floatField** button when changed.
 
 	:param value: Field value. ( Float )
 	"""
@@ -1174,7 +1174,7 @@ def vRepeat_floatField_OnChanged(value=None):
 
 def unfoldingTools_window():
 	"""
-	This definition creates the 'Unfolding Tools' main window.
+	Creates the 'Unfolding Tools' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -1353,7 +1353,7 @@ def unfoldingTools_window():
 
 def unfoldingTools():
 	"""
-	This definition launches the 'Unfolding Tools' main window.
+	Launches the 'Unfolding Tools' main window.
 	"""
 
 	unfoldingTools_window()
@@ -1361,7 +1361,7 @@ def unfoldingTools():
 @stacksHandler
 def IUnfoldingTools():
 	"""
-	This definition is the unfoldingTools definition Interface.
+	Defines the unfoldingTools definition Interface.
 	"""
 
 	unfoldingTools()

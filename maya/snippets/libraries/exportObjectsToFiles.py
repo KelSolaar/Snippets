@@ -63,7 +63,7 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This definition returns transform of the given node.
+	Returns transform of the given node.
 
 	:param node: Current object. ( String )
 	:param fullPath: Current full path state. ( Boolean )
@@ -78,7 +78,7 @@ def getTransform(node, fullPath=True):
 
 def setPadding(data, padding, affix="0"):
 	"""
-	This definition pads the given data.
+	Pads the given data.
 
 	:param data: Data to pad. ( String )
 	:param padding: Padding. ( Integer )
@@ -91,7 +91,7 @@ def setPadding(data, padding, affix="0"):
 
 def getUserExportDirectory():
 	"""
-	This definition gets the user export directory.
+	Gets the user export directory.
 
 	:return: Export directory. ( String )
 	"""
@@ -102,7 +102,7 @@ def getUserExportDirectory():
 
 def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames=False):
 	"""
-	This definition export given objects to files.
+	Export given objects to files.
 
 	:param objects: Objects to export. ( List )
 	:param exportType: Export type. ( String )
@@ -129,7 +129,7 @@ def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames
 
 def exportSelectedObjectsToShortObjFiles():
 	"""
-	This definition exports selected objects to short named obj files.
+	Exports selected objects to short named obj files.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -138,14 +138,14 @@ def exportSelectedObjectsToShortObjFiles():
 @stacksHandler
 def IExportSelectedObjectsToShortObjFiles():
 	"""
-	This definition is the exportSelectedObjectsToShortObjFiles definition Interface.
+	Defines the exportSelectedObjectsToShortObjFiles definition Interface.
 	"""
 
 	exportSelectedObjectsToShortObjFiles()
 
 def exportSelectedObjectsToLongObjFiles():
 	"""
-	This definition exports selected objects to long named obj files.
+	Exports selected objects to long named obj files.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -154,14 +154,14 @@ def exportSelectedObjectsToLongObjFiles():
 @stacksHandler
 def IExportSelectedObjectsToLongObjFiles():
 	"""
-	This definition is the exportSelectedObjectsToLongObjFiles definition Interface.
+	Defines the exportSelectedObjectsToLongObjFiles definition Interface.
 	"""
 
 	exportSelectedObjectsToLongObjFiles()
 
 def exportDefaultObject(object):
 	"""
-	This definition exports the default object.
+	Exports the default object.
 	"""
 
 	exportObjectsToFiles((object,), "Obj", False)[0]
@@ -169,7 +169,7 @@ def exportDefaultObject(object):
 @stacksHandler
 def IExportDefaultObject():
 	"""
-	This definition is the exportDefaultObject definition Interface.
+	Defines the exportDefaultObject definition Interface.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -177,7 +177,7 @@ def IExportDefaultObject():
 
 def exportSelectedObjectToUvLayout(object):
 	"""
-	This definition exports the selected object to uvlayout.
+	Exports the selected object to uvlayout.
 	"""
 
 	file = exportObjectsToFiles((object,), "Obj", False)[0]
@@ -186,7 +186,7 @@ def exportSelectedObjectToUvLayout(object):
 @stacksHandler
 def IExportSelectedObjectToUvLayout():
 	"""
-	This definition is the exportSelectedObjectToUvLayout definition Interface.
+	Defines the exportSelectedObjectToUvLayout definition Interface.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
@@ -194,7 +194,7 @@ def IExportSelectedObjectToUvLayout():
 
 def importDefaultObject():
 	"""
-	This definition imports the default object: 'Export_000.obj'.
+	Imports the default object: 'Export_000.obj'.
 	"""
 
 	name = os.path.join(getUserExportDirectory(), "%s.%s" % ("%s_%s" % (FILE_DEFAULT_PREFIX, setPadding(str(0), 3)), FILE_TYPES["Obj"]["extension"]))
@@ -208,7 +208,7 @@ def importDefaultObject():
 @stacksHandler
 def IImportDefaultObject():
 	"""
-	This definition is the importDefaultObject definition Interface.
+	Defines the importDefaultObject definition Interface.
 	"""
 
 	importDefaultObject()

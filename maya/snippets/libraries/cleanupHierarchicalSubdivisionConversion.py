@@ -41,7 +41,7 @@ def stacksHandler(object):
 @stacksHandler
 def cleanupHierarchicalSubdivisionConversion(object):
 	"""
-	This definition cleans Maya hierarchical polygonal conversion.
+	Cleans Maya hierarchical polygonal conversion.
 
 	:param object: Object to cleanup. ( String )
 	"""
@@ -69,7 +69,7 @@ def cleanupHierarchicalSubdivisionConversion(object):
 
 def ICleanupHierarchicalSubdivisionConversion():
 	"""
-	This definition is the cleanupHierarchicalSubdivisionConversion definition Interface.
+	Defines the cleanupHierarchicalSubdivisionConversion definition Interface.
 	"""
 
 	for object in cmds.ls(sl=True, l=True):

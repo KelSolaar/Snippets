@@ -83,7 +83,7 @@ class Active_QLabel(QLabel):
 				checkable=False,
 				checked=False):
 		"""
-		This method initializes the class.
+		Initializes the class.
 
 		:param parent: Widget parent. ( QObject )
 		:param defaultPixmap: Label default pixmap. ( QPixmap )
@@ -123,7 +123,7 @@ class Active_QLabel(QLabel):
 	@property
 	def defaultPixmap(self):
 		"""
-		This method is the property for **self.__defaultPixmap** attribute.
+		Property for **self.__defaultPixmap** attribute.
 
 		:return: self.__defaultPixmap. ( QPixmap )
 		"""
@@ -134,7 +134,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def defaultPixmap(self, value):
 		"""
-		This method is the setter method for **self.__defaultPixmap** attribute.
+		Setter for **self.__defaultPixmap** attribute.
 
 		:param value: Attribute value. ( QPixmap )
 		"""
@@ -147,7 +147,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def defaultPixmap(self):
 		"""
-		This method is the deleter method for **self.__defaultPixmap** attribute.
+		Deleter for **self.__defaultPixmap** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -156,7 +156,7 @@ class Active_QLabel(QLabel):
 	@property
 	def hoverPixmap(self):
 		"""
-		This method is the property for **self.__hoverPixmap** attribute.
+		Property for **self.__hoverPixmap** attribute.
 
 		:return: self.__hoverPixmap. ( QPixmap )
 		"""
@@ -167,7 +167,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def hoverPixmap(self, value):
 		"""
-		This method is the setter method for **self.__hoverPixmap** attribute.
+		Setter for **self.__hoverPixmap** attribute.
 
 		:param value: Attribute value. ( QPixmap )
 		"""
@@ -180,7 +180,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def hoverPixmap(self):
 		"""
-		This method is the deleter method for **self.__hoverPixmap** attribute.
+		Deleter for **self.__hoverPixmap** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -189,7 +189,7 @@ class Active_QLabel(QLabel):
 	@property
 	def activePixmap(self):
 		"""
-		This method is the property for **self.__activePixmap** attribute.
+		Property for **self.__activePixmap** attribute.
 
 		:return: self.__activePixmap. ( QPixmap )
 		"""
@@ -200,7 +200,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def activePixmap(self, value):
 		"""
-		This method is the setter method for **self.__activePixmap** attribute.
+		Setter for **self.__activePixmap** attribute.
 
 		:param value: Attribute value. ( QPixmap )
 		"""
@@ -213,7 +213,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def activePixmap(self):
 		"""
-		This method is the deleter method for **self.__activePixmap** attribute.
+		Deleter for **self.__activePixmap** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -222,7 +222,7 @@ class Active_QLabel(QLabel):
 	@property
 	def checkable(self):
 		"""
-		This method is the property for **self.__checkable** attribute.
+		Property for **self.__checkable** attribute.
 
 		:return: self.__checkable. ( Boolean )
 		"""
@@ -233,7 +233,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def checkable(self, value):
 		"""
-		This method is the setter method for **self.__checkable** attribute.
+		Setter for **self.__checkable** attribute.
 
 		:param value: Attribute value. ( Boolean )
 		"""
@@ -246,7 +246,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def checkable(self):
 		"""
-		This method is the deleter method for **self.__checkable** attribute.
+		Deleter for **self.__checkable** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -255,7 +255,7 @@ class Active_QLabel(QLabel):
 	@property
 	def checked(self):
 		"""
-		This method is the property for **self.__checked** attribute.
+		Property for **self.__checked** attribute.
 
 		:return: self.__checked. ( Boolean )
 		"""
@@ -266,7 +266,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def checked(self, value):
 		"""
-		This method is the setter method for **self.__checked** attribute.
+		Setter for **self.__checked** attribute.
 
 		:param value: Attribute value. ( Boolean )
 		"""
@@ -279,7 +279,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def checked(self):
 		"""
-		This method is the deleter method for **self.__checked** attribute.
+		Deleter for **self.__checked** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -288,7 +288,7 @@ class Active_QLabel(QLabel):
 	@property
 	def menu(self):
 		"""
-		This method is the property for **self.__menu** attribute.
+		Property for **self.__menu** attribute.
 
 		:return: self.__menu. ( QMenu )
 		"""
@@ -299,7 +299,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def menu(self, value):
 		"""
-		This method is the setter method for **self.__menu** attribute.
+		Setter for **self.__menu** attribute.
 
 		:param value: Attribute value. ( QMenu )
 		"""
@@ -311,7 +311,7 @@ class Active_QLabel(QLabel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def menu(self):
 		"""
-		This method is the deleter method for **self.__menu** attribute.
+		Deleter for **self.__menu** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -322,7 +322,7 @@ class Active_QLabel(QLabel):
 	#******************************************************************************************************************
 	def enterEvent(self, event):
 		"""
-		This method reimplements the :meth:`QLabel.enterEvent` method.
+		Reimplements the :meth:`QLabel.enterEvent` method.
 
 		:param event: QEvent. ( QEvent )
 		"""
@@ -334,7 +334,7 @@ class Active_QLabel(QLabel):
 
 	def leaveEvent(self, event):
 		"""
-		This method reimplements the :meth:`QLabel.leaveEvent` method.
+		Reimplements the :meth:`QLabel.leaveEvent` method.
 
 		:param event: QEvent. ( QEvent )
 		"""
@@ -346,7 +346,7 @@ class Active_QLabel(QLabel):
 
 	def mousePressEvent(self, event):
 		"""
-		This method reimplements the :meth:`QLabel.mousePressEvent` method.
+		Reimplements the :meth:`QLabel.mousePressEvent` method.
 
 		:param event: QEvent. ( QEvent )
 		"""
@@ -357,7 +357,7 @@ class Active_QLabel(QLabel):
 
 	def mouseReleaseEvent(self, event):
 		"""
-		This method reimplements the :meth:`QLabel.mouseReleaseEvent` method.
+		Reimplements the :meth:`QLabel.mouseReleaseEvent` method.
 
 		:param event: QEvent. ( QEvent )
 		"""
@@ -374,7 +374,7 @@ class Active_QLabel(QLabel):
 
 	def setChecked(self, state):
 		"""
-		This method sets the Widget checked state.
+		Sets the Widget checked state.
 
 		:param state: New check state. ( Boolean )
 		:return: Method success. ( Boolean )
@@ -394,7 +394,7 @@ class Active_QLabel(QLabel):
 
 	def setMenu(self, menu):
 		"""
-		This method sets the Widget menu.
+		Sets the Widget menu.
 
 		:param menu: Menu. ( QMenu )
 		:return: Method success. ( Boolean )

@@ -47,7 +47,7 @@ def stacksHandler(object):
 
 def unfoldBandUVs(object, divisions=1, history=True):
 	"""
-	This definition unfolds object band UVs.
+	Unfolds object band UVs.
 
 	:param object: Object. ( String )
 	:param divisions: Extrusion divisions. ( Integer )
@@ -79,7 +79,7 @@ def unfoldBandUVs(object, divisions=1, history=True):
 @stacksHandler
 def unfoldBand_button_OnClicked(state=None):
 	"""
-	This definition is triggered by the **unfoldBand_button** button when clicked.
+	Defines the slot triggered by **unfoldBand_button** button when clicked.
 
 	:param state: Button state. ( Boolean )
 	"""
@@ -89,7 +89,7 @@ def unfoldBand_button_OnClicked(state=None):
 
 def unfoldBand_window():
 	"""
-	This definition creates the 'Unfold Band' main window.
+	Creates the 'Unfold Band' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
@@ -125,7 +125,7 @@ def unfoldBand_window():
 
 def unfoldBand():
 	"""
-	This definition launches the 'Unfold Band' main window.
+	Launches the 'Unfold Band' main window.
 	"""
 
 	unfoldBand_window()
@@ -133,14 +133,14 @@ def unfoldBand():
 @stacksHandler
 def IUnfoldBand():
 	"""
-	This definition is the unfoldBand definition Interface.
+	Defines the unfoldBand definition Interface.
 	"""
 
 	unfoldBand()
 
 def unfoldBandRegular(seamsEdges, history=False):
 	"""
-	This definition unfolds object band UVs using given seamsEdges.
+	Unfolds object band UVs using given seamsEdges.
 	
 	:param seamsEdges: Seams edges. ( List )
 	:param history: Keep construction history. ( Boolean )
@@ -163,7 +163,7 @@ def unfoldBandRegular(seamsEdges, history=False):
 @stacksHandler
 def IUnfoldBandRegular():
 	"""
-	This definition is the unfoldBandRegular definition Interface.
+	Defines the unfoldBandRegular definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)

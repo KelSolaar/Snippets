@@ -58,7 +58,7 @@ class Categorie(foundations.dataStructures.Structure):
 
 	def __init__(self, **kwargs):
 		"""
-		This method initializes the class.
+		Initializes the class.
 
 		:param kwargs: name. ( Key / Value pairs )
 		"""
@@ -72,7 +72,7 @@ class Interface(foundations.dataStructures.Structure):
 
 	def __init__(self, **kwargs):
 		"""
-		This method initializes the class.
+		Initializes the class.
 
 		:param kwargs: name, attribute, module. ( Key / Value pairs )
 		"""
@@ -86,7 +86,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def __init__(self, parent=None, interfaces=None):
 		"""
-		This method initializes the class.
+		Initializes the class.
 
 		:param parent: Parent object. ( QObject )
 		:param interfaces: InterfacesModel. ( List )
@@ -106,7 +106,7 @@ class InterfacesModel(QAbstractListModel):
 	@property
 	def interfaces(self):
 		"""
-		This method is the property for **self.__interfaces** attribute.
+		Property for **self.__interfaces** attribute.
 
 		:return: self.__interfaces. ( List )
 		"""
@@ -117,7 +117,7 @@ class InterfacesModel(QAbstractListModel):
 	@foundations.exceptions.handleExceptions(AssertionError)
 	def interfaces(self, value):
 		"""
-		This method is the setter method for **self.__interfaces** attribute.
+		Setter for **self.__interfaces** attribute.
 
 		:param value: Attribute value. ( List )
 		"""
@@ -136,7 +136,7 @@ class InterfacesModel(QAbstractListModel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def interfaces(self):
 		"""
-		This method is the deleter method for **self.__interfaces** attribute.
+		Deleter for **self.__interfaces** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -147,7 +147,7 @@ class InterfacesModel(QAbstractListModel):
 	#******************************************************************************************************************
 	def __getitem__(self, name):
 		"""
-		This method reimplements the :meth:`object.__getitem__` method.
+		Reimplements the :meth:`object.__getitem__` method.
 		
 		:param name: Item name. ( String )
 		:return: Item. ( Interface ) 
@@ -159,7 +159,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def __iter__(self):
 		"""
-		This method reimplements the :meth:`object.__iter__` method.
+		Reimplements the :meth:`object.__iter__` method.
 
 		:return: Interfaces iterator. ( Object )
 		"""
@@ -168,7 +168,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def __reversed__(self):
 		"""
-		This method reimplements the :meth:`object.__reversed__` method.
+		Reimplements the :meth:`object.__reversed__` method.
 
 		:return: Reverse interfaces iterator. ( Object )
 		"""
@@ -177,7 +177,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def __contains__(self, name):
 		"""
-		This method reimplements the :meth:`object.__contains__` method.
+		Reimplements the :meth:`object.__contains__` method.
 
 		:param name: Item name. ( String )
 		:return: Item existence. ( Boolean )
@@ -187,7 +187,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def __len__(self):
 		"""
-		This method reimplements the :meth:`object.__len__` method.
+		Reimplements the :meth:`object.__len__` method.
 
 		:return: Interfaces count. ( Integer )
 		"""
@@ -196,7 +196,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def rowCount(self, parent=QModelIndex()):
 		"""
-		This method reimplements the :meth:`QAbstractListModel.rowCount` method.
+		Reimplements the :meth:`QAbstractListModel.rowCount` method.
 
 		:param parent: Parent. ( QModelIndex )
 		:return: Row count. ( Integer )
@@ -206,7 +206,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def data(self, index, role=Qt.DisplayRole):
 		"""
-		This method reimplements the :meth:`QAbstractListModel.data` method.
+		Reimplements the :meth:`QAbstractListModel.data` method.
 
 		:param index: Index. ( QModelIndex )
 		:param role: Role. ( Integer )
@@ -222,7 +222,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def clear(self):
 		"""
-		This method clears the Model.
+		Clears the Model.
 		
 		:return: Method success. ( Boolean )
 		"""
@@ -235,7 +235,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def sort(self, order=Qt.AscendingOrder):
 		"""
-		This method sorts the Model interfaces.
+		Sorts the Model interfaces.
 		
 		:param order: Order. ( Qt.SortOrder )
 		:return: Method success. ( Boolean )
@@ -249,7 +249,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def getInterface(self, index):
 		"""
-		This method returns the interface with given index.
+		Returns the interface with given index.
 		
 		:param index: Interface index. ( QModelIndex )
 		:return: Interface. ( Interface )
@@ -259,7 +259,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def __registerCategorie(self, categorie):
 		"""
-		This method registers given categorie.
+		Registers given categorie.
 
 		:param categorie: Categorie name. ( String )
 		"""
@@ -270,7 +270,7 @@ class InterfacesModel(QAbstractListModel):
 
 	def __unregisterCategorie(self, name):
 		"""
-		This method unregisters categorie with given name.
+		Unregisters categorie with given name.
 
 		:param categorie: Categorie name. ( String )
 		"""
@@ -287,7 +287,7 @@ class InterfacesModel(QAbstractListModel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def registerInterface(self, interface):
 		"""
-		This method registers given interface.
+		Registers given interface.
 		
 		:param interface: Interface to register. ( Interface )
 		:return: Method success. ( Boolean )
@@ -308,7 +308,7 @@ class InterfacesModel(QAbstractListModel):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def unregisterInterface(self, name):
 		"""
-		This method unregisters interface with given name.
+		Unregisters interface with given name.
 		
 		:param name: Interface to unregister. ( String )
 		:return: Method success. ( Boolean )

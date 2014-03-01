@@ -34,7 +34,7 @@ from snippets.globals.constants import Constants
 
 def _overrideDependenciesGlobals():
 	"""
-	This definition overrides dependencies globals.
+	Overrides dependencies globals.
 
 	:return: Definition success. ( Boolean )
 	"""
@@ -76,7 +76,7 @@ foundations.verbose.getLoggingConsoleHandler()
 #**********************************************************************************************************************
 def _setModulesManager():
 	"""
-	This definition sets the global modules manager instance.
+	Sets the global modules manager instance.
 	"""
 
 	if not isinstance(RuntimeGlobals.modulesManager, ModulesManager):
@@ -85,7 +85,7 @@ def _setModulesManager():
 
 def run():
 	"""
-	This definition starts the Application.
+	Starts the Application.
 
 	:return: Definition success. ( Boolean )
 	"""

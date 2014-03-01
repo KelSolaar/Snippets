@@ -5,7 +5,7 @@ import snippets.libraries.utilities
 
 def resetNodesParameters(nodes, traverse=True):
 	"""
-	This definition resets given nodes parameters.
+	Resets given nodes parameters.
 
 	:param nodes: Nodes to search and replace. ( List )
 	:param traverse: Traverse nodes children. ( Boolean )

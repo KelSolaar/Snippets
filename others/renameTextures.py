@@ -50,7 +50,7 @@ PATCH_PATTERN = "\d{4,}"
 #**********************************************************************************************************************
 def getPatchFromUdim(udim):
 	"""
-	This definition returns the patch from given udim.
+	Returns the patch from given udim.
 
 	Usage::
 
@@ -73,7 +73,7 @@ def getPatchFromUdim(udim):
 
 def getUdimFromPatch(patch):
 	"""
-	This definition returns the udim from given patch.
+	Returns the udim from given patch.
 
 	Usage::
 
@@ -98,7 +98,7 @@ def getUdimFromPatch(patch):
 
 def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 	"""
-	This definition renames given textures.
+	Renames given textures.
 
 	Usage::
 
@@ -167,7 +167,7 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 
 def getCommandLineParametersParser():
 	"""
-	This definition returns the command line parameters parser.
+	Returns the command line parameters parser.
 
 	:return: Parser. ( Parser )
 	"""
@@ -213,7 +213,7 @@ def getCommandLineParametersParser():
 
 def renameTextures(textures, input="zbrush", output="mari", prefix=None, preview=False):
 	"""
-	This definition renames given textures.
+	Renames given textures.
 
 	:param textures: Textures. ( List )
 	:param input: Input format ( "mari", "mudbox", "zbrush" ). ( String )

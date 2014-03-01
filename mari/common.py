@@ -57,7 +57,7 @@ __all__ = ["unpackDefault",
 
 def unpackDefault(data, length=3, default=None):
 	"""
-	This definition unpack given iterable data with default if needed.
+	Unpack given iterable data with default if needed.
 	
 	:param data: Iterable. ( String / Tuple / List )
 	:param length: Default length. ( Integer )
@@ -69,7 +69,7 @@ def unpackDefault(data, length=3, default=None):
 
 def fillPaintBuffer(color):
 	"""
-	This definition fills the paint buffer with given color.
+	Fills the paint buffer with given color.
 	
 	:param color: Color. ( QColor )
 	:return: Definition success. ( Boolean )
@@ -83,7 +83,7 @@ def fillPaintBuffer(color):
 
 def projectColor(color):
 	"""
-	This definition projects the given color.
+	Projects the given color.
 	
 	:param color: Color. ( QColor )
 	:return: Definition success. ( Boolean )
@@ -95,7 +95,7 @@ def projectColor(color):
 
 def projectBlack():
 	"""
-	This definition projects black color.
+	Projects black color.
 
 	:return: Definition success. ( Boolean )
 	"""
@@ -104,7 +104,7 @@ def projectBlack():
 
 def projectWhite():
 	"""
-	This definition projects white color.
+	Projects white color.
 
 	:return: Definition success. ( Boolean )
 	"""
@@ -113,7 +113,7 @@ def projectWhite():
 
 def getSelectedPatches():
 	"""
-	This definition returns current selected patches.
+	Returns current selected patches.
 
 	:return: Selected patches. ( List )
 	"""
@@ -126,7 +126,7 @@ def getSelectedPatches():
 
 def displaySelectedPatches():
 	"""
-	This definition displays current selected patches.
+	Displays current selected patches.
 
 	:return: Definition success. ( Boolean )
 	"""
@@ -139,7 +139,7 @@ def displaySelectedPatches():
 
 def getPatchesFromSequence(sequence):
 	"""
-	This definition returns patches from the given sequence.
+	Returns patches from the given sequence.
 
 	:param sequence: sequence. ( String )
 	:return: Patches. ( List )
@@ -158,7 +158,7 @@ def getPatchesFromSequence(sequence):
 
 def selectPatches(patches):
 	"""
-	This definition selects given patches.
+	Selects given patches.
 
 	:param patches: patches. ( List )
 	:return: Definition success. ( Boolean )
@@ -172,7 +172,7 @@ def selectPatches(patches):
 
 def selectInputPatches():
 	"""
-	This definition selects input patches.
+	Selects input patches.
 
 	:return: Definition success. ( Boolean )
 	"""
@@ -183,7 +183,7 @@ def selectInputPatches():
 
 def playblastTimeRange():
 	"""
-	This definition playblasts current time range.
+	Playblasts current time range.
 
 	:return: Definition success. ( Boolean )
 	"""
@@ -209,7 +209,7 @@ def playblastTimeRange():
 
 def writeUVsMasks(directory):
 	"""
-	This definition writes UVs masks to given output directory.
+	Writes UVs masks to given output directory.
 
 	:return: Definition success. ( Boolean )
 	"""
@@ -234,7 +234,7 @@ def writeUVsMasks(directory):
 
 def exportUVsMasks():
 	"""
-	This definition exports UVs masks.
+	Exports UVs masks.
 
 	:return: Definition success. ( Boolean )
 	"""

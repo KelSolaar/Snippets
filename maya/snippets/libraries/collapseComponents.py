@@ -52,7 +52,7 @@ def stacksHandler(object):
 
 def getTransform(node, fullPath=True):
 	"""
-	This definition returns transform of the given node.
+	Returns transform of the given node.
 
 	:param node: Current object. ( String )
 	:param fullPath: Current full path state. (Boolean)
@@ -67,7 +67,7 @@ def getTransform(node, fullPath=True):
 
 def getAverageVector(vectors):
 	"""
-	This definition returns the average vector from a list of vectors.
+	Returns the average vector from a list of vectors.
 
 	:param vectors: Vectors to get the average one. ( List )
 	:return: Average vector. ( List )
@@ -83,7 +83,7 @@ def getAverageVector(vectors):
 
 def collapseComponents(components, axis=("X", "Y", "Z")):
 	"""
-	This definition collapses the given Components.
+	Collapses the given Components.
 
 	:param components: Components to collapse. ( List )
 	:param axis: Collapse axis. ( Tuple )
@@ -103,7 +103,7 @@ def collapseComponents(components, axis=("X", "Y", "Z")):
 @stacksHandler
 def ICollapseComponents():
 	"""
-	This definition is the collapseComponents definition Interface.
+	Defines the collapseComponents definition Interface.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -111,7 +111,7 @@ def ICollapseComponents():
 
 def collapseComponentsOnX():
 	"""
-	This definition triggers the collapseComponents method on x axis.
+	Triggers the collapseComponents method on x axis.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -120,14 +120,14 @@ def collapseComponentsOnX():
 @stacksHandler
 def ICollapseComponentsOnX():
 	"""
-	This definition is the collapseComponentsOnX definition Interface.
+	Defines the collapseComponentsOnX definition Interface.
 	"""
 
 	collapseComponentsOnX()
 
 def collapseComponentsOnY():
 	"""
-	This definition triggers the collapseComponents method on y axis.
+	Triggers the collapseComponents method on y axis.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -136,14 +136,14 @@ def collapseComponentsOnY():
 @stacksHandler
 def ICollapseComponentsOnY():
 	"""
-	This definition is the collapseComponentsOnY definition Interface.
+	Defines the collapseComponentsOnY definition Interface.
 	"""
 
 	collapseComponentsOnY()
 
 def collapseComponentsOnZ():
 	"""
-	This definition triggers the collapseComponents method on z axis.
+	Triggers the collapseComponents method on z axis.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -152,7 +152,7 @@ def collapseComponentsOnZ():
 @stacksHandler
 def ICollapseComponentsOnZ():
 	"""
-	This definition is the collapseComponentsOnZ definition Interface.
+	Defines the collapseComponentsOnZ definition Interface.
 	"""
 
 	collapseComponentsOnZ()

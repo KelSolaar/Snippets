@@ -84,7 +84,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
 		"""
-		This method initializes the class.
+		Initializes the class.
 		
 		:param parent: Parent object. ( QObject )
 		:param modulesManager: Modules Manager. ( ModulesManager )
@@ -118,7 +118,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def container(self):
 		"""
-		This method is the property for **self.__container** attribute.
+		Property for **self.__container** attribute.
 
 		:return: self.__container. ( QObject )
 		"""
@@ -129,7 +129,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def container(self, value):
 		"""
-		This method is the setter method for **self.__container** attribute.
+		Setter for **self.__container** attribute.
 
 		:param value: Attribute value. ( QObject )
 		"""
@@ -140,7 +140,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def container(self):
 		"""
-		This method is the deleter method for **self.__container** attribute.
+		Deleter for **self.__container** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("container"))
@@ -148,7 +148,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def modulesManager(self):
 		"""
-		This method is the property for **self.__modulesManager** attribute.
+		Property for **self.__modulesManager** attribute.
 
 		:return: self.__modulesManager. ( QObject )
 		"""
@@ -159,7 +159,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def modulesManager(self, value):
 		"""
-		This method is the setter method for **self.__modulesManager** attribute.
+		Setter for **self.__modulesManager** attribute.
 
 		:param value: Attribute value. ( QObject )
 		"""
@@ -170,7 +170,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def modulesManager(self):
 		"""
-		This method is the deleter method for **self.__modulesManager** attribute.
+		Deleter for **self.__modulesManager** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modulesManager"))
@@ -178,7 +178,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def model(self):
 		"""
-		This method is the property for **self.__model** attribute.
+		Property for **self.__model** attribute.
 
 		:return: self.__model. ( TemplatesModel )
 		"""
@@ -189,7 +189,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def model(self, value):
 		"""
-		This method is the setter method for **self.__model** attribute.
+		Setter for **self.__model** attribute.
 
 		:param value: Attribute value. ( TemplatesModel )
 		"""
@@ -201,7 +201,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def model(self):
 		"""
-		This method is the deleter method for **self.__model** attribute.
+		Deleter for **self.__model** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -210,7 +210,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def view(self):
 		"""
-		This method is the property for **self.__view** attribute.
+		Property for **self.__view** attribute.
 
 		:return: self.__view. ( QWidget )
 		"""
@@ -221,7 +221,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def view(self, value):
 		"""
-		This method is the setter method for **self.__view** attribute.
+		Setter for **self.__view** attribute.
 
 		:param value: Attribute value. ( QWidget )
 		"""
@@ -233,7 +233,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def view(self):
 		"""
-		This method is the deleter method for **self.__view** attribute.
+		Deleter for **self.__view** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -242,7 +242,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def defaultText(self):
 		"""
-		This method is the property for **self.__defaultText** attribute.
+		Property for **self.__defaultText** attribute.
 
 		:return: self.__defaultText. ( String )
 		"""
@@ -253,7 +253,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def defaultText(self, value):
 		"""
-		This method is the setter method for **self.__defaultText** attribute.
+		Setter for **self.__defaultText** attribute.
 
 		:param value: Attribute value. ( String )
 		"""
@@ -264,7 +264,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def defaultText(self):
 		"""
-		This method is the deleter method for **self.__defaultText** attribute.
+		Deleter for **self.__defaultText** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("defaultText"))
@@ -272,7 +272,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def linuxTextEditors(self):
 		"""
-		This method is the property for **self.__linuxTextEditors** attribute.
+		Property for **self.__linuxTextEditors** attribute.
 
 		:return: self.__linuxTextEditors. ( Tuple )
 		"""
@@ -283,7 +283,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def linuxTextEditors(self, value):
 		"""
-		This method is the setter method for **self.__linuxTextEditors** attribute.
+		Setter for **self.__linuxTextEditors** attribute.
 
 		:param value: Attribute value. ( Tuple )
 		"""
@@ -294,7 +294,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def linuxTextEditors(self):
 		"""
-		This method is the deleter method for **self.__linuxTextEditors** attribute.
+		Deleter for **self.__linuxTextEditors** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("linuxTextEditors"))
@@ -302,7 +302,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@property
 	def linuxBrowsers(self):
 		"""
-		This method is the property for **self.__linuxBrowsers** attribute.
+		Property for **self.__linuxBrowsers** attribute.
 
 		:return: self.__linuxBrowsers. ( QObject )
 		"""
@@ -313,7 +313,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def linuxBrowsers(self, value):
 		"""
-		This method is the setter method for **self.__linuxBrowsers** attribute.
+		Setter for **self.__linuxBrowsers** attribute.
 
 		:param value: Attribute value. ( QObject )
 		"""
@@ -324,7 +324,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
 	def linuxBrowsers(self):
 		"""
-		This method is the deleter method for **self.__linuxBrowsers** attribute.
+		Deleter for **self.__linuxBrowsers** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("linuxBrowsers"))
@@ -334,7 +334,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	#******************************************************************************************************************
 	def __initializeUI(self):
 		"""
-		This method initializes the Widget.
+		Initializes the Widget.
 		"""
 
 		self.Search_lineEdit.setParent(None)
@@ -372,7 +372,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __view_addActions(self):
 		"""
-		This method sets the View actions.
+		Sets the View actions.
 		"""
 
 		editSnippetAction = QAction("Edit Snippet", self.__view)
@@ -385,7 +385,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __view_editSnippetAction(self, checked):
 		"""
-		This method is triggered by **editSnippetAction** action.
+		Defines the slot triggered by **editSnippetAction** action.
 
 		:param checked: Checked state. ( Boolean )
 		"""
@@ -399,7 +399,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __view_exploreSnippetFolderAction(self, checked):
 		"""
-		This method is triggered by **exploreSnippetFolderAction** action.
+		Defines the slot triggered by **exploreSnippetFolderAction** action.
 
 		:param checked: Checked state. ( Boolean )
 		"""
@@ -412,7 +412,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __Execute_Snippet_pushButton__clicked(self, checked):
 		"""
-		This method is triggered when **Execute_Snippet_pushButton** Widget is clicked.
+		Defines the slot triggered by **Execute_Snippet_pushButton** Widget when clicked.
 
 		:param checked: Checked state. ( Boolean )
 		"""
@@ -421,7 +421,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __Reload_Snippets_pushButton__clicked(self, checked):
 		"""
-		This method is triggered when **Reload_Snippets_pushButton** Widget is clicked.
+		Defines the slot triggered by **Reload_Snippets_pushButton** Widget when clicked.
 
 		:param checked: Checked state. ( Boolean )
 		"""
@@ -431,7 +431,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __view_selectionModel__selectionChanged(self, selectedItems, deselectedItems):
 		"""
-		This method sets the **Informations_textBrowser** Widget.
+		Sets the **Informations_textBrowser** Widget.
 
 		:param selectedItems: Selected items. ( QItemSelection )
 		:param deselectedItems: Deselected items. ( QItemSelection )
