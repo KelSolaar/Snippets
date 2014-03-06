@@ -82,8 +82,10 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Initializes the class.
 		
-		:param parent: Parent object. ( QObject )
-		:param modulesManager: Modules Manager. ( ModulesManager )
+		:param parent: Parent object.
+		:type parent: QObject
+		:param modulesManager: Modules Manager.
+		:type modulesManager: ModulesManager
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
@@ -111,7 +113,8 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Property for **self.__container** attribute.
 
-		:return: self.__container. ( QObject )
+		:return: self.__container.
+		:rtype: QObject
 		"""
 
 		return self.__container
@@ -122,7 +125,8 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Setter for **self.__container** attribute.
 
-		:param value: Attribute value. ( QObject )
+		:param value: Attribute value.
+		:type value: QObject
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("container"))
@@ -141,7 +145,8 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Property for **self.__modulesManager** attribute.
 
-		:return: self.__modulesManager. ( QObject )
+		:return: self.__modulesManager.
+		:rtype: QObject
 		"""
 
 		return self.__modulesManager
@@ -152,7 +157,8 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Setter for **self.__modulesManager** attribute.
 
-		:param value: Attribute value. ( QObject )
+		:param value: Attribute value.
+		:type value: QObject
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modulesManager"))
@@ -171,7 +177,8 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Property for **self.__model** attribute.
 
-		:return: self.__model. ( TemplatesModel )
+		:return: self.__model.
+		:rtype: TemplatesModel
 		"""
 
 		return self.__model
@@ -182,7 +189,8 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Setter for **self.__model** attribute.
 
-		:param value: Attribute value. ( TemplatesModel )
+		:param value: Attribute value.
+		:type value: TemplatesModel
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -242,7 +250,8 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Triggers the Interface with given name execution.
 		
-		:param name: Interface name. ( String )
+		:param name: Interface name.
+		:type name: str
 		"""
 
 		pattern = RuntimeGlobals.popupPattern = name
@@ -257,9 +266,12 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Sets the Model interfaces.
 
-		:param pattern: Interface name. ( String )
-		:param flags: Regex filtering flags. ( Integer )
-		:return: Method success. ( Boolean )
+		:param pattern: Interface name.
+		:type pattern: str
+		:param flags: Regex filtering flags.
+		:type flags: int
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		try:
@@ -286,8 +298,10 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Gets the method name from the Interface.
 
-		:param name: Interface name. ( String )
-		:return: Method name. ( String )
+		:param name: Interface name.
+		:type name: str
+		:return: Method name.
+		:rtype: str
 		"""
 
 		return "{0}{1}".format(name[1].lower(), name[2:])
@@ -296,9 +310,12 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Returns the Interface with given name.
 
-		:param pattern: Interface name. ( String )
-		:param flags: Regex filtering flags. ( Integer )
-		:return: Method success. ( Boolean )
+		:param pattern: Interface name.
+		:type pattern: str
+		:param flags: Regex filtering flags.
+		:type flags: int
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		for interface in self.__model:
@@ -312,8 +329,10 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 		Executes the object associated with given interface.
 		
-		:param interface: Interface. ( Interface )
-		:return: Method success. ( Boolean )
+		:param interface: Interface.
+		:type interface: Interface
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		if not interface:

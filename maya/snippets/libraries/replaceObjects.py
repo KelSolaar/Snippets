@@ -21,15 +21,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -48,12 +51,18 @@ def replaceTargetsObjectsWithSources(sources, targets, inPlace=False, usePivot=F
 	"""
 	Replaces the targets with sources.
 
-	:param sources: Sources. ( List )
-	:param targets: Targets. ( List )
-	:param inPlace: In place replacement. ( Boolean )
-	:param usePivot: Use target pivot. ( Boolean )
-	:param asInstance: Duplicate as instances. ( Boolean )
-	:param deleteTargets: Delete targets. ( Boolean )
+	:param sources: Sources.
+	:type sources: list
+	:param targets: Targets.
+	:type targets: list
+	:param inPlace: In place replacement.
+	:type inPlace: bool
+	:param usePivot: Use target pivot.
+	:type usePivot: bool
+	:param asInstance: Duplicate as instances.
+	:type asInstance: bool
+	:param deleteTargets: Delete targets.
+	:type deleteTargets: bool
 	"""
 
 	duplicatedObjects = []
@@ -90,7 +99,8 @@ def pickSources_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **pickSources_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	cmds.textField("sources_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -100,7 +110,8 @@ def pickTargets_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **pickTargets_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	cmds.textField("targets_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -110,7 +121,8 @@ def replaceObjects_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **replaceObjects_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	sources = [source for source in cmds.textField("sources_textField", query=True, text=True).split(", ") if cmds.objExists(source)]

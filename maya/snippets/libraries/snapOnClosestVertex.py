@@ -63,15 +63,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -90,8 +93,10 @@ def getMPoint(point):
 	"""
 	Returns an MPoint.
 
-	:param point: Point. ( List )
-	:return: MPoint ( MVector )
+	:param point: Point.
+	:type point: list
+	:return: MPoint
+	:rtype: MVector
 	"""
 
 	return OpenMaya.MPoint(point[0], point[1], point[2])
@@ -100,9 +105,12 @@ def norme(pointA, pointB):
 	"""
 	Returns the norme of a vector.
 
-	:param pointA: Point A. ( List )
-	:param pointB: Point B. ( List )
-	:return: Norme ( Float )
+	:param pointA: Point A.
+	:type pointA: list
+	:param pointB: Point B.
+	:type pointB: list
+	:return: Norme
+	:rtype: float
 	"""
 
 	mPointA = getMPoint(pointA)
@@ -114,10 +122,14 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
 	Returns shapes of the given object.
 
-	:param object: Current object. ( String )
-	:param fullPath: Current full path state. ( Boolean )
-	:param noIntermediate: Current no intermediate state. ( Boolean )
-	:return: Objects shapes. ( List )
+	:param object: Current object.
+	:type object: str
+	:param fullPath: Current full path state.
+	:type fullPath: bool
+	:param noIntermediate: Current no intermediate state.
+	:type noIntermediate: bool
+	:return: Objects shapes.
+	:rtype: list
 	"""
 
 	objectShapes = []
@@ -132,7 +144,8 @@ def getReferenceObject_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **getReferenceObject_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, type="transform")
@@ -144,7 +157,8 @@ def loadPlugin(plugin):
 	"""
 	This function loads a plugin.
 
-	:param plugin: Plugin to load. (String)
+	:param plugin: Plugin to load.
+	:type plugin: str
 	"""
 
 	not cmds.pluginInfo(plugin, query=True, loaded=True) and cmds.loadPlugin(plugin)
@@ -153,8 +167,10 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 	"""
 	This function snaps vertices onto the reference object vertices.
 
-	:param referenceObject: Reference mesh. (String)
-	:param components: Components. (List)
+	:param referenceObject: Reference mesh.
+	:type referenceObject: str
+	:param components: Components.
+	:type components: list
 	"""
 
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
@@ -203,7 +219,8 @@ def snapIt_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **snapIt_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	referenceObject = cmds.textField("referenceObject_textField", query=True, text=True)

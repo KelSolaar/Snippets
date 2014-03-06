@@ -51,15 +51,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -78,10 +81,14 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
 	Returns shapes of the given object.
 
-	:param object: Current object. ( String )
-	:param fullPath: Current full path state. ( Boolean )
-	:param noIntermediate: Current no intermediate state. ( Boolean )
-	:return: Objects shapes. ( List )
+	:param object: Current object.
+	:type object: str
+	:param fullPath: Current full path state.
+	:type fullPath: bool
+	:param noIntermediate: Current no intermediate state.
+	:type noIntermediate: bool
+	:return: Objects shapes.
+	:rtype: list
 	"""
 
 	objectShapes = []
@@ -95,8 +102,10 @@ def transfertVerticesPositionsInUvsSpace(targets, source):
 	"""
 	Transferts vertices positions from source to targets object in UVs space.
 
-	:param targets: Sources objects. ( List )
-	:param source: Target object. ( String )
+	:param targets: Sources objects.
+	:type targets: list
+	:param source: Target object.
+	:type source: str
 	"""
 
 	for target in targets:
@@ -116,9 +125,12 @@ def transfertVerticesPositionsInWorldSpace(targets, source, searchMethod=0):
 	"""
 	Transferts vertices positions from source to targets object in world space.
 
-	:param targets: Sources objects. ( List )
-	:param source: Target object. ( String )
-	:param searchMethod: Current search method. ( Integer )
+	:param targets: Sources objects.
+	:type targets: list
+	:param source: Target object.
+	:type source: str
+	:param searchMethod: Current search method.
+	:type searchMethod: int
 	"""
 
 	for target in targets:
@@ -138,8 +150,10 @@ def transfertUvsInTopologySpace(targets, source):
 	"""
 	Transferts UVs from source to targets object in topology space.
 
-	:param targets: Sources objects. ( List )
-	:param source: Target object. ( String )
+	:param targets: Sources objects.
+	:type targets: list
+	:param source: Target object.
+	:type source: str
 	"""
 
 	for target in targets:
@@ -200,7 +214,8 @@ def toggleGeometriesShadingOverride(nodes):
 	"""
 	Toggles geometries shading override.
 	
-	:param nodes: Nodes to toggle shading override on. ( List )
+	:param nodes: Nodes to toggle shading override on.
+	:type nodes: list
 	"""
 
 	for node in nodes:
@@ -240,7 +255,8 @@ def splitRingMiddle(nodes):
 	"""
 	Sets the polysplitring nodes weights to 0.5.
 
-	:param nodes: Nodes to retrieve history from. ( List )
+	:param nodes: Nodes to retrieve history from.
+	:type nodes: list
 	"""
 
 	for node in nodes:
@@ -261,7 +277,8 @@ def symmetricalInstance(object):
 	"""
 	Creates a symmetrical instance.
 
-	:param object: Object to symmetrical instantiate. ( String )
+	:param object: Object to symmetrical instantiate.
+	:type object: str
 	"""
 
 	instance = cmds.instance(object)
@@ -281,7 +298,8 @@ def pivotsIdentity(transforms):
 	"""
 	Puts given transforms pivots to origin.
 
-	:param transforms: Transforms to affect pivots. ( List )
+	:param transforms: Transforms to affect pivots.
+	:type transforms: list
 	"""
 
 	for transform in transforms:
@@ -304,7 +322,8 @@ def flattenHierachy(object):
 	"""
 	Flattens given object hierarchy.
 	
-	:return: Definition succes. ( Boolean )
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	relatives = cmds.listRelatives(object, allDescendents=True, fullPath=True)
@@ -335,7 +354,8 @@ def transfertSelection():
 	"""
 	Transfers a component selection to another object.
 	
-	:return: Definition succes. ( Boolean )
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	selection = cmds.ls(sl=True, long=True)
@@ -387,7 +407,8 @@ def pickTarget_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **pickTarget_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -421,7 +442,8 @@ def transfertSelection_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **transfertSelection_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	transfertSelectionToUserTarget()

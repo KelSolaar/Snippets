@@ -13,15 +13,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)

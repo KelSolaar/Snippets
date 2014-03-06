@@ -36,7 +36,8 @@ def _overrideDependenciesGlobals():
 	"""
 	Overrides dependencies globals.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	foundations.globals.constants.Constants.logger = Constants.logger
@@ -87,7 +88,8 @@ def run():
 	"""
 	Starts the Application.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	RuntimeGlobals.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)

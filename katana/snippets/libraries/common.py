@@ -7,9 +7,12 @@ def resetNodesParameters(nodes, traverse=True):
 	"""
 	Resets given nodes parameters.
 
-	:param nodes: Nodes to search and replace. ( List )
-	:param traverse: Traverse nodes children. ( Boolean )
-	:return: Definition success. ( Boolean )
+	:param nodes: Nodes to search and replace.
+	:type nodes: list
+	:param traverse: Traverse nodes children.
+	:type traverse: bool
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	for node in nodes:

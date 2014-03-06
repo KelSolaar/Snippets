@@ -65,8 +65,10 @@ def getPatchFromUdim(udim):
 		>>> getPatchFromUdim((9, 9))
 		1100
 
-	:param udim: Udim to convert. ( Tuple )
-	:return: Patch. ( Integer )
+	:param udim: Udim to convert.
+	:type udim: tuple
+	:return: Patch.
+	:rtype: int
 	"""
 
 	return 1000 + udim[0] + 1 + udim[1] * 10
@@ -88,8 +90,10 @@ def getUdimFromPatch(patch):
 		>>> getUdimFromPatch(1100)
 		(9, 9)
 
-	:param udim: Patch to convert. ( Integer )
-	:return: Udim. ( String )
+	:param udim: Patch to convert.
+	:type udim: int
+	:return: Udim.
+	:rtype: str
 	"""
 
 	u = (patch - 1000) % 10
@@ -115,11 +119,16 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 		>>> getTexturesNames(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], prefix="Color_")
 		[('Diffuse_u0_v0.exr', 'Color_1001.exr'), ('Diffuse_u9_v0.exr', 'Color_1010.exr')]
 
-	:param textures: Textures. ( List )
-	:param input: Input format ( "mari", "mudbox", "zbrush" ). ( String )
-	:param output: Output format ( "mari", "mudbox", "zbrush" ). ( String )
-	:param prefix: Rename prefix. ( String )
-	:return: Converted textures names. ( List )
+	:param textures: Textures.
+	:type textures: list
+	:param input: Input format ( "mari", "mudbox", "zbrush" ).
+	:type input: str
+	:param output: Output format ( "mari", "mudbox", "zbrush" ).
+	:type output: str
+	:param prefix: Rename prefix.
+	:type prefix: str
+	:return: Converted textures names.
+	:rtype: list
 	"""
 
 	inputMethod = "udim" if input in ("mudbox", "zbrush") else "patch"
@@ -169,7 +178,8 @@ def getCommandLineParametersParser():
 	"""
 	Returns the command line parameters parser.
 
-	:return: Parser. ( Parser )
+	:return: Parser.
+	:rtype: Parser
 	"""
 
 	parser = optparse.OptionParser(formatter=optparse.IndentedHelpFormatter(indent_increment=2,
@@ -215,12 +225,18 @@ def renameTextures(textures, input="zbrush", output="mari", prefix=None, preview
 	"""
 	Renames given textures.
 
-	:param textures: Textures. ( List )
-	:param input: Input format ( "mari", "mudbox", "zbrush" ). ( String )
-	:param output: Output format ( "mari", "mudbox", "zbrush" ). ( String )
-	:param prefix: Rename prefix. ( String )
-	:param preview: Only preview changes. ( Boolean )
-	:return: Definition success. ( Boolean )
+	:param textures: Textures.
+	:type textures: list
+	:param input: Input format ( "mari", "mudbox", "zbrush" ).
+	:type input: str
+	:param output: Output format ( "mari", "mudbox", "zbrush" ).
+	:type output: str
+	:param prefix: Rename prefix.
+	:type prefix: str
+	:param preview: Only preview changes.
+	:type preview: bool
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	for source, target in getTexturesNames(textures, input, output, prefix):

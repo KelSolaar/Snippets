@@ -10,9 +10,12 @@ def getDefaultNodeName(node, mappingTable=NODES_NAMES_MAPPING_TABLE):
 	"""
 	Returns given node default name.
 
-	:param nodes: Node to get the default name. ( Node )
-	:param mappingTable: Names mapping table. ( Dictionary )
-	:return: Node default name. ( String )
+	:param nodes: Node to get the default name.
+	:type nodes: Node
+	:param mappingTable: Names mapping table.
+	:type mappingTable: dict
+	:return: Node default name.
+	:rtype: str
 	"""
 
 	nodeType = node.getType()
@@ -27,9 +30,12 @@ def setNodeName(node, name):
 	"""
 	Sets given node name.
 
-	:param node: Node to set the name. ( Object )
-	:param name: Node name. ( String )
-	:return: Definition success. ( Boolean )
+	:param node: Node to set the name.
+	:type node: object
+	:param name: Node name.
+	:type name: str
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	node.setName(name)
@@ -44,11 +50,16 @@ def setNodeNames(nodes, prefix, mappingTable=NODES_NAMES_MAPPING_TABLE, traverse
 	"""
 	Sets given nodes names using given prefix.
 
-	:param nodes: Nodes to set the names. ( List )
-	:param prefix: Prefix. ( String )
-	:param mappingTable: Names mapping table. ( Dictionary )
-	:param traverse: Traverse nodes children. ( Boolean )
-	:return: Definition success. ( Boolean )
+	:param nodes: Nodes to set the names.
+	:type nodes: list
+	:param prefix: Prefix.
+	:type prefix: str
+	:param mappingTable: Names mapping table.
+	:type mappingTable: dict
+	:param traverse: Traverse nodes children.
+	:type traverse: bool
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	for node in nodes:
@@ -64,12 +75,18 @@ def searchAndReplaceNodesNames(nodes, searchPattern, replacementPattern, flags=0
 	"""
 	Search and replace given nodes names.
 
-	:param nodes: Nodes to search and replace. ( List )
-	:param searchPattern: Search pattern. ( String )
-	:param replacementPattern: Replacement pattern. ( String )
-	:param flags: Matching regex flags. ( Integer )
-	:param traverse: Traverse nodes children. ( Boolean )
-	:return: Definition success. ( Boolean )
+	:param nodes: Nodes to search and replace.
+	:type nodes: list
+	:param searchPattern: Search pattern.
+	:type searchPattern: str
+	:param replacementPattern: Replacement pattern.
+	:type replacementPattern: str
+	:param flags: Matching regex flags.
+	:type flags: int
+	:param traverse: Traverse nodes children.
+	:type traverse: bool
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	searchPattern = re.compile(searchPattern)
@@ -86,9 +103,12 @@ def removeNodesNamesTrailingNumbers(nodes, traverse=True):
 	"""
 	Removes given nodes names trailing numbers.
 
-	:param nodes: Nodes to search and replace. ( List )
-	:param traverse: Traverse nodes children. ( Boolean )
-	:return: Definition success. ( Boolean )
+	:param nodes: Nodes to search and replace.
+	:type nodes: list
+	:param traverse: Traverse nodes children.
+	:type traverse: bool
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	return searchAndReplaceNodesNames(nodes, r"\d+$", str(), traverse=traverse)
@@ -97,10 +117,14 @@ def prefixNodesNames(nodes, prefix, traverse=True):
 	"""
 	Prefixes given nodes names using given prefix.
 
-	:param nodes: Nodes to search and replace. ( List )
-	:param prefix: Prefix. ( String )
-	:param traverse: Traverse nodes children. ( Boolean )
-	:return: Definition success. ( Boolean )
+	:param nodes: Nodes to search and replace.
+	:type nodes: list
+	:param prefix: Prefix.
+	:type prefix: str
+	:param traverse: Traverse nodes children.
+	:type traverse: bool
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	return searchAndReplaceNodesNames(nodes, r".*", lambda x: "{0}{1}".format(prefix, x.group(0)), traverse=traverse)
@@ -109,13 +133,20 @@ def searchAndReplaceHintsParameter(parameter, searchPattern, replacementPattern,
 	"""
 	Search and replace given hint parameter.
 
-	:param parameter: Hint parameter to search and replace. ( Object )
-	:param searchPattern: Search pattern. ( String )
-	:param replacementPattern: Replacement pattern. ( String )
-	:param flags: Matching regex flags. ( Integer )
-	:param time: Time to set the value to. ( Integer )
-	:param keys: Hints keys to search and replace in. ( List )
-	:return: Definition success. ( Boolean )
+	:param parameter: Hint parameter to search and replace.
+	:type parameter: object
+	:param searchPattern: Search pattern.
+	:type searchPattern: str
+	:param replacementPattern: Replacement pattern.
+	:type replacementPattern: str
+	:param flags: Matching regex flags.
+	:type flags: int
+	:param time: Time to set the value to.
+	:type time: int
+	:param keys: Hints keys to search and replace in.
+	:type keys: list
+	:return: Definition success.
+	:rtype: bool
 	"""
 	
 	data = ast.literal_eval(parameter.getValue(time))
@@ -134,14 +165,22 @@ def searchAndReplaceHintsParameters(nodes, searchPattern, replacementPattern, fl
 	"""
 	Search and replace given nodes hints parameters.
 
-	:param nodes: Nodes to search and replace. ( List )
-	:param searchPattern: Search pattern. ( String )
-	:param replacementPattern: Replacement pattern. ( String )
-	:param flags: Matching regex flags. ( Integer )
-	:param time: Time to set the value to. ( Integer )
-	:param keys: Hints keys to search and replace in. ( List )
-	:param traverse: Traverse nodes children. ( Boolean )
-	:return: Definition success. ( Boolean )
+	:param nodes: Nodes to search and replace.
+	:type nodes: list
+	:param searchPattern: Search pattern.
+	:type searchPattern: str
+	:param replacementPattern: Replacement pattern.
+	:type replacementPattern: str
+	:param flags: Matching regex flags.
+	:type flags: int
+	:param time: Time to set the value to.
+	:type time: int
+	:param keys: Hints keys to search and replace in.
+	:type keys: list
+	:param traverse: Traverse nodes children.
+	:type traverse: bool
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	searchPattern = re.compile(searchPattern)

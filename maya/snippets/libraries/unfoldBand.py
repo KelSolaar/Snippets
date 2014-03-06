@@ -22,15 +22,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -49,9 +52,12 @@ def unfoldBandUVs(object, divisions=1, history=True):
 	"""
 	Unfolds object band UVs.
 
-	:param object: Object. ( String )
-	:param divisions: Extrusion divisions. ( Integer )
-	:param history: Keep construction history. ( Boolean )
+	:param object: Object.
+	:type object: str
+	:param divisions: Extrusion divisions.
+	:type divisions: int
+	:param history: Keep construction history.
+	:type history: bool
 	"""
 
 	edgesCount = cmds.polyEvaluate(object, edge=True)
@@ -81,7 +87,8 @@ def unfoldBand_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **unfoldBand_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	for object in cmds.ls(sl=True, l=True, o=True):
@@ -142,8 +149,10 @@ def unfoldBandRegular(seamsEdges, history=False):
 	"""
 	Unfolds object band UVs using given seamsEdges.
 	
-	:param seamsEdges: Seams edges. ( List )
-	:param history: Keep construction history. ( Boolean )
+	:param seamsEdges: Seams edges.
+	:type seamsEdges: list
+	:param history: Keep construction history.
+	:type history: bool
 	"""
 
 	seamsEdges = filter(lambda x: re.search(r"e\[\d+\]", x), cmds.ls(seamsEdges, fl=True, l=True))

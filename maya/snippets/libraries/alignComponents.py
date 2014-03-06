@@ -30,15 +30,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -57,8 +60,10 @@ def getMVector(vector):
 	"""
 	Returns an MVector.
 
-	:param vector: Vector. ( List )
-	:return: MVector ( MVector )
+	:param vector: Vector.
+	:type vector: list
+	:return: MVector
+	:rtype: MVector
 	"""
 
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
@@ -67,8 +72,10 @@ def normalize(vector):
 	"""
 	Returns the normalized vector.
 
-	:param vector: Vector. ( List )
-	:return: Normalized vector ( Tuple )
+	:param vector: Vector.
+	:type vector: list
+	:return: Normalized vector
+	:rtype: tuple
 	"""
 
 	mVector = getMVector(vector)
@@ -79,10 +86,14 @@ def alignComponentsBetweenAnchors(anchorA, anchorB, components, axis=("X", "Y", 
 	"""
 	Aligns given Components between the two anchors.
 
-	:param anchorA: Anchor a. ( String )
-	:param anchorB: Anchor b. ( String )
-	:param components: Components to align. ( List )
-	:param axis: Collapse axis. ( Tuple )
+	:param anchorA: Anchor a.
+	:type anchorA: str
+	:param anchorB: Anchor b.
+	:type anchorB: str
+	:param components: Components to align.
+	:type components: list
+	:param axis: Collapse axis.
+	:type axis: tuple
 	"""
 
 	vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
@@ -111,7 +122,8 @@ def selectAnchors_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **selectAnchors_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	global ALIGNEMENT_ANCHORS
@@ -127,7 +139,8 @@ def alignSelection_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **alignSelection_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -139,7 +152,8 @@ def alignSelectionOnXAxis_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **alignSelectionOnXAxis_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -151,7 +165,8 @@ def alignSelectionOnYAxis_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **alignSelectionOnYAxis_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	if ALIGNEMENT_ANCHORS:
@@ -163,7 +178,8 @@ def alignSelectionOnZAxis_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **alignSelectionOnZAxis_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	if ALIGNEMENT_ANCHORS:

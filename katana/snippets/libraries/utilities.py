@@ -9,7 +9,8 @@ def consolePrint(*args):
 	"""
 	Prints given message to KatanaConsole.
 
-	:param \*args: Arguments. ( \* )
+	:param \*args: Arguments.
+	:type \*args: \*
 	"""
 
 	UI4.App.Tabs.FindTopTab("Python").printMessage(" ".join(map(str, args)))
@@ -18,8 +19,10 @@ def listRendererObjectNames(renderer):
 	"""
 	Lists given render object names ( Shaders ).
 
-	:param renderer: Renderer to list the object names. ( String )
-	:return: Object names. ( List )
+	:param renderer: Renderer to list the object names.
+	:type renderer: str
+	:return: Object names.
+	:rtype: list
 	"""
 	
 	rendererInfo = RenderingAPI.RenderPlugins.GetInfoPluginName(renderer)
@@ -30,10 +33,14 @@ def listNode(node, indentation="\t", tabLevel= -1):
 	"""
 	Lists the current node and its children.
 
-	:param node: Node to list. ( Object )
-	:param indentation: Indentation character. ( String )
-	:param tabLevel: Indentation level. ( Integer )
-	:return: Node listing. ( String )
+	:param node: Node to list.
+	:type node: object
+	:param indentation: Indentation character.
+	:type indentation: str
+	:param tabLevel: Indentation level.
+	:type tabLevel: int
+	:return: Node listing.
+	:rtype: str
 	"""
 
 	attribute = "getChildren"
@@ -60,11 +67,16 @@ def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 	"""
 	Lists given node and children hints parameters.
 
-	:param node: Node to list hint parameters. ( Object )
-	:param outputAsTree: Output as groups outputAsTree. ( Boolean )
-	:param indentation: Indentation character. ( String )
-	:param time: Time to get the hints parameters value. ( Integer )
-	:return: Hints parameters listing. ( String )
+	:param node: Node to list hint parameters.
+	:type node: object
+	:param outputAsTree: Output as groups outputAsTree.
+	:type outputAsTree: bool
+	:param indentation: Indentation character.
+	:type indentation: str
+	:param time: Time to get the hints parameters value.
+	:type time: int
+	:return: Hints parameters listing.
+	:rtype: str
 	"""
 
 	nodes = [node]
@@ -105,9 +117,12 @@ def nodesWalker(node, ascendants=False):
 	"""
 	Defines a generator used to walk into nodes hierarchy.
 
-	:param node: Node to walk. ( Object )
-	:param ascendants: Ascendants instead of descendants will be yielded. ( Boolean )
-	:return: Node. ( Object )
+	:param node: Node to walk.
+	:type node: object
+	:param ascendants: Ascendants instead of descendants will be yielded.
+	:type ascendants: bool
+	:return: Node.
+	:rtype: object
 	"""
 
 	attribute = "getChildren" if not ascendants else "getParent"
@@ -141,10 +156,14 @@ def filterNodeParameters(node, pattern=r".*", flags=0):
 	"""
 	Filters given nodes parameters using given pattern.
 
-	:param nodes: Nodes parameters to search and replace. ( List )
-	:param pattern: Matching pattern. ( String )
-	:param flags: Matching regex flags. ( Integer )
-	:return: Definition success. ( Boolean )
+	:param nodes: Nodes parameters to search and replace.
+	:type nodes: list
+	:param pattern: Matching pattern.
+	:type pattern: str
+	:param flags: Matching regex flags.
+	:type flags: int
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	return [parameter for parameter in parametersWalker(node.getParameters()) \
@@ -154,10 +173,14 @@ def resetNodeParameters(node, pattern=r".*", flags=0):
 	"""
 	Resets given nodes parameters using given pattern.
 
-	:param nodes: Nodes parameters to search and replace. ( List )
-	:param pattern: Matching pattern. ( String )
-	:param flags: Matching regex flags. ( Integer )
-	:return: Definition success. ( Boolean )
+	:param nodes: Nodes parameters to search and replace.
+	:type nodes: list
+	:param pattern: Matching pattern.
+	:type pattern: str
+	:param flags: Matching regex flags.
+	:type flags: int
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	for parameter in filterNodeParameters(node, pattern, flags):
@@ -168,8 +191,10 @@ def importScriptNode(path):
 	"""
 	Imports given path script node.
 
-	:param path: Script node path. ( String )
-	:return: Script node success. ( Object )
+	:param path: Script node path.
+	:type path: str
+	:return: Script node success.
+	:rtype: object
 	"""
 	
 	if not os.path.exists(path):
@@ -188,8 +213,10 @@ def singleShotScriptNode(path, parameter):
 	"""
 	Executes given path script node parameter.
 
-	:param path: Script node path. ( String )
-	:return: Definition success. ( Boolean )
+	:param path: Script node path.
+	:type path: str
+	:return: Definition success.
+	:rtype: bool
 	"""
 	
 	if not os.path.exists(path):

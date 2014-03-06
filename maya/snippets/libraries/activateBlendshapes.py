@@ -54,15 +54,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -81,7 +84,8 @@ def weight_floatSliderGrp_OnValueChanged(value):
 	"""
 	Defines the slot triggered by 'weight_floatSliderGrp' slider when value changed.
 
-	:param value: Value. ( Float )
+	:param value: Value.
+	:type value: float
 	"""
 
 	setWeight(cmds.floatSliderGrp("weight_floatSliderGrp", query=True, value=True))
@@ -90,7 +94,8 @@ def setWeight(value):
 	"""
 	Activates every first blendshape node slot in the scene.
 
-	:param value: Activation value. ( Float )
+	:param value: Activation value.
+	:type value: float
 	"""
 
 	blendShapesNodes = cmds.ls(type="blendShape")

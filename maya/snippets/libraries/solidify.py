@@ -30,15 +30,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -57,9 +60,12 @@ def getTransform(node, fullPath=True):
 	"""
 	Returns transform of the given node.
 
-	:param node: Current object. ( String )
-	:param fullPath: Current full path state. ( Boolean )
-	:return: Object transform. ( String )
+	:param node: Current object.
+	:type node: str
+	:param fullPath: Current full path state.
+	:type fullPath: bool
+	:return: Object transform.
+	:rtype: str
 	"""
 
 	transform = node
@@ -72,8 +78,10 @@ def getMVector(vector):
 	"""
 	Returns an MVector.
 
-	:param vector: Vector. ( List )
-	:return: MVector ( MVector )
+	:param vector: Vector.
+	:type vector: list
+	:return: MVector
+	:rtype: MVector
 	"""
 
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
@@ -82,8 +90,10 @@ def getMMatrix(matrix):
 	"""
 	Returns an MMatrix.
 
-	:param matrix: matrix. ( List )
-	:return: MMatrix ( MMatrix )
+	:param matrix: matrix.
+	:type matrix: list
+	:return: MMatrix
+	:rtype: MMatrix
 	"""
 
 	mMatrix = OpenMaya.MMatrix()
@@ -94,8 +104,10 @@ def normalize(vector):
 	"""
 	Returns the normalized vector.
 
-	:param vector: Vector. ( List )
-	:return: Normalized vector ( Tuple )
+	:param vector: Vector.
+	:type vector: list
+	:return: Normalized vector
+	:rtype: tuple
 	"""
 
 	mVector = getMVector(vector)
@@ -106,9 +118,12 @@ def vectorMatrixMultiplication(vector, matrix):
 	"""
 	Returns the vector multiplication between a Vector And a matrix.
 
-	:param vector: Vector. ( List )
-	:param matrix: matrix. ( List )
-	:return: Matrix multiplied vector. ( Tuple )
+	:param vector: Vector.
+	:type vector: list
+	:param matrix: matrix.
+	:type matrix: list
+	:return: Matrix multiplied vector.
+	:rtype: tuple
 	"""
 
 	mVector = getMVector(vector)
@@ -120,9 +135,12 @@ def dot(vectorA, vectorB):
 	"""
 	Returns the dot product between two vectors.
 
-	:param vectorA: Vector A. ( List )
-	:param vectorB: Vector B. ( List )
-	:return: Dot product. ( Float )
+	:param vectorA: Vector A.
+	:type vectorA: list
+	:param vectorB: Vector B.
+	:type vectorB: list
+	:return: Dot product.
+	:rtype: float
 	"""
 
 	mVectorA = getMVector(vectorA)
@@ -133,8 +151,10 @@ def getAverageVector(vectors):
 	"""
 	Returns the average vector from a list of vectors.
 
-	:param vectors: Vectors to get the average one. ( List )
-	:return: Average vector. ( List )
+	:param vectors: Vectors to get the average one.
+	:type vectors: list
+	:return: Average vector.
+	:rtype: list
 	"""
 
 	averageVector = [0, 0, 0]
@@ -149,9 +169,12 @@ def getAngle(vectorA, vectorB):
 	"""
 	Returns the angle between two vectors.
 
-	:param vectorA: Vector A. ( List )
-	:param vectorB: Vector B. ( List )
-	:return: Angle between Vector A and Vector B. ( Float )
+	:param vectorA: Vector A.
+	:type vectorA: list
+	:param vectorB: Vector B.
+	:type vectorB: list
+	:return: Angle between Vector A and Vector B.
+	:rtype: float
 	"""
 
 	return math.degrees(math.acos(dot(vectorA, vectorB)))
@@ -160,8 +183,10 @@ def hasBorderEdges(object):
 	"""
 	Returns if an object has border edges.
 
-	:param object: Object. ( String )
-	:return: Has object border edges. ( Boolean )
+	:param object: Object.
+	:type object: str
+	:return: Has object border edges.
+	:rtype: bool
 	"""
 
 	cmds.select(object)
@@ -174,10 +199,14 @@ def solidifyObject(object, height=1, divisions=2, history=True):
 	"""
 	Solidifies given object.
 
-	:param object: Object. ( String )
-	:param height: Extrusion height. ( Float )
-	:param division: Extrusion divisions. ( Float )
-	:param history: Keep construction history. ( Boolean )
+	:param object: Object.
+	:type object: str
+	:param height: Extrusion height.
+	:type height: float
+	:param division: Extrusion divisions.
+	:type division: float
+	:param history: Keep construction history.
+	:type history: bool
 	"""
 
 	if hasBorderEdges(object):
@@ -218,7 +247,8 @@ def solidify_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **solidify_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	for object in cmds.ls(sl=True, l=True, o=True):

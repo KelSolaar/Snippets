@@ -16,15 +16,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -43,10 +46,14 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
 	"""
 	Returns shapes of the given object.
 
-	:param object: Current object. ( String )
-	:param fullPath: Current full path state. ( Boolean )
-	:param noIntermediate: Current no intermediate state. ( Boolean )
-	:return: Objects shapes. ( List )
+	:param object: Current object.
+	:type object: str
+	:param fullPath: Current full path state.
+	:type fullPath: bool
+	:param noIntermediate: Current no intermediate state.
+	:type noIntermediate: bool
+	:return: Objects shapes.
+	:rtype: list
 	"""
 
 	objectShapes = []
@@ -60,8 +67,10 @@ def snapObjectsOnSupport(objects, support):
 	"""
 	Snaps objects on support.
 
-	:param objects: Objects to snap. ( List )
-	:param value: Support. ( String )
+	:param objects: Objects to snap.
+	:type objects: list
+	:param value: Support.
+	:type value: str
 	"""
 
 	if cmds.pluginInfo("nearestPointOnMesh", q=True, loaded=False):

@@ -86,8 +86,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Initializes the class.
 		
-		:param parent: Parent object. ( QObject )
-		:param modulesManager: Modules Manager. ( ModulesManager )
+		:param parent: Parent object.
+		:type parent: QObject
+		:param modulesManager: Modules Manager.
+		:type modulesManager: ModulesManager
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
@@ -120,7 +122,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Property for **self.__container** attribute.
 
-		:return: self.__container. ( QObject )
+		:return: self.__container.
+		:rtype: QObject
 		"""
 
 		return self.__container
@@ -131,7 +134,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Setter for **self.__container** attribute.
 
-		:param value: Attribute value. ( QObject )
+		:param value: Attribute value.
+		:type value: QObject
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("container"))
@@ -150,7 +154,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Property for **self.__modulesManager** attribute.
 
-		:return: self.__modulesManager. ( QObject )
+		:return: self.__modulesManager.
+		:rtype: QObject
 		"""
 
 		return self.__modulesManager
@@ -161,7 +166,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Setter for **self.__modulesManager** attribute.
 
-		:param value: Attribute value. ( QObject )
+		:param value: Attribute value.
+		:type value: QObject
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modulesManager"))
@@ -180,7 +186,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Property for **self.__model** attribute.
 
-		:return: self.__model. ( TemplatesModel )
+		:return: self.__model.
+		:rtype: TemplatesModel
 		"""
 
 		return self.__model
@@ -191,7 +198,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Setter for **self.__model** attribute.
 
-		:param value: Attribute value. ( TemplatesModel )
+		:param value: Attribute value.
+		:type value: TemplatesModel
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -212,7 +220,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Property for **self.__view** attribute.
 
-		:return: self.__view. ( QWidget )
+		:return: self.__view.
+		:rtype: QWidget
 		"""
 
 		return self.__view
@@ -223,7 +232,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Setter for **self.__view** attribute.
 
-		:param value: Attribute value. ( QWidget )
+		:param value: Attribute value.
+		:type value: QWidget
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -244,7 +254,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Property for **self.__defaultText** attribute.
 
-		:return: self.__defaultText. ( String )
+		:return: self.__defaultText.
+		:rtype: str
 		"""
 
 		return self.__defaultText
@@ -255,7 +266,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Setter for **self.__defaultText** attribute.
 
-		:param value: Attribute value. ( String )
+		:param value: Attribute value.
+		:type value: str
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("defaultText"))
@@ -274,7 +286,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Property for **self.__linuxTextEditors** attribute.
 
-		:return: self.__linuxTextEditors. ( Tuple )
+		:return: self.__linuxTextEditors.
+		:rtype: tuple
 		"""
 
 		return self.__linuxTextEditors
@@ -285,7 +298,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Setter for **self.__linuxTextEditors** attribute.
 
-		:param value: Attribute value. ( Tuple )
+		:param value: Attribute value.
+		:type value: tuple
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("linuxTextEditors"))
@@ -304,7 +318,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Property for **self.__linuxBrowsers** attribute.
 
-		:return: self.__linuxBrowsers. ( QObject )
+		:return: self.__linuxBrowsers.
+		:rtype: QObject
 		"""
 
 		return self.__linuxBrowsers
@@ -315,7 +330,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Setter for **self.__linuxBrowsers** attribute.
 
-		:param value: Attribute value. ( QObject )
+		:param value: Attribute value.
+		:type value: QObject
 		"""
 
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("linuxBrowsers"))
@@ -387,7 +403,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Defines the slot triggered by **editSnippetAction** action.
 
-		:param checked: Checked state. ( Boolean )
+		:param checked: Checked state.
+		:type checked: bool
 		"""
 
 		interface = self.getSelectedInterface()
@@ -401,7 +418,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Defines the slot triggered by **exploreSnippetFolderAction** action.
 
-		:param checked: Checked state. ( Boolean )
+		:param checked: Checked state.
+		:type checked: bool
 		"""
 
 		interface = self.getSelectedInterface()
@@ -414,7 +432,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Defines the slot triggered by **Execute_Snippet_pushButton** Widget when clicked.
 
-		:param checked: Checked state. ( Boolean )
+		:param checked: Checked state.
+		:type checked: bool
 		"""
 
 		self.executeInterface()
@@ -423,7 +442,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Defines the slot triggered by **Reload_Snippets_pushButton** Widget when clicked.
 
-		:param checked: Checked state. ( Boolean )
+		:param checked: Checked state.
+		:type checked: bool
 		"""
 
 		self.__modulesManager.reloadAll()
@@ -433,8 +453,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		Sets the **Informations_textBrowser** Widget.
 
-		:param selectedItems: Selected items. ( QItemSelection )
-		:param deselectedItems: Deselected items. ( QItemSelection )
+		:param selectedItems: Selected items.
+		:type selectedItems: QItemSelection
+		:param deselectedItems: Deselected items.
+		:type deselectedItems: QItemSelection
 		"""
 
 		interface = self.getSelectedInterface()
@@ -486,7 +508,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is triggered when **Interfaces_listView** Widget is double clicked.
 
-		:param index: Current index. ( QModelIndex )
+		:param index: Current index.
+		:type index: QModelIndex
 		"""
 
 		self.executeInterface()
@@ -495,7 +518,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method is triggered when **Search_lineEdit** Widget text changes.
 
-		:param text: Current text value. ( QString )
+		:param text: Current text value.
+		:type text: QString
 		"""
 
 		self.setInterfaces(foundations.strings.encode(text))
@@ -504,8 +528,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method gets the method name from the Interface.
 
-		:param name: Interface name. ( String )
-		:return: Method name. ( String )
+		:param name: Interface name.
+		:type name: str
+		:return: Method name.
+		:rtype: str
 		"""
 
 		return "{0}{1}".format(name[1].lower(), name[2:])
@@ -514,9 +540,12 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method sets the Model interfaces.
 
-		:param pattern: Interface name. ( String )
-		:param flags: Regex filtering flags. ( Integer )
-		:return: Method success. ( Boolean )
+		:param pattern: Interface name.
+		:type pattern: str
+		:param flags: Regex filtering flags.
+		:type flags: int
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		try:
@@ -540,7 +569,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method returns the current selected Interface.
 
-		:return: Selected interface. ( Interface )
+		:return: Selected interface.
+		:rtype: Interface
 		"""
 
 		items = [self.__model.getInterface(index) for index in self.__view.selectionModel().selectedIndexes()]
@@ -550,7 +580,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method triggers the selected Interface execution.
 		
-		:return: Method success. ( Boolean )
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		interface = self.getSelectedInterface()
@@ -570,8 +601,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method provides editing capability.
 
-		:param file: File to edit. ( String )
-		:return: Method success. ( Boolean )
+		:param file: File to edit.
+		:type file: str
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		editCommand = None
@@ -611,8 +644,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"""
 		This method provides directory exploring capability.
 
-		:param directory: Folder to explore. ( String )
-		:return: Method success. ( Boolean )
+		:param directory: Folder to explore.
+		:type directory: str
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		browserCommand = None

@@ -66,8 +66,10 @@ class Module(object):
 		"""
 		Initializes the class.
 
-		:param name: Name of the Component. ( String )
-		:param path: Path of the Component. ( String )
+		:param name: Name of the Component.
+		:type name: str
+		:param path: Path of the Component.
+		:type path: str
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
@@ -89,7 +91,8 @@ class Module(object):
 		"""
 		Property for **self.___name** attribute.
 
-		:return: self.__name. ( String )
+		:return: self.__name.
+		:rtype: str
 		"""
 
 		return self.__name
@@ -100,7 +103,8 @@ class Module(object):
 		"""
 		Setter for **self.___name** attribute.
 
-		:param value: Attribute value. ( String )
+		:param value: Attribute value.
+		:type value: str
 		"""
 
 		if value is not None:
@@ -122,7 +126,8 @@ class Module(object):
 		"""
 		Property for **self.__paths** attribute.
 
-		:return: self.__paths. ( String )
+		:return: self.__paths.
+		:rtype: str
 		"""
 
 		return self.__paths
@@ -133,7 +138,8 @@ class Module(object):
 		"""
 		Setter for **self.__paths** attribute.
 
-		:param value: Attribute value. ( String )
+		:param value: Attribute value.
+		:type value: str
 		"""
 
 		if value is not None:
@@ -156,7 +162,8 @@ class Module(object):
 		"""
 		Property for **self.___import_** attribute.
 
-		:return: self.__import. ( Module )
+		:return: self.__import.
+		:rtype: ModuleType
 		"""
 
 		return self.__import
@@ -167,7 +174,8 @@ class Module(object):
 		"""
 		Setter for **self.___import_** attribute.
 
-		:param value: Attribute value. ( Module )
+		:param value: Attribute value.
+		:type value: ModuleType
 		"""
 
 		if value is not None:
@@ -188,7 +196,8 @@ class Module(object):
 		"""
 		Property for **self.__interfaces** attribute.
 
-		:return: self.__interfaces. ( Object )
+		:return: self.__interfaces.
+		:rtype: object
 		"""
 
 		return self.__interfaces
@@ -198,7 +207,8 @@ class Module(object):
 		"""
 		Setter for **self.__interfaces** attribute.
 
-		:param value: Attribute value. ( Object )
+		:param value: Attribute value.
+		:type value: object
 		"""
 
 		self.__interfaces = value
@@ -221,7 +231,8 @@ class ModulesManager(object):
 		"""
 		Initializes the class.
 
-		:param path: Paths of the modules. ( Tuple / List )
+		:param path: Paths of the modules.
+		:type path: tuple or list
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
@@ -241,7 +252,8 @@ class ModulesManager(object):
 		"""
 		Property for **self.__paths** attribute.
 
-		:return: self.__paths. ( List )
+		:return: self.__paths.
+		:rtype: list
 		"""
 
 		return self.__paths
@@ -252,7 +264,8 @@ class ModulesManager(object):
 		"""
 		Setter for **self.__paths** attribute.
 
-		:param value: Attribute value. ( Tuple / List )
+		:param value: Attribute value.
+		:type value: tuple or list
 		"""
 
 		if value is not None:
@@ -275,7 +288,8 @@ class ModulesManager(object):
 		"""
 		Property for **self.__modules** attribute.
 
-		:return: self.__modules. ( Dictionary )
+		:return: self.__modules.
+		:rtype: dict
 		"""
 
 		return self.__modules
@@ -286,7 +300,8 @@ class ModulesManager(object):
 		"""
 		Setter for **self.__modules** attribute.
 
-		:param value: Attribute value. ( Dictionary )
+		:param value: Attribute value.
+		:type value: dict
 		"""
 
 		if value is not None:
@@ -307,7 +322,8 @@ class ModulesManager(object):
 		"""
 		Property for **self.__libraryExtension** attribute.
 
-		:return: self.__libraryExtension. ( String )
+		:return: self.__libraryExtension.
+		:rtype: str
 		"""
 
 		return self.__libraryExtension
@@ -318,7 +334,8 @@ class ModulesManager(object):
 		"""
 		Setter for **self.__libraryExtension** attribute.
 
-		:param value: Attribute value. ( String )
+		:param value: Attribute value.
+		:type value: str
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -341,8 +358,10 @@ class ModulesManager(object):
 		"""
 		Reimplements the :meth:`object.__getitem__` method.
 
-		:param name: Module name. ( String )
-		:return: Module. ( Module )
+		:param name: Module name.
+		:type name: str
+		:return: Module.
+		:rtype: ModuleType
 		"""
 
 		for module in self.__modules.itervalues():
@@ -353,7 +372,8 @@ class ModulesManager(object):
 		"""
 		Reimplements the :meth:`object.__iter__` method.
 		
-		:return: Modules iterator. ( Object )
+		:return: Modules iterator.
+		:rtype: object
 		"""
 
 		return self.__modules.iteritems()
@@ -362,8 +382,10 @@ class ModulesManager(object):
 		"""
 		Reimplements the :meth:`object.__contains__` method.
 
-		:param name: Module name. ( String )
-		:return: Module existence. ( Boolean )
+		:param name: Module name.
+		:type name: str
+		:return: Module existence.
+		:rtype: bool
 		"""
 
 		return self[name] and True or False
@@ -372,7 +394,8 @@ class ModulesManager(object):
 		"""
 		Reimplements the :meth:`object.__len__` method.
 
-		:return: Modules count. ( Integer )
+		:return: Modules count.
+		:rtype: int
 		"""
 
 		return len(self.__modules)
@@ -381,7 +404,8 @@ class ModulesManager(object):
 		"""
 		Lists the registered modules.
 
-		:return: Modules list. ( List )
+		:return: Modules list.
+		:rtype: list
 		"""
 
 		return [module.name for module in self.iterkeys()]
@@ -391,9 +415,12 @@ class ModulesManager(object):
 		"""
 		Registers given module.
 
-		:param name: Module name. ( String )
-		:param path: Module path. ( Layout )
-		:return: Method success. ( Boolean )
+		:param name: Module name.
+		:type name: str
+		:param path: Module path.
+		:type path: Layout
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		if name in self:
@@ -408,8 +435,10 @@ class ModulesManager(object):
 		"""
 		Unregisters given module.
 
-		:param name: Module name. ( String )
-		:return: Method success. ( Boolean )
+		:param name: Module name.
+		:type name: str
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		if not name in self:
@@ -422,7 +451,8 @@ class ModulesManager(object):
 	def registerModules(self):
 		"""
 		Gathers the modules.
-		:return: Method success. ( Boolean )
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		for directory in self.__paths:
@@ -434,8 +464,10 @@ class ModulesManager(object):
 		"""
 		Instantiates given module interfaces.
 
-		:param module: Module. ( Module )
-		:return: Method success. ( Boolean )
+		:param module: Module.
+		:type module: ModuleType
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		if module.path not in sys.path:
@@ -457,7 +489,8 @@ class ModulesManager(object):
 		"""
 		Registers modules interfaces.
 
-		:return: Method success. ( Boolean )
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		for name, module in self:
@@ -468,7 +501,8 @@ class ModulesManager(object):
 		"""
 		Unregisters modules and their interfaces.
 
-		:return: Method success. ( Boolean )
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		self.__modules = {}
@@ -478,7 +512,8 @@ class ModulesManager(object):
 		"""
 		Registers modules and their interfaces.
 
-		:return: Method success. ( Boolean )
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		self.registerModules()
@@ -489,7 +524,8 @@ class ModulesManager(object):
 		"""
 		Reloads all modules and their interfaces.
 
-		:return: Method success. ( Boolean )
+		:return: Method success.
+		:rtype: bool
 		"""
 
 		self.unregisterAll()

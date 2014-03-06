@@ -59,10 +59,14 @@ def unpackDefault(data, length=3, default=None):
 	"""
 	Unpack given iterable data with default if needed.
 	
-	:param data: Iterable. ( String / Tuple / List )
-	:param length: Default length. ( Integer )
-	:param default: Default value. ( Object )
-	:return: Definition success. ( Boolean )
+	:param data: Iterable.
+	:type data: str or tuple or list
+	:param length: Default length.
+	:type length: int
+	:param default: Default value.
+	:type default: object
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	return itertools.islice(itertools.chain(iter(data), itertools.repeat(default)), length)
@@ -71,8 +75,10 @@ def fillPaintBuffer(color):
 	"""
 	Fills the paint buffer with given color.
 	
-	:param color: Color. ( QColor )
-	:return: Definition success. ( Boolean )
+	:param color: Color.
+	:type color: QColor
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	paintBuffer = mari.canvases.paintBuffer()
@@ -85,8 +91,10 @@ def projectColor(color):
 	"""
 	Projects the given color.
 	
-	:param color: Color. ( QColor )
-	:return: Definition success. ( Boolean )
+	:param color: Color.
+	:type color: QColor
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	if fillPaintBuffer(color):
@@ -97,7 +105,8 @@ def projectBlack():
 	"""
 	Projects black color.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	return projectColor(QColor(0, 0, 0,255))
@@ -106,7 +115,8 @@ def projectWhite():
 	"""
 	Projects white color.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	return projectColor(QColor(255, 255, 255,255))
@@ -115,7 +125,8 @@ def getSelectedPatches():
 	"""
 	Returns current selected patches.
 
-	:return: Selected patches. ( List )
+	:return: Selected patches.
+	:rtype: list
 	"""
 
 	patches = []
@@ -128,7 +139,8 @@ def displaySelectedPatches():
 	"""
 	Displays current selected patches.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 	
 	patches = getSelectedPatches()
@@ -141,8 +153,10 @@ def getPatchesFromSequence(sequence):
 	"""
 	Returns patches from the given sequence.
 
-	:param sequence: sequence. ( String )
-	:return: Patches. ( List )
+	:param sequence: sequence.
+	:type sequence: str
+	:return: Patches.
+	:rtype: list
 	"""
 	
 	patches = []
@@ -160,8 +174,10 @@ def selectPatches(patches):
 	"""
 	Selects given patches.
 
-	:param patches: patches. ( List )
-	:return: Definition success. ( Boolean )
+	:param patches: patches.
+	:type patches: list
+	:return: Definition success.
+	:rtype: bool
 	"""
 	
 	patches	= [str(patch) for patch in patches]
@@ -174,7 +190,8 @@ def selectInputPatches():
 	"""
 	Selects input patches.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	sequence = QInputDialog.getText(None, "Select Patches", "Patches Sequences:")
@@ -185,7 +202,8 @@ def playblastTimeRange():
 	"""
 	Playblasts current time range.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	mari.actions.find('/Mari/Canvas/Screenshot settings').trigger()
@@ -211,7 +229,8 @@ def writeUVsMasks(directory):
 	"""
 	Writes UVs masks to given output directory.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	if not directory:
@@ -236,7 +255,8 @@ def exportUVsMasks():
 	"""
 	Exports UVs masks.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 	
 	return writeUVsMasks(QFileDialog.getExistingDirectory(None, "Select Output Directory",))

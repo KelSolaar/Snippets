@@ -68,11 +68,16 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Initializes the class.
 
-		:param parent: Widget parent. ( QObject )
-		:param uiSearchImage: Search button image path. ( String )
-		:param uiSearchClickedImage: Search button clicked image path. ( String )
-		:param uiClearImage: Clear button image path. ( String )
-		:param uiClearClickedImage: Clear button clicked image path. ( String )
+		:param parent: Widget parent.
+		:type parent: QObject
+		:param uiSearchImage: Search button image path.
+		:type uiSearchImage: str
+		:param uiSearchClickedImage: Search button clicked image path.
+		:type uiSearchClickedImage: str
+		:param uiClearImage: Clear button image path.
+		:type uiClearImage: str
+		:param uiClearClickedImage: Clear button clicked image path.
+		:type uiClearClickedImage: str
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
@@ -123,7 +128,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Property for **self.__uiSearchImage** attribute.
 
-		:return: self.__uiSearchImage. ( String )
+		:return: self.__uiSearchImage.
+		:rtype: str
 		"""
 
 		return self.__uiSearchImage
@@ -134,7 +140,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Setter for **self.__uiSearchImage** attribute.
 
-		:param value: Attribute value. ( String )
+		:param value: Attribute value.
+		:type value: str
 		"""
 
 		if value is not None:
@@ -158,7 +165,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Property for **self.__uiSearchClickedImage** attribute.
 
-		:return: self.__uiSearchClickedImage. ( String )
+		:return: self.__uiSearchClickedImage.
+		:rtype: str
 		"""
 
 		return self.__uiSearchClickedImage
@@ -169,7 +177,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Setter for **self.__uiSearchClickedImage** attribute.
 
-		:param value: Attribute value. ( String )
+		:param value: Attribute value.
+		:type value: str
 		"""
 
 		if value is not None:
@@ -194,7 +203,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Property for **self.__uiClearImage** attribute.
 
-		:return: self.__uiClearImage. ( String )
+		:return: self.__uiClearImage.
+		:rtype: str
 		"""
 
 		return self.__uiClearImage
@@ -205,7 +215,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Setter for **self.__uiClearImage** attribute.
 
-		:param value: Attribute value. ( String )
+		:param value: Attribute value.
+		:type value: str
 		"""
 
 		if value is not None:
@@ -230,7 +241,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Property for **self.__uiClearClickedImage** attribute.
 
-		:return: self.__uiClearClickedImage. ( String )
+		:return: self.__uiClearClickedImage.
+		:rtype: str
 		"""
 
 		return self.__uiClearClickedImage
@@ -241,7 +253,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Setter for **self.__uiClearClickedImage** attribute.
 
-		:param value: Attribute value. ( String )
+		:param value: Attribute value.
+		:type value: str
 		"""
 
 		if value is not None:
@@ -266,7 +279,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Property for **self.__searchActiveLabel** attribute.
 
-		:return: self.__searchActiveLabel. ( QPushButton )
+		:return: self.__searchActiveLabel.
+		:rtype: QPushButton
 		"""
 
 		return self.__searchActiveLabel
@@ -277,7 +291,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Setter for **self.__searchActiveLabel** attribute.
 
-		:param value: Attribute value. ( QPushButton )
+		:param value: Attribute value.
+		:type value: QPushButton
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -298,7 +313,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Property for **self.__clearButton** attribute.
 
-		:return: self.__clearButton. ( QPushButton )
+		:return: self.__clearButton.
+		:rtype: QPushButton
 		"""
 
 		return self.__clearButton
@@ -309,7 +325,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Setter for **self.__clearButton** attribute.
 
-		:param value: Attribute value. ( QPushButton )
+		:param value: Attribute value.
+		:type value: QPushButton
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -330,7 +347,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Property for **self.__completer** attribute.
 
-		:return: self.__completer. ( QCompleter )
+		:return: self.__completer.
+		:rtype: QCompleter
 		"""
 
 		return self.__completer
@@ -341,7 +359,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Setter for **self.__completer** attribute.
 
-		:param value: Attribute value. ( QCompleter )
+		:param value: Attribute value.
+		:type value: QCompleter
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -362,7 +381,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Property for **self.__completerVisibleItemsCount** attribute.
 
-		:return: self.__completerVisibleItemsCount. ( Integer )
+		:return: self.__completerVisibleItemsCount.
+		:rtype: int
 		"""
 
 		return self.__completerVisibleItemsCount
@@ -373,7 +393,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Setter for **self.__completerVisibleItemsCount** attribute.
 
-		:param value: Attribute value. ( Integer )
+		:param value: Attribute value.
+		:type value: int
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
@@ -396,7 +417,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Reimplements the :meth:`QLineEdit.QResizeEvent` method.
 
-		:param event: Resize event. ( QResizeEvent )
+		:param event: Resize event.
+		:type event: QResizeEvent
 		"""
 
 		frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
@@ -450,7 +472,8 @@ class Search_QLineEdit(QLineEdit):
 		"""
 		Sets the clear button visibility.
 
-		:param text: Current field text. ( QString )
+		:param text: Current field text.
+		:type text: QString
 		"""
 
 		if text:

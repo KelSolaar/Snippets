@@ -58,8 +58,10 @@ def getResourcePath(name):
 	"""
 	Returns the resource file path matching the given name.
 
-	:param name: Resource name. ( String )
-	:return: Resource path. ( String )
+	:param name: Resource name.
+	:type name: str
+	:return: Resource path.
+	:rtype: str
 	"""
 
 	if not foundations.common.pathExists(RuntimeGlobals.resourcesDirectory):
@@ -74,7 +76,8 @@ def parentsWalker(object):
 	"""
 	Defines a generator used to retrieve the chain of parents of the given :class:`QObject` instance.
 
-	:param object: Provided path. ( QObject )
+	:param object: Provided path.
+	:type object: QObject
 	:yield: Object parent. ( QObject )
 	"""
 
@@ -86,7 +89,8 @@ def getMayaWindow():
 	"""
 	Returns Maya window as QObject.
 
-	:return: Maya window. ( QObject )
+	:return: Maya window.
+	:rtype: QObject
 	"""
 
 	pointer = OpenMayaUI.MQtUtil.mainWindow()
@@ -96,9 +100,12 @@ def messageBox(messageType, title, message):
 	"""
 	Provides a fast gui message box.
 
-	:param messageType: Message type. ( String )
-	:param title: Message box title. ( String )
-	:param message: Message content. ( String )
+	:param messageType: Message type.
+	:type messageType: str
+	:param title: Message box title.
+	:type title: str
+	:param message: Message content.
+	:type message: str
 	"""
 
 	LOGGER.debug("> Launching messagebox().")
@@ -135,7 +142,8 @@ def centerWidgetOnScreen(widget):
 	"""
 	Centers given Widget middle of the screen.
 
-	:param widget: Current Widget. ( QWidget )
+	:param widget: Current Widget.
+	:type widget: QWidget
 	"""
 
 	widget.move(QApplication.desktop().width() / 2 - widget.width() / 2, QApplication.desktop().height() / 2 - widget.height() / 2)
@@ -144,9 +152,12 @@ def resizeWidget(widget, sizeX, sizeY):
 	"""
 	Resize given Widget.
 
-	:param widget: Current Widget. ( QWidget )
-	:param sizeX: Size x. ( Integer )
-	:param sizeY: Size y. ( Integer )
+	:param widget: Current Widget.
+	:type widget: QWidget
+	:param sizeX: Size x.
+	:type sizeX: int
+	:param sizeY: Size y.
+	:type sizeY: int
 	"""
 
 	widget.resize(int(sizeX), int(sizeY))

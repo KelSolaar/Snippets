@@ -38,15 +38,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -65,9 +68,12 @@ def getTransform(node, fullPath=True):
 	"""
 	Returns transform of the given node.
 
-	:param node: Current object. ( String )
-	:param fullPath: Current full path state. ( Boolean )
-	:return: Object transform. ( String )
+	:param node: Current object.
+	:type node: str
+	:param fullPath: Current full path state.
+	:type fullPath: bool
+	:return: Object transform.
+	:rtype: str
 	"""
 
 	transform = node
@@ -80,9 +86,12 @@ def setPadding(data, padding, affix="0"):
 	"""
 	Pads the given data.
 
-	:param data: Data to pad. ( String )
-	:param padding: Padding. ( Integer )
-	:param affix: Padding affix. ( String )
+	:param data: Data to pad.
+	:type data: str
+	:param padding: Padding.
+	:type padding: int
+	:param affix: Padding affix.
+	:type affix: str
 	"""
 
 	while len(data) < padding:
@@ -93,7 +102,8 @@ def getUserExportDirectory():
 	"""
 	Gets the user export directory.
 
-	:return: Export directory. ( String )
+	:return: Export directory.
+	:rtype: str
 	"""
 
 	workspace = cmds.workspace(q=True, rd=True)
@@ -104,11 +114,16 @@ def exportObjectsToFiles(objects, exportType, useObjectsNames=True, useLongNames
 	"""
 	Export given objects to files.
 
-	:param objects: Objects to export. ( List )
-	:param exportType: Export type. ( String )
-	:param useObjectsNames: Use objects names. ( Boolean )
-	:param useLongNames: Use long Maya names. ( Boolean )
-	:return: Exported files. ( List )
+	:param objects: Objects to export.
+	:type objects: list
+	:param exportType: Export type.
+	:type exportType: str
+	:param useObjectsNames: Use objects names.
+	:type useObjectsNames: bool
+	:param useLongNames: Use long Maya names.
+	:type useLongNames: bool
+	:return: Exported files.
+	:rtype: list
 	"""
 
 	exportDirectory = getUserExportDirectory()

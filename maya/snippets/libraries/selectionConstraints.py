@@ -41,15 +41,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -148,7 +151,8 @@ def selectCreasesEdges(object):
 	"""
 	Cleans Maya hierarchical polygonal conversion.
 
-	:param object: Object to select creases edges. ( String )
+	:param object: Object to select creases edges.
+	:type object: str
 	"""
 
 	edges = cmds.ls(object + ".e[0:" + str(cmds.polyEvaluate(object, edge=True) - 1) + "]", fl=True)
@@ -259,8 +263,10 @@ def selectSideVertices(object, positive=True):
 	"""
 	Selects given side geometry vertices.
 	
-	:param object: Object to select vertices. ( String )
-	:param positive: Select positive vertices. ( Boolean )
+	:param object: Object to select vertices.
+	:type object: str
+	:param positive: Select positive vertices.
+	:type positive: bool
 	"""
 
 	comparison = positive and operator.gt or operator.lt
@@ -272,7 +278,8 @@ def selectLeftVertices(object):
 	"""
 	Selects left side geometry vertices.
 	
-	:param object: Object to select left vertices. ( String )
+	:param object: Object to select left vertices.
+	:type object: str
 	"""
 
 	selectSideVertices(object)
@@ -290,7 +297,8 @@ def selectRightVertices(object):
 	"""
 	Selects right side geometry vertices.
 	
-	:param object: Object to select right vertices. ( String )
+	:param object: Object to select right vertices.
+	:type object: str
 	"""
 
 	selectSideVertices(object, positive=False)

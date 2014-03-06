@@ -24,15 +24,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -51,8 +54,10 @@ def getMPoint(point):
 	"""
 	Returns an MPoint.
 
-	:param point: Point. ( List )
-	:return: MPoint ( MVector )
+	:param point: Point.
+	:type point: list
+	:return: MPoint
+	:rtype: MVector
 	"""
 
 	return OpenMaya.MPoint(point[0], point[1], point[2])
@@ -61,9 +66,12 @@ def norme(pointA, pointB):
 	"""
 	Returns the norme of a vector.
 
-	:param pointA: Point A. ( List )
-	:param pointB: Point B. ( List )
-	:return: Norme ( Float )
+	:param pointA: Point A.
+	:type pointA: list
+	:param pointB: Point B.
+	:type pointB: list
+	:return: Norme
+	:rtype: float
 	"""
 
 	mPointA = getMPoint(pointA)
@@ -75,9 +83,12 @@ def renameTargetsFromClosestSources(sources, targets, suffixe="__"):
 	"""
 	Renames the targets from closest sources.
 
-	:param sources: Sources. ( List )
-	:param targets: Targets. ( List )
-	:param suffixe: Suffixe. ( String )
+	:param sources: Sources.
+	:type sources: list
+	:param targets: Targets.
+	:type targets: list
+	:param suffixe: Suffixe.
+	:type suffixe: str
 	"""
 
 	for target in targets:
@@ -93,7 +104,8 @@ def pickSources_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **pickSources_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	cmds.textField("sources_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -103,7 +115,8 @@ def pickTargets_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **pickTargets_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	cmds.textField("targets_textField", edit=True, text=", ".join(cmds.ls(sl=True, l=True)))
@@ -113,7 +126,8 @@ def renameFromClosest_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **renameFromClosest_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	sources = [source for source in cmds.textField("sources_textField", query=True, text=True).split(", ") if cmds.objExists(source)]

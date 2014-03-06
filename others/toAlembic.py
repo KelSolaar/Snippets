@@ -53,9 +53,12 @@ def ascendantsWalker(path, visitor=None):
 	"""
 	Returns the parents of given Dag path.
 	
-	:param path: Dag path. ( String )
-	:param visitor: Visitor. ( Object )
-	:return: Parent. ( String )
+	:param path: Dag path.
+	:type path: str
+	:param visitor: Visitor.
+	:type visitor: object
+	:return: Parent.
+	:rtype: str
 	"""
 
 	parents = cmds.listRelatives(path, allParents=True, fullPath=True)
@@ -72,8 +75,10 @@ def getRoot(path):
 	"""
 	Returns the root path of given Dag path.
 	
-	:param path: Dag path. ( String )
-	:return: Root path. ( String )
+	:param path: Dag path.
+	:type path: str
+	:return: Root path.
+	:rtype: str
 	"""
 
 	parents = list(ascendantsWalker(path))
@@ -83,9 +88,12 @@ def toAlembic(parameters, arguments):
 	"""
 	Converts an Obj file to Alembic file.
 	
-	:param parameters: Command line parameters. ( Object )
-	:param arguments: Command line arguments. ( Object )
-	:return: Definition success. ( Boolean )
+	:param parameters: Command line parameters.
+	:type parameters: object
+	:param arguments: Command line arguments.
+	:type arguments: object
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	inputFile = parameters.inputFile
@@ -133,8 +141,10 @@ def getCommandLineParameters(argv):
 	"""
 	Returns the command line parameters parser.
 
-	:param argv: Command line parameters. ( String )
-	:return: Settings, arguments ( Parser Instance )
+	:param argv: Command line parameters.
+	:type argv: str
+	:return: Settings, arguments
+	:rtype: ParserInstance
 	"""
 
 	argv = argv or sys.argv[1:]

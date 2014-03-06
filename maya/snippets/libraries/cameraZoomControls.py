@@ -22,15 +22,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -49,7 +52,8 @@ def getActiveCamera():
 	"""
 	Returns the current active camera.
 
-	:return: Active camera. ( String )
+	:return: Active camera.
+	:rtype: str
 	"""
 
 	try :
@@ -63,7 +67,8 @@ def overscan_floatSliderGrp_OnValueChanged(value):
 	"""
 	Defines the slot triggered by 'overscan_floatSliderGrp' slider when value changed.
 
-	:param value: Value. ( Float )
+	:param value: Value.
+	:type value: float
 	"""
 
 	activeCamera = getActiveCamera()
@@ -78,7 +83,8 @@ def horizontalOffset_floatSliderGrp_OnValueChanged(value):
 	"""
 	Defines the slot triggered by 'horizontalOffset_floatSliderGrp' slider when value changed.
 
-	:param value: Value. ( Float )
+	:param value: Value.
+	:type value: float
 	"""
 
 	activeCamera = getActiveCamera()
@@ -93,7 +99,8 @@ def verticalOffset_floatSliderGrp_OnValueChanged(value):
 	"""
 	Defines the slot triggered by 'verticalOffset_floatSliderGrp' slider when value changed.
 
-	:param value: Value. ( Float )
+	:param value: Value.
+	:type value: float
 	"""
 
 	activeCamera = getActiveCamera()
@@ -108,7 +115,8 @@ def resetZoomControls_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **resetZoomControls_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	cmds.floatSliderGrp("overscan_floatSliderGrp", edit=True, value=1)

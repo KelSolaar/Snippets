@@ -61,7 +61,8 @@ class MayaLoggingHandler(logging.Handler):
 		"""
 		Emits the given record.
 
-		:param record: Record. ( String )
+		:param record: Record.
+		:type record: str
 		"""
 
 		if record.levelno > logging.INFO:

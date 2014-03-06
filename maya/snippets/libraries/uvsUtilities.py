@@ -102,15 +102,18 @@ def stacksHandler(object):
 	"""
 	Handles Maya stacks.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def stacksHandlerCall(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		cmds.undoInfo(openChunk=True)
@@ -129,15 +132,18 @@ def anchorSelection(object):
 	"""
 	Anchors current selection.
 
-	:param object: Python object. ( Object )
-	:return: Python function. ( Function )
+	:param object: Python object.
+	:type object: object
+	:return: Python function.
+	:rtype: object
 	"""
 
 	def function(*args, **kwargs):
 		"""
 		Anchors current selection.
 
-		:return: Python object. ( Python )
+		:return: Python object.
+		:rtype: object
 		"""
 
 		selection = cmds.ls(sl=True, l=True)
@@ -151,9 +157,12 @@ def getFirstItem(iterable, default=None):
     """
     Returns the first item of given iterable.
 
-    :param iterable: Iterable. ( Object )
-    :param default: Default value. ( Object )
-    :return: First iterable item. ( Object )
+    :param iterable: Iterable.
+    :type iterable: object
+    :param default: Default value.
+    :type default: object
+    :return: First iterable item.
+    :rtype: object
     """
 
     if not iterable:
@@ -166,10 +175,14 @@ def getShapes(object, fullPathState=False, noIntermediateState=True):
     """
     Returns shapes of the given object.
 
-    :param object: Current object. ( String )
-    :param fullPath: Current full path state. ( Boolean )
-    :param noIntermediate: Current no intermediate state. ( Boolean )
-    :return: Objects shapes. ( List )
+    :param object: Current object.
+    :type object: str
+    :param fullPath: Current full path state.
+    :type fullPath: bool
+    :param noIntermediate: Current no intermediate state.
+    :type noIntermediate: bool
+    :return: Objects shapes.
+    :rtype: list
     """
 
     objectShapes = []
@@ -183,8 +196,10 @@ def getNode(node):
 	"""
 	Returns given node if it exists or **None**.
 
-	:param node: Current node to retrun. ( String )
-	:return: Node. ( String )
+	:param node: Current node to retrun.
+	:type node: str
+	:return: Node.
+	:rtype: str
 	"""
 
 	try:
@@ -196,8 +211,10 @@ def isGeometry(object):
 	"""
 	Returns if a node is a geometry.
 
-	:param object: Current object to check. ( String )
-	:return: Geometry object state. ( Boolean )
+	:param object: Current object to check.
+	:type object: str
+	:return: Geometry object state.
+	:rtype: bool
 	"""
 
 	if cmds.nodeType(object) == "mesh" or cmds.nodeType(object) == "nurbsSurface" or cmds.nodeType(object) == "subdiv":
@@ -209,8 +226,10 @@ def getConnections(node):
     """
     Returns the connections of given node.
 
-    :param node: Node. ( String )
-    :return: Connections. ( List )
+    :param node: Node.
+    :type node: str
+    :return: Connections.
+    :rtype: list
     """
 
     connections = cmds.listConnections(node, c=True)
@@ -220,8 +239,10 @@ def getAttachedShaders(object):
     """
     Returns the shaders attached to given objects.
 
-    :param object: Current object. ( String )
-    :return: Attached shaders. ( List )
+    :param object: Current object.
+    :type object: str
+    :return: Attached shaders.
+    :rtype: list
     """
 
     shape = getFirstItem(getShapes(object))
@@ -242,9 +263,12 @@ def getUVsFromComponents(components, flatten=True):
 	"""
 	Returns the uvs from given components.
 
-	:param components: Components. ( List )
-	:param flatten: Flatten components list. ( Boolean )
-	:return: Components UVs. ( List )
+	:param components: Components.
+	:type components: list
+	:param flatten: Flatten components list.
+	:type flatten: bool
+	:return: Components UVs.
+	:rtype: list
 	"""
 
 	pattern = re.compile(r"map\[\d+\]")
@@ -257,8 +281,10 @@ def getFacesPerPatches(object):
 	"""
 	Returns the faces per patches from given object.
 
-	:param object: Object. ( String )
-	:return: Faces per patches. ( Dictionary )
+	:param object: Object.
+	:type object: str
+	:return: Faces per patches.
+	:rtype: dict
 	"""
 
 	faces = cmds.ls("%s.f[0:%s]" % (object, cmds.polyEvaluate(object, face=True)), fl=True)
@@ -276,8 +302,10 @@ def getObjectUVsArea(object):
 	"""
 	Returns given object UVs area.
 
-	:param object: Object to retrieve UVs area. ( String )
-	:return: UVs area. ( Integer )
+	:param object: Object to retrieve UVs area.
+	:type object: str
+	:return: UVs area.
+	:rtype: int
 	"""
 
 	selectionList = OpenMaya.MSelectionList()
@@ -300,8 +328,10 @@ def getComponentUVDims(component):
 	"""
 	Returns the UVDims of the given component.
 
-	:param component: Component to retrieve the UVDims. ( String )
-	:return: UVDims. ( Tuple )
+	:param component: Component to retrieve the UVDims.
+	:type component: str
+	:return: UVDims.
+	:rtype: tuple
 	"""
 
 	u, v = cmds.polyEditUV(component, q=True, uValue=True, vValue=True)
@@ -311,8 +341,10 @@ def getMariPatchFromUVDims(uvDims):
 	"""
 	Returns the Mari patch of the given component from UVDims.
 
-	:param uvDims: UVDims to convert to Mari Patch. ( Tuple )
-	:return: Mari patch. ( Integer )
+	:param uvDims: UVDims to convert to Mari Patch.
+	:type uvDims: tuple
+	:return: Mari patch.
+	:rtype: int
 	"""
 
 	uDim, vDim = uvDims
@@ -322,8 +354,10 @@ def getComponentsUVDims(components):
 	"""
 	Returns given components UVDims.
 
-	:param components: Components. ( Tuple / List )
-	:return: Components UVDims. ( List )
+	:param components: Components.
+	:type components: tuple or list
+	:return: Components UVDims.
+	:rtype: list
 	"""
 
 	uvs = getUVsFromComponents(components)
@@ -337,8 +371,10 @@ def getComponentsMariPatches(components):
 	"""
 	Returns given components Mari patches.
 
-	:param components: Components. ( Tuple / List )
-	:return: Components Mari patches. ( List )
+	:param components: Components.
+	:type components: tuple or list
+	:return: Components Mari patches.
+	:rtype: list
 	"""
 
 	uvDims = getComponentsUVDims(components)
@@ -351,8 +387,10 @@ def getComponentsOccupationAsUVDims(components):
 	"""
 	Returns given components occupation as UVDims.
 
-	:param components: Components. ( Tuple / List )
-	:return: Components occupation. ( Tuple )
+	:param components: Components.
+	:type components: tuple or list
+	:return: Components occupation.
+	:rtype: tuple
 	"""
 
 	shells = getComponentsUVDims(components)
@@ -362,8 +400,10 @@ def getComponentsOccupationAsMariPatches(components):
 	"""
 	Returns given components occupation as Mari patches.
 
-	:param components: Components. ( Tuple / List )
-	:return: Components occupation. ( Tuple )
+	:param components: Components.
+	:type components: tuple or list
+	:return: Components occupation.
+	:rtype: tuple
 	"""
 
 	mariPatches = getComponentsMariPatches(components)
@@ -403,8 +443,10 @@ def getComponentsBoundingBox(components):
 	"""
 	Returns given components Bounding Box.
 
-	:param components: Components. ( Tuple / List )
-	:return: Components Bounding Box. ( Tuple )
+	:param components: Components.
+	:type components: tuple or list
+	:return: Components Bounding Box.
+	:rtype: tuple
 	"""
 
 	uvs = getUVsFromComponents(components)
@@ -421,8 +463,10 @@ def getComponentsUVsCenter(components):
 	"""
 	Returns given components UVs center.
 
-	:param components: Components. ( Tuple / List )
-	:return: Components UVs center. ( Tuple )
+	:param components: Components.
+	:type components: tuple or list
+	:return: Components UVs center.
+	:rtype: tuple
 	"""
 
 	uMin, vMin, uMax, vMax = getComponentsBoundingBox(components)
@@ -463,10 +507,14 @@ def scaleComponentsUVs(components, su=1, sv=1):
 	"""
 	Scales given components UVs.
 
-	:param components: Components. ( Tuple / List )
-	:param su: Scale U value. ( Float )
-	:param sv: Scale V value. ( Float )
-	:return: Definition succes. ( Boolean )
+	:param components: Components.
+	:type components: tuple or list
+	:param su: Scale U value.
+	:type su: float
+	:param sv: Scale V value.
+	:type sv: float
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	if su == 0.0:
@@ -483,8 +531,10 @@ def centerComponentsUVs(components):
 	"""
 	Centers given components UVs.
 
-	:param components: Components. ( Tuple / List )
-	:return: Definition succes. ( Boolean )
+	:param components: Components.
+	:type components: tuple or list
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	uvs = getUVsFromComponents(components)
@@ -499,8 +549,10 @@ def scaleCenterComponentsUVs(components, coverage=DEFAULT_SCALE_COVERAGE):
 	"""
 	Scales / centers given components UVs.
 
-	:param components: Components. ( Tuple / List )
-	:return: Definition succes. ( Boolean )
+	:param components: Components.
+	:type components: tuple or list
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	uvs = getUVsFromComponents(components)
@@ -519,10 +571,14 @@ def rotateComponentsUVs(components, value, clockWise=True):
 	"""
 	Rotates given components UVs.
 
-	:param components: Components. ( Tuple / List )
-	:param value: Rotation value. ( Float )
-	:param clockWise: Rotation direction. ( Boolean )
-	:return: Definition succes. ( Boolean )
+	:param components: Components.
+	:type components: tuple or list
+	:param value: Rotation value.
+	:type value: float
+	:param clockWise: Rotation direction.
+	:type clockWise: bool
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	uvs = getUVsFromComponents(components)
@@ -538,10 +594,14 @@ def polyRotateComponentsUVs(components, value, clockWise=True):
 	"""
 	Rotates given components UVs using Maya "polyRotateUVs" melscript ( Ugly but sadly faster ).
 
-	:param components: Components. ( Tuple / List )
-	:param value: Rotation value. ( Float )
-	:param clockWise: Rotation direction. ( Boolean )
-	:return: Definition succes. ( Boolean )
+	:param components: Components.
+	:type components: tuple or list
+	:param value: Rotation value.
+	:type value: float
+	:param clockWise: Rotation direction.
+	:type clockWise: bool
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	if clockWise:
@@ -555,10 +615,14 @@ def moveComponentsUVs(components, u=0, v=0):
 	"""
 	Moves given components UVs.
 
-	:param components: Components. ( Tuple / List )
-	:param u: U value. ( Float )
-	:param v: V value. ( Float )
-	:return: Definition succes. ( Boolean )
+	:param components: Components.
+	:type components: tuple or list
+	:param u: U value.
+	:type u: float
+	:param v: V value.
+	:type v: float
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	uvs = getUVsFromComponents(components, flatten=False)
@@ -570,9 +634,12 @@ def mirrorComponentsUVs(components, horizontal=True):
 	"""
 	Mirrors given components UVs.
 
-	:param components: Components. ( Tuple / List )
-	:param horizontal: Horizontal mirror. ( Boolean )
-	:return: Definition succes. ( Boolean )
+	:param components: Components.
+	:type components: tuple or list
+	:param horizontal: Horizontal mirror.
+	:type horizontal: bool
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	uvs = getUVsFromComponents(components)
@@ -589,10 +656,14 @@ def stackObjectsUVs(objects, alignement="center", horizontal=True, margin=0):
 	"""
 	Stacks given objects UVs.
 
-	:param objects: Objects. ( Tuple / List )
-	:param alignement: Alignement ( "bottom", "top", "left", "right", "center" ). ( String )
-	:param horizontal: Horizontal stack. ( Boolean )
-	:return: Definition succes. ( Boolean )
+	:param objects: Objects.
+	:type objects: tuple or list
+	:param alignement: Alignement ( "bottom", "top", "left", "right", "center" ).
+	:type alignement: str
+	:param horizontal: Horizontal stack.
+	:type horizontal: bool
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	if not objects:
@@ -632,8 +703,10 @@ def prescaleUVsShells(object):
 	"""
 	Prescales object UVs shells.
 
-	:param objects: Object. ( String )
-	:return: Definition succes. ( Boolean )
+	:param objects: Object.
+	:type objects: str
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	uvs = getUVsFromComponents(object)
@@ -660,8 +733,10 @@ def autoRatioUVsAreas(objects):
 	"""
 	Scales objects UVs depending their worldspace areas.
 
-	:param objects: Objects. ( Tuple / List )
-	:return: Definition succes. ( Boolean )
+	:param objects: Objects.
+	:type objects: tuple or list
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	if not objects:
@@ -681,8 +756,10 @@ def getConnections(node):
     """
     Returns the connections of given node.
 
-    :param node: Node. ( String )
-    :return: Connections. ( List )
+    :param node: Node.
+    :type node: str
+    :return: Connections.
+    :rtype: list
     """
 
     connections = cmds.listConnections(node, c=True)
@@ -692,8 +769,10 @@ def getAttachedShaders(object):
     """
     Returns the shaders attached to given objects.
 
-    :param object: Current object. ( String )
-    :return: Attached shaders. ( List )
+    :param object: Current object.
+    :type object: str
+    :return: Attached shaders.
+    :rtype: list
     """
 
     shape = getFirstItem(getShapes(object))
@@ -715,10 +794,14 @@ def addUVsChecker(objects, uRepeats=4, vRepeats=4):
 	"""
 	Applies UVs checkers onto given geometry objects.
 
-	:param objects: Current objects list. ( List )
-	:param uRepeats: U checker repeats. ( Float )
-	:param vRepeats: V checker repeats. ( Float )
-	:return: Definition succes. ( Boolean )
+	:param objects: Current objects list.
+	:type objects: list
+	:param uRepeats: U checker repeats.
+	:type uRepeats: float
+	:param vRepeats: V checker repeats.
+	:type vRepeats: float
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	for object in objects:
@@ -745,8 +828,10 @@ def addUVsChecker(objects, uRepeats=4, vRepeats=4):
 @stacksHandler
 def removeUVsChecker(objects):
 	"""
-	:param objects: Current objects list. ( List )
-	:return: Definition succes. ( Boolean )
+	:param objects: Current objects list.
+	:type objects: list
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	for object in objects:
@@ -762,9 +847,12 @@ def setUVsCheckerRepeats(uRepeats=None, vRepeats=None):
 	"""
 	Sets UVs checkers repeats.
 
-	:param uRepeats: U checker repeats. ( Float )
-	:param vRepeats: V checker repeats. ( Float )
-	:return: Definition succes. ( Boolean )
+	:param uRepeats: U checker repeats.
+	:type uRepeats: float
+	:param vRepeats: V checker repeats.
+	:type vRepeats: float
+	:return: Definition succes.
+	:rtype: bool
 	"""
 
 	for file in cmds.ls("UVsChecker_*_place2dTexture"):
@@ -777,9 +865,12 @@ def getPatchShaderTree(patch, prefix):
 	"""
 	Builds the patch shader tree of given patch.
 
-	:param patch: Patch. ( Integer )
-	:param prefix: Name prefix. ( String )
-	:return: Tree shading engine. ( String )
+	:param patch: Patch.
+	:type patch: int
+	:param prefix: Name prefix.
+	:type prefix: str
+	:return: Tree shading engine.
+	:rtype: str
 	"""
 
 	name = "%s%s" % (prefix, patch)
@@ -798,9 +889,12 @@ def assignMariShadersToObject(object, prefix):
 	"""
 	Assigns the Mari shaders to given object.
 
-	:param prefix: Shader prefix name. ( String )
-	:param object: Object. ( String )
-	:return: Definition success. ( Boolean )
+	:param prefix: Shader prefix name.
+	:type prefix: str
+	:param object: Object.
+	:type object: str
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	patches = getComponentsOccupationAsMariPatches(object)
@@ -819,9 +913,12 @@ def assignMariShaders(objects, prefix):
 	"""
 	Assigns the Mari shaders to given objects.
 
-	:param objects: Objects. ( List )
-	:param prefix: Shader prefix name. ( String )
-	:return: Definition success. ( Boolean )
+	:param objects: Objects.
+	:type objects: list
+	:param prefix: Shader prefix name.
+	:type prefix: str
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	mainProgressBar = mel.eval('$tmp = $gMainProgressBar')
@@ -861,8 +958,10 @@ def getMariAffixes(name):
 	"""
 	Returns given name Mari affixes.
 
-	:param name: Name. ( String )
-	:return: Affixes. ( Tuple )
+	:param name: Name.
+	:type name: str
+	:return: Affixes.
+	:rtype: tuple
 	"""
 
 	prefix, suffix = os.path.splitext(os.path.basename(name))
@@ -874,11 +973,16 @@ def getPreviewMariTexturesBranches(directory, prefix, extension, shader="lambert
 	"""
 	Creates Mari preview textures branches.
 
-	:param directory: Source directory. ( String )
-	:param prefix: Files prefix. ( String )
-	:param extension: Files extension. ( String )
-	:param shader: Shader type. ( String )
-	:return: Definition success. ( Boolean )
+	:param directory: Source directory.
+	:type directory: str
+	:param prefix: Files prefix.
+	:type prefix: str
+	:param extension: Files extension.
+	:type extension: str
+	:param shader: Shader type.
+	:type shader: str
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	for shader in filter(lambda x: re.search(r"\w+[0-9]{4}", x), cmds.ls(type=shader)):
@@ -898,7 +1002,8 @@ def assignMariPreviewTextures():
 	"""
 	Assigns the Mari preview textures.
 
-	:return: Definition success. ( Boolean )
+	:return: Definition success.
+	:rtype: bool
 	"""
 
 	file = cmds.fileDialog2(fileFilter="All files (*.*)", fm=1, dialogStyle=2)
@@ -926,7 +1031,8 @@ def flipUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **flipUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -937,7 +1043,8 @@ def moveUpUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **moveUpUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -948,7 +1055,8 @@ def flopUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **flopUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -959,7 +1067,8 @@ def moveLeftUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **moveLeftUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -970,7 +1079,8 @@ def fitUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **fitUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -981,7 +1091,8 @@ def moveRightUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **moveRightUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -992,7 +1103,8 @@ def centerUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **centerUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1003,7 +1115,8 @@ def moveDownUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **moveDownUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1014,7 +1127,8 @@ def scaleUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **scaleUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1025,7 +1139,8 @@ def rotateCounterClockWiseUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **rotateCounterClockWiseUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1036,7 +1151,8 @@ def rotateClockWiseUVs_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **rotateClockWiseUVs_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1047,7 +1163,8 @@ def stackUVsOnUBottom_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **stackUVsOnUBottom_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1058,7 +1175,8 @@ def stackUVsOnUCenter_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **stackUVsOnUCenter_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1069,7 +1187,8 @@ def stackUVsOnUTop_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **stackUVsOnUTop_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1079,7 +1198,8 @@ def stackUVsOnVLeft_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **stackUVsOnVLeft_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1090,7 +1210,8 @@ def stackUVsOnVCenter_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **stackUVsOnVCenter_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1101,7 +1222,8 @@ def stackUVsOnVRight_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **stackUVsOnVRight_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1112,7 +1234,8 @@ def prescaleUVsShells_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **prescaleUVsShells_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1124,7 +1247,8 @@ def autoRatioUVsAreas_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **autoRatioUVsAreas_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1135,7 +1259,8 @@ def addUVsChecker_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **addUVsChecker_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1146,7 +1271,8 @@ def removeUVsChecker_button_OnClicked(state=None):
 	"""
 	Defines the slot triggered by **removeUVsChecker_button** button when clicked.
 
-	:param state: Button state. ( Boolean )
+	:param state: Button state.
+	:type state: bool
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
@@ -1157,7 +1283,8 @@ def uRepeat_floatField_OnChanged(value=None):
 	"""
 	Defines the slot triggered by **uRepeat_floatField** button when changed.
 
-	:param value: Field value. ( Float )
+	:param value: Field value.
+	:type value: float
 	"""
 
 	setUVsCheckerRepeats(uRepeats=value)
@@ -1167,7 +1294,8 @@ def vRepeat_floatField_OnChanged(value=None):
 	"""
 	Defines the slot triggered by **vRepeat_floatField** button when changed.
 
-	:param value: Field value. ( Float )
+	:param value: Field value.
+	:type value: float
 	"""
 
 	setUVsCheckerRepeats(vRepeats=value)
