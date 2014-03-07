@@ -8,7 +8,7 @@
 	Windows.
 
 **Description:**
-	This module exports given scene to Alembic using Maya.
+	Exports given scene to Alembic using Maya.
 	
 	Usage::
 

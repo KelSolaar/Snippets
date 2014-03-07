@@ -14,7 +14,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	This module defines the :class:`Popup` class.
+	Defines the :class:`Popup` class.
 
 **Others:**
 

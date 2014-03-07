@@ -8,7 +8,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	This module defines the :def:`getTexturesNames` and :def:`renameTextures` definitions and other related objects.
+	Defines the :def:`getTexturesNames` and :def:`renameTextures` definitions and other related objects.
 
 **Others:**
 """

@@ -8,7 +8,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	This module defines the :class:`Active_QLabel` class.
+	Defines the :class:`Active_QLabel` class.
 
 **Others:**
 

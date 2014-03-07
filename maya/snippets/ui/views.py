@@ -8,7 +8,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	This module defines the :class:`snippets.loader.Loader` class Views.
+	Defines the :class:`snippets.loader.Loader` class Views.
 
 **Others:**
 

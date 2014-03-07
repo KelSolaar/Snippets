@@ -14,7 +14,7 @@
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	This module defines the :class:`Loader` class.
+	Defines the :class:`Loader` class.
 
 **Others:**
 
