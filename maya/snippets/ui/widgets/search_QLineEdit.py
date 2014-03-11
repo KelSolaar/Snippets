@@ -15,6 +15,11 @@
 """
 
 #**********************************************************************************************************************
+#***	Future imports.
+#**********************************************************************************************************************
+from __future__ import unicode_literals
+
+#**********************************************************************************************************************
 #***	External imports.
 #**********************************************************************************************************************
 import functools
@@ -138,7 +143,7 @@ class Search_QLineEdit(QLineEdit):
 		"""
 
 		if value is not None:
-			assert type(value) in (str, unicode), "'{0}' attribute: '{1}' type is not 'str' or 'unicode'!".format(
+			assert type(value) is unicode, "'{0}' attribute: '{1}' type is not 'unicode'!".format(
 			"uiSearchImage", value)
 			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format("uiSearchImage", value)
 		self.__uiSearchImage = value
@@ -173,7 +178,7 @@ class Search_QLineEdit(QLineEdit):
 		"""
 
 		if value is not None:
-			assert type(value) in (str, unicode), "'{0}' attribute: '{1}' type is not 'str' or 'unicode'!".format(
+			assert type(value) is unicode, "'{0}' attribute: '{1}' type is not 'unicode'!".format(
 			"uiSearchClickedImage", value)
 			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format(
 			"uiSearchClickedImage", value)
@@ -209,7 +214,7 @@ class Search_QLineEdit(QLineEdit):
 		"""
 
 		if value is not None:
-			assert type(value) in (str, unicode), "'{0}' attribute: '{1}' type is not 'str' or 'unicode'!".format(
+			assert type(value) is unicode, "'{0}' attribute: '{1}' type is not 'unicode'!".format(
 			"uiClearImage", value)
 			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format(
 			"uiClearImage", value)
@@ -245,7 +250,7 @@ class Search_QLineEdit(QLineEdit):
 		"""
 
 		if value is not None:
-			assert type(value) in (str, unicode), "'{0}' attribute: '{1}' type is not 'str' or 'unicode'!".format(
+			assert type(value) is unicode, "'{0}' attribute: '{1}' type is not 'unicode'!".format(
 			"uiClearClickedImage", value)
 			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format(
 			"uiClearClickedImage", value)

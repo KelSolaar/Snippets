@@ -91,7 +91,7 @@ __all__ = ["RESOURCES_DIRECTORY",
 		"unfoldingTools",
 		"IUvsTools"]
 
-RESOURCES_DIRECTORY = os.path.join(os.path.dirname("__file__" in locals() and __file__ or str()), "../resources")
+RESOURCES_DIRECTORY = os.path.join(os.path.dirname("__file__" in locals() and __file__ or ""), "../resources")
 CHECKER_IMAGE = "images/Checker.jpg"
 
 DEFAULT_SCALE_COVERAGE = 0.98
@@ -867,7 +867,7 @@ def getMariAffixes(name):
 
 	prefix, suffix = os.path.splitext(os.path.basename(name))
 	prefix = re.match(r"([\w\.]+)\d{4}", prefix)
-	return prefix.groups()[0] if prefix else str(), suffix.replace(".", str())
+	return prefix.groups()[0] if prefix else "", suffix.replace(".", "")
 
 @stacksHandler
 def getPreviewMariTexturesBranches(directory, prefix, extension, shader="lambert"):

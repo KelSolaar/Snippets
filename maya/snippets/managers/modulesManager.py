@@ -21,6 +21,11 @@
 """
 
 #**********************************************************************************************************************
+#***	Future imports.
+#**********************************************************************************************************************
+from __future__ import unicode_literals
+
+#**********************************************************************************************************************
 #***	External imports.
 #**********************************************************************************************************************
 import logging
@@ -104,7 +109,7 @@ class Module(object):
 		"""
 
 		if value is not None:
-			assert type(value) in (str, unicode), "'{0}' Attribute: '{1}' type is not 'str' or 'unicode'!".format("name",
+			assert type(value) is unicode, "'{0}' Attribute: '{1}' type is not 'unicode'!".format("name",
 																												value)
 		self.__name = value
 
@@ -137,7 +142,7 @@ class Module(object):
 		"""
 
 		if value is not None:
-			assert type(value) in (str, unicode), "'{0}' Attribute: '{1}' type is not 'str' or 'unicode'!".format("path",
+			assert type(value) is unicode, "'{0}' Attribute: '{1}' type is not 'unicode'!".format("path",
 																												value)
 			assert os.path.exists(value), "'{0}' Attribute: '{1}' directory doesn't exists!".format("path", value)
 		self.__paths = value

@@ -18,7 +18,7 @@ def getDefaultNodeName(node, mappingTable=NODES_NAMES_MAPPING_TABLE):
 	nodeType = node.getType()
 	name = mappingTable.get(nodeType, nodeType)
 	if nodeType in ("ArnoldShadingNode", "PrmanShadingNode"):
-		coShader = re.sub(r":.*", str(), node.getParameter("nodeType").getValue(0))
+		coShader = re.sub(r":.*", "", node.getParameter("nodeType").getValue(0))
 		return "{0}_{1}".format( mappingTable.get(coShader, coShader), name)
 	else:
 		return name
@@ -91,7 +91,7 @@ def removeNodesNamesTrailingNumbers(nodes, traverse=True):
 	:return: Definition success. ( Boolean )
 	"""
 
-	return searchAndReplaceNodesNames(nodes, r"\d+$", str(), traverse=traverse)
+	return searchAndReplaceNodesNames(nodes, r"\d+$", "", traverse=traverse)
 
 def prefixNodesNames(nodes, prefix, traverse=True):
 	"""
