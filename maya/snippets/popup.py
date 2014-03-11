@@ -21,6 +21,11 @@
 """
 
 #**********************************************************************************************************************
+#***	Future imports.
+#**********************************************************************************************************************
+from __future__ import unicode_literals
+
+#**********************************************************************************************************************
 #***	External imports.
 #**********************************************************************************************************************
 import logging
@@ -255,7 +260,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 
 		pattern = RuntimeGlobals.popupPattern = name
-		interface = self.getInterface(foundations.strings.encode("^{0}$".format(pattern)))
+		interface = self.getInterface(foundations.strings.toString("^{0}$".format(pattern)))
 		if not interface:
 			return
 

@@ -35,7 +35,7 @@ def listGiggleMetaData(metaData, indentation="\t"):
 	:rtype: str
 	"""
 
-	output = str()
+	output = ""
 	entryCounter = 0
 	for token in metaData:
 		search = re.search(r"\<(?P<key>\w+)\>(?P<value>.*)\</\w+\>", token)
@@ -80,7 +80,7 @@ def listNodeGiggleMetaData(node):
 	:rtype: str
 	"""
 
-	output = str()
+	output = ""
 	if node.getType() == "PrmanShadingNode":
 		path = getCoshaderSloFile(node.getParameter("nodeType").getValue(0))
 		if os.path.exists(path):
@@ -100,7 +100,7 @@ def listNodesGiggleMetaData(nodes, traverse=True):
 	:rtype: str
 	"""
 
-	output = str()
+	output = ""
 	for node in nodes:
 		output += listNodeGiggleMetaData(node)
 		if not traverse:
