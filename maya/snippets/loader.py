@@ -511,7 +511,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __view__doubleClicked(self, index):
 		"""
-		This method is triggered when **Interfaces_listView** Widget is double clicked.
+		Defines the slot triggered by **Interfaces_listView** Widget when double clicked.
 
 		:param index: Current index.
 		:type index: QModelIndex
@@ -521,7 +521,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def __Search_lineEdit__textChanged(self, text):
 		"""
-		This method is triggered when **Search_lineEdit** Widget text changes.
+		Defines the slot triggered by **Search_lineEdit** Widget when text changed.
 
 		:param text: Current text value.
 		:type text: QString
@@ -531,7 +531,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def getMethodName(self, name):
 		"""
-		This method gets the method name from the Interface.
+		Returns the method name from the Interface.
 
 		:param name: Interface name.
 		:type name: str
@@ -543,7 +543,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def setInterfaces(self, pattern=".*", flags=re.IGNORECASE):
 		"""
-		This method sets the Model interfaces.
+		Sets the Model interfaces.
 
 		:param pattern: Interface name.
 		:type pattern: str
@@ -572,7 +572,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def getSelectedInterface(self):
 		"""
-		This method returns the current selected Interface.
+		Returns the current selected Interface.
 
 		:return: Selected interface.
 		:rtype: Interface
@@ -583,7 +583,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def executeInterface(self):
 		"""
-		This method triggers the selected Interface execution.
+		Triggers the selected Interface execution.
 		
 		:return: Method success.
 		:rtype: bool
@@ -604,7 +604,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def editFile(self, file):
 		"""
-		This method provides editing capability.
+		Provides editing capability.
 
 		:param file: File to edit.
 		:type file: str
@@ -647,7 +647,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 	def exploreDirectory(self, directory):
 		"""
-		This method provides directory exploring capability.
+		Provides directory exploring capability.
 
 		:param directory: Folder to explore.
 		:type directory: str
