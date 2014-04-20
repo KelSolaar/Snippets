@@ -1,5 +1,5 @@
 """
-NAME: searchAndReplaceHintsParameters_Script
+NAME: list_nodes_giggle_metadata_Script
 ICON: icon.png
 DROP_TYPES: 
 SCOPE:
@@ -27,4 +27,4 @@ not SNIPPETS_PATH in sys. path and sys.path.append(SNIPPETS_PATH)
 
 import snippets.libraries.utilities
 
-snippets.libraries.utilities.importScriptNode("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/searchAndReplaceHintsParameters_Script_vLatest.katana")
+snippets.libraries.utilities.single_shot_script_node("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/list_nodes_giggle_metadata_Script_vLatest.katana", "list_nodes_giggle_metadata")

@@ -47,8 +47,8 @@ import foundations.strings
 import foundations.verbose
 import snippets.ui.common
 from snippets.globals.constants import Constants
-from snippets.globals.runtimeGlobals import RuntimeGlobals
-from snippets.globals.uiConstants import UiConstants
+from snippets.globals.runtime_globals import RuntimeGlobals
+from snippets.globals.ui_constants import UiConstants
 from snippets.ui.models import Interface
 from snippets.ui.models import InterfacesModel
 from snippets.ui.widgets.search_QLineEdit import Search_QLineEdit
@@ -65,14 +65,14 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Ui_Popup_Type", "Ui_Popup_Setup", "Popup"]
 
-LOGGER = foundations.verbose.installLogger()
+LOGGER = foundations.verbose.install_logger()
 
-RuntimeGlobals.popupUiFile = snippets.ui.common.getResourcePath(UiConstants.popupUiFile)
-if foundations.common.pathExists(RuntimeGlobals.popupUiFile):
-	Ui_Popup_Setup, Ui_Popup_Type = uic.loadUiType(RuntimeGlobals.popupUiFile)
+RuntimeGlobals.popup_ui_file = snippets.ui.common.get_resource_path(UiConstants.popup_ui_file)
+if foundations.common.path_exists(RuntimeGlobals.popup_ui_file):
+	Ui_Popup_Setup, Ui_Popup_Type = uic.loadUiType(RuntimeGlobals.popup_ui_file)
 else:
-	error = "'{0}' Ui file is not available!".format(RuntimeGlobals.popupUiFile)
-	snippets.ui.common.messageBox("Error", "Error", error)
+	error = "'{0}' Ui file is not available!".format(RuntimeGlobals.popup_ui_file)
+	snippets.ui.common.message_box("Error", "Error", error)
 	raise Exception(error)
 
 #**********************************************************************************************************************
@@ -83,14 +83,14 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	Defines the simple Maya Interfaces loader widget.
 	"""
 
-	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
+	def __init__(self, parent=None, modules_manager=RuntimeGlobals.modules_manager):
 		"""
 		Initializes the class.
-		
+
 		:param parent: Parent object.
 		:type parent: QObject
-		:param modulesManager: Modules Manager.
-		:type modulesManager: ModulesManager
+		:param modules_manager: Modules Manager.
+		:type modules_manager: ModulesManager
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
@@ -102,13 +102,13 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 
 		# --- Setting class attributes. ---
 		self.__container = parent
-		self.__modulesManager = modulesManager
+		self.__modules_manager = modules_manager
 
 		self.__model = None
 		self.__view = None
 
 		# --- Initialize Ui. ---
-		self.__initializeUI()
+		self.__initialize_ui()
 
 	#******************************************************************************************************************
 	#***	Attributes properties.
@@ -125,7 +125,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		return self.__container
 
 	@container.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def container(self, value):
 		"""
 		Setter for **self.__container** attribute.
@@ -137,7 +137,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("container"))
 
 	@container.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def container(self):
 		"""
 		Deleter for **self.__container** attribute.
@@ -146,36 +146,36 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("container"))
 
 	@property
-	def modulesManager(self):
+	def modules_manager(self):
 		"""
-		Property for **self.__modulesManager** attribute.
+		Property for **self.__modules_manager** attribute.
 
-		:return: self.__modulesManager.
+		:return: self.__modules_manager.
 		:rtype: QObject
 		"""
 
-		return self.__modulesManager
+		return self.__modules_manager
 
-	@modulesManager.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def modulesManager(self, value):
+	@modules_manager.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def modules_manager(self, value):
 		"""
-		Setter for **self.__modulesManager** attribute.
+		Setter for **self.__modules_manager** attribute.
 
 		:param value: Attribute value.
 		:type value: QObject
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modulesManager"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modules_manager"))
 
-	@modulesManager.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def modulesManager(self):
+	@modules_manager.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def modules_manager(self):
 		"""
-		Deleter for **self.__modulesManager** attribute.
+		Deleter for **self.__modules_manager** attribute.
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modulesManager"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modules_manager"))
 
 	@property
 	def model(self):
@@ -189,7 +189,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		return self.__model
 
 	@model.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def model(self, value):
 		"""
 		Setter for **self.__model** attribute.
@@ -202,7 +202,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "model"))
 
 	@model.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def model(self):
 		"""
 		Deleter for **self.__model** attribute.
@@ -220,11 +220,11 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		"""
 
 		self.move(QCursor.pos().x() - self.width() / 2, QCursor.pos().y() - self.height() / 2)
-		self.Interfaces_lineEdit.setText(RuntimeGlobals.popupPattern or QString())
+		self.Interfaces_lineEdit.setText(RuntimeGlobals.popup_pattern or QString())
 		self.Interfaces_lineEdit.setFocus()
 		super(Popup, self).show()
 
-	def __initializeUI(self):
+	def __initialize_ui(self):
 		"""
 		Triggers the **Methods_listWidget** Widget.
 		"""
@@ -239,7 +239,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		# self.Interfaces_lineEdit.setPlaceholderText("Enter Interface Name...")
 		self.Popup_Form_gridLayout.addWidget(self.Interfaces_lineEdit)
 
-		self.setInterfaces()
+		self.set_interfaces()
 
 		# Signals / Slots.
 		self.Interfaces_lineEdit.returnPressed.connect(self.__Interfaces_lineEdit__returnPressed)
@@ -254,20 +254,20 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	def __triggerInterface(self, name):
 		"""
 		Triggers the Interface with given name execution.
-		
+
 		:param name: Interface name.
 		:type name: str
 		"""
 
-		pattern = RuntimeGlobals.popupPattern = name
-		interface = self.getInterface(foundations.strings.toString("^{0}$".format(pattern)))
+		pattern = RuntimeGlobals.popup_pattern = name
+		interface = self.get_interface(foundations.strings.to_string("^{0}$".format(pattern)))
 		if not interface:
 			return
 
-		self.executeInterface(interface)
+		self.execute_interface(interface)
 		self.close()
 
-	def setInterfaces(self, pattern=".*", flags=re.IGNORECASE):
+	def set_interfaces(self, pattern=".*", flags=re.IGNORECASE):
 		"""
 		Sets the Model interfaces.
 
@@ -287,19 +287,19 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		self.__model.clear()
 
 		interfaces = []
-		for name, module in self.__modulesManager:
+		for name, module in self.__modules_manager:
 			if not module.interfaces:
 				continue
 
 			for interface in module.interfaces:
-				name = foundations.strings.getNiceName(self.getMethodName(interface))
+				name = foundations.strings.get_nice_name(self.get_method_name(interface))
 				if re.search(pattern, name):
 					interfaces.append(name)
-					self.__model.registerInterface(Interface(name=name, attribute=interface, module=module))
+					self.__model.register_interface(Interface(name=name, attribute=interface, module=module))
 		self.Interfaces_lineEdit.completer.setModel(QStringListModel(sorted(interfaces)))
 		return True
 
-	def getMethodName(self, name):
+	def get_method_name(self, name):
 		"""
 		Gets the method name from the Interface.
 
@@ -309,9 +309,9 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		:rtype: str
 		"""
 
-		return "{0}{1}".format(name[1].lower(), name[2:])
+		return " ".join(map(lambda x: x.title(), name.split("_")))
 
-	def getInterface(self, pattern):
+	def get_interface(self, pattern):
 		"""
 		Returns the Interface with given name.
 
@@ -330,10 +330,10 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 			if re.search(pattern, interface.name):
 				return interface
 
-	def executeInterface(self, interface):
+	def execute_interface(self, interface):
 		"""
 		Executes the object associated with given interface.
-		
+
 		:param interface: Interface.
 		:type interface: Interface
 		:return: Method success.

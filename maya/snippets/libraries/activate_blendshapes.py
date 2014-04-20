@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-**activateBlendshapes.py**
+**activate_blendshapes.py**
 
 **Platform :**
 	Windows, Linux, Mac Os X.
@@ -23,7 +23,6 @@ from __future__ import unicode_literals
 #***	External imports.
 #**********************************************************************************************************************
 import maya.cmds as cmds
-import maya.mel as mel
 
 #**********************************************************************************************************************
 #***	Internal imports.
@@ -39,17 +38,18 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["stacksHandler",
-			"weight_floatSliderGrp_OnValueChanged",
-			"setWeight",
-			"activateBlendshapes_window",
-			"activateBlendshapes",
-			"IActivateBlendshapes"]
+__all__ = ["stacks_handler",
+			"weight_floatSliderGrp__on_value_changed",
+			"set_weight",
+			"activate_blendshapes_window",
+			"activate_blendshapes"]
+
+__interfaces__ = ["activate_blendshapes"]
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-def stacksHandler(object):
+def stacks_handler(object):
 	"""
 	Handles Maya stacks.
 
@@ -59,7 +59,7 @@ def stacksHandler(object):
 	:rtype: object
 	"""
 
-	def stacksHandlerCall(*args, **kwargs):
+	def stacks_handler_wrapper(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
@@ -72,14 +72,14 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
 
-	return stacksHandlerCall
+	return stacks_handler_wrapper
 
-def weight_floatSliderGrp_OnValueChanged(value):
+def weight_floatSliderGrp__on_value_changed(value):
 	"""
 	Defines the slot triggered by 'weight_floatSliderGrp' slider when value changed.
 
@@ -87,9 +87,9 @@ def weight_floatSliderGrp_OnValueChanged(value):
 	:type value: float
 	"""
 
-	setWeight(cmds.floatSliderGrp("weight_floatSliderGrp", query=True, value=True))
+	set_weight(cmds.floatSliderGrp("weight_floatSliderGrp", query=True, value=True))
 
-def setWeight(value):
+def set_weight(value):
 	"""
 	Activates every first blendshape node slot in the scene.
 
@@ -97,26 +97,26 @@ def setWeight(value):
 	:type value: float
 	"""
 
-	blendShapesNodes = cmds.ls(type="blendShape")
-	for blendShapesNode in blendShapesNodes :
-		targets = cmds.listAttr(blendShapesNode + ".w", m=True)
+	blend_shapes_nodes = cmds.ls(type="blendShape")
+	for blend_shapes_node in blend_shapes_nodes :
+		targets = cmds.listAttr("{0}.w".format(blend_shapes_node), m=True)
 		for target in targets:
 			try:
-				cmds.setAttr("%s.%s" % (blendShapesNode, target), value)
+				cmds.setAttr("{0}.{1}".format(blend_shapes_node, target), value)
 			except:
 				pass
 
-def activateBlendshapes_window():
+def activate_blendshapes_window():
 	"""
 	Creates the 'Activate Blendshapes' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("activateBlendshapes_window", exists=True)):
-		cmds.deleteUI("activateBlendshapes_window")
+	if (cmds.window("activate_blendshapes_window", exists=True)):
+		cmds.deleteUI("activate_blendshapes_window")
 
-	cmds.window("activateBlendshapes_window",
+	cmds.window("activate_blendshapes_window",
 		title="Activate Blendshapes",
 		width=320)
 
@@ -126,25 +126,17 @@ def activateBlendshapes_window():
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.floatSliderGrp("weight_floatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, sliderStep=0.01, value=0, changeCommand=weight_floatSliderGrp_OnValueChanged, dragCommand=weight_floatSliderGrp_OnValueChanged)
+	cmds.floatSliderGrp("weight_floatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, sliderStep=0.01, value=0, changeCommand=weight_floatSliderGrp__on_value_changed, dragCommand=weight_floatSliderGrp__on_value_changed)
 
 	cmds.separator(height=10, style="singleDash")
 
-	cmds.showWindow("activateBlendshapes_window")
+	cmds.showWindow("activate_blendshapes_window")
 
 	cmds.windowPref(enableAll=True)
 
-def activateBlendshapes():
+def activate_blendshapes():
 	"""
 	Launches the 'Activate Blendshapes' main window.
 	"""
 
-	activateBlendshapes_window()
-
-@stacksHandler
-def IActivateBlendshapes():
-	"""
-	Defines the activateBlendshapes definition Interface.
-	"""
-
-	activateBlendshapes()
+	activate_blendshapes_window()

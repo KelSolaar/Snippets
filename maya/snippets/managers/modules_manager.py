@@ -8,7 +8,7 @@
 #**********************************************************************************************************************
 
 """
-**loader.py**
+**modules_manager.py**
 
 **Platform:**
 	Windows, Linux, Mac Os X.
@@ -28,7 +28,6 @@ from __future__ import unicode_literals
 #**********************************************************************************************************************
 #***	External imports.
 #**********************************************************************************************************************
-import logging
 import os
 import re
 import sys
@@ -42,8 +41,8 @@ import foundations.strings
 import foundations.verbose
 import foundations.walkers
 from snippets.globals.constants import Constants
-from snippets.globals.runtimeGlobals import RuntimeGlobals
-from snippets.globals.uiConstants import UiConstants
+from snippets.globals.runtime_globals import RuntimeGlobals
+from snippets.globals.ui_constants import UiConstants
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -57,7 +56,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Module", "ModulesManager"]
 
-LOGGER = foundations.verbose.installLogger()
+LOGGER = foundations.verbose.install_logger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -103,7 +102,7 @@ class Module(object):
 		return self.__name
 
 	@name.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
+	@foundations.exceptions.handle_exceptions(AssertionError)
 	def name(self, value):
 		"""
 		Setter for **self.___name** attribute.
@@ -118,7 +117,7 @@ class Module(object):
 		self.__name = value
 
 	@name.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def name(self):
 		"""
 		Deleter for **self.___name** attribute.
@@ -138,7 +137,7 @@ class Module(object):
 		return self.__paths
 
 	@path.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
+	@foundations.exceptions.handle_exceptions(AssertionError)
 	def path(self, value):
 		"""
 		Setter for **self.__paths** attribute.
@@ -154,7 +153,7 @@ class Module(object):
 		self.__paths = value
 
 	@path.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def path(self):
 		"""
 		Deleter for **self.__paths** attribute.
@@ -174,7 +173,7 @@ class Module(object):
 		return self.__import
 
 	@import_.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
+	@foundations.exceptions.handle_exceptions(AssertionError)
 	def import_(self, value):
 		"""
 		Setter for **self.___import_** attribute.
@@ -188,7 +187,7 @@ class Module(object):
 		self.__import = value
 
 	@import_.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def import_(self):
 		"""
 		Deleter for **self.___import_** attribute.
@@ -219,7 +218,7 @@ class Module(object):
 		self.__interfaces = value
 
 	@interfaces.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def interfaces(self):
 		"""
 		Deleter for **self.__interfaces** attribute.
@@ -247,7 +246,7 @@ class ModulesManager(object):
 		self.__paths = paths
 
 		self.__modules = {}
-		self.__libraryExtension = Constants.libraryExtension
+		self.__library_extension = Constants.library_extension
 
 	#******************************************************************************************************************
 	#***	Attributes properties.
@@ -264,7 +263,7 @@ class ModulesManager(object):
 		return self.__paths
 
 	@paths.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
+	@foundations.exceptions.handle_exceptions(AssertionError)
 	def paths(self, value):
 		"""
 		Setter for **self.__paths** attribute.
@@ -280,7 +279,7 @@ class ModulesManager(object):
 		self.__paths = value
 
 	@paths.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def paths(self):
 		"""
 		Deleter for **self.__paths** attribute.
@@ -300,7 +299,7 @@ class ModulesManager(object):
 		return self.__modules
 
 	@modules.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
+	@foundations.exceptions.handle_exceptions(AssertionError)
 	def modules(self, value):
 		"""
 		Setter for **self.__modules** attribute.
@@ -314,7 +313,7 @@ class ModulesManager(object):
 		self.__modules = value
 
 	@modules.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def modules(self):
 		"""
 		Deleter for **self.__modules** attribute.
@@ -323,38 +322,38 @@ class ModulesManager(object):
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modules"))
 
 	@property
-	def libraryExtension(self):
+	def library_extension(self):
 		"""
-		Property for **self.__libraryExtension** attribute.
+		Property for **self.__library_extension** attribute.
 
-		:return: self.__libraryExtension.
+		:return: self.__library_extension.
 		:rtype: str
 		"""
 
-		return self.__libraryExtension
+		return self.__library_extension
 
-	@libraryExtension.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def libraryExtension(self, value):
+	@library_extension.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def library_extension(self, value):
 		"""
-		Setter for **self.__libraryExtension** attribute.
+		Setter for **self.__library_extension** attribute.
 
 		:param value: Attribute value.
 		:type value: str
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "libraryExtension"))
+		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "library_extension"))
 
-	@libraryExtension.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def libraryExtension(self):
+	@library_extension.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def library_extension(self):
 		"""
-		Deleter for **self.__libraryExtension** attribute.
+		Deleter for **self.__library_extension** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "libraryExtension"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "library_extension"))
 
 	#******************************************************************************************************************
 	#***	Class methods.
@@ -376,7 +375,7 @@ class ModulesManager(object):
 	def __iter__(self):
 		"""
 		Reimplements the :meth:`object.__iter__` method.
-		
+
 		:return: Modules iterator.
 		:rtype: object
 		"""
@@ -405,7 +404,7 @@ class ModulesManager(object):
 
 		return len(self.__modules)
 
-	def listModules(self):
+	def list_modules(self):
 		"""
 		Lists the registered modules.
 
@@ -413,10 +412,10 @@ class ModulesManager(object):
 		:rtype: list
 		"""
 
-		return [module.name for module in self.iterkeys()]
+		return [module.name for module in self.__modules.iterkeys()]
 
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def registerModule(self, name, path):
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def register_module(self, name, path):
 		"""
 		Registers given module.
 
@@ -435,8 +434,8 @@ class ModulesManager(object):
 		self.__modules[name] = Module(name=name, path=os.path.dirname(path))
 		return True
 
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def unregisterModule(self, name):
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def unregister_module(self, name):
 		"""
 		Unregisters given module.
 
@@ -453,7 +452,7 @@ class ModulesManager(object):
 		del(self.__modules[name])
 		return True
 
-	def registerModules(self):
+	def register_modules(self):
 		"""
 		Gathers the modules.
 		:return: Method success.
@@ -461,11 +460,11 @@ class ModulesManager(object):
 		"""
 
 		for directory in self.__paths:
-			for path in foundations.walkers.filesWalker(directory, filtersIn=(r"\.{0}$".format(self.__libraryExtension),)):
-				self.registerModule(foundations.strings.getSplitextBasename(path), path)
+			for path in foundations.walkers.files_walker(directory, filters_in=(r"\.{0}$".format(self.__library_extension),)):
+				self.register_module(foundations.strings.get_splitext_basename(path), path)
 		return True
 
-	def registerModuleInterfaces(self, module):
+	def register_module_interfaces(self, module):
 		"""
 		Instantiates given module interfaces.
 
@@ -483,14 +482,19 @@ class ModulesManager(object):
 
 		module.import_ = __import__(module.name)
 
-		interfaces = [attribute for attribute in module.import_.__dict__ if re.search(r"^I[A-Z]\w+", attribute)]
+		if not hasattr(module.import_, "__interfaces__"):
+			LOGGER.warning("!> {0} | '{1}' module is not exporting any interfaces!".format(self.__class__.__name__,
+                                                                                           module.name))
+			return False
+
+		interfaces = [interface for interface in module.import_.__interfaces__ if hasattr(module.import_, interface)]
 		if interfaces:
 			LOGGER.info("{0} | Registering '{1}' Interfaces from '{2}' Module!".format(self.__class__.__name__,
 																						interfaces, module.name))
 			module.interfaces = interfaces
 			return True
 
-	def registerInterfaces(self):
+	def register_interfaces(self):
 		"""
 		Registers modules interfaces.
 
@@ -499,10 +503,10 @@ class ModulesManager(object):
 		"""
 
 		for name, module in self:
-			self.registerModuleInterfaces(module)
+			self.register_module_interfaces(module)
 		return True
 
-	def unregisterAll(self):
+	def unregister_all(self):
 		"""
 		Unregisters modules and their interfaces.
 
@@ -513,7 +517,7 @@ class ModulesManager(object):
 		self.__modules = {}
 		return True
 
-	def registerAll(self):
+	def register_all(self):
 		"""
 		Registers modules and their interfaces.
 
@@ -521,11 +525,11 @@ class ModulesManager(object):
 		:rtype: bool
 		"""
 
-		self.registerModules()
-		self.registerInterfaces()
+		self.register_modules()
+		self.register_interfaces()
 		return True
 
-	def reloadAll(self):
+	def reload_all(self):
 		"""
 		Reloads all modules and their interfaces.
 
@@ -533,6 +537,6 @@ class ModulesManager(object):
 		:rtype: bool
 		"""
 
-		self.unregisterAll()
-		self.registerAll()
+		self.unregister_all()
+		self.register_all()
 		return True

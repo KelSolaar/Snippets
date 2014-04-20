@@ -7,3 +7,4 @@
 *.pyc
 
 maya/snippets/resources/images/builders/
+.idea/

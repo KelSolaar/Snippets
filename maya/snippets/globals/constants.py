@@ -41,13 +41,13 @@ class Constants():
 	"""
 
 	logger = "Snippets_Logger"
-	verbosityLevel = 3
-	loggingSeparators = "*" * 96
+	verbosity_level = 3
+	logging_separators = "*" * 96
 
-	libraryExtension = "py"
-	libraryCompiledExtension = "pyc"
+	library_extension = "py"
+	library_compiled_extension = "pyc"
 
-	librariesDirectory = "libraries"
-	resourcesDirectory = "resources"
+	libraries_directory = "libraries"
+	resources_directory = "resources"
 
-	nullObject = "None"
+	null_object = "None"

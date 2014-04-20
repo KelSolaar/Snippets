@@ -38,8 +38,8 @@ from PyQt4.QtGui import QToolButton
 #**********************************************************************************************************************
 import foundations.exceptions
 import foundations.verbose
-import umbra.ui.common
-from umbra.ui.widgets.active_QLabel import Active_QLabel
+import snippets.ui.common
+from snippets.ui.widgets.active_QLabel import Active_QLabel
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -53,7 +53,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Search_QLineEdit"]
 
-LOGGER = foundations.verbose.installLogger()
+LOGGER = foundations.verbose.install_logger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -66,23 +66,23 @@ class Search_QLineEdit(QLineEdit):
 
 	def __init__(self,
 				parent=None,
-				uiSearchImage=None,
-				uiSearchClickedImage=None,
-				uiClearImage=None,
-				uiClearClickedImage=None):
+				ui_search_image=None,
+				ui_search_clicked_image=None,
+				ui_clear_image=None,
+				ui_clear_clicked_image=None):
 		"""
 		Initializes the class.
 
 		:param parent: Widget parent.
 		:type parent: QObject
-		:param uiSearchImage: Search button image path.
-		:type uiSearchImage: str
-		:param uiSearchClickedImage: Search button clicked image path.
-		:type uiSearchClickedImage: str
-		:param uiClearImage: Clear button image path.
-		:type uiClearImage: str
-		:param uiClearClickedImage: Clear button clicked image path.
-		:type uiClearClickedImage: str
+		:param ui_search_image: Search button image path.
+		:type ui_search_image: unicode
+		:param ui_search_clicked_image: Search button clicked image path.
+		:type ui_search_clicked_image: unicode
+		:param ui_clear_image: Clear button image path.
+		:type ui_clear_image: unicode
+		:param ui_clear_clicked_image: Clear button clicked image path.
+		:type ui_clear_clicked_image: unicode
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
@@ -90,262 +90,262 @@ class Search_QLineEdit(QLineEdit):
 		QLineEdit.__init__(self, parent)
 
 		# --- Setting class attributes. ---
-		self.__uiSearchImage = None
-		self.uiSearchImage = uiSearchImage or umbra.ui.common.getResourcePath("images/Search_Glass.png")
-		self.__uiSearchClickedImage = None
-		self.uiSearchClickedImage = uiSearchClickedImage or umbra.ui.common.getResourcePath(
+		self.__ui_search_image = None
+		self.ui_search_image = ui_search_image or snippets.ui.common.get_resource_path("images/Search_Glass.png")
+		self.__ui_search_clicked_image = None
+		self.ui_search_clicked_image = ui_search_clicked_image or snippets.ui.common.get_resource_path(
 		"images/Search_Glass_Clicked.png")
-		self.__uiClearImage = None
-		self.uiClearImage = uiClearImage or umbra.ui.common.getResourcePath("images/Search_Clear.png")
-		self.__uiClearClickedImage = None
-		self.uiClearClickedImage = uiClearClickedImage or umbra.ui.common.getResourcePath(
+		self.__ui_clear_image = None
+		self.ui_clear_image = ui_clear_image or snippets.ui.common.get_resource_path("images/Search_Clear.png")
+		self.__ui_clear_clicked_image = None
+		self.ui_clear_clicked_image = ui_clear_clicked_image or snippets.ui.common.get_resource_path(
 		"images/Search_Clear_Clicked.png")
 
-		self.__searchActiveLabel = Active_QLabel(self,
-												QPixmap(self.__uiSearchImage),
-												QPixmap(self.__uiSearchImage),
-												QPixmap(self.__uiSearchClickedImage))
-		self.__searchActiveLabel.setObjectName("Search_Field_activeLabel")
-		self.__searchActiveLabel.showEvent = lambda event: reduce(lambda *args: None,
-		(self.__setStyleSheet(), Active_QLabel.showEvent(self.__searchActiveLabel, event)))
-		self.__searchActiveLabel.hideEvent = lambda event: reduce(lambda *args: None,
-		(self.__setStyleSheet(), Active_QLabel.hideEvent(self.__searchActiveLabel, event)))
+		self.__search_active_label = Active_QLabel(self,
+												QPixmap(self.__ui_search_image),
+												QPixmap(self.__ui_search_image),
+												QPixmap(self.__ui_search_clicked_image))
+		self.__search_active_label.setObjectName("Search_Field_active_label")
+		self.__search_active_label.showEvent = lambda event: reduce(lambda *args: None,
+		(self.__set_style_sheet(), Active_QLabel.showEvent(self.__search_active_label, event)))
+		self.__search_active_label.hideEvent = lambda event: reduce(lambda *args: None,
+		(self.__set_style_sheet(), Active_QLabel.hideEvent(self.__search_active_label, event)))
 
-		self.__clearButton = QToolButton(self)
-		self.__clearButton.setObjectName("Clear_Field_button")
+		self.__clear_button = QToolButton(self)
+		self.__clear_button.setObjectName("Clear_Field_button")
 
 		self.__completer = QCompleter()
 		self.setCompleter(self.__completer)
-		self.__completerVisibleItemsCount = 16
+		self.__completer_visible_items_count = 16
 
-		Search_QLineEdit.__initializeUi(self)
-		self.__setClearButtonVisibility(self.text())
+		Search_QLineEdit.__initialize_ui(self)
+		self.__set_clear_button_visibility(self.text())
 
 		# Signals / Slots.
-		self.__clearButton.clicked.connect(self.clear)
-		self.textChanged.connect(self.__setClearButtonVisibility)
+		self.__clear_button.clicked.connect(self.clear)
+		self.textChanged.connect(self.__set_clear_button_visibility)
 
 	#******************************************************************************************************************
 	#***	Attributes properties.
 	#******************************************************************************************************************
 	@property
-	def uiSearchImage(self):
+	def ui_search_image(self):
 		"""
-		Property for **self.__uiSearchImage** attribute.
+		Property for **self.__ui_search_image** attribute.
 
-		:return: self.__uiSearchImage.
-		:rtype: str
+		:return: self.__ui_search_image.
+		:rtype: unicode
 		"""
 
-		return self.__uiSearchImage
+		return self.__ui_search_image
 
-	@uiSearchImage.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
-	def uiSearchImage(self, value):
+	@ui_search_image.setter
+	@foundations.exceptions.handle_exceptions(AssertionError)
+	def ui_search_image(self, value):
 		"""
-		Setter for **self.__uiSearchImage** attribute.
+		Setter for **self.__ui_search_image** attribute.
 
 		:param value: Attribute value.
-		:type value: str
+		:type value: unicode
 		"""
 
 		if value is not None:
 			assert type(value) is unicode, "'{0}' attribute: '{1}' type is not 'unicode'!".format(
-			"uiSearchImage", value)
-			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format("uiSearchImage", value)
-		self.__uiSearchImage = value
+			"ui_search_image", value)
+			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format("ui_search_image", value)
+		self.__ui_search_image = value
 
-	@uiSearchImage.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def uiSearchImage(self):
+	@ui_search_image.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def ui_search_image(self):
 		"""
-		Deleter for **self.__uiSearchImage** attribute.
+		Deleter for **self.__ui_search_image** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "uiSearchImage"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "ui_search_image"))
 
 	@property
-	def uiSearchClickedImage(self):
+	def ui_search_clicked_image(self):
 		"""
-		Property for **self.__uiSearchClickedImage** attribute.
+		Property for **self.__ui_search_clicked_image** attribute.
 
-		:return: self.__uiSearchClickedImage.
-		:rtype: str
+		:return: self.__ui_search_clicked_image.
+		:rtype: unicode
 		"""
 
-		return self.__uiSearchClickedImage
+		return self.__ui_search_clicked_image
 
-	@uiSearchClickedImage.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
-	def uiSearchClickedImage(self, value):
+	@ui_search_clicked_image.setter
+	@foundations.exceptions.handle_exceptions(AssertionError)
+	def ui_search_clicked_image(self, value):
 		"""
-		Setter for **self.__uiSearchClickedImage** attribute.
+		Setter for **self.__ui_search_clicked_image** attribute.
 
 		:param value: Attribute value.
-		:type value: str
+		:type value: unicode
 		"""
 
 		if value is not None:
 			assert type(value) is unicode, "'{0}' attribute: '{1}' type is not 'unicode'!".format(
-			"uiSearchClickedImage", value)
+			"ui_search_clicked_image", value)
 			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format(
-			"uiSearchClickedImage", value)
-		self.__uiSearchClickedImage = value
+			"ui_search_clicked_image", value)
+		self.__ui_search_clicked_image = value
 
-	@uiSearchClickedImage.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def uiSearchClickedImage(self):
+	@ui_search_clicked_image.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def ui_search_clicked_image(self):
 		"""
-		Deleter for **self.__uiSearchClickedImage** attribute.
+		Deleter for **self.__ui_search_clicked_image** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "uiSearchClickedImage"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "ui_search_clicked_image"))
 
 	@property
-	def uiClearImage(self):
+	def ui_clear_image(self):
 		"""
-		Property for **self.__uiClearImage** attribute.
+		Property for **self.__ui_clear_image** attribute.
 
-		:return: self.__uiClearImage.
-		:rtype: str
+		:return: self.__ui_clear_image.
+		:rtype: unicode
 		"""
 
-		return self.__uiClearImage
+		return self.__ui_clear_image
 
-	@uiClearImage.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
-	def uiClearImage(self, value):
+	@ui_clear_image.setter
+	@foundations.exceptions.handle_exceptions(AssertionError)
+	def ui_clear_image(self, value):
 		"""
-		Setter for **self.__uiClearImage** attribute.
+		Setter for **self.__ui_clear_image** attribute.
 
 		:param value: Attribute value.
-		:type value: str
+		:type value: unicode
 		"""
 
 		if value is not None:
 			assert type(value) is unicode, "'{0}' attribute: '{1}' type is not 'unicode'!".format(
-			"uiClearImage", value)
+			"ui_clear_image", value)
 			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format(
-			"uiClearImage", value)
-		self.__uiClearImage = value
+			"ui_clear_image", value)
+		self.__ui_clear_image = value
 
-	@uiClearImage.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def uiClearImage(self):
+	@ui_clear_image.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def ui_clear_image(self):
 		"""
-		Deleter for **self.__uiClearImage** attribute.
+		Deleter for **self.__ui_clear_image** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "uiClearImage"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "ui_clear_image"))
 
 	@property
-	def uiClearClickedImage(self):
+	def ui_clear_clicked_image(self):
 		"""
-		Property for **self.__uiClearClickedImage** attribute.
+		Property for **self.__ui_clear_clicked_image** attribute.
 
-		:return: self.__uiClearClickedImage.
-		:rtype: str
+		:return: self.__ui_clear_clicked_image.
+		:rtype: unicode
 		"""
 
-		return self.__uiClearClickedImage
+		return self.__ui_clear_clicked_image
 
-	@uiClearClickedImage.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
-	def uiClearClickedImage(self, value):
+	@ui_clear_clicked_image.setter
+	@foundations.exceptions.handle_exceptions(AssertionError)
+	def ui_clear_clicked_image(self, value):
 		"""
-		Setter for **self.__uiClearClickedImage** attribute.
+		Setter for **self.__ui_clear_clicked_image** attribute.
 
 		:param value: Attribute value.
-		:type value: str
+		:type value: unicode
 		"""
 
 		if value is not None:
 			assert type(value) is unicode, "'{0}' attribute: '{1}' type is not 'unicode'!".format(
-			"uiClearClickedImage", value)
+			"ui_clear_clicked_image", value)
 			assert os.path.exists(value), "'{0}' attribute: '{1}' file doesn't exists!".format(
-			"uiClearClickedImage", value)
-		self.__uiClearClickedImage = value
+			"ui_clear_clicked_image", value)
+		self.__ui_clear_clicked_image = value
 
-	@uiClearClickedImage.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def uiClearClickedImage(self):
+	@ui_clear_clicked_image.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def ui_clear_clicked_image(self):
 		"""
-		Deleter for **self.__uiClearClickedImage** attribute.
+		Deleter for **self.__ui_clear_clicked_image** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "uiClearClickedImage"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "ui_clear_clicked_image"))
 
 	@property
-	def searchActiveLabel(self):
+	def search_active_label(self):
 		"""
-		Property for **self.__searchActiveLabel** attribute.
+		Property for **self.__search_active_label** attribute.
 
-		:return: self.__searchActiveLabel.
+		:return: self.__search_active_label.
 		:rtype: QPushButton
 		"""
 
-		return self.__searchActiveLabel
+		return self.__search_active_label
 
-	@searchActiveLabel.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def searchActiveLabel(self, value):
+	@search_active_label.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def search_active_label(self, value):
 		"""
-		Setter for **self.__searchActiveLabel** attribute.
+		Setter for **self.__search_active_label** attribute.
 
 		:param value: Attribute value.
 		:type value: QPushButton
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "searchActiveLabel"))
+		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "search_active_label"))
 
-	@searchActiveLabel.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def searchActiveLabel(self):
+	@search_active_label.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def search_active_label(self):
 		"""
-		Deleter for **self.__searchActiveLabel** attribute.
+		Deleter for **self.__search_active_label** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "searchActiveLabel"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "search_active_label"))
 
 	@property
-	def clearButton(self):
+	def clear_button(self):
 		"""
-		Property for **self.__clearButton** attribute.
+		Property for **self.__clear_button** attribute.
 
-		:return: self.__clearButton.
+		:return: self.__clear_button.
 		:rtype: QPushButton
 		"""
 
-		return self.__clearButton
+		return self.__clear_button
 
-	@clearButton.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def clearButton(self, value):
+	@clear_button.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def clear_button(self, value):
 		"""
-		Setter for **self.__clearButton** attribute.
+		Setter for **self.__clear_button** attribute.
 
 		:param value: Attribute value.
 		:type value: QPushButton
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "clearButton"))
+		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "clear_button"))
 
-	@clearButton.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def clearButton(self):
+	@clear_button.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def clear_button(self):
 		"""
-		Deleter for **self.__clearButton** attribute.
+		Deleter for **self.__clear_button** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "clearButton"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "clear_button"))
 
 	@property
 	def completer(self):
@@ -359,7 +359,7 @@ class Search_QLineEdit(QLineEdit):
 		return self.__completer
 
 	@completer.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def completer(self, value):
 		"""
 		Setter for **self.__completer** attribute.
@@ -372,7 +372,7 @@ class Search_QLineEdit(QLineEdit):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "completer"))
 
 	@completer.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def completer(self):
 		"""
 		Deleter for **self.__completer** attribute.
@@ -382,38 +382,38 @@ class Search_QLineEdit(QLineEdit):
 		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "completer"))
 
 	@property
-	def completerVisibleItemsCount(self):
+	def completer_visible_items_count(self):
 		"""
-		Property for **self.__completerVisibleItemsCount** attribute.
+		Property for **self.__completer_visible_items_count** attribute.
 
-		:return: self.__completerVisibleItemsCount.
+		:return: self.__completer_visible_items_count.
 		:rtype: int
 		"""
 
-		return self.__completerVisibleItemsCount
+		return self.__completer_visible_items_count
 
-	@completerVisibleItemsCount.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def completerVisibleItemsCount(self, value):
+	@completer_visible_items_count.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def completer_visible_items_count(self, value):
 		"""
-		Setter for **self.__completerVisibleItemsCount** attribute.
+		Setter for **self.__completer_visible_items_count** attribute.
 
 		:param value: Attribute value.
 		:type value: int
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "completerVisibleItemsCount"))
+		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "completer_visible_items_count"))
 
-	@completerVisibleItemsCount.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def completerVisibleItemsCount(self):
+	@completer_visible_items_count.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def completer_visible_items_count(self):
 		"""
-		Deleter for **self.__completerVisibleItemsCount** attribute.
+		Deleter for **self.__completer_visible_items_count** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "completerVisibleItemsCount"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "completer_visible_items_count"))
 
 	#******************************************************************************************************************
 	#***	Class methods.
@@ -426,54 +426,53 @@ class Search_QLineEdit(QLineEdit):
 		:type event: QResizeEvent
 		"""
 
-		frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
-		searchActiveLabelSize = self.__searchActiveLabel.sizeHint()
-		self.__searchActiveLabel.move(self.rect().left() + frameWidth,
-		(self.rect().bottom() - searchActiveLabelSize.height()) / 2 + frameWidth / 2)
-		clearButtonSize = self.__clearButton.sizeHint()
-		self.__clearButton.move(self.rect().right() - frameWidth - clearButtonSize.width(),
-		(self.rect().bottom() - clearButtonSize.height()) / 2 + frameWidth / 2)
+		frame_width = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
+		search_active_labelSize = self.__search_active_label.sizeHint()
+		self.__search_active_label.move(self.rect().left() + frame_width,
+		(self.rect().bottom() - search_active_labelSize.height()) / 2 + frame_width / 2)
+		clear_buttonSize = self.__clear_button.sizeHint()
+		self.__clear_button.move(self.rect().right() - frame_width - clear_buttonSize.width(),
+		(self.rect().bottom() - clear_buttonSize.height()) / 2 + frame_width / 2)
 
-	def __initializeUi(self):
+	def __initialize_ui(self):
 		"""
 		Initializes the Widget ui.
 		"""
 
-		self.__clearButton.setCursor(Qt.ArrowCursor)
-		if self.__uiClearImage and self.__uiClearClickedImage:
-			pixmap = QPixmap(self.__uiClearImage)
-			clickedPixmap = QPixmap(self.__uiClearClickedImage)
-			self.__clearButton.setIcon(QIcon(pixmap))
-			self.__clearButton.setMaximumSize(pixmap.size())
+		self.__clear_button.setCursor(Qt.ArrowCursor)
+		if self.__ui_clear_image and self.__ui_clear_clicked_image:
+			pixmap = QPixmap(self.__ui_clear_image)
+			clicked_pixmap = QPixmap(self.__ui_clear_clicked_image)
+			self.__clear_button.setIcon(QIcon(pixmap))
+			self.__clear_button.setMaximumSize(pixmap.size())
 
 			# Signals / Slots.
-			self.__clearButton.pressed.connect(functools.partial(self.__clearButton.setIcon, QIcon(clickedPixmap)))
-			self.__clearButton.released.connect(functools.partial(self.__clearButton.setIcon, QIcon(pixmap)))
+			self.__clear_button.pressed.connect(functools.partial(self.__clear_button.setIcon, QIcon(clicked_pixmap)))
+			self.__clear_button.released.connect(functools.partial(self.__clear_button.setIcon, QIcon(pixmap)))
 		else:
-			self.__clearButton.setText("Clear")
+			self.__clear_button.setText("Clear")
 
-		self.__setStyleSheet()
+		self.__set_style_sheet()
 
-		frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
-		self.setMinimumSize(max(self.minimumSizeHint().width(), self.__clearButton.sizeHint().height() + frameWidth * 2),
-		 					max(self.minimumSizeHint().height(), self.__clearButton.sizeHint().height() + frameWidth * 2))
+		frame_width = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
+		self.setMinimumSize(max(self.minimumSizeHint().width(), self.__clear_button.sizeHint().height() + frame_width * 2),
+		 					max(self.minimumSizeHint().height(), self.__clear_button.sizeHint().height() + frame_width * 2))
 
 		self.__completer.setCaseSensitivity(Qt.CaseInsensitive)
 		self.__completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
-		# self.__completer.setMaxVisibleItems(self.__completerVisibleItemsCount)
+		self.__completer.setMaxVisibleItems(self.__completer_visible_items_count)
 
-	def __setStyleSheet(self):
+	def __set_style_sheet(self):
 		"""
 		Sets the Widget stylesheet.
 		"""
 
-		frameWidth = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
-		self.setStyleSheet(QString(
-		"QLineEdit {{ padding-left: {0}px; padding-right: {1}px; }}\nQToolButton {{ border: none; padding: 0px; }}".format(
-		self.__searchActiveLabel.sizeHint().width() if self.__searchActiveLabel.isVisible() else 0 + frameWidth,
-		self.__clearButton.sizeHint().width() + frameWidth)))
+		frame_width = self.style().pixelMetric(QStyle.PM_DefaultFrameWidth)
+		self.setStyleSheet(QString("QLineEdit {{ padding-left: {0}px; padding-right: {1}px; }}".format(
+		self.__search_active_label.sizeHint().width() if self.__search_active_label.isVisible() else 0 + frame_width,
+		self.__clear_button.sizeHint().width() + frame_width)))
 
-	def __setClearButtonVisibility(self, text):
+	def __set_clear_button_visibility(self, text):
 		"""
 		Sets the clear button visibility.
 
@@ -482,35 +481,6 @@ class Search_QLineEdit(QLineEdit):
 		"""
 
 		if text:
-			self.__clearButton.show()
+			self.__clear_button.show()
 		else:
-			self.__clearButton.hide()
-
-if __name__ == "__main__":
-	import sys
-	from PyQt4.QtGui import QGridLayout
-	from PyQt4.QtGui import QStringListModel
-	from PyQt4.QtGui import QWidget
-
-	application = umbra.ui.common.getApplicationInstance()
-
-	widget = QWidget()
-
-	gridLayout = QGridLayout()
-	widget.setLayout(gridLayout)
-
-	search_QLineEditA = Search_QLineEdit()
-	gridLayout.addWidget(search_QLineEditA)
-
-	search_QLineEditA.completer.setModel(QStringListModel([(letter * 8).title() for letter in map(chr, range(97, 123))]))
-	search_QLineEditA.setPlaceholderText("Search...")
-
-	search_QLineEditB = Search_QLineEdit()
-	search_QLineEditB.searchActiveLabel.hide()
-	gridLayout.addWidget(search_QLineEditB)
-
-	widget.show()
-	widget.raise_()
-
-	sys.exit(application.exec_())
-
+			self.__clear_button.hide()

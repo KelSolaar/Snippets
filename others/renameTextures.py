@@ -44,7 +44,7 @@ __all__ = ["UDIM_PATTERN",
 		"getPatchFromUdim",
 		"getUdimFromPatch",
 		"getTexturesNames",
-		"getCommandLineParametersParser",
+		"get_command_line_parameters_parser",
 		"renameTextures"]
 
 UDIM_PATTERN = "u\d+_v\d+"
@@ -140,7 +140,7 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 	outputMethod = "udim" if output in ("mudbox", "zbrush") else "patch"
 	pattern = UDIM_PATTERN if inputMethod == "udim" else PATCH_PATTERN
 
-	offsetUdim = lambda x, y: (x[0] + y, x[1] + y)
+	offset_udim = lambda x, y: (x[0] + y, x[1] + y)
 
 	if input == "zbrush" and output == "mudbox":
 		textures = reversed(textures)
@@ -160,8 +160,8 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 		elif inputMethod == "patch":
 			udim = getUdimFromPatch(int(search.group(0)))
 
-		udim = offsetUdim(udim, -1) if input == "mudbox" else udim
-		udim = offsetUdim(udim, 1) if output == "mudbox" else udim
+		udim = offset_udim(udim, -1) if input == "mudbox" else udim
+		udim = offset_udim(udim, 1) if output == "mudbox" else udim
 
 		if outputMethod == "udim":
 		 	outputAffix = "u{0}_v{1}".format(*udim)
@@ -179,7 +179,7 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 
 	return texturesMapping
 
-def getCommandLineParametersParser():
+def get_command_line_parameters_parser():
 	"""
 	Returns the command line parameters parser.
 
@@ -262,7 +262,7 @@ if __name__ == "__main__":
 	if "*" in sys.argv[-1]:
 		sys.argv[-1:] = glob.glob(sys.argv[-1])
 
-	parameters, arguments = getCommandLineParametersParser().parse_args(sys.argv)
+	parameters, arguments = get_command_line_parameters_parser().parse_args(sys.argv)
 	renameTextures([os.path.join(os.getcwd(), texture) for texture in arguments[1:]],
 					parameters.input.lower(),
 					parameters.output.lower(),

@@ -43,7 +43,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Interfaces_QListView"]
 
-LOGGER = foundations.verbose.installLogger()
+LOGGER = foundations.verbose.install_logger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.

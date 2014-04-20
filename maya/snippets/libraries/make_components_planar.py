@@ -10,18 +10,20 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["stacksHandler",
-			"getTransform",
-			"getMVector",
-			"getMMatrix",
+__all__ = ["stacks_handler",
+			"get_transform",
+			"get_mvector",
+			"get_mmatrix",
 			"normalize",
-			"vectorMatrixMultiplication",
+			"vector_matrix_multiplication",
 			"dot",
-			"getAverageVector",
-			"makePlanar",
-			"IMakePlanar"]
+			"get_average_vector",
+            "make_components_planar",
+			"make_selected_components_planar"]
 
-def stacksHandler(object):
+__interfaces__ = ["make_selected_components_planar"]
+
+def stacks_handler(object):
 	"""
 	Handles Maya stacks.
 
@@ -31,7 +33,7 @@ def stacksHandler(object):
 	:rtype: object
 	"""
 
-	def stacksHandlerCall(*args, **kwargs):
+	def stacks_handler_wrapper(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
@@ -44,32 +46,32 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
 
-	return stacksHandlerCall
+	return stacks_handler_wrapper
 
-def getTransform(node, fullPath=True):
+def get_transform(node, full_path=True):
 	"""
 	Returns transform of the given node.
 
 	:param node: Current object.
 	:type node: str
-	:param fullPath: Current full path state.
-	:type fullPath: bool
+	:param full_path: Current full path state.
+	:type full_path: bool
 	:return: Object transform.
 	:rtype: str
 	"""
 
 	transform = node
 	if cmds.nodeType(node) != "transform":
-		parents = cmds.listRelatives(node, fullPath=fullPath, parent=True)
+		parents = cmds.listRelatives(node, fullPath=full_path, parent=True)
 		transform = parents[0]
 	return transform
 
-def getMVector(vector):
+def get_mvector(vector):
 	"""
 	Returns an MVector.
 
@@ -81,7 +83,7 @@ def getMVector(vector):
 
 	return OpenMaya.MVector(vector[0], vector[1], vector[2])
 
-def getMMatrix(matrix):
+def get_mmatrix(matrix):
 	"""
 	Returns an MMatrix.
 
@@ -91,9 +93,9 @@ def getMMatrix(matrix):
 	:rtype: MMatrix
 	"""
 
-	mMatrix = OpenMaya.MMatrix()
-	OpenMaya.MScriptUtil.createMatrixFromList(matrix, mMatrix)
-	return mMatrix
+	mmatrix = OpenMaya.MMatrix()
+	OpenMaya.MScriptUtil.createMatrixFromList(matrix, mmatrix)
+	return mmatrix
 
 def normalize(vector):
 	"""
@@ -105,11 +107,11 @@ def normalize(vector):
 	:rtype: tuple
 	"""
 
-	mVector = getMVector(vector)
-	mVector.normalize()
-	return (mVector.x, mVector.y, mVector.z)
+	mvector = get_mvector(vector)
+	mvector.normalize()
+	return (mvector.x, mvector.y, mvector.z)
 
-def vectorMatrixMultiplication(vector, matrix):
+def vector_matrix_multiplication(vector, matrix):
 	"""
 	Returns the vector multiplication between a Vector And a matrix.
 
@@ -121,28 +123,28 @@ def vectorMatrixMultiplication(vector, matrix):
 	:rtype: tuple
 	"""
 
-	mVector = getMVector(vector)
-	mMatrix = getMMatrix(matrix)
-	mVector = mVector * mMatrix
-	return (mVector.x, mVector.y, mVector.z)
+	mvector = get_mvector(vector)
+	mmatrix = get_mmatrix(matrix)
+	mvector = mvector * mmatrix
+	return (mvector.x, mvector.y, mvector.z)
 
-def dot(vectorA, vectorB):
+def dot(vector_a, vector_b):
 	"""
 	Returns the dot product between two vectors.
 
-	:param vectorA: Vector A.
-	:type vectorA: list
-	:param vectorB: Vector B.
-	:type vectorB: list
+	:param vector_a: Vector A.
+	:type vector_a: list
+	:param vector_b: Vector B.
+	:type vector_b: list
 	:return: Dot product.
 	:rtype: float
 	"""
 
-	mVectorA = getMVector(vectorA)
-	mVectorB = getMVector(vectorB)
-	return mVectorA * mVectorB
+	mvector_a = get_mvector(vector_a)
+	mvector_b = get_mvector(vector_b)
+	return mvector_a * mvector_b
 
-def getAverageVector(vectors):
+def get_average_vector(vectors):
 	"""
 	Returns the average vector from a list of vectors.
 
@@ -152,17 +154,18 @@ def getAverageVector(vectors):
 	:rtype: list
 	"""
 
-	averageVector = [0, 0, 0]
+	average_vector = [0, 0, 0]
 	for vector in vectors:
 		for i in range(3):
-			averageVector[i] += vector[i]
+			average_vector[i] += vector[i]
 	for i in range(3):
-		averageVector[i] = averageVector[i] / len(vectors)
-	return averageVector
+		average_vector[i] = average_vector[i] / len(vectors)
+	return average_vector
 
-def makePlanar(components):
+@stacks_handler
+def make_components_planar(components):
 	"""
-	Planarizes the given Components.
+	Planarizes given components.
 
 	:param components: Components to planarizes.
 	:type components: list
@@ -170,27 +173,27 @@ def makePlanar(components):
 
 	object = cmds.ls(components, o=True)
 	if object:
-		transform = getTransform(object)
+		transform = get_transform(object)
 		vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 
 		barycenters = cmds.xform(vertices, q=True, t=True, ws=True)
-		barycenter = getAverageVector([(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
+		barycenter = get_average_vector([(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
 
 		normals = [float(normal) for data in cmds.polyInfo(cmds.polyListComponentConversion(components, toFace=True), faceNormals=True) for normal in data.split()[2:5]]
 		normals = [(normals[i], normals[i + 1], normals[i + 2]) for i in range(0, len(normals), 3)]
-		averageNormal = vectorMatrixMultiplication(normalize(getAverageVector(normals)), cmds.xform(transform, query=True, matrix=True, worldSpace=True))
+		average_normal = vector_matrix_multiplication(normalize(get_average_vector(normals)), cmds.xform(transform, query=True, matrix=True, worldSpace=True))
 
-		offset = -dot(averageNormal, barycenter)
+		offset = -dot(average_normal, barycenter)
 
 		for vertex in vertices:
 			position = cmds.xform(vertex, q=True, t=True, ws=True)
-			distance = -(dot(averageNormal, position) + offset)
-			cmds.xform(vertex, r=True, t=(averageNormal[0] * distance, averageNormal[1] * distance, averageNormal[2] * distance))
+			distance = -(dot(average_normal, position) + offset)
+			cmds.xform(vertex, r=True, t=(average_normal[0] * distance, average_normal[1] * distance, average_normal[2] * distance))
 
-@stacksHandler
-def IMakePlanar():
+@stacks_handler
+def make_selected_components_planar():
 	"""
-	Defines the makePlanar definition Interface.
+	Planarizes selected components.
 	"""
 
-	makePlanar(cmds.ls(sl=True))
+	make_components_planar(cmds.ls(sl=True))

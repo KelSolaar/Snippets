@@ -8,7 +8,7 @@
 #**********************************************************************************************************************
 
 """
-**RuntimeGlobals.py**
+**runtime_globals.py**
 
 **Platform:**
 	Windows, Linux, Mac Os X.
@@ -40,12 +40,12 @@ class RuntimeGlobals():
 	Defines the runtime globals class.
 	"""
 
-	loaderUiFile = None
-	popupUiFile = None
+	loader_ui_file = None
+	popup_ui_file = None
 
-	modulesManager = None
+	modules_manager = None
 
-	librariesDirectory = None
-	resourcesDirectory = None
+	libraries_directory = None
+	resources_directory = None
 
-	popupPattern = None
+	popup_pattern = None

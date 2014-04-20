@@ -5,7 +5,7 @@ import ast
 import os
 import re
 
-def consolePrint(*args):
+def console_print(*args):
 	"""
 	Prints given message to KatanaConsole.
 
@@ -15,7 +15,7 @@ def consolePrint(*args):
 
 	UI4.App.Tabs.FindTopTab("Python").printMessage(" ".join(map(str, args)))
 
-def listRendererObjectNames(renderer):
+def list_renderer_object_names(renderer):
 	"""
 	Lists given render object names ( Shaders ).
 
@@ -25,11 +25,11 @@ def listRendererObjectNames(renderer):
 	:rtype: list
 	"""
 	
-	rendererInfo = RenderingAPI.RenderPlugins.GetInfoPluginName(renderer)
-	plugin = RenderingAPI.RendererInfo.GetPlugin(rendererInfo)
+	renderer_info = RenderingAPI.RenderPlugins.GetInfoPluginName(renderer)
+	plugin = RenderingAPI.RendererInfo.GetPlugin(renderer_info)
 	return plugin.getRendererObjectNames()
 
-def listNode(node, indentation="\t", tabLevel= -1):
+def list_node(node, indentation="\t", tab_level= -1):
 	"""
 	Lists the current node and its children.
 
@@ -37,8 +37,8 @@ def listNode(node, indentation="\t", tabLevel= -1):
 	:type node: object
 	:param indentation: Indentation character.
 	:type indentation: str
-	:param tabLevel: Indentation level.
-	:type tabLevel: int
+	:param tab_level: Indentation level.
+	:type tab_level: int
 	:return: Node listing.
 	:rtype: str
 	"""
@@ -46,9 +46,9 @@ def listNode(node, indentation="\t", tabLevel= -1):
 	attribute = "getChildren"
 
 	output = ""
-	tabLevel += 1
+	tab_level += 1
 
-	for i in range(tabLevel):
+	for i in range(tab_level):
 		output += indentation
 
 	output += "|----'{0}'\n".format(node.getName())
@@ -58,19 +58,19 @@ def listNode(node, indentation="\t", tabLevel= -1):
 			if child is None:
 				continue
 
-			output += listNode(child, indentation, tabLevel)
+			output += list_node(child, indentation, tab_level)
 
-	tabLevel -= 1
+	tab_level -= 1
 	return output
 
-def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
+def list_hints_parameters(node, output_as_tree=False, indentation="\t", time=0):
 	"""
 	Lists given node and children hints parameters.
 
 	:param node: Node to list hint parameters.
 	:type node: object
-	:param outputAsTree: Output as groups outputAsTree.
-	:type outputAsTree: bool
+	:param output_as_tree: Output as groups output_as_tree.
+	:type output_as_tree: bool
 	:param indentation: Indentation character.
 	:type indentation: str
 	:param time: Time to get the hints parameters value.
@@ -80,14 +80,14 @@ def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 	"""
 
 	nodes = [node]
-	nodes.extend(list(nodesWalker(node)))
+	nodes.extend(list(nodes_walker(node)))
 
 	output = ""
 
-	if outputAsTree:
+	if output_as_tree:
 		hints = {}
 		for node in nodes:
-			for parameter in filterNodeParameters(node, "^hints$"):
+			for parameter in filter_node_parameters(node, "^hints$"):
 				value = ast.literal_eval(parameter.getValue(time))
 				group = value.get("dstPage", "Undefined")
 				if not hints.get(group):
@@ -103,7 +103,7 @@ def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 			output += "\n"
 	else:
 		for node in nodes:
-			for parameter in filterNodeParameters(node, "^hints$"):
+			for parameter in filter_node_parameters(node, "^hints$"):
 				value = ast.literal_eval(parameter.getValue(time))
 				output += "{0}.{1}:\n".format(node.getName(), parameter.getParent().getName())
 				output += "{0}Group: {1}\n".format(indentation, value.pop("dstPage", "Undefined"))
@@ -113,7 +113,7 @@ def listHintsParameters(node, outputAsTree=False, indentation="\t", time=0):
 				output += "\n"
 	return output
 
-def nodesWalker(node, ascendants=False):
+def nodes_walker(node, ascendants=False):
 	"""
 	Defines a generator used to walk into nodes hierarchy.
 
@@ -144,15 +144,15 @@ def nodesWalker(node, ascendants=False):
 		if not getattr(element, attribute):
 			continue
 
-		for subElement in nodesWalker(element, ascendants=ascendants):
-			if subElement is None:
+		for sub_element in nodes_walker(element, ascendants=ascendants):
+			if sub_element is None:
 				continue
 
-			yield subElement
+			yield sub_element
 
-parametersWalker = nodesWalker
+parameters_walker = nodes_walker
 
-def filterNodeParameters(node, pattern=r".*", flags=0):
+def filter_node_parameters(node, pattern=r".*", flags=0):
 	"""
 	Filters given nodes parameters using given pattern.
 
@@ -166,10 +166,10 @@ def filterNodeParameters(node, pattern=r".*", flags=0):
 	:rtype: bool
 	"""
 
-	return [parameter for parameter in parametersWalker(node.getParameters()) \
+	return [parameter for parameter in parameters_walker(node.getParameters()) \
 	if re.search(pattern, parameter.getName(), flags)]
 
-def resetNodeParameters(node, pattern=r".*", flags=0):
+def reset_node_parameters(node, pattern=r".*", flags=0):
 	"""
 	Resets given nodes parameters using given pattern.
 
@@ -183,11 +183,11 @@ def resetNodeParameters(node, pattern=r".*", flags=0):
 	:rtype: bool
 	"""
 
-	for parameter in filterNodeParameters(node, pattern, flags):
+	for parameter in filter_node_parameters(node, pattern, flags):
 		parameter.setUseNodeDefault(True)
 	return True	
 
-def importScriptNode(path):
+def import_script_node(path):
 	"""
 	Imports given path script node.
 
@@ -202,14 +202,14 @@ def importScriptNode(path):
 
 	nodes = NodegraphAPI.GetAllSelectedNodes()
 	Katana.KatanaFile.Import(path)
-	scriptNode = NodegraphAPI.GetAllSelectedNodes().pop()
+	script_node = NodegraphAPI.GetAllSelectedNodes().pop()
 	NodegraphAPI.SetAllSelectedNodes(nodes)
 	for node in NodegraphAPI.GetAllEditedNodes():
 		NodegraphAPI.SetNodeEdited(node, False)
-	NodegraphAPI.SetNodeEdited(scriptNode, True)
-	return scriptNode
+	NodegraphAPI.SetNodeEdited(script_node, True)
+	return script_node
 
-def singleShotScriptNode(path, parameter):
+def single_shot_script_node(path, parameter):
 	"""
 	Executes given path script node parameter.
 
@@ -222,11 +222,11 @@ def singleShotScriptNode(path, parameter):
 	if not os.path.exists(path):
 		return
 		
-	editedNodes = NodegraphAPI.GetAllEditedNodes()
-	scriptNode = importScriptNode(path)
-	NodegraphAPI.UserParameters.ExecuteButton(scriptNode, parameter)
-	scriptNode.delete() 
-	for node in editedNodes:
+	edited_nodes = NodegraphAPI.GetAllEditedNodes()
+	script_node = import_script_node(path)
+	NodegraphAPI.UserParameters.ExecuteButton(script_node, parameter)
+	script_node.delete() 
+	for node in edited_nodes:
 		NodegraphAPI.SetNodeEdited(node, True)
 	return True
 	

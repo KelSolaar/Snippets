@@ -8,7 +8,7 @@
 #**********************************************************************************************************************
 
 """
-**snapOnClosestVertex.py**
+**snap_on_closest_vertex.py**
 
 **Platform :**
 	Windows, Linux, Mac Os X.
@@ -46,17 +46,18 @@ __status__ = "Production"
 
 __all__ = ["TOLERANCE",
 			"MAXIMUM_SEARCH_DISTANCE",
-			"stacksHandler",
-			"getMPoint",
+			"stacks_handler",
+			"get_mpoint",
 			"norme",
-			"getShapes",
-			"getReferenceObject_button_OnClicked",
-			"loadPlugin",
-			"snapComponentsOnClosestVertex",
-			"snapIt_button_OnClicked",
-			"snapOnClosestVertex_window",
-			"snapOnClosestVertex",
-			"ISnapOnClosestVertex"]
+			"get_shapes",
+			"get_reference_object_button__on_clicked",
+			"load_plugin",
+			"snap_components_on_closest_vertex",
+			"snap_it_button__on_clicked",
+			"snap_on_closest_vertex_window",
+			"snap_on_closest_vertex"]
+
+__interfaces__ = ["snap_on_closest_vertex"]
 
 TOLERANCE = 64
 MAXIMUM_SEARCH_DISTANCE = 2 ** 32 - 1
@@ -64,7 +65,7 @@ MAXIMUM_SEARCH_DISTANCE = 2 ** 32 - 1
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-def stacksHandler(object):
+def stacks_handler(object):
 	"""
 	Handles Maya stacks.
 
@@ -74,7 +75,7 @@ def stacksHandler(object):
 	:rtype: object
 	"""
 
-	def stacksHandlerCall(*args, **kwargs):
+	def stacks_handler_wrapper(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
@@ -87,14 +88,14 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
 
-	return stacksHandlerCall
+	return stacks_handler_wrapper
 
-def getMPoint(point):
+def get_mpoint(point):
 	"""
 	Returns an MPoint.
 
@@ -106,48 +107,48 @@ def getMPoint(point):
 
 	return OpenMaya.MPoint(point[0], point[1], point[2])
 
-def norme(pointA, pointB):
+def norme(point_a, point_b):
 	"""
 	Returns the norme of a vector.
 
-	:param pointA: Point A.
-	:type pointA: list
-	:param pointB: Point B.
-	:type pointB: list
+	:param point_a: Point A.
+	:type point_a: list
+	:param point_b: Point B.
+	:type point_b: list
 	:return: Norme
 	:rtype: float
 	"""
 
-	mPointA = getMPoint(pointA)
-	mPointB = getMPoint(pointB)
-	mVector = mPointA - mPointB
-	return mVector.length()
+	mpoint_a = get_mpoint(point_a)
+	mpoint_b = get_mpoint(point_b)
+	mvector = mpoint_a - mpoint_b
+	return mvector.length()
 
-def getShapes(object, fullPathState=False, noIntermediateState=True):
+def get_shapes(object, full_path=False, no_intermediate=True):
 	"""
 	Returns shapes of the given object.
 
 	:param object: Current object.
 	:type object: str
-	:param fullPath: Current full path state.
-	:type fullPath: bool
+	:param full_path: Current full path state.
+	:type full_path: bool
 	:param noIntermediate: Current no intermediate state.
 	:type noIntermediate: bool
 	:return: Objects shapes.
 	:rtype: list
 	"""
 
-	objectShapes = []
-	shapes = cmds.listRelatives(object, fullPath=fullPathState, shapes=True, noIntermediate=noIntermediateState)
+	object_shapes = []
+	shapes = cmds.listRelatives(object, fullPath=full_path, shapes=True, noIntermediate=no_intermediate)
 	if shapes != None:
-		objectShapes = shapes
+		object_shapes = shapes
 
-	return objectShapes
+	return object_shapes
 
-@stacksHandler
-def getReferenceObject_button_OnClicked(state=None):
+@stacks_handler
+def get_reference_object_button__on_clicked(state=None):
 	"""
-	Defines the slot triggered by **getReferenceObject_button** button when clicked.
+	Defines the slot triggered by **get_reference_object_button** button when clicked.
 
 	:param state: Button state.
 	:type state: bool
@@ -156,9 +157,9 @@ def getReferenceObject_button_OnClicked(state=None):
 	selection = cmds.ls(sl=True, type="transform")
 
 	if selection :
-		cmds.textField("referenceObject_textField", edit=True, text=selection[0])
+		cmds.textField("reference_object_textField", edit=True, text=selection[0])
 
-def loadPlugin(plugin):
+def load_plugin(plugin):
 	"""
 	This function loads a plugin.
 
@@ -168,12 +169,12 @@ def loadPlugin(plugin):
 
 	not cmds.pluginInfo(plugin, query=True, loaded=True) and cmds.loadPlugin(plugin)
 
-def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
+def snap_components_on_closest_vertex(reference_object, components, tolerance) :
 	"""
 	This function snaps vertices onto the reference object vertices.
 
-	:param referenceObject: Reference mesh.
-	:type referenceObject: str
+	:param reference_object: Reference mesh.
+	:type reference_object: str
 	:param components: Components.
 	:type components: list
 	"""
@@ -184,68 +185,68 @@ def snapComponentsOnClosestVertex(referenceObject, components, tolerance) :
 
 	cmds.progressBar(progressBar, edit=True, beginProgress=True, isInterruptable=True, status="Snapping vertices ...", maxValue=len(vertices))
 
-	loadPlugin("nearestPointOnMesh")
+	load_plugin("nearestPointOnMesh")
 
-	nearestPointOnMeshNode = mel.eval("nearestPointOnMesh " + referenceObject)
+	nearest_point_on_mesh = mel.eval("nearestPointOnMesh " + reference_object)
 
 	for vertex in vertices :
 		if cmds.progressBar(progressBar, query=True, isCancelled=True) :
 			break
 
-		closestDistance = MAXIMUM_SEARCH_DISTANCE
+		closest_distance = MAXIMUM_SEARCH_DISTANCE
 
-		vertexPosition = cmds.pointPosition(vertex, world=True)
-		cmds.setAttr(nearestPointOnMeshNode + ".inPosition", vertexPosition[0], vertexPosition[1], vertexPosition[2])
-		associatedFaceId = cmds.getAttr(nearestPointOnMeshNode + ".nearestFaceIndex")
-		vtxsFaces = cmds.filterExpand(cmds.polyListComponentConversion((referenceObject + ".f[" + str(associatedFaceId) + "]"), fromFace=True, 	toVertexFace=True), sm=70, expand=True)
+		vertex_position = cmds.pointPosition(vertex, world=True)
+		cmds.setAttr("{0}.inPosition".format(nearest_point_on_mesh), vertex_position[0], vertex_position[1], vertex_position[2])
+		associated_face_id = cmds.getAttr("{0}.nearestFaceIndex".format(nearest_point_on_mesh))
+		vtxs_faces = cmds.filterExpand(cmds.polyListComponentConversion("{0}.f[{1}]".format(reference_object, associated_face_id), fromFace=True, toVertexFace=True), sm=70, expand=True)
 
-		closestPosition = []
-		for vtxsFace in vtxsFaces :
-			associatedVtx = cmds.polyListComponentConversion(vtxsFace, fromVertexFace=True, toVertex=True)
-			associatedVtxPosition = cmds.pointPosition(associatedVtx, world=True)
+		closest_position = []
+		for vtxs_face in vtxs_faces :
+			associated_vtx = cmds.polyListComponentConversion(vtxs_face, fromVertexFace=True, toVertex=True)
+			associated_vtx_position = cmds.pointPosition(associated_vtx, world=True)
 
-			distance = norme(vertexPosition, associatedVtxPosition)
+			distance = norme(vertex_position, associated_vtx_position)
 
-			if distance < closestDistance :
-				closestDistance = distance
-				closestPosition = associatedVtxPosition
+			if distance < closest_distance :
+				closest_distance = distance
+				closest_position = associated_vtx_position
 
-			if closestDistance < tolerance :
-				cmds.move(closestPosition[0], closestPosition[1], closestPosition[2], vertex, worldSpace=True)
+			if closest_distance < tolerance :
+				cmds.move(closest_position[0], closest_position[1], closest_position[2], vertex, worldSpace=True)
 
 		cmds.progressBar(progressBar, edit=True, step=1)
 
 	cmds.progressBar(progressBar, edit=True, endProgress=True)
 
-	cmds.delete(nearestPointOnMeshNode)
+	cmds.delete(nearest_point_on_mesh)
 
-@stacksHandler
-def snapIt_button_OnClicked(state=None):
+@stacks_handler
+def snap_it_button__on_clicked(state=None):
 	"""
-	Defines the slot triggered by **snapIt_button** button when clicked.
+	Defines the slot triggered by **snap_it_button** button when clicked.
 
 	:param state: Button state.
 	:type state: bool
 	"""
 
-	referenceObject = cmds.textField("referenceObject_textField", query=True, text=True)
+	reference_object = cmds.textField("reference_object_textField", query=True, text=True)
 
-	referenceObjectShapes = cmds.objExists(referenceObject) and getShapes(referenceObject) or None
+	reference_objectShapes = cmds.objExists(reference_object) and get_shapes(reference_object) or None
 
 	selection = cmds.ls(sl=True, fl=True)
-	referenceObjectShapes and selection and snapComponentsOnClosestVertex(referenceObjectShapes[0], selection, TOLERANCE)
+	reference_objectShapes and selection and snap_components_on_closest_vertex(reference_objectShapes[0], selection, TOLERANCE)
 
-def snapOnClosestVertex_window():
+def snap_on_closest_vertex_window():
 	"""
 	Creates the 'Snap On Closest Vertex' vertex window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("snapOnClosestVertex_window", exists=True)):
-		cmds.deleteUI("snapOnClosestVertex_window")
+	if (cmds.window("snap_on_closest_vertex_window", exists=True)):
+		cmds.deleteUI("snap_on_closest_vertex_window")
 
-	cmds.window("snapOnClosestVertex_window",
+	cmds.window("snap_on_closest_vertex_window",
 		title="Snap On Closest Vertex",
 		width=320)
 
@@ -255,28 +256,20 @@ def snapOnClosestVertex_window():
 
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Reference Object:")
-	referenceObject_textField = cmds.textField("referenceObject_textField")
-	cmds.button("getReferenceObject_button", label="Get Reference Object!", command=getReferenceObject_button_OnClicked)
+	reference_object_textField = cmds.textField("reference_object_textField")
+	cmds.button("get_reference_object_button", label="Get Reference Object!", command=get_reference_object_button__on_clicked)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")
 
-	cmds.button("snapIt_button", label="Snap It!", al="center", command=snapIt_button_OnClicked)
+	cmds.button("snap_it_button", label="Snap It!", al="center", command=snap_it_button__on_clicked)
 
-	cmds.showWindow("snapOnClosestVertex_window")
+	cmds.showWindow("snap_on_closest_vertex_window")
 	cmds.windowPref(enableAll=True)
 
-def snapOnClosestVertex():
+def snap_on_closest_vertex():
 	"""
 	Launches the 'Snap On Closest Vertex' main window.
 	"""
 
-	snapOnClosestVertex_window()
-
-@stacksHandler
-def ISnapOnClosestVertex():
-	"""
-	Defines the snapOnClosestVertex definition Interface.
-	"""
-
-	snapOnClosestVertex()
+	snap_on_closest_vertex_window()

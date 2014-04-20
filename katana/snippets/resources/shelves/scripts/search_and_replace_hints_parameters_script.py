@@ -1,5 +1,5 @@
 """
-NAME: listNodesChildren_Script
+NAME: search_and_replace_hints_parameters_Script
 ICON: icon.png
 DROP_TYPES: 
 SCOPE:
@@ -27,5 +27,4 @@ not SNIPPETS_PATH in sys. path and sys.path.append(SNIPPETS_PATH)
 
 import snippets.libraries.utilities
 
-snippets.libraries.utilities.singleShotScriptNode("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/listNodesChildren_Script_vLatest.katana", "listNodesChildren")
-
+snippets.libraries.utilities.import_script_node("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/search_and_replace_hints_parameters_Script_vLatest.katana")

@@ -6,9 +6,9 @@ import sys
 
 import snippets.libraries.utilities
 
-def getGiggleMetaData(path):
+def get_giggle_meta_data(path):
 	"""
-	Returns the Giggle metaData of give '.slo' file path.
+	Returns the Giggle metadata of give '.slo' file path.
 
 	:param path: File get the MetaData from.
 	:type path: str
@@ -16,32 +16,32 @@ def getGiggleMetaData(path):
 	:rtype: list
 	"""
 
-	metaData = []
+	metadata = []
 	with open(path) as file:
 		for line in file:
 			if not re.match(r"\s*\$meta_\<ggl\>", line):
 				continue
 
-			metaData.append(line.split("\\n")[1:-1])
-	return metaData
+			metadata.append(line.split("\\n")[1:-1])
+	return metadata
 
-def listGiggleMetaData(metaData, indentation="\t"):
+def list_giggle_meta_data(metadata, indentation="\t"):
 	"""
-	Lists given metaData.
+	Lists given metadata.
 
-	:param metaData: MetaData to list.
-	:type metaData: list
-	:return: Formated metaData.
+	:param metadata: MetaData to list.
+	:type metadata: list
+	:return: Formated metadata.
 	:rtype: str
 	"""
 
 	output = ""
-	entryCounter = 0
-	for token in metaData:
+	entry_counter = 0
+	for token in metadata:
 		search = re.search(r"\<(?P<key>\w+)\>(?P<value>.*)\</\w+\>", token)
 		if not search:
 			continue
-		
+
 		key, value = search.group("key"), search.group("value")
 		if key in ("name", "label"):
 			output += "{0}:\n".format(value)
@@ -52,11 +52,11 @@ def listGiggleMetaData(metaData, indentation="\t"):
 		elif key == "default":
 			output += "{0}Default Value: {1}\n".format(indentation, value)
 		elif key == "entry":
-			output += "{0}Entry '{1}': {2}\n".format(indentation, entryCounter, value)
-			entryCounter +=1
+			output += "{0}Entry '{1}': {2}\n".format(indentation, entry_counter, value)
+			entry_counter += 1
 	return output
 
-def getCoshaderSloFile(coshader):
+def get_coshader_slo_file(coshader):
 	"""
 	Returns gviven coshader '.slo' file path.
 
@@ -66,56 +66,56 @@ def getCoshaderSloFile(coshader):
 	:rtype: str
 	"""
 
-	rendererInfo = RenderingAPI.RenderPlugins.GetInfoPluginName("prman")
-	plugin = RenderingAPI.RendererInfo.GetPlugin(rendererInfo)
+	renderer_info = RenderingAPI.RenderPlugins.GetInfoPluginName("prman")
+	plugin = RenderingAPI.RendererInfo.GetPlugin(renderer_info)
 	return plugin.getRendererObjectInfo(coshader).getFullPath()
 
-def listNodeGiggleMetaData(node):
+def list_node_giggle_metadata(node):
 	"""
-	Lists given node metaData.
+	Lists given node metadata.
 
-	:param node: Node to list metaData.
+	:param node: Node to list metadata.
 	:type node: object
-	:return: Formated metaData list.
+	:return: Formated metadata list.
 	:rtype: str
 	"""
 
 	output = ""
 	if node.getType() == "PrmanShadingNode":
-		path = getCoshaderSloFile(node.getParameter("nodeType").getValue(0))
+		path = get_coshader_slo_file(node.getParameter("nodeType").getValue(0))
 		if os.path.exists(path):
-			for metaData in getGiggleMetaData(path):
-				output += listGiggleMetaData(metaData)
+			for metadata in get_giggle_meta_data(path):
+				output += list_giggle_meta_data(metadata)
 	return output
 
-def listNodesGiggleMetaData(nodes, traverse=True):
+def list_nodes_giggle_metadata(nodes, traverse=True):
 	"""
-	Lists given nodes metaData.
+	Lists given nodes metadata.
 
-	:param node: Node to list metaData.
+	:param node: Node to list metadata.
 	:type node: object
 	:param traverse: Traverse nodes children.
 	:type traverse: bool
-	:return: Formated metaData.
+	:return: Formated metadata.
 	:rtype: str
 	"""
 
 	output = ""
 	for node in nodes:
-		output += listNodeGiggleMetaData(node)
+		output += list_node_giggle_metadata(node)
 		if not traverse:
 			continue
 
-		for childNode in snippets.libraries.utilities.nodesWalker(node):
-			output += listNodeGiggleMetaData(childNode)
+		for child_node in snippets.libraries.utilities.nodes_walker(node):
+			output += list_node_giggle_metadata(child_node)
 	return output
-	
-def lisObjectNames():
+
+def list_object_names():
 	"""
-	Lists PRMan object names ( Shaders ).
+	Lists PRMan object names.
 
 	:return: PRMan Object names.
 	:rtype: list
 	"""
-	
-	return snippets.libraries.utilities.listRendererObjectNames("prman")
+
+	return snippets.libraries.utilities.list_renderer_object_names("prman")

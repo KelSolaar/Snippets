@@ -10,44 +10,52 @@ __status__ = "Production"
 
 __all__ = ["DEFAULTS_HOTKEYS",
 			"TRANSFERT_SELECTION_HOTKEY",
-			"stacksHandler",
-			"getShapes",
-			"transfertVerticesPositionsInUvsSpace",
-			"ITransfertVerticesPositionsInUvsSpace",
-			"transfertVerticesPositionsInWorldSpace",
-			"ITransfertVerticesPositionsInWorldSpace",
-			"transfertUvsInTopologySpace",
-			"ITransfertUvsInTopologySpace",
-			"toggleSelectionHighlight",
-			"IToggleSelectionHighlight",
-			"toggleGeometriesVisibility",
-			"IToggleGeometriesVisibility",
-			"toggleGeometriesShadingOverride",
-			"IToggleGeometriesShadingOverride",
-			"isolateSelection",
-			"IIsolateSelection",
-			"splitRingMiddle",
-			"ISplitRingMiddle",
-			"symmetricalInstance",
-			"ISymmetricalInstance",
-			"pivotsIdentity",
-			"IPivotsIdentity",
+			"stacks_handler",
+			"get_shapes",
+			"transfert_vertices_positions_in_uvs_space",
+			"transfert_selected_objects_vertices_positions_in_uvs_space",
+			"transfert_vertices_positions_in_world_space",
+			"transfert_selected_objects_vertices_positions_in_world_space",
+			"transfert_uvs_in_topology_space",
+			"transfert_selected_objects_uvs_in_topology_space",
+			"toggle_selection_highlight",
+			"toggle_geometries_visibility",
+			"toggle_shading_override",
+			"toggle_selected_objects_shading_override",
+			"isolate_selected_objects",
+			"split_ring_middle",
+			"split_ring_middle_selected_objects",
+			"symmetrical_instance",
+			"symmetrical_instance_selected_objects",
+			"pivots_identity",
+			"pivots_identity_selected_objects",
 			"flattenHierarchy",
-			"IFlattenHierarchy",
-			"transfertSelection",
-			"ITransfertSelection",
-			"transfertSelectionToUserTarget",
-			"pickTarget_button_OnClicked",
-			"setUnsetContextHotkeys_button_OnClicked",
-			"transfertSelection_button_OnClicked",
-			"transfertSelectionToTarget_window",
-			"transfertSelectionToTarget",
-			"ITransfertSelectionToTarget"]
+			"flatten_selected_objects_hierachy",
+			"transfert_selection",
+			"transfert_selection_to_user_target",
+			"pick_target_button__on_clicked",
+			"transfert_selection_button__on_clicked",
+			"transfert_selection_to_target_window",
+			"transfert_selection_to_target"]
+
+__interfaces__ = ["transfert_selected_objects_vertices_positions_in_uvs_space",
+				"transfert_selected_objects_vertices_positions_in_world_space",
+				"transfert_selected_objects_uvs_in_topology_space",
+				"toggle_selection_highlight",
+				"toggle_geometries_visibility",
+				"toggle_selected_objects_shading_override",
+				"isolate_selected_objects",
+				"split_ring_middle_selected_objects",
+				"symmetrical_instance_selected_objects",
+				"pivots_identity_selected_objects",
+				"flatten_selected_objects_hierachy",
+				"transfert_selection",
+				"transfert_selection_to_target"]
 
 DEFAULTS_HOTKEYS = {}
 TRANSFERT_SELECTION_HOTKEY = "t"
 
-def stacksHandler(object):
+def stacks_handler(object):
 	"""
 	Handles Maya stacks.
 
@@ -57,7 +65,7 @@ def stacksHandler(object):
 	:rtype: object
 	"""
 
-	def stacksHandlerCall(*args, **kwargs):
+	def stacks_handler_wrapper(*args, **kwargs):
 		"""
 		Handles Maya stacks.
 
@@ -70,37 +78,38 @@ def stacksHandler(object):
 		cmds.undoInfo(closeChunk=True)
 		# Maya produces a weird command error if not wrapped here.
 		try:
-			cmds.repeatLast(addCommand="python(\"import %s; %s.%s()\")" % (__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+			cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
 		except:
 			pass
 		return value
 
-	return stacksHandlerCall
+	return stacks_handler_wrapper
 
-def getShapes(object, fullPathState=False, noIntermediateState=True):
+def get_shapes(object, full_path=False, no_intermediate=True):
 	"""
 	Returns shapes of the given object.
 
 	:param object: Current object.
 	:type object: str
-	:param fullPath: Current full path state.
-	:type fullPath: bool
+	:param full_path: Current full path state.
+	:type full_path: bool
 	:param noIntermediate: Current no intermediate state.
 	:type noIntermediate: bool
 	:return: Objects shapes.
 	:rtype: list
 	"""
 
-	objectShapes = []
-	shapes = cmds.listRelatives(object, fullPath=fullPathState, shapes=True, noIntermediate=noIntermediateState)
+	object_shapes = []
+	shapes = cmds.listRelatives(object, fullPath=full_path, shapes=True, noIntermediate=no_intermediate)
 	if shapes != None:
-		objectShapes = shapes
+		object_shapes = shapes
 
-	return objectShapes
+	return object_shapes
 
-def transfertVerticesPositionsInUvsSpace(targets, source):
+@stacks_handler
+def transfert_vertices_positions_in_uvs_space(targets, source):
 	"""
-	Transferts vertices positions from source to targets object in UVs space.
+	Transfers vertices positions from source to target objects in Uvs space.
 
 	:param targets: Sources objects.
 	:type targets: list
@@ -112,43 +121,45 @@ def transfertVerticesPositionsInUvsSpace(targets, source):
 		cmds.transferAttributes(source, target, transferPositions=1, sampleSpace=3)
 		cmds.delete(source, ch=True)
 
-@stacksHandler
-def ITransfertVerticesPositionsInUvsSpace():
+@stacks_handler
+def transfert_selected_objects_vertices_positions_in_uvs_space():
 	"""
-	Defines the transfertVerticesPositionsInUvsSpace definition Interface.
+	Transfers vertices positions from selected source to selected target objects in Uvs space.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and transfertVerticesPositionsInUvsSpace(selection[:-1], selection[-1])
+	selection and transfert_vertices_positions_in_uvs_space(selection[:-1], selection[-1])
 
-def transfertVerticesPositionsInWorldSpace(targets, source, searchMethod=0):
+@stacks_handler
+def transfert_vertices_positions_in_world_space(targets, source, search_method=0):
 	"""
-	Transferts vertices positions from source to targets object in world space.
+	Transfers vertices positions from source to target objects in world space.
 
 	:param targets: Sources objects.
 	:type targets: list
 	:param source: Target object.
 	:type source: str
-	:param searchMethod: Current search method.
-	:type searchMethod: int
+	:param search_method: Current search method.
+	:type search_method: int
 	"""
 
 	for target in targets:
 		cmds.transferAttributes(source, target, transferPositions=1, sampleSpace=0, searchMethod=3)
 		cmds.delete(source, ch=True)
 
-@stacksHandler
-def ITransfertVerticesPositionsInWorldSpace():
+@stacks_handler
+def transfert_selected_objects_vertices_positions_in_world_space():
 	"""
-	Defines the transfertVerticesPositionsInWorldSpace definition Interface.
+	Transfers vertices positions from selected source to selected target objects in world space.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and transfertVerticesPositionsInWorldSpace(selection[:-1], selection[-1], 0)
+	selection and transfert_vertices_positions_in_world_space(selection[:-1], selection[-1], 0)
 
-def transfertUvsInTopologySpace(targets, source):
+@stacks_handler
+def transfert_uvs_in_topology_space(targets, source):
 	"""
-	Transferts UVs from source to targets object in topology space.
+	Transfers Uvs from source to targets object in topology space.
 
 	:param targets: Sources objects.
 	:type targets: list
@@ -157,19 +168,20 @@ def transfertUvsInTopologySpace(targets, source):
 	"""
 
 	for target in targets:
-		cmds.transferAttributes(source, target, transferUVs=2, sampleSpace=5)
+		cmds.transferAttributes(source, target, transferUvs=2, sampleSpace=5)
 		cmds.delete(source, ch=True)
 
-@stacksHandler
-def ITransfertUvsInTopologySpace():
+@stacks_handler
+def transfert_selected_objects_uvs_in_topology_space():
 	"""
-	Defines the transfertUvsInTopologySpace definition Interface.
+	Transfers Uvs from selected source to selected target objects in topology space.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and transfertUvsInTopologySpace(selection[:-1], selection[-1])
+	selection and transfert_uvs_in_topology_space(selection[:-1], selection[-1])
 
-def toggleSelectionHighlight():
+@stacks_handler
+def toggle_selection_highlight():
 	"""
 	Toggles active modeling panel selection highlight.
 	"""
@@ -180,15 +192,8 @@ def toggleSelectionHighlight():
 	except:
 		pass
 
-@stacksHandler
-def IToggleSelectionHighlight():
-	"""
-	Defines the toggleSelectionHighlight definition Interface.
-	"""
-
-	toggleSelectionHighlight()
-
-def toggleGeometriesVisibility():
+@stacks_handler
+def toggle_geometries_visibility():
 	"""
 	Toggles active modeling panel geometries visibility highlight.
 	"""
@@ -202,37 +207,31 @@ def toggleGeometriesVisibility():
 	except:
 		pass
 
-@stacksHandler
-def IToggleGeometriesVisibility():
-	"""
-	Defines the toggleGeometriesVisibility definition Interface.
-	"""
-
-	toggleGeometriesVisibility()
-
-def toggleGeometriesShadingOverride(nodes):
+@stacks_handler
+def toggle_shading_override(objects):
 	"""
 	Toggles geometries shading override.
 	
-	:param nodes: Nodes to toggle shading override on.
-	:type nodes: list
+	:param objects: Objects to toggle shading override on.
+	:type objects: list
 	"""
 
-	for node in nodes:
-		shape = getShapes(node, True)[0]
-		cmds.setAttr("%s.overrideEnabled" % shape, 1)
-		cmds.setAttr("%s.overrideShading" % shape, not cmds.getAttr("%s.overrideShading" % shape))
+	for object in objects:
+		shape = get_shapes(object, True)[0]
+		cmds.setAttr("{0}.overrideEnabled".format(shape), 1)
+		cmds.setAttr("{0}.overrideShading".format(shape), not cmds.getAttr("{0}.overrideShading".format(shape)))
 
-@stacksHandler
-def IToggleGeometriesShadingOverride():
+@stacks_handler
+def toggle_selected_objects_shading_override():
 	"""
-	Defines the toggleGeometriesShadingOverride definition Interface.
+	Toggles selected objects shading override.
 	"""
 
 	selection = cmds.ls(sl=True, l=True, type="transform")
-	selection and toggleGeometriesShadingOverride(selection)
+	selection and toggle_shading_override(selection)
 
-def isolateSelection():
+@stacks_handler
+def isolate_selected_objects():
 	"""
 	Isolates current selection.
 	"""
@@ -243,15 +242,8 @@ def isolateSelection():
 	except:
 		pass
 
-@stacksHandler
-def IIsolateSelection():
-	"""
-	Defines the isolateSelection definition Interface.
-	"""
-
-	isolateSelection()
-
-def splitRingMiddle(nodes):
+@stacks_handler
+def split_ring_middle(nodes):
 	"""
 	Sets the polysplitring nodes weights to 0.5.
 
@@ -260,41 +252,43 @@ def splitRingMiddle(nodes):
 	"""
 
 	for node in nodes:
-		for historyNode in cmds.listHistory(node):
-			if cmds.nodeType(historyNode) == "polySplitRing":
-				cmds.setAttr(historyNode + ".weight", 0.5)
+		for history_node in cmds.listHistory(node):
+			if cmds.nodeType(history_node) == "polySplitRing":
+				cmds.setAttr("{0}.weight".format(history_node), 0.5)
 
-@stacksHandler
-def ISplitRingMiddle():
+@stacks_handler
+def split_ring_middle_selected_objects():
 	"""
-	Defines the splitRingMiddle definition Interface.
+	Sets the selected polysplitring nodes weights to 0.5.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
-	selection and splitRingMiddle(selection)
+	selection and split_ring_middle(selection)
 
-def symmetricalInstance(object):
+@stacks_handler
+def symmetrical_instance(object):
 	"""
-	Creates a symmetrical instance.
+	Creates a symmetrical instance on given object.
 
 	:param object: Object to symmetrical instantiate.
 	:type object: str
 	"""
 
 	instance = cmds.instance(object)
-	cmds.setAttr(object + ".sx", -1)
+	cmds.setAttr("{0}.sx".format(object), -1)
 
-@stacksHandler
-def ISymmetricalInstance():
+@stacks_handler
+def symmetrical_instance_selected_objects():
 	"""
-	Defines the symmetricalInstance definition Interface.
+	Creates a symmetrical instance on selected object.
 	"""
 
 	selection = list(set(cmds.ls(sl=True, l=True, o=True)))
 	for object in selection:
-		symmetricalInstance(object)
+		symmetrical_instance(object)
 
-def pivotsIdentity(transforms):
+@stacks_handler
+def pivots_identity(transforms):
 	"""
 	Puts given transforms pivots to origin.
 
@@ -305,20 +299,21 @@ def pivotsIdentity(transforms):
 	for transform in transforms:
 		try:
 			for pivotType in ("scalePivot", "rotatePivot"):
-				cmds.move(0, 0, 0, transform + "." + pivotType)
+				cmds.move(0, 0, 0, "{0}.{1}".format(transform, pivotType))
 		except:
 			pass
-@stacksHandler
-def IPivotsIdentity():
+
+@stacks_handler
+def pivots_identity_selected_objects():
 	"""
-	Defines the pivotsIdentity definition Interface.
+	Puts selected transforms pivots to origin.
 	"""
 
 	selection = cmds.ls(sl=True, l=True, type="transform")
-	selection and pivotsIdentity(selection)
+	selection and pivots_identity(selection)
 
-
-def flattenHierachy(object):
+@stacks_handler
+def flatten_hierachy(object):
 	"""
 	Flattens given object hierarchy.
 	
@@ -326,31 +321,32 @@ def flattenHierachy(object):
 	:rtype: bool
 	"""
 
-	relatives = cmds.listRelatives(object, allDescendents=True, fullPath=True)
+	relatives = cmds.listRelatives(object, allDescendents=True, full_path=True)
 	for relative in relatives:
-		if not getShapes(relative):
+		if not get_shapes(relative):
 			continue
-		if cmds.listRelatives(relative, fullPath=True, parent=True)[0] != object:
+		if cmds.listRelatives(relative, full_path=True, parent=True)[0] != object:
 			cmds.parent(relative, object)
 
-	relatives = cmds.listRelatives(object, fullPath=True)
+	relatives = cmds.listRelatives(object, full_path=True)
 	if relatives:
 		for relative in relatives:
-			if not getShapes(relative):
+			if not get_shapes(relative):
 				cmds.delete(relative)
 	return True
 
-@stacksHandler
-def IFlattenHierachy():
+@stacks_handler
+def flatten_selected_objects_hierachy():
 	"""
-	Defines the flattenHierachy definition Interface.
+	Flattens selected object hierarchy.
 	"""
 
 	selection = cmds.ls(sl=True, l=True)
 	for object in selection:
-		flattenHierachy(object)
+		flatten_hierachy(object)
 
-def transfertSelection():
+@stacks_handler
+def transfert_selection():
 	"""
 	Transfers a component selection to another object.
 	
@@ -360,34 +356,26 @@ def transfertSelection():
 
 	selection = cmds.ls(sl=True, long=True)
 
-	targetObject = ""
+	target_object = ""
 	for item in selection:
 		if "." not in item:
-			targetObject = item
+			target_object = item
 			break
 
-	if targetObject != "":
-		cmds.hilite(targetObject, replace=True)
+	if target_object != "":
+		cmds.hilite(target_object, replace=True)
 		cmds.selectMode(component=True)
-		nextSelection = []
+		next_selection = []
 		for item in selection:
-			if item != targetObject:
+			if item != target_object:
 				if "." in item:
-					itemTokens = item.split(".")
-					nextSelection.append(targetObject + "." + itemTokens[1])
-		nextSelection and cmds.select(nextSelection)
+					item_tokens = item.split(".")
+					next_selection.append("{0}.{1}".format(target_object, item_tokens[1]))
+		next_selection and cmds.select(next_selection)
 	return True
 
-@stacksHandler
-def ITransfertSelection():
-	"""
-	Defines the transfertSelection definition Interface.
-	"""
-
-	transfertSelection()
-
-@stacksHandler
-def transfertSelectionToUserTarget():
+@stacks_handler
+def transfert_selection_to_user_target():
 	"""
 	Transfers a component selection to user target object.
 	"""
@@ -400,12 +388,12 @@ def transfertSelectionToUserTarget():
 		return
 
 	cmds.select(source, add=True)
-	return transfertSelection()
+	return transfert_selection()
 
-@stacksHandler
-def pickTarget_button_OnClicked(state=None):
+@stacks_handler
+def pick_target_button__on_clicked(state=None):
 	"""
-	Defines the slot triggered by **pickTarget_button** button when clicked.
+	Defines the slot triggered by **pick_target_button** button when clicked.
 
 	:param state: Button state.
 	:type state: bool
@@ -414,17 +402,17 @@ def pickTarget_button_OnClicked(state=None):
 	selection = cmds.ls(sl=True, l=True)
 	selection and cmds.textField("target_textField", edit=True, text=selection[0])
 
-@stacksHandler
-def setUnsetContextHotkeys():
+@stacks_handler
+def set_unset_context_hotkeys():
 	"""
 	Sets / unsets context hotkeys.
 	"""
 
 	sequence = TRANSFERT_SELECTION_HOTKEY
-	command = "python(\"import snippets.libraries.others as others; reload(others); others.transfertSelectionToUserTarget()\")"
-	name = "transfertSelectionNamedCommand"
+	command = "python(\"import snippets.libraries.others as others; reload(others); others.transfert_selection_to_user_target()\")"
+	name = "transfert_selectionNamedCommand"
 	if cmds.hotkey(sequence, query=True, name=True) != name:
-		print("%s | Assigning '%s' hotkey to '%s' command!" % (__name__, sequence, name))
+		print("{0} | Assigning '{1}' hotkey to '{2}' command!".format(__name__, sequence, name))
 		DEFAULTS_HOTKEYS[sequence] = {"name" : cmds.hotkey(sequence, query=True, name=True),
 								"releaseName" : cmds.hotkey(sequence, query=True, releaseName=True)}
 
@@ -433,32 +421,32 @@ def setUnsetContextHotkeys():
 	else:
 		hotkey = DEFAULTS_HOTKEYS.get(sequence)
 		if hotkey:
-			print("%s | Unassigning '%s' hotkey from '%s' command!" % (__name__, sequence, name))
+			print("{0} | Unassigning '{1}' hotkey from '{2}' command!".format(__name__, sequence, name))
 			cmds.hotkey(k=sequence, name=hotkey.get("name"), releaseName=hotkey.get("releaseName"))
 	return True
 
-@stacksHandler
-def transfertSelection_button_OnClicked(state=None):
+@stacks_handler
+def transfert_selection_button__on_clicked(state=None):
 	"""
-	Defines the slot triggered by **transfertSelection_button** button when clicked.
+	Defines the slot triggered by **transfert_selection_button** button when clicked.
 
 	:param state: Button state.
 	:type state: bool
 	"""
 
-	transfertSelectionToUserTarget()
+	transfert_selection_to_user_target()
 
-def transfertSelectionToTarget_window():
+def transfert_selection_to_target_window():
 	"""
 	Creates the 'Transfert Selection To Target' main window.
 	"""
 
 	cmds.windowPref(enableAll=False)
 
-	if (cmds.window("transfertSelectionToTarget_window", exists=True)):
-		cmds.deleteUI("transfertSelectionToTarget_window")
+	if (cmds.window("transfert_selection_to_target_window", exists=True)):
+		cmds.deleteUI("transfert_selection_to_target_window")
 
-	cmds.window("transfertSelectionToTarget_window",
+	cmds.window("transfert_selection_to_target_window",
 		title="Transfert Selection To Target",
 		width=320)
 
@@ -469,32 +457,25 @@ def transfertSelectionToTarget_window():
 	cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
 	cmds.text(label="Target:")
 	sources_textField = cmds.textField("target_textField")
-	cmds.button("pickTarget_button", label="Pick Target!", command=pickTarget_button_OnClicked)
+	cmds.button("pick_target_button", label="Pick Target!", command=pick_target_button__on_clicked)
 	cmds.setParent(topLevel=True)
 
 	cmds.separator(style="single")
 
-	cmds.button("transfertSelection_button", label="Transfert Selection!", command=transfertSelection_button_OnClicked)
+	cmds.button("transfert_selection_button", label="Transfert Selection!", command=transfert_selection_button__on_clicked)
 
-	setUnsetContextHotkeys()
-	scriptJob = cmds.scriptJob(uiDeleted=("transfertSelectionToTarget_window", setUnsetContextHotkeys), runOnce=True)
+	set_unset_context_hotkeys()
+	scriptJob = cmds.scriptJob(uiDeleted=("transfert_selection_to_target_window", set_unset_context_hotkeys), runOnce=True)
 
-	cmds.showWindow("transfertSelectionToTarget_window")
+	cmds.showWindow("transfert_selection_to_target_window")
 
 	cmds.windowPref(enableAll=True)
 
-@stacksHandler
-def transfertSelectionToTarget():
+@stacks_handler
+def transfert_selection_to_target():
 	"""
 	Launches the 'Transfert Selection To Target' main window.
 	"""
 
-	transfertSelectionToTarget_window()
+	transfert_selection_to_target_window()
 
-@stacksHandler
-def ITransfertSelectionToTarget():
-	"""
-	Defines the transfertSelectionToTarget definition Interface.
-	"""
-
-	transfertSelectionToTarget()

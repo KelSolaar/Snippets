@@ -3,7 +3,7 @@ import re
 
 import snippets.libraries.utilities
 
-def resetNodesParameters(nodes, traverse=True):
+def reset_nodes_parameters(nodes, traverse=True):
 	"""
 	Resets given nodes parameters.
 
@@ -16,10 +16,10 @@ def resetNodesParameters(nodes, traverse=True):
 	"""
 
 	for node in nodes:
-		snippets.libraries.utilities.resetNodeParameters(node)
+		snippets.libraries.utilities.reset_node_parameters(node)
 		if not traverse:
 			continue
 
-		for childNode in snippets.libraries.utilities.nodesWalker(node):
-			snippets.libraries.utilities.resetNodeParameters(childNode)
+		for child_node in snippets.libraries.utilities.nodes_walker(node):
+			snippets.libraries.utilities.reset_node_parameters(child_node)
 	return True

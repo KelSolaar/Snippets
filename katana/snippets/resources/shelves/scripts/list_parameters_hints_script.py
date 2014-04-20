@@ -1,5 +1,5 @@
 """
-NAME: resetNodesParameters_Script
+NAME: listParametersHints_Script
 ICON: icon.png
 DROP_TYPES: 
 SCOPE:
@@ -27,4 +27,4 @@ not SNIPPETS_PATH in sys. path and sys.path.append(SNIPPETS_PATH)
 
 import snippets.libraries.utilities
 
-snippets.libraries.utilities.singleShotScriptNode("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/resetNodesParameters_Script_vLatest.katana", "resetNodesParameters")
+snippets.libraries.utilities.single_shot_script_node("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/listParametersHints_Script_vLatest.katana", "listParametersHints")

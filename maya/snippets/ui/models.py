@@ -31,7 +31,7 @@ from PyQt4.QtCore import Qt
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
-import foundations.dataStructures
+import foundations.data_structures
 import foundations.exceptions
 import foundations.verbose
 from snippets.globals.constants import Constants
@@ -51,12 +51,12 @@ __all__ = ["LOGGER",
 			"Interface",
 			"InterfacesModel"]
 
-LOGGER = foundations.verbose.installLogger()
+LOGGER = foundations.verbose.install_logger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-class Categorie(foundations.dataStructures.Structure):
+class Categorie(foundations.data_structures.Structure):
 	"""
 	This is the **Interface** class.
 	"""
@@ -69,9 +69,9 @@ class Categorie(foundations.dataStructures.Structure):
 		:type kwargs: dict
 		"""
 
-		foundations.dataStructures.Structure.__init__(self, **kwargs)
+		foundations.data_structures.Structure.__init__(self, **kwargs)
 
-class Interface(foundations.dataStructures.Structure):
+class Interface(foundations.data_structures.Structure):
 	"""
 	This is the **Interface** class.
 	"""
@@ -84,7 +84,7 @@ class Interface(foundations.dataStructures.Structure):
 		:type kwargs: dict
 		"""
 
-		foundations.dataStructures.Structure.__init__(self, **kwargs)
+		foundations.data_structures.Structure.__init__(self, **kwargs)
 
 class InterfacesModel(QAbstractListModel):
 	"""
@@ -124,7 +124,7 @@ class InterfacesModel(QAbstractListModel):
 		return self.__interfaces
 
 	@interfaces.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
+	@foundations.exceptions.handle_exceptions(AssertionError)
 	def interfaces(self, value):
 		"""
 		Setter for **self.__interfaces** attribute.
@@ -144,7 +144,7 @@ class InterfacesModel(QAbstractListModel):
 		self.modelReset.emit()
 
 	@interfaces.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def interfaces(self):
 		"""
 		Deleter for **self.__interfaces** attribute.
@@ -272,7 +272,7 @@ class InterfacesModel(QAbstractListModel):
 		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
 		self.modelReset.emit()
 
-	def getInterface(self, index):
+	def get_interface(self, index):
 		"""
 		Returns the interface with given index.
 		
@@ -284,7 +284,7 @@ class InterfacesModel(QAbstractListModel):
 
 		return self.__interfaces[index.row()]
 
-	def __registerCategorie(self, categorie):
+	def __register_categorie(self, categorie):
 		"""
 		Registers given categorie.
 
@@ -296,7 +296,7 @@ class InterfacesModel(QAbstractListModel):
 		if not name in self:
 			self.__interfaces.append(Categorie(name=name))
 
-	def __unregisterCategorie(self, name):
+	def __unregister_categorie(self, name):
 		"""
 		Unregisters categorie with given name.
 
@@ -313,8 +313,8 @@ class InterfacesModel(QAbstractListModel):
 			if item.name == name and count == 1:
 				self.__interfaces.remove(self[name])
 
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def registerInterface(self, interface):
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def register_interface(self, interface):
 		"""
 		Registers given interface.
 		
@@ -332,12 +332,12 @@ class InterfacesModel(QAbstractListModel):
 		LOGGER.debug("> Registering '{0}' interface.".format(name))
 
 		self.__interfaces.append(interface)
-		self.__registerCategorie(name)
+		self.__register_categorie(name)
 		self.sort()
 		return True
 
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def unregisterInterface(self, name):
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def unregister_interface(self, name):
 		"""
 		Unregisters interface with given name.
 		
@@ -358,6 +358,6 @@ class InterfacesModel(QAbstractListModel):
 				continue
 
 			del(self.__interfaces[i])
-			self.__unregisterCategorie(name)
+			self.__unregister_categorie(name)
 			self.sort()
 			return True

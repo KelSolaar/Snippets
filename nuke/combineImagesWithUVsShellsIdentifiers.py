@@ -42,7 +42,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["GLOB_FILTER", "OUTPUT_FILE_FORMAT", "SHELLS_FILTER", "getSplitextBasename", "getUVsShellsSiblingsTrees", "combineImagesWithUVsShellsIdentifiers"]
+__all__ = ["GLOB_FILTER", "OUTPUT_FILE_FORMAT", "SHELLS_FILTER", "get_splitext_basename", "getUVsShellsSiblingsTrees", "combineImagesWithUVsShellsIdentifiers"]
 
 GLOB_FILTER = "tif"
 OUTPUT_FILE_FORMAT = "tif"
@@ -70,7 +70,7 @@ def _getUVsShellsSiblings(elements, filter=SHELLS_FILTER):
 			continue
 
 		uvShell = search.group(0)
-		name = getSplitextBasename(element)
+		name = get_splitext_basename(element)
 		if uvShell not in uvsShellsSiblings:
 			uvsShellsSiblings[uvShell] = {name:element}
 		else:
@@ -131,7 +131,7 @@ def _getWriteNode(name="", file=None, node=None):
 	write.setInput(0, node)
 	return write
 
-def getSplitextBasename(path):
+def get_splitext_basename(path):
 	"""
 	Gets the basename of a path without its extension.
 
@@ -144,16 +144,16 @@ def getSplitextBasename(path):
 	basename = os.path.splitext(os.path.basename(os.path.normpath(path)))[0]
 	return basename
 
-def getUVsShellsSiblingsTrees(elements, outputDirectory, outputFileFormat, outputPrefix=""):
+def getUVsShellsSiblingsTrees(elements, output_directory, output_fileFormat, outputPrefix=""):
 	"""
 	This gets UVs shells siblings trees.
 
 	:param elements: Elements to get UVs shells trees siblings from.
 	:type elements: list
-	:param outputDirectory: Write nodes output directory.
-	:type outputDirectory: str
-	:param outputFileFormat: Write nodes output format.
-	:type outputFileFormat: str
+	:param output_directory: Write nodes output directory.
+	:type output_directory: str
+	:param output_fileFormat: Write nodes output format.
+	:type output_fileFormat: str
 	:param outputPrefix: Write nodes output prefix.
 	:type outputPrefix: str
 	:return: Write nodes.
@@ -167,7 +167,7 @@ def getUVsShellsSiblingsTrees(elements, outputDirectory, outputFileFormat, outpu
 			files.append(_getReadNode(name, sibling))
 
 		merge = _getMerge2Node(shell, files, useMask=False)
-		writes.append(_getWriteNode(shell, os.path.join(outputDirectory, "{0}{1}.{2}".format(outputPrefix, shell, outputFileFormat)), merge))
+		writes.append(_getWriteNode(shell, os.path.join(output_directory, "{0}{1}.{2}".format(outputPrefix, shell, output_fileFormat)), merge))
 	return writes
 
 def combineImagesWithUVsShellsIdentifiers():

@@ -50,8 +50,8 @@ import foundations.verbose
 import snippets.ui.common
 from foundations.environment import Environment
 from snippets.globals.constants import Constants
-from snippets.globals.runtimeGlobals import RuntimeGlobals
-from snippets.globals.uiConstants import UiConstants
+from snippets.globals.runtime_globals import RuntimeGlobals
+from snippets.globals.ui_constants import UiConstants
 from snippets.ui.models import Interface
 from snippets.ui.models import InterfacesModel
 from snippets.ui.views import Interfaces_QListView
@@ -69,14 +69,14 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Loader"]
 
-LOGGER = foundations.verbose.installLogger()
+LOGGER = foundations.verbose.install_logger()
 
-RuntimeGlobals.loaderUiFile = snippets.ui.common.getResourcePath(UiConstants.loaderUiFile)
-if foundations.common.pathExists(RuntimeGlobals.loaderUiFile):
-	Ui_Loader_Setup, Ui_Loader_Type = uic.loadUiType(RuntimeGlobals.loaderUiFile)
+RuntimeGlobals.loader_ui_file = snippets.ui.common.get_resource_path(UiConstants.loader_ui_file)
+if foundations.common.path_exists(RuntimeGlobals.loader_ui_file):
+	Ui_Loader_Setup, Ui_Loader_Type = uic.loadUiType(RuntimeGlobals.loader_ui_file)
 else:
-	error = "'{0}' Ui file is not available!".format(RuntimeGlobals.loaderUiFile)
-	snippets.ui.common.messageBox("Error", "Error", error)
+	error = "'{0}' Ui file is not available!".format(RuntimeGlobals.loader_ui_file)
+	snippets.ui.common.message_box("Error", "Error", error)
 	raise Exception(error)
 
 #**********************************************************************************************************************
@@ -87,14 +87,14 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 	Defines the complex Maya Interfaces loader widget.
 	"""
 
-	def __init__(self, parent=None, modulesManager=RuntimeGlobals.modulesManager):
+	def __init__(self, parent=None, modules_manager=RuntimeGlobals.modules_manager):
 		"""
 		Initializes the class.
-		
+
 		:param parent: Parent object.
 		:type parent: QObject
-		:param modulesManager: Modules Manager.
-		:type modulesManager: ModulesManager
+		:param modules_manager: Modules Manager.
+		:type modules_manager: ModulesManager
 		"""
 
 		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
@@ -106,18 +106,18 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		# --- Setting class attributes. ---
 		self.__container = parent
-		self.__modulesManager = modulesManager
+		self.__modules_manager = modules_manager
 
 		self.__model = None
 		self.__view = None
 
-		self.__defaultText = "<center><br/><br/><h4>* * *</h4>Select a Snippet to display related informations!<h4>* * *</h4></center>"
+		self.__default_text = "<center><br/><br/><h4>* * *</h4>Select a Snippet to display related informations!<h4>* * *</h4></center>"
 
-		self.__linuxTextEditors = ("gedit", "kwrite", "nedit", "mousepad")
-		self.__linuxBrowsers = ("nautilus", "dolphin", "konqueror", "thunar")
+		self.__linux_text_editors = ("gedit", "kwrite", "nedit", "mousepad")
+		self.__linux_browsers = ("nautilus", "dolphin", "konqueror", "thunar")
 
 		# --- Initialize Ui. ---
-		self.__initializeUI()
+		self.__initialize_ui()
 
 	#******************************************************************************************************************
 	#***	Attributes properties.
@@ -134,7 +134,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		return self.__container
 
 	@container.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def container(self, value):
 		"""
 		Setter for **self.__container** attribute.
@@ -146,7 +146,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("container"))
 
 	@container.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def container(self):
 		"""
 		Deleter for **self.__container** attribute.
@@ -155,36 +155,36 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("container"))
 
 	@property
-	def modulesManager(self):
+	def modules_manager(self):
 		"""
-		Property for **self.__modulesManager** attribute.
+		Property for **self.__modules_manager** attribute.
 
-		:return: self.__modulesManager.
+		:return: self.__modules_manager.
 		:rtype: QObject
 		"""
 
-		return self.__modulesManager
+		return self.__modules_manager
 
-	@modulesManager.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def modulesManager(self, value):
+	@modules_manager.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def modules_manager(self, value):
 		"""
-		Setter for **self.__modulesManager** attribute.
+		Setter for **self.__modules_manager** attribute.
 
 		:param value: Attribute value.
 		:type value: QObject
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modulesManager"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("modules_manager"))
 
-	@modulesManager.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def modulesManager(self):
+	@modules_manager.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def modules_manager(self):
 		"""
-		Deleter for **self.__modulesManager** attribute.
+		Deleter for **self.__modules_manager** attribute.
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modulesManager"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("modules_manager"))
 
 	@property
 	def model(self):
@@ -198,7 +198,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		return self.__model
 
 	@model.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def model(self, value):
 		"""
 		Setter for **self.__model** attribute.
@@ -211,7 +211,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "model"))
 
 	@model.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def model(self):
 		"""
 		Deleter for **self.__model** attribute.
@@ -232,7 +232,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		return self.__view
 
 	@view.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def view(self, value):
 		"""
 		Setter for **self.__view** attribute.
@@ -245,7 +245,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "view"))
 
 	@view.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def view(self):
 		"""
 		Deleter for **self.__view** attribute.
@@ -255,105 +255,105 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "view"))
 
 	@property
-	def defaultText(self):
+	def default_text(self):
 		"""
-		Property for **self.__defaultText** attribute.
+		Property for **self.__default_text** attribute.
 
-		:return: self.__defaultText.
+		:return: self.__default_text.
 		:rtype: str
 		"""
 
-		return self.__defaultText
+		return self.__default_text
 
-	@defaultText.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def defaultText(self, value):
+	@default_text.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def default_text(self, value):
 		"""
-		Setter for **self.__defaultText** attribute.
+		Setter for **self.__default_text** attribute.
 
 		:param value: Attribute value.
 		:type value: str
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("defaultText"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("default_text"))
 
-	@defaultText.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def defaultText(self):
+	@default_text.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def default_text(self):
 		"""
-		Deleter for **self.__defaultText** attribute.
+		Deleter for **self.__default_text** attribute.
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("defaultText"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("default_text"))
 
 	@property
-	def linuxTextEditors(self):
+	def linux_text_editors(self):
 		"""
-		Property for **self.__linuxTextEditors** attribute.
+		Property for **self.__linux_text_editors** attribute.
 
-		:return: self.__linuxTextEditors.
+		:return: self.__linux_text_editors.
 		:rtype: tuple
 		"""
 
-		return self.__linuxTextEditors
+		return self.__linux_text_editors
 
-	@linuxTextEditors.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def linuxTextEditors(self, value):
+	@linux_text_editors.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def linux_text_editors(self, value):
 		"""
-		Setter for **self.__linuxTextEditors** attribute.
+		Setter for **self.__linux_text_editors** attribute.
 
 		:param value: Attribute value.
 		:type value: tuple
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("linuxTextEditors"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("linux_text_editors"))
 
-	@linuxTextEditors.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def linuxTextEditors(self):
+	@linux_text_editors.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def linux_text_editors(self):
 		"""
-		Deleter for **self.__linuxTextEditors** attribute.
+		Deleter for **self.__linux_text_editors** attribute.
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("linuxTextEditors"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("linux_text_editors"))
 
 	@property
-	def linuxBrowsers(self):
+	def linux_browsers(self):
 		"""
-		Property for **self.__linuxBrowsers** attribute.
+		Property for **self.__linux_browsers** attribute.
 
-		:return: self.__linuxBrowsers.
+		:return: self.__linux_browsers.
 		:rtype: QObject
 		"""
 
-		return self.__linuxBrowsers
+		return self.__linux_browsers
 
-	@linuxBrowsers.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def linuxBrowsers(self, value):
+	@linux_browsers.setter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def linux_browsers(self, value):
 		"""
-		Setter for **self.__linuxBrowsers** attribute.
+		Setter for **self.__linux_browsers** attribute.
 
 		:param value: Attribute value.
 		:type value: QObject
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("linuxBrowsers"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is read only!".format("linux_browsers"))
 
-	@linuxBrowsers.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def linuxBrowsers(self):
+	@linux_browsers.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def linux_browsers(self):
 		"""
-		Deleter for **self.__linuxBrowsers** attribute.
+		Deleter for **self.__linux_browsers** attribute.
 		"""
 
-		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("linuxBrowsers"))
+		raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("linux_browsers"))
 
 	#******************************************************************************************************************
 	#***	Class methods.
 	#******************************************************************************************************************
-	def __initializeUI(self):
+	def __initialize_ui(self):
 		"""
 		Initializes the Widget.
 		"""
@@ -373,16 +373,16 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.Interfaces_frame_splitter.insertWidget(0, self.Interfaces_listView)
 		self.__view = self.Interfaces_listView
 		self.__view.setContextMenuPolicy(Qt.ActionsContextMenu)
-		self.__view_addActions()
+		self.__view_add_actions()
 
-		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resourcesDirectory,
-																	UiConstants.snippetsLoaderLogo)))
+		self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resources_directory,
+																	UiConstants.snippets_loader_logo)))
 
-		self.Informations_textBrowser.setText(self.__defaultText)
+		self.Informations_textBrowser.setText(self.__default_text)
 
 		self.Interfaces_frame_splitter.setSizes([16777215, 0])
 
-		self.setInterfaces("")
+		self.set_interfaces()
 
 		# Signals / Slots.
 		self.Execute_Snippet_pushButton.clicked.connect(self.__Execute_Snippet_pushButton__clicked)
@@ -391,7 +391,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		self.__view.doubleClicked.connect(self.__view__doubleClicked)
 		self.Search_lineEdit.textChanged.connect(self.__Search_lineEdit__textChanged)
 
-	def __view_addActions(self):
+	def __view_add_actions(self):
 		"""
 		Sets the View actions.
 		"""
@@ -412,12 +412,12 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:type checked: bool
 		"""
 
-		interface = self.getSelectedInterface()
+		interface = self.get_selected_interface()
 		if not interface:
 			return
 
-		self.editFile(interface.module.import_.__file__.replace(
-		Constants.libraryCompiledExtension, Constants.libraryExtension))
+		self.edit_file(interface.module.import_.__file__.replace(
+		Constants.library_compiled_extension, Constants.library_extension))
 
 	def __view_exploreSnippetFolderAction(self, checked):
 		"""
@@ -427,11 +427,11 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:type checked: bool
 		"""
 
-		interface = self.getSelectedInterface()
+		interface = self.get_selected_interface()
 		if not interface:
 			return
 
-		self.exploreDirectory(os.path.dirname(interface.module.import_.__file__))
+		self.explore_directory(os.path.dirname(interface.module.import_.__file__))
 
 	def __Execute_Snippet_pushButton__clicked(self, checked):
 		"""
@@ -441,7 +441,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:type checked: bool
 		"""
 
-		self.executeInterface()
+		self.execute_interface()
 
 	def __Reload_Snippets_pushButton__clicked(self, checked):
 		"""
@@ -451,20 +451,20 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:type checked: bool
 		"""
 
-		self.__modulesManager.reloadAll()
-		self.setInterfaces()
+		self.__modules_manager.reload_all()
+		self.set_interfaces()
 
-	def __view_selectionModel__selectionChanged(self, selectedItems, deselectedItems):
+	def __view_selectionModel__selectionChanged(self, selected_items, deselected_items):
 		"""
 		Sets the **Informations_textBrowser** Widget.
 
-		:param selectedItems: Selected items.
-		:type selectedItems: QItemSelection
-		:param deselectedItems: Deselected items.
-		:type deselectedItems: QItemSelection
+		:param selected_items: Selected items.
+		:type selected_items: QItemSelection
+		:param deselected_items: Deselected items.
+		:type deselected_items: QItemSelection
 		"""
 
-		interface = self.getSelectedInterface()
+		interface = self.get_selected_interface()
 		if not interface:
 			return
 
@@ -496,7 +496,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 					""".format(interface.name,
 						interface.module.name,
 						os.path.normpath(interface.module.import_.__file__),
-						self.getMethodName(interface.attribute),
+						self.get_method_name(interface.attribute),
 						interface.attribute,
 						arguments.args,
 						arguments.defaults,
@@ -504,7 +504,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 						arguments.keywords,
 						interface.module.import_.__dict__[interface.attribute].__doc__)
 		else:
-			content = self.__defaultText
+			content = self.__default_text
 
 		LOGGER.debug("> Update 'Informations_textBrowser' Widget content: '{0}'.".format(content))
 		self.Informations_textBrowser.setText(content)
@@ -517,7 +517,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:type index: QModelIndex
 		"""
 
-		self.executeInterface()
+		self.execute_interface()
 
 	def __Search_lineEdit__textChanged(self, text):
 		"""
@@ -527,9 +527,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:type text: QString
 		"""
 
-		self.setInterfaces(foundations.strings.toString(text))
+		self.set_interfaces(foundations.strings.to_string(text))
 
-	def getMethodName(self, name):
+	def get_method_name(self, name):
 		"""
 		Returns the method name from the Interface.
 
@@ -539,9 +539,9 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:rtype: str
 		"""
 
-		return "{0}{1}".format(name[1].lower(), name[2:])
+		return " ".join(map(lambda x: x.title(), name.split("_")))
 
-	def setInterfaces(self, pattern=".*", flags=re.IGNORECASE):
+	def set_interfaces(self, pattern=".*", flags=re.IGNORECASE):
 		"""
 		Sets the Model interfaces.
 
@@ -560,17 +560,17 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 
 		self.__model.clear()
 
-		for name, module in self.__modulesManager:
+		for name, module in self.__modules_manager:
 			if not module.interfaces:
 				continue
 
 			for interface in module.interfaces:
-				name = foundations.strings.getNiceName(self.getMethodName(interface))
+				name = foundations.strings.get_nice_name(self.get_method_name(interface))
 				if re.search(pattern, name):
-					self.__model.registerInterface(Interface(name=name, attribute=interface, module=module))
+					self.__model.register_interface(Interface(name=name, attribute=interface, module=module))
 		return True
 
-	def getSelectedInterface(self):
+	def get_selected_interface(self):
 		"""
 		Returns the current selected Interface.
 
@@ -578,18 +578,18 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:rtype: Interface
 		"""
 
-		items = [self.__model.getInterface(index) for index in self.__view.selectionModel().selectedIndexes()]
+		items = [self.__model.get_interface(index) for index in self.__view.selectionModel().selectedIndexes()]
 		return items and items[0]
 
-	def executeInterface(self):
+	def execute_interface(self):
 		"""
 		Triggers the selected Interface execution.
-		
+
 		:return: Method success.
 		:rtype: bool
 		"""
 
-		interface = self.getSelectedInterface()
+		interface = self.get_selected_interface()
 		if not interface:
 			return
 
@@ -602,7 +602,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		module.import_.__dict__[method]()
 		return True
 
-	def editFile(self, file):
+	def edit_file(self, file):
 		"""
 		Provides editing capability.
 
@@ -612,40 +612,40 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:rtype: bool
 		"""
 
-		editCommand = None
+		edit_command = None
 
 		file = os.path.normpath(file)
 		if platform.system() == "Windows" or platform.system() == "Microsoft":
 			LOGGER.info("{0} | Launching 'notepad.exe' with '{1}'.".format(self.__class__.__name__, file))
-			editCommand = "notepad.exe \"{0}\"".format(file)
+			edit_command = "notepad.exe \"{0}\"".format(file)
 		elif platform.system() == "Darwin":
 			LOGGER.info("{0} | Launching default text editor with '{1}'.".format(self.__class__.__name__, file))
-			editCommand = "open -e \"{0}\"".format(file)
+			edit_command = "open -e \"{0}\"".format(file)
 		elif platform.system() == "Linux":
-			environmentVariable = Environment("PATH")
-			paths = environmentVariable.getValue().split(":")
+			environment_variable = Environment("PATH")
+			paths = environment_variable.get_value().split(":")
 
-			editorFound = False
-			for editor in self.__linuxTextEditors:
-				if not editorFound:
+			editor_found = False
+			for editor in self.__linux_text_editors:
+				if not editor_found:
 					try:
 						for path in paths:
 							if os.path.exists(os.path.join(path, editor)):
 								LOGGER.info("{0} | Launching '{1}' text editor with '{2}'.".format(self.__class__.__name__, editor, file))
-								editCommand = "\"{0}\" \"{1}\"".format(editor, file)
-								editorFound = True
+								edit_command = "\"{0}\" \"{1}\"".format(editor, file)
+								editor_found = True
 								raise StopIteration
 					except StopIteration:
 						pass
 				else:
 					break
-		if editCommand:
-			LOGGER.debug("> Current edit command: '{0}'.".format(editCommand))
-			editProcess = QProcess()
-			editProcess.startDetached(editCommand)
+		if edit_command:
+			LOGGER.debug("> Current edit command: '{0}'.".format(edit_command))
+			edit_process = QProcess()
+			edit_process.startDetached(edit_command)
 		return True
 
-	def exploreDirectory(self, directory):
+	def explore_directory(self, directory):
 		"""
 		Provides directory exploring capability.
 
@@ -655,38 +655,38 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
 		:rtype: bool
 		"""
 
-		browserCommand = None
+		browser_command = None
 
 		directory = os.path.normpath(directory)
 		if platform.system() == "Windows" or platform.system() == "Microsoft":
 			LOGGER.info("{0} | Launching 'explorer.exe' with '{1}'.".format(self.__class__.__name__, directory))
-			browserCommand = "explorer.exe \"{0}\"".format(directory)
+			browser_command = "explorer.exe \"{0}\"".format(directory)
 		elif platform.system() == "Darwin":
 			LOGGER.info("{0} | Launching 'Finder' with '{1}'.".format(self.__class__.__name__, directory))
-			browserCommand = "open \"{0}\"".format(directory)
+			browser_command = "open \"{0}\"".format(directory)
 		elif platform.system() == "Linux":
-			environmentVariable = Environment("PATH")
-			paths = environmentVariable.getValue().split(":")
+			environment_variable = Environment("PATH")
+			paths = environment_variable.get_value().split(":")
 
-			browserFound = False
-			for browser in self.__linuxBrowsers:
-				if not browserFound:
+			browser_found = False
+			for browser in self.__linux_browsers:
+				if not browser_found:
 					try:
 						for path in paths:
 							if os.path.exists(os.path.join(path, browser)):
 								LOGGER.info("{0} | Launching '{1}' file browser with '{1}'.".format(self.__class__.__name__,
 																									browser,
 																									directory))
-								browserCommand = "\"{0}\" \"{1}\"".format(browser, directory)
-								browserFound = True
+								browser_command = "\"{0}\" \"{1}\"".format(browser, directory)
+								browser_found = True
 								raise StopIteration
 					except StopIteration:
 						pass
 				else:
 					break
 
-		if browserCommand:
-			LOGGER.debug("> Current browser command: '{0}'.".format(browserCommand))
-			browserProcess = QProcess()
-			browserProcess.startDetached(browserCommand)
+		if browser_command:
+			LOGGER.debug("> Current browser command: '{0}'.".format(browser_command))
+			browser_process = QProcess()
+			browser_process.startDetached(browser_command)
 		return True

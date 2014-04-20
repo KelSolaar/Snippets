@@ -49,7 +49,7 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["ascendantsWalker" , "getRoot", "toAlembic", "getCommandLineParameters"]
+__all__ = ["ascendantsWalker" , "get_root", "toAlembic", "getCommandLineParameters"]
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -76,7 +76,7 @@ def ascendantsWalker(path, visitor=None):
 		for value in ascendantsWalker(parent):
 			yield value
 
-def getRoot(path):
+def get_root(path):
 	"""
 	Returns the root path of given Dag path.
 	
@@ -110,7 +110,7 @@ def toAlembic(parameters, arguments):
 		sys.stderr.write("!> {0} | '{1}' file doesn't exists'!\n".format(inspect.getmodulename(__file__), inputFile))
 		return
 
-	outputFile = os.path.abspath(parameters.outputFile if parameters.outputFile else re.sub(r"\.\w+$", ".abc", inputFile))
+	output_file = os.path.abspath(parameters.output_file if parameters.output_file else re.sub(r"\.\w+$", ".abc", inputFile))
 
 	exportAll = parameters.exportAll
 
@@ -132,11 +132,11 @@ def toAlembic(parameters, arguments):
 			cmds.polySoftEdge(mesh, a=180, ch=False)
 
 	if exportAll:
-		jobCommand = "-frameRange {0} {1} -uvWrite -file {2}".format(frameIn, frameOut, outputFile)
+		jobCommand = "-frameRange {0} {1} -uvWrite -file {2}".format(frameIn, frameOut, output_file)
 	else:
-		rootNodes = list(set([getRoot(mesh) for mesh in cmds.ls(type="mesh", long=True)]))
-		rootFlags = " ".join(["-root {0}".format(rootNode) for rootNode in rootNodes])
-		jobCommand = "-frameRange {0} {1} -uvWrite {2} -file {3}".format(frameIn, frameOut, rootFlags, outputFile)
+		root_nodes = list(set([get_root(mesh) for mesh in cmds.ls(type="mesh", long=True)]))
+		rootFlags = " ".join(["-root {0}".format(root_node) for root_node in root_nodes])
+		jobCommand = "-frameRange {0} {1} -uvWrite {2} -file {3}".format(frameIn, frameOut, rootFlags, output_file)
 	
 	sys.stderr.write("{0} | Exporting to 'Alembic' with following job command: '{1}'\n".format(inspect.getmodulename(__file__), jobCommand))
 	cmds.AbcExport(j=jobCommand)
@@ -158,7 +158,7 @@ def getCommandLineParameters(argv):
 
 	parser.add_option("-h", "--help", action="help", help="'Display this help message and exit.'")
 	parser.add_option("-i", "--inputFile", action="store", type="string", dest="inputFile", help="'Input file.")
-	parser.add_option("-o", "--outputFile", action="store", type="string", dest="outputFile", help="'Output file.")
+	parser.add_option("-o", "--output_file", action="store", type="string", dest="output_file", help="'Output file.")
 	parser.add_option("-a", "--exportAll", action="store_true", dest="exportAll", default=False, help="Export all scene.")
 	parser.add_option("-r", "--frameRange", action="store", type="string", dest="frameRange", default="1-5", help="Frame range ( '1-5' ).")
 

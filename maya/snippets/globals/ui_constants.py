@@ -8,7 +8,7 @@
 #**********************************************************************************************************************
 
 """
-**UiConstants.py**
+**ui_constants.py**
 
 **Platform:**
 	Windows, Linux, Mac Os X.
@@ -40,7 +40,7 @@ class UiConstants():
 	Defines the ui constants class.
 	"""
 
-	loaderUiFile = "Loader.ui"
-	popupUiFile = "Popup.ui"
+	loader_ui_file = "Loader.ui"
+	popup_ui_file = "Popup.ui"
 
-	snippetsLoaderLogo = "images/Snippets_Loader_Logo.png"
+	snippets_loader_logo = "images/Snippets_Loader_Logo.png"

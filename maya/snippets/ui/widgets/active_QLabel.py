@@ -32,7 +32,7 @@ from PyQt4.QtGui import QPixmap
 #**********************************************************************************************************************
 import foundations.exceptions
 import foundations.verbose
-import umbra.ui.common
+import snippets.ui.common
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -46,7 +46,7 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Active_QLabel"]
 
-LOGGER = foundations.verbose.installLogger()
+LOGGER = foundations.verbose.install_logger()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
@@ -60,22 +60,22 @@ class Active_QLabel(QLabel):
 	# Custom signals definitions.
 	clicked = pyqtSignal()
 	"""
-	This signal is emited by the :class:`Active_QLabel` class when it has been clicked. ( pyqtSignal )
+	This signal is emited by the :class:`Active_QLabel` class when it has been clicked.
 	"""
 
 	pressed = pyqtSignal()
 	"""
-	This signal is emited by the :class:`Active_QLabel` class when it has been pressed. ( pyqtSignal )
+	This signal is emited by the :class:`Active_QLabel` class when it has been pressed.
 	"""
 
 	released = pyqtSignal()
 	"""
-	This signal is emited by the :class:`Active_QLabel` class when it has been released. ( pyqtSignal )
+	This signal is emited by the :class:`Active_QLabel` class when it has been released.
 	"""
 
 	toggled = pyqtSignal(bool)
 	"""
-	This signal is emited by the :class:`Active_QLabel` class when it has been toggled. ( pyqtSignal )
+	This signal is emited by the :class:`Active_QLabel` class when it has been toggled.
 
 	:return: Current checked state.
 	:rtype: bool
@@ -83,9 +83,9 @@ class Active_QLabel(QLabel):
 
 	def __init__(self,
 				parent=None,
-				defaultPixmap=None,
-				hoverPixmap=None,
-				activePixmap=None,
+				default_pixmap=None,
+				hover_pixmap=None,
+				active_pixmap=None,
 				checkable=False,
 				checked=False):
 		"""
@@ -93,12 +93,12 @@ class Active_QLabel(QLabel):
 
 		:param parent: Widget parent.
 		:type parent: QObject
-		:param defaultPixmap: Label default pixmap.
-		:type defaultPixmap: QPixmap
-		:param hoverPixmap: Label hover pixmap.
-		:type hoverPixmap: QPixmap
-		:param activePixmap: Label active pixmap.
-		:type activePixmap: QPixmap
+		:param default_pixmap: Label default pixmap.
+		:type default_pixmap: QPixmap
+		:param hover_pixmap: Label hover pixmap.
+		:type hover_pixmap: QPixmap
+		:param active_pixmap: Label active pixmap.
+		:type active_pixmap: QPixmap
 		:param checkable: Checkable state.
 		:type checkable: bool
 		:param checked: Checked state.
@@ -110,12 +110,12 @@ class Active_QLabel(QLabel):
 		QLabel.__init__(self, parent)
 
 		# --- Setting class attributes. ---
-		self.__defaultPixmap = None
-		self.defaultPixmap = defaultPixmap or QPixmap()
-		self.__hoverPixmap = None
-		self.hoverPixmap = hoverPixmap or QPixmap()
-		self.__activePixmap = None
-		self.activePixmap = activePixmap or QPixmap()
+		self.__default_pixmap = None
+		self.default_pixmap = default_pixmap or QPixmap()
+		self.__hover_pixmap = None
+		self.hover_pixmap = hover_pixmap or QPixmap()
+		self.__active_pixmap = None
+		self.active_pixmap = active_pixmap or QPixmap()
 
 		self.__checkable = None
 		self.checkable = checkable
@@ -125,117 +125,117 @@ class Active_QLabel(QLabel):
 		self.__menu = None
 
 		if self.__checked:
-			self.setPixmap(self.__activePixmap)
+			self.setPixmap(self.__active_pixmap)
 		else:
-			self.setPixmap(self.__defaultPixmap)
+			self.setPixmap(self.__default_pixmap)
 
 	#******************************************************************************************************************
 	#***	Attributes properties.
 	#******************************************************************************************************************
 	@property
-	def defaultPixmap(self):
+	def default_pixmap(self):
 		"""
-		Property for **self.__defaultPixmap** attribute.
+		Property for **self.__default_pixmap** attribute.
 
-		:return: self.__defaultPixmap.
+		:return: self.__default_pixmap.
 		:rtype: QPixmap
 		"""
 
-		return self.__defaultPixmap
+		return self.__default_pixmap
 
-	@defaultPixmap.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
-	def defaultPixmap(self, value):
+	@default_pixmap.setter
+	@foundations.exceptions.handle_exceptions(AssertionError)
+	def default_pixmap(self, value):
 		"""
-		Setter for **self.__defaultPixmap** attribute.
+		Setter for **self.__default_pixmap** attribute.
 
 		:param value: Attribute value.
 		:type value: QPixmap
 		"""
 
 		if value is not None:
-			assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("defaultPixmap", value)
-		self.__defaultPixmap = value
+			assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("default_pixmap", value)
+		self.__default_pixmap = value
 
-	@defaultPixmap.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def defaultPixmap(self):
+	@default_pixmap.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def default_pixmap(self):
 		"""
-		Deleter for **self.__defaultPixmap** attribute.
+		Deleter for **self.__default_pixmap** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "defaultPixmap"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "default_pixmap"))
 
 	@property
-	def hoverPixmap(self):
+	def hover_pixmap(self):
 		"""
-		Property for **self.__hoverPixmap** attribute.
+		Property for **self.__hover_pixmap** attribute.
 
-		:return: self.__hoverPixmap.
+		:return: self.__hover_pixmap.
 		:rtype: QPixmap
 		"""
 
-		return self.__hoverPixmap
+		return self.__hover_pixmap
 
-	@hoverPixmap.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
-	def hoverPixmap(self, value):
+	@hover_pixmap.setter
+	@foundations.exceptions.handle_exceptions(AssertionError)
+	def hover_pixmap(self, value):
 		"""
-		Setter for **self.__hoverPixmap** attribute.
+		Setter for **self.__hover_pixmap** attribute.
 
 		:param value: Attribute value.
 		:type value: QPixmap
 		"""
 
 		if value is not None:
-			assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("hoverPixmap", value)
-		self.__hoverPixmap = value
+			assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("hover_pixmap", value)
+		self.__hover_pixmap = value
 
-	@hoverPixmap.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def hoverPixmap(self):
+	@hover_pixmap.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def hover_pixmap(self):
 		"""
-		Deleter for **self.__hoverPixmap** attribute.
+		Deleter for **self.__hover_pixmap** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "hoverPixmap"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "hover_pixmap"))
 
 	@property
-	def activePixmap(self):
+	def active_pixmap(self):
 		"""
-		Property for **self.__activePixmap** attribute.
+		Property for **self.__active_pixmap** attribute.
 
-		:return: self.__activePixmap.
+		:return: self.__active_pixmap.
 		:rtype: QPixmap
 		"""
 
-		return self.__activePixmap
+		return self.__active_pixmap
 
-	@activePixmap.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
-	def activePixmap(self, value):
+	@active_pixmap.setter
+	@foundations.exceptions.handle_exceptions(AssertionError)
+	def active_pixmap(self, value):
 		"""
-		Setter for **self.__activePixmap** attribute.
+		Setter for **self.__active_pixmap** attribute.
 
 		:param value: Attribute value.
 		:type value: QPixmap
 		"""
 
 		if value is not None:
-			assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("activePixmap", value)
-		self.__activePixmap = value
+			assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("active_pixmap", value)
+		self.__active_pixmap = value
 
-	@activePixmap.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
-	def activePixmap(self):
+	@active_pixmap.deleter
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+	def active_pixmap(self):
 		"""
-		Deleter for **self.__activePixmap** attribute.
+		Deleter for **self.__active_pixmap** attribute.
 		"""
 
 		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "activePixmap"))
+		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "active_pixmap"))
 
 	@property
 	def checkable(self):
@@ -249,7 +249,7 @@ class Active_QLabel(QLabel):
 		return self.__checkable
 
 	@checkable.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
+	@foundations.exceptions.handle_exceptions(AssertionError)
 	def checkable(self, value):
 		"""
 		Setter for **self.__checkable** attribute.
@@ -263,7 +263,7 @@ class Active_QLabel(QLabel):
 		self.__checkable = value
 
 	@checkable.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def checkable(self):
 		"""
 		Deleter for **self.__checkable** attribute.
@@ -284,7 +284,7 @@ class Active_QLabel(QLabel):
 		return self.__checked
 
 	@checked.setter
-	@foundations.exceptions.handleExceptions(AssertionError)
+	@foundations.exceptions.handle_exceptions(AssertionError)
 	def checked(self, value):
 		"""
 		Setter for **self.__checked** attribute.
@@ -295,10 +295,10 @@ class Active_QLabel(QLabel):
 
 		if value is not None:
 			assert type(value) is bool, "'{0}' attribute: '{1}' type is not 'bool'!".format("checked", value)
-		self.setChecked(value)
+		self.set_checked(value)
 
 	@checked.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def checked(self):
 		"""
 		Deleter for **self.__checked** attribute.
@@ -319,7 +319,7 @@ class Active_QLabel(QLabel):
 		return self.__menu
 
 	@menu.setter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def menu(self, value):
 		"""
 		Setter for **self.__menu** attribute.
@@ -332,7 +332,7 @@ class Active_QLabel(QLabel):
 		"{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "menu"))
 
 	@menu.deleter
-	@foundations.exceptions.handleExceptions(foundations.exceptions.ProgrammingError)
+	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
 	def menu(self):
 		"""
 		Deleter for **self.__menu** attribute.
@@ -353,9 +353,9 @@ class Active_QLabel(QLabel):
 		"""
 
 		if self.__checkable:
-			not self.__checked and self.setPixmap(self.__hoverPixmap)
+			not self.__checked and self.setPixmap(self.__hover_pixmap)
 		else:
-			self.setPixmap(self.__hoverPixmap)
+			self.setPixmap(self.__hover_pixmap)
 
 	def leaveEvent(self, event):
 		"""
@@ -366,9 +366,9 @@ class Active_QLabel(QLabel):
 		"""
 
 		if self.__checkable:
-			not self.__checked and self.setPixmap(self.__defaultPixmap)
+			not self.__checked and self.setPixmap(self.__default_pixmap)
 		else:
-			self.setPixmap(self.__defaultPixmap)
+			self.setPixmap(self.__default_pixmap)
 
 	def mousePressEvent(self, event):
 		"""
@@ -378,7 +378,7 @@ class Active_QLabel(QLabel):
 		:type event: QEvent
 		"""
 
-		self.setPixmap(self.__activePixmap)
+		self.setPixmap(self.__active_pixmap)
 		self.__menu and self.__menu.exec_(QCursor.pos())
 		self.pressed.emit()
 
@@ -392,15 +392,15 @@ class Active_QLabel(QLabel):
 
 		if self.underMouse():
 			if self.__checkable:
-				self.setChecked(not self.__checked)
+				self.set_checked(not self.__checked)
 			else:
-				self.setPixmap(self.__activePixmap)
+				self.setPixmap(self.__active_pixmap)
 		else:
-			self.setPixmap(self.__defaultPixmap)
+			self.setPixmap(self.__default_pixmap)
 		self.released.emit()
 		self.clicked.emit()
 
-	def setChecked(self, state):
+	def set_checked(self, state):
 		"""
 		Sets the Widget checked state.
 
@@ -415,14 +415,14 @@ class Active_QLabel(QLabel):
 
 		if state:
 			self.__checked = True
-			self.setPixmap(self.__activePixmap)
+			self.setPixmap(self.__active_pixmap)
 		else:
 			self.__checked = False
-			self.setPixmap(self.__defaultPixmap)
+			self.setPixmap(self.__default_pixmap)
 		self.toggled.emit(state)
 		return True
 
-	def setMenu(self, menu):
+	def set_menu(self, menu):
 		"""
 		Sets the Widget menu.
 
@@ -437,37 +437,7 @@ class Active_QLabel(QLabel):
 		if not self.parent():
 			return False
 
-		parent = [parent for parent in umbra.ui.common.parentsWalker(self)].pop()
+		parent = [parent for parent in snippets.ui.common.parents_walker(self)].pop()
 		for action in self.__menu.actions():
 			not action.shortcut().isEmpty() and parent.addAction(action)
 		return True
-
-if __name__ == "__main__":
-	import sys
-	from PyQt4.QtGui import QGridLayout
-	from PyQt4.QtGui import QWidget
-
-	from umbra.globals.uiConstants import UiConstants
-
-	application = umbra.ui.common.getApplicationInstance()
-
-	widget = QWidget()
-
-	gridLayout = QGridLayout()
-	widget.setLayout(gridLayout)
-
-	activeLabelA = Active_QLabel(widget, QPixmap(umbra.ui.common.getResourcePath(UiConstants.developmentIcon)),
-									QPixmap(umbra.ui.common.getResourcePath(UiConstants.developmentHoverIcon)),
-									QPixmap(umbra.ui.common.getResourcePath(UiConstants.developmentActiveIcon)))
-	activeLabelB = Active_QLabel(widget, QPixmap(umbra.ui.common.getResourcePath(UiConstants.preferencesIcon)),
-									QPixmap(umbra.ui.common.getResourcePath(UiConstants.preferencesHoverIcon)),
-									QPixmap(umbra.ui.common.getResourcePath(UiConstants.preferencesActiveIcon)),
-									checkable=True,
-									checked=True)
-	for activeLabel in (activeLabelA, activeLabelB):
-		gridLayout.addWidget(activeLabel)
-
-	widget.show()
-	widget.raise_()
-
-	sys.exit(application.exec_())

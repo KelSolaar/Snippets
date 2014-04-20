@@ -37,7 +37,7 @@ import os
 import foundations.globals.constants
 from snippets.globals.constants import Constants
 
-def _overrideDependenciesGlobals():
+def _override_dependencies_globals():
 	"""
 	Overrides dependencies globals.
 
@@ -48,15 +48,15 @@ def _overrideDependenciesGlobals():
 	foundations.globals.constants.Constants.logger = Constants.logger
 	return True
 
-_overrideDependenciesGlobals()
+_override_dependencies_globals()
 
 #**********************************************************************************************************************
 #***	Internal imports.
 #**********************************************************************************************************************
 import foundations.verbose
 import snippets.libraries.common
-from snippets.globals.runtimeGlobals import RuntimeGlobals
-from snippets.managers.modulesManager import ModulesManager
+from snippets.globals.runtime_globals import RuntimeGlobals
+from snippets.managers.modules_manager import ModulesManager
 
 #**********************************************************************************************************************
 #***	Module attributes.
@@ -70,24 +70,24 @@ __status__ = "Production"
 
 __all__ = ["LOGGER", "Ui_Loader_Setup", "Ui_Loader_Type", "Loader"]
 
-LOGGER = foundations.verbose.installLogger()
+LOGGER = foundations.verbose.install_logger()
 
 # Remove existing handlers.
 del logging.root.handlers[:]
 
-foundations.verbose.getLoggingConsoleHandler()
+foundations.verbose.get_logging_console_handler()
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-def _setModulesManager():
+def _set_modules_manager():
 	"""
 	Sets the global modules manager instance.
 	"""
 
-	if not isinstance(RuntimeGlobals.modulesManager, ModulesManager):
-		RuntimeGlobals.modulesManager = ModulesManager([RuntimeGlobals.librariesDirectory])
-		RuntimeGlobals.modulesManager.registerAll()
+	if not isinstance(RuntimeGlobals.modules_manager, ModulesManager):
+		RuntimeGlobals.modules_manager = ModulesManager([RuntimeGlobals.libraries_directory])
+		RuntimeGlobals.modules_manager.register_all()
 
 def run():
 	"""
@@ -97,7 +97,7 @@ def run():
 	:rtype: bool
 	"""
 
-	RuntimeGlobals.librariesDirectory = os.path.join(os.path.dirname(__file__), Constants.librariesDirectory)
-	RuntimeGlobals.resourcesDirectory = os.path.join(os.path.dirname(__file__), Constants.resourcesDirectory)
+	RuntimeGlobals.libraries_directory = os.path.join(os.path.dirname(__file__), Constants.libraries_directory)
+	RuntimeGlobals.resources_directory = os.path.join(os.path.dirname(__file__), Constants.resources_directory)
 
-	_setModulesManager()
+	_set_modules_manager()

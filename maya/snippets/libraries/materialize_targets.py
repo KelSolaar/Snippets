@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-**materializeTargets.py**
+**materialize_targets.py**
 
 **Platform:**
 	Windows, Linux, Mac Os X.
@@ -39,18 +39,20 @@ __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
-__all__ = ["stacksHandler",
-           "pickBlendShape_button_OnClicked",
-           "pickExtractionSource_button_OnClicked",
-           "materializeTargets_button_OnClicked",
-           "materializeBlendshapeTargets",
-           "materializeTargets_window",
-           "materializeTargets"]
+__all__ = ["stacks_handler",
+           "pick_blend_shape_button__on_clicked",
+           "pick_extraction_source_button__on_clicked",
+           "materialize_targets_button__on_clicked",
+           "materialize_blendshape_targets",
+           "materialize_targets_window",
+           "materialize_targets"]
+
+__interfaces__ = ["materialize_targets"]
 
 #**********************************************************************************************************************
 #***	Module classes and definitions.
 #**********************************************************************************************************************
-def stacksHandler(object):
+def stacks_handler(object):
     """
     Handles Maya stacks.
 
@@ -60,7 +62,7 @@ def stacksHandler(object):
    :rtype: object
     """
 
-    def stacksHandlerCall(*args, **kwargs):
+    def stacks_handler_wrapper(*args, **kwargs):
         """
         Handles Maya stacks.
 
@@ -79,73 +81,73 @@ def stacksHandler(object):
             pass
         return value
 
-    return stacksHandlerCall
+    return stacks_handler_wrapper
 
-def pickBlendShape_button_OnClicked(state=None):
+def pick_blend_shape_button__on_clicked(state=None):
     """
-    Defines the slot triggered by **pickBlendShape_Button** button when clicked.
+    Defines the slot triggered by **pick_blend_shape_button** button when clicked.
 
-   :param state: Button state.
-   :type state: bool
+    :param state: button state.
+    :type state: bool
     """
-    cmds.textField("blendShapeNode_TextField", edit=True, text=cmds.ls(sl=True, l=True)[0])
+    cmds.textField("blend_shape_node_TextField", edit=True, text=cmds.ls(sl=True, l=True)[0])
 
-def pickExtractionSource_button_OnClicked(state=None):
+def pick_extraction_source_button__on_clicked(state=None):
     """
-    Defines the slot triggered by **pickExtractionSource** button when clicked.
+    Defines the slot triggered by **pick_extraction_source_button** button when clicked.
 
-   :param state: Button state.
-   :type state: bool
+    :param state: button state.
+    :type state: bool
     """
     cmds.textField("extractionSource_TextField", edit=True, text=cmds.ls(sl=True, l=True)[0])
 
-@stacksHandler
-def materializeTargets_button_OnClicked(state=None):
+@stacks_handler
+def materialize_targets_button__on_clicked(state=None):
     """
-    Defines the slot triggered by **materializeTargets_Button** button when clicked.
+    Defines the slot triggered by **materialize_targets_button** button when clicked.
 
-   :param state: Button state.
+   :param state: button state.
    :type state: bool
     """
-    blendShapesNode = cmds.textField("blendShapeNode_TextField", query=True, text=True)
-    duplicationSource = cmds.textField("extractionSource_TextField", query=True, text=True)
+    blend_shapes_node = cmds.textField("blend_shape_node_TextField", query=True, text=True)
+    duplication_source = cmds.textField("extractionSource_TextField", query=True, text=True)
 
-    if blendShapesNode != "" and duplicationSource != "":
-        materializeBlendshapeTargets(blendShapesNode, duplicationSource)
+    if blend_shapes_node != "" and duplication_source != "":
+        materialize_blendshape_targets(blend_shapes_node, duplication_source)
 
-@stacksHandler
-def materializeBlendshapeTargets(blendShapeNode, duplicationSource):
+@stacks_handler
+def materialize_blendshape_targets(blend_shape_node, duplication_source):
     """
     Materializes targets from given blendshape node using given duplication source.
 
-   :param blendShapeNode: Blendshape node.
-   :type blendShapeNode: unicode
-   :param duplicationSource: Duplication source.
-   :type duplicationSource: unicode
+   :param blend_shape_node: Blendshape node.
+   :type blend_shape_node: unicode
+   :param duplication_source: Duplication source.
+   :type duplication_source: unicode
     """
 
-    targets = cmds.listAttr("{0}.w".format(blendShapeNode), m=True)
+    targets = cmds.listAttr("{0}.w".format(blend_shape_node), m=True)
     for target in targets:
         try:
-            cmds.setAttr("{0}.{1}".format(blendShapeNode, target), 1)
+            cmds.setAttr("{0}.{1}".format(blend_shape_node, target), 1)
         except:
             pass
 
-        duplicatedNodes = cmds.duplicate(duplicationSource, rr=True)
+        duplicatedNodes = cmds.duplicate(duplication_source, rr=True)
         cmds.rename(duplicatedNodes[0], target)
 
         try:
-            cmds.setAttr("{0}.{1}".format(blendShapeNode, target), 0)
+            cmds.setAttr("{0}.{1}".format(blend_shape_node, target), 0)
         except:
             pass
 
-def materializeTargets_window():
+def materialize_targets_window():
     cmds.windowPref(enableAll=False)
 
-    if cmds.window("materializeTargets_window", exists=True):
-        cmds.deleteUI("materializeTargets_window")
+    if cmds.window("materialize_targets_window", exists=True):
+        cmds.deleteUI("materialize_targets_window")
 
-    cmds.window("materializeTargets_window",
+    cmds.window("materialize_targets_window",
                 title="Materialize Blendshape Targets",
                 width=320)
 
@@ -156,39 +158,31 @@ def materializeTargets_window():
     cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"),
                    columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
     cmds.text(label="BlendShape Node:")
-    blendShapeNode_TextField = cmds.textField("blendShapeNode_TextField")
-    cmds.button("pickBlendShapeNode_Button", label="Pick BlendShape Node!",
-                command=pickBlendShape_button_OnClicked)
+    blend_shape_node_TextField = cmds.textField("blend_shape_node_TextField")
+    cmds.button("pick_blend_shapeNode_button", label="Pick BlendShape Node!",
+                command=pick_blend_shape_button__on_clicked)
     cmds.setParent(topLevel=True)
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"),
                    columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
     cmds.text(label="Extraction Source:")
     extractionSource_TextField = cmds.textField("extractionSource_TextField")
-    cmds.button("pickExtractionSource_Button", label="Pick Extraction Source!",
-                command=pickExtractionSource_button_OnClicked)
+    cmds.button("pick_extraction_source_button", label="Pick Extraction Source!",
+                command=pick_extraction_source_button__on_clicked)
     cmds.setParent(topLevel=True)
 
-    cmds.separator(style='single')
+    cmds.separator(style="single")
 
-    cmds.button("materializeTargets_Button", label="Extract Targets!",
-                command=materializeTargets_button_OnClicked)
+    cmds.button("materialize_targets_button", label="Extract Targets!",
+                command=materialize_targets_button__on_clicked)
 
-    cmds.showWindow("materializeTargets_window")
+    cmds.showWindow("materialize_targets_window")
 
     cmds.windowPref(enableAll=True)
 
-def materializeTargets():
+def materialize_targets():
     """
     Launches the 'Materialize Blendshape Targets' main window.
     """
 
-    materializeTargets_window()
-
-@stacksHandler
-def IMaterializeTargets():
-    """
-    Defines the materializeTargets definition Interface.
-    """
-
-    materializeTargets()
+    materialize_targets_window()
