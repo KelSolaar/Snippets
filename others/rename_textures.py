@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-**renameTextures.py**
+**rename_textures.py**
 
 **Platform:**
 	Windows, Linux, Mac Os X.
 
 **Description:**
-	Defines the :def:`getTexturesNames` and :def:`renameTextures` definitions and other related objects.
+	Defines the :def:`get_textures_names` and :def:`rename_textures` definitions and other related objects.
 
 **Others:**
 """
@@ -32,30 +32,30 @@ __status__ = "Production"
 
 __all__ = ["UDIM_PATTERN",
 		"PATCH_PATTERN",
-		"getPatchFromUdim",
-		"getUdimFromPatch",
-		"getTexturesNames",
+        "get_patch_from_udim",
+        "get_udim_from_patch",
+        "get_textures_names",
 		"get_command_line_parameters_parser",
-		"renameTextures"]
+        "rename_textures"]
 
 UDIM_PATTERN = "u\d+_v\d+"
 PATCH_PATTERN = "\d{4,}"
 
-def getPatchFromUdim(udim):
+def get_patch_from_udim(udim):
 	"""
 	Returns the patch from given udim.
 
 	Usage::
 
-		>>> getPatchFromUdim((0, 0)) # doctest: +NORMALIZE_WHITESPACE
-		1001	
-		>>> getPatchFromUdim((9, 0))
+		>>> get_patch_from_udim((0, 0)) # doctest: +NORMALIZE_WHITESPACE
+		1001
+		>>> get_patch_from_udim((9, 0))
 		1010
-		>>> getPatchFromUdim((0, 1))
+		>>> get_patch_from_udim((0, 1))
 		1011
-		>>> getPatchFromUdim((9, 1))
+		>>> get_patch_from_udim((9, 1))
 		1020
-		>>> getPatchFromUdim((9, 9))
+		>>> get_patch_from_udim((9, 9))
 		1100
 
 	:param udim: Udim to convert.
@@ -66,21 +66,21 @@ def getPatchFromUdim(udim):
 
 	return 1000 + udim[0] + 1 + udim[1] * 10
 
-def getUdimFromPatch(patch):
+def get_udim_from_patch(patch):
 	"""
 	Returns the udim from given patch.
 
 	Usage::
 
-		>>> getUdimFromPatch(1001) # doctest: +NORMALIZE_WHITESPACE
+		>>> get_udim_from_patch(1001) # doctest: +NORMALIZE_WHITESPACE
 		(0, 0)
-		>>> getUdimFromPatch(1010)
+		>>> get_udim_from_patch(1010)
 		(9, 0)
-		>>> getUdimFromPatch(1011)
+		>>> get_udim_from_patch(1011)
 		(0, 1)
-		>>> getUdimFromPatch(1020)
+		>>> get_udim_from_patch(1020)
 		(9, 1)
-		>>> getUdimFromPatch(1100)
+		>>> get_udim_from_patch(1100)
 		(9, 9)
 
 	:param udim: Patch to convert.
@@ -93,23 +93,23 @@ def getUdimFromPatch(patch):
 	v = (patch - 1000) / 10
 	return 9 if u == 0 else u - 1, v - 1 if u % 10 == 0 else v
 
-def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
+def get_textures_names(textures, input="zbrush", output="mari", prefix=None):
 	"""
 	Renames given textures.
 
 	Usage::
 
-		>>> getTexturesNames(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"]) # doctest: +NORMALIZE_WHITESPACE
+		>>> get_textures_names(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"]) # doctest: +NORMALIZE_WHITESPACE
 		[(u'Diffuse_u0_v0.exr', u'Diffuse_1001.exr'), (u'Diffuse_u9_v0.exr', u'Diffuse_1010.exr')]
-		>>> getTexturesNames(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], "zbrush", "mudbox")
+		>>> get_textures_names(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], "zbrush", "mudbox")
 		[(u'Diffuse_u9_v0.exr', u'Diffuse_u10_v1.exr'), (u'Diffuse_u0_v0.exr', u'Diffuse_u1_v1.exr')]
-		>>> getTexturesNames(["Diffuse_1001.exr", "Diffuse_1010.exr"], "mari", "zbrush")
+		>>> get_textures_names(["Diffuse_1001.exr", "Diffuse_1010.exr"], "mari", "zbrush")
 		[(u'Diffuse_1001.exr', u'Diffuse_u0_v0.exr'), (u'Diffuse_1010.exr', u'Diffuse_u9_v0.exr')]
-		>>> getTexturesNames(["Diffuse_1001.exr", "Diffuse_1010.exr"], "mari", "mudbox")
+		>>> get_textures_names(["Diffuse_1001.exr", "Diffuse_1010.exr"], "mari", "mudbox")
 		[(u'Diffuse_1001.exr', u'Diffuse_u1_v1.exr'), (u'Diffuse_1010.exr', u'Diffuse_u10_v1.exr')]
-		>>> getTexturesNames(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], prefix="")
+		>>> get_textures_names(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], prefix="")
 		[(u'Diffuse_u0_v0.exr', u'1001.exr'), (u'Diffuse_u9_v0.exr', u'1010.exr')]
-		>>> getTexturesNames(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], prefix="Color_")
+		>>> get_textures_names(["Diffuse_u0_v0.exr", "Diffuse_u9_v0.exr"], prefix="Color_")
 		[(u'Diffuse_u0_v0.exr', u'Color_1001.exr'), (u'Diffuse_u9_v0.exr', u'Color_1010.exr')]
 
 	:param textures: Textures.
@@ -124,48 +124,48 @@ def getTexturesNames(textures, input="zbrush", output="mari", prefix=None):
 	:rtype: list
 	"""
 
-	inputMethod = "udim" if input in ("mudbox", "zbrush") else "patch"
-	outputMethod = "udim" if output in ("mudbox", "zbrush") else "patch"
-	pattern = UDIM_PATTERN if inputMethod == "udim" else PATCH_PATTERN
+	input_method = "udim" if input in ("mudbox", "zbrush") else "patch"
+	output_method = "udim" if output in ("mudbox", "zbrush") else "patch"
+	pattern = UDIM_PATTERN if input_method == "udim" else PATCH_PATTERN
 
 	offset_udim = lambda x, y: (x[0] + y, x[1] + y)
 
 	if input == "zbrush" and output == "mudbox":
 		textures = reversed(textures)
 
-	texturesMapping = []
+	textures_mapping = []
 	for texture in textures:
 		basename = os.path.basename(texture)
 		search = re.search(r"({0})".format(pattern), basename)
 		if not search:
 			print("'{0}' | '{1}' file doesn't match '{2}' pattern!".format(inspect.getmodulename(__file__),
 																		texture,
-																		inputMethod.title()))
+																		input_method.title()))
 	 		continue
 
-		if inputMethod == "udim":
+		if input_method == "udim":
 		 	udim = [int(value[1:]) for value in search.group(0).split("_")]
-		elif inputMethod == "patch":
-			udim = getUdimFromPatch(int(search.group(0)))
+		elif input_method == "patch":
+			udim = get_udim_from_patch(int(search.group(0)))
 
 		udim = offset_udim(udim, -1) if input == "mudbox" else udim
 		udim = offset_udim(udim, 1) if output == "mudbox" else udim
 
-		if outputMethod == "udim":
-		 	outputAffix = "u{0}_v{1}".format(*udim)
-		elif outputMethod == "patch":
-			outputAffix = getPatchFromUdim(udim)
+		if output_method == "udim":
+		 	output_affix = "u{0}_v{1}".format(*udim)
+		elif output_method == "patch":
+			output_affix = get_patch_from_udim(udim)
 
 		if prefix is not None:
 		 	path = os.path.join(os.path.dirname(texture), "{0}{1}{2}".format(prefix,
-																			outputAffix,
+																			output_affix,
 																			os.path.splitext(texture)[-1]))
-		else:			
-			path = os.path.join(os.path.dirname(texture), re.sub(r"({0})".format(pattern), str(outputAffix), basename))
+		else:
+			path = os.path.join(os.path.dirname(texture), re.sub(r"({0})".format(pattern), str(output_affix), basename))
 
-		texturesMapping.append((texture, path))
+		textures_mapping.append((texture, path))
 
-	return texturesMapping
+	return textures_mapping
 
 def get_command_line_parameters_parser():
 	"""
@@ -214,7 +214,7 @@ def get_command_line_parameters_parser():
 
 	return parser
 
-def renameTextures(textures, input="zbrush", output="mari", prefix=None, preview=False):
+def rename_textures(textures, input="zbrush", output="mari", prefix=None, preview=False):
 	"""
 	Renames given textures.
 
@@ -232,7 +232,7 @@ def renameTextures(textures, input="zbrush", output="mari", prefix=None, preview
 	:rtype: bool
 	"""
 
-	for source, target in getTexturesNames(textures, input, output, prefix):
+	for source, target in get_textures_names(textures, input, output, prefix):
 		if not os.path.exists(source):
 			print("'{0}' | '{1}' file doesn't exists!".format(inspect.getmodulename(__file__), source))
 			continue
@@ -248,7 +248,7 @@ if __name__ == "__main__":
 		sys.argv[-1:] = glob.glob(sys.argv[-1])
 
 	parameters, arguments = get_command_line_parameters_parser().parse_args(sys.argv)
-	renameTextures([os.path.join(os.getcwd(), texture) for texture in arguments[1:]],
+	rename_textures([os.path.join(os.getcwd(), texture) for texture in arguments[1:]],
 					parameters.input.lower(),
 					parameters.output.lower(),
 					parameters.name,
