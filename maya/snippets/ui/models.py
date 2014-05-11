@@ -14,31 +14,19 @@
 
 """
 
-#**********************************************************************************************************************
-#***	Future imports.
-#**********************************************************************************************************************
 from __future__ import unicode_literals
 
-#**********************************************************************************************************************
-#***	External imports.
-#**********************************************************************************************************************
 import logging
 from PyQt4.QtCore import QAbstractListModel
 from PyQt4.QtCore import QModelIndex
 from PyQt4.QtCore import QVariant
 from PyQt4.QtCore import Qt
 
-#**********************************************************************************************************************
-#***	Internal imports.
-#**********************************************************************************************************************
 import foundations.data_structures
 import foundations.exceptions
 import foundations.verbose
 from snippets.globals.constants import Constants
 
-#**********************************************************************************************************************
-#***	Module attributes.
-#**********************************************************************************************************************
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2008 - 2014 - Thomas Mansencal"
 __license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
@@ -53,9 +41,6 @@ __all__ = ["LOGGER",
 
 LOGGER = foundations.verbose.install_logger()
 
-#**********************************************************************************************************************
-#***	Module classes and definitions.
-#**********************************************************************************************************************
 class Categorie(foundations.data_structures.Structure):
 	"""
 	This is the **Interface** class.
@@ -109,9 +94,6 @@ class InterfacesModel(QAbstractListModel):
 		self.__interfaces = []
 		self.interfaces = interfaces or self.__interfaces
 
-	#******************************************************************************************************************
-	#***	Attributes properties.
-	#******************************************************************************************************************
 	@property
 	def interfaces(self):
 		"""
@@ -153,9 +135,6 @@ class InterfacesModel(QAbstractListModel):
 		raise foundations.exceptions.ProgrammingError(
 		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "interfaces"))
 
-	#******************************************************************************************************************
-	#***	Class methods.
-	#******************************************************************************************************************
 	def __getitem__(self, name):
 		"""
 		Reimplements the :meth:`object.__getitem__` method.

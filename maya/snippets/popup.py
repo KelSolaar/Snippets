@@ -20,14 +20,8 @@
 
 """
 
-#**********************************************************************************************************************
-#***	Future imports.
-#**********************************************************************************************************************
 from __future__ import unicode_literals
 
-#**********************************************************************************************************************
-#***	External imports.
-#**********************************************************************************************************************
 import logging
 import maya.cmds as cmds
 import maya.mel as mel
@@ -38,9 +32,6 @@ from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QStringListModel
 from PyQt4.QtGui import QCursor
 
-#**********************************************************************************************************************
-#***	Internal imports.
-#**********************************************************************************************************************
 import foundations.common
 import foundations.exceptions
 import foundations.strings
@@ -53,9 +44,6 @@ from snippets.ui.models import Interface
 from snippets.ui.models import InterfacesModel
 from snippets.ui.widgets.search_QLineEdit import Search_QLineEdit
 
-#**********************************************************************************************************************
-#***	Module attributes.
-#**********************************************************************************************************************
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2010 - 2014 - Thomas Mansencal"
 __license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
@@ -75,9 +63,6 @@ else:
 	snippets.ui.common.message_box("Error", "Error", error)
 	raise Exception(error)
 
-#**********************************************************************************************************************
-#***	Module classes and definitions.
-#**********************************************************************************************************************
 class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 	"""
 	Defines the simple Maya Interfaces loader widget.
@@ -110,9 +95,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		# --- Initialize Ui. ---
 		self.__initialize_ui()
 
-	#******************************************************************************************************************
-	#***	Attributes properties.
-	#******************************************************************************************************************
 	@property
 	def container(self):
 		"""
@@ -211,9 +193,6 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
 		raise foundations.exceptions.ProgrammingError(
 		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "model"))
 
-	#******************************************************************************************************************
-	#***	Class methods.
-	#******************************************************************************************************************
 	def show(self):
 		"""
 		Reimplements the :meth:`QWidget.show` method.

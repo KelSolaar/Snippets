@@ -20,21 +20,12 @@
 
 """
 
-#**********************************************************************************************************************
-#***	Future imports.
-#**********************************************************************************************************************
 from __future__ import unicode_literals
 
-#**********************************************************************************************************************
-#***	External imports.
-#**********************************************************************************************************************
 import os
 import re
 import sys
 
-#**********************************************************************************************************************
-#***	Internal imports.
-#**********************************************************************************************************************
 import foundations.exceptions
 import foundations.namespace
 import foundations.strings
@@ -44,9 +35,6 @@ from snippets.globals.constants import Constants
 from snippets.globals.runtime_globals import RuntimeGlobals
 from snippets.globals.ui_constants import UiConstants
 
-#**********************************************************************************************************************
-#***	Module attributes.
-#**********************************************************************************************************************
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2010 - 2014 - Thomas Mansencal"
 __license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
@@ -58,9 +46,6 @@ __all__ = ["LOGGER", "Module", "ModulesManager"]
 
 LOGGER = foundations.verbose.install_logger()
 
-#**********************************************************************************************************************
-#***	Module classes and definitions.
-#**********************************************************************************************************************
 class Module(object):
 	"""
 	Defines the **Module** class.
@@ -87,9 +72,6 @@ class Module(object):
 		self.__import = None
 		self.__interfaces = None
 
-	#******************************************************************************************************************
-	#***	Attributes properties.
-	#******************************************************************************************************************
 	@property
 	def name(self):
 		"""
@@ -248,9 +230,6 @@ class ModulesManager(object):
 		self.__modules = {}
 		self.__library_extension = Constants.library_extension
 
-	#******************************************************************************************************************
-	#***	Attributes properties.
-	#******************************************************************************************************************
 	@property
 	def paths(self):
 		"""
@@ -355,9 +334,6 @@ class ModulesManager(object):
 		raise foundations.exceptions.ProgrammingError(
 		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "library_extension"))
 
-	#******************************************************************************************************************
-	#***	Class methods.
-	#******************************************************************************************************************
 	def __getitem__(self, name):
 		"""
 		Reimplements the :meth:`object.__getitem__` method.

@@ -9,25 +9,19 @@
 
 **Description:**
 	Exports given scene to Alembic using Maya.
-	
+
 	Usage::
 
 		alias toAlembic 'setenv MAYA_LOCATION /software/maya/2013/linux.centos6.x86_64 && $MAYA_LOCATION/bin/mayapy "/usr/people/thomas-ma/Developement/Snippets/src/others/toAlembic.py"'
-		
+
 		toAlembic -i myFile.obj
-		
+
 **Others:**
 
 """
 
-#**********************************************************************************************************************
-#***	Future imports.
-#**********************************************************************************************************************
 from __future__ import unicode_literals
 
-#**********************************************************************************************************************
-#***	External imports.
-#**********************************************************************************************************************
 import maya.standalone
 
 maya.standalone.initialize(name="python")
@@ -39,11 +33,8 @@ import os
 import re
 import sys
 
-#**********************************************************************************************************************
-#***	Module attributes.
-#**********************************************************************************************************************
 __author__ = "Thomas Mansencal"
-__copyright__ = "Copyright (C) 2010 - 2014 - Thomas Mansencal"
+__copyright__ = "Copyright (C) 2010 - 2014 - Thomas Mansencal"  
 __license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
 __maintainer__ = "Thomas Mansencal"
 __email__ = "thomas.mansencal@gmail.com"
@@ -51,13 +42,10 @@ __status__ = "Production"
 
 __all__ = ["ascendantsWalker" , "get_root", "toAlembic", "getCommandLineParameters"]
 
-#**********************************************************************************************************************
-#***	Module classes and definitions.
-#**********************************************************************************************************************
 def ascendantsWalker(path, visitor=None):
 	"""
 	Returns the parents of given Dag path.
-	
+
 	:param path: Dag path.
 	:type path: str
 	:param visitor: Visitor.
@@ -69,7 +57,7 @@ def ascendantsWalker(path, visitor=None):
 	parents = cmds.listRelatives(path, allParents=True, fullPath=True)
 	if not parents:
 		return
-	
+
 	for parent in parents:
 		visitor and visitor(parent)
 		yield parent
@@ -79,7 +67,7 @@ def ascendantsWalker(path, visitor=None):
 def get_root(path):
 	"""
 	Returns the root path of given Dag path.
-	
+
 	:param path: Dag path.
 	:type path: str
 	:return: Root path.
@@ -88,11 +76,11 @@ def get_root(path):
 
 	parents = list(ascendantsWalker(path))
 	return parents[-1] if parents else path
-	
+
 def toAlembic(parameters, arguments):
 	"""
 	Converts an Obj file to Alembic file.
-	
+
 	:param parameters: Command line parameters.
 	:type parameters: object
 	:param arguments: Command line arguments.
@@ -120,8 +108,8 @@ def toAlembic(parameters, arguments):
 	except ValueError:
 		sys.stderr.write("!> {0} | The frame range format could not be determined!\n".format(inspect.getmodulename(__file__)))
 		return
-	
-	not cmds.pluginInfo("AbcExport", q=True, loaded=True) and cmds.loadPlugin("AbcExport")	
+
+	not cmds.pluginInfo("AbcExport", q=True, loaded=True) and cmds.loadPlugin("AbcExport")
 
 	cmds.file(inputFile, o=True)
 
@@ -137,7 +125,7 @@ def toAlembic(parameters, arguments):
 		root_nodes = list(set([get_root(mesh) for mesh in cmds.ls(type="mesh", long=True)]))
 		rootFlags = " ".join(["-root {0}".format(root_node) for root_node in root_nodes])
 		jobCommand = "-frameRange {0} {1} -uvWrite {2} -file {3}".format(frameIn, frameOut, rootFlags, output_file)
-	
+
 	sys.stderr.write("{0} | Exporting to 'Alembic' with following job command: '{1}'\n".format(inspect.getmodulename(__file__), jobCommand))
 	cmds.AbcExport(j=jobCommand)
 	return True

@@ -14,14 +14,8 @@
 
 """
 
-#**********************************************************************************************************************
-#***	Future imports.
-#**********************************************************************************************************************
 from __future__ import unicode_literals
 
-#**********************************************************************************************************************
-#***	External imports.
-#**********************************************************************************************************************
 import functools
 import os
 from PyQt4.QtCore import QString
@@ -33,17 +27,11 @@ from PyQt4.QtGui import QPixmap
 from PyQt4.QtGui import QStyle
 from PyQt4.QtGui import QToolButton
 
-#**********************************************************************************************************************
-#***	Internal imports.
-#**********************************************************************************************************************
 import foundations.exceptions
 import foundations.verbose
 import snippets.ui.common
 from snippets.ui.widgets.active_QLabel import Active_QLabel
 
-#**********************************************************************************************************************
-#***	Module attributes.
-#**********************************************************************************************************************
 __author__ = "Thomas Mansencal"
 __copyright__ = "Copyright (C) 2008 - 2014 - Thomas Mansencal"
 __license__ = "GPL V3.0 - http://www.gnu.org/licenses/"
@@ -55,9 +43,6 @@ __all__ = ["LOGGER", "Search_QLineEdit"]
 
 LOGGER = foundations.verbose.install_logger()
 
-#**********************************************************************************************************************
-#***	Module classes and definitions.
-#**********************************************************************************************************************
 class Search_QLineEdit(QLineEdit):
 	"""
 	Defines a `QLineEdit <http://doc.qt.nokia.com/qlinedit.html>`_ subclass providing
@@ -125,9 +110,6 @@ class Search_QLineEdit(QLineEdit):
 		self.__clear_button.clicked.connect(self.clear)
 		self.textChanged.connect(self.__set_clear_button_visibility)
 
-	#******************************************************************************************************************
-	#***	Attributes properties.
-	#******************************************************************************************************************
 	@property
 	def ui_search_image(self):
 		"""
@@ -415,9 +397,6 @@ class Search_QLineEdit(QLineEdit):
 		raise foundations.exceptions.ProgrammingError(
 		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "completer_visible_items_count"))
 
-	#******************************************************************************************************************
-	#***	Class methods.
-	#******************************************************************************************************************
 	def resizeEvent(self, event):
 		"""
 		Reimplements the :meth:`QLineEdit.QResizeEvent` method.
