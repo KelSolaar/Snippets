@@ -15,82 +15,82 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["RESOURCES_DIRECTORY",
-        "CHECKER_IMAGE",
-        "DEFAULT_SCALE_COVERAGE",
-        "MARI_NAME_FORMAT",
-        "stacks_handler",
-        "anchor_selection",
-        "get_first_item",
-        "get_shapes",
-        "get_node",
-        "is_geometry",
-        "get_connections",
-        "get_attached_shaders",
-        "get_uvs_from_components",
-        "get_faces_per_patches",
-        "get_object_uvs_area",
-        "get_component_uv_dims",
-        "get_mari_patch_from_uv_dims",
-        "get_components_uv_dims",
-        "get_components_mari_patches",
-        "get_components_occupation_as_uv_dims",
-        "get_components_occupation_as_mari_patches",
-        "print_components_occupation_as_uv_dims",
-        "print_components_occupation_as_mari_patches",
-        "get_components_bounding_box",
-        "get_components_uvs_center",
-        "print_components_uvs_center_as_uv_dims",
-        "print_components_uvs_center_as_mari_patch",
-        "scale_components_uvs",
-        "center_components_uvs",
-        "scale_center_components_uvs",
-        "rotate_components_uvs",
-        "move_components_uvs",
-        "mirror_components_uvs",
-        "stack_objects_uvs",
-        "prescale_uvs_shells",
-        "auto_ratio_uvs_areas",
-        "add_uvs_checker",
-        "remove_uvs_checker",
-        "set_uvs_checker_repeats",
-        "get_patch_shader_tree",
-        "assign_mari_shadersToObject",
-        "assign_mari_shaders",
-        "get_mari_affixes",
-        "get_preview_mari_textures_branches",
-        "assign_mari_preview_textures",
-        "flip_uvs_button__on_clicked",
-        "move_up_uvs_button__on_clicked",
-        "flop_uvs_button__on_clicked",
-        "move_left_uvs_button__on_clicked",
-        "fit_uvs_button__on_clicked",
-        "move_right_uvs_button__on_clicked",
-        "center_uvs_button__on_clicked",
-        "move_down_uvs_button__on_clicked",
-        "scale_uvs_button__on_clicked",
-        "rotate_counter_clock_wise_uvs_button__on_clicked",
-        "rotate_clock_wise_uvs_button__on_clicked",
-        "stack_uvs_on_u_bottom_button__on_clicked",
-        "stack_uvs_on_u_center_button__on_clicked",
-        "stack_uvs_on_u_top_button__on_clicked",
-        "stack_uvs_on_v_left_button__on_clicked",
-        "stack_uvs_on_v_center_button__on_clicked",
-        "stack_uvs_on_v_right_button__on_clicked",
-        "auto_ratio_uvs_areas_button__on_clicked",
-        "add_uvs_checker_button__on_clicked",
-        "remove_uvs_checker_button__on_clicked",
-        "u_repeat_float_field__on_changed",
-        "v_repeat_float_field__on_changed",
-        "unfolding_tools_window",
-        "unfolding_tools"]
+           "CHECKER_IMAGE",
+           "DEFAULT_SCALE_COVERAGE",
+           "MARI_NAME_FORMAT",
+           "stacks_handler",
+           "anchor_selection",
+           "get_first_item",
+           "get_shapes",
+           "get_node",
+           "is_geometry",
+           "get_connections",
+           "get_attached_shaders",
+           "get_uvs_from_components",
+           "get_faces_per_patches",
+           "get_object_uvs_area",
+           "get_component_uv_dims",
+           "get_mari_patch_from_uv_dims",
+           "get_components_uv_dims",
+           "get_components_mari_patches",
+           "get_components_occupation_as_uv_dims",
+           "get_components_occupation_as_mari_patches",
+           "print_components_occupation_as_uv_dims",
+           "print_components_occupation_as_mari_patches",
+           "get_components_bounding_box",
+           "get_components_uvs_center",
+           "print_components_uvs_center_as_uv_dims",
+           "print_components_uvs_center_as_mari_patch",
+           "scale_components_uvs",
+           "center_components_uvs",
+           "scale_center_components_uvs",
+           "rotate_components_uvs",
+           "move_components_uvs",
+           "mirror_components_uvs",
+           "stack_objects_uvs",
+           "prescale_uvs_shells",
+           "auto_ratio_uvs_areas",
+           "add_uvs_checker",
+           "remove_uvs_checker",
+           "set_uvs_checker_repeats",
+           "get_patch_shader_tree",
+           "assign_mari_shadersToObject",
+           "assign_mari_shaders",
+           "get_mari_affixes",
+           "get_preview_mari_textures_branches",
+           "assign_mari_preview_textures",
+           "flip_uvs_button__on_clicked",
+           "move_up_uvs_button__on_clicked",
+           "flop_uvs_button__on_clicked",
+           "move_left_uvs_button__on_clicked",
+           "fit_uvs_button__on_clicked",
+           "move_right_uvs_button__on_clicked",
+           "center_uvs_button__on_clicked",
+           "move_down_uvs_button__on_clicked",
+           "scale_uvs_button__on_clicked",
+           "rotate_counter_clock_wise_uvs_button__on_clicked",
+           "rotate_clock_wise_uvs_button__on_clicked",
+           "stack_uvs_on_u_bottom_button__on_clicked",
+           "stack_uvs_on_u_center_button__on_clicked",
+           "stack_uvs_on_u_top_button__on_clicked",
+           "stack_uvs_on_v_left_button__on_clicked",
+           "stack_uvs_on_v_center_button__on_clicked",
+           "stack_uvs_on_v_right_button__on_clicked",
+           "auto_ratio_uvs_areas_button__on_clicked",
+           "add_uvs_checker_button__on_clicked",
+           "remove_uvs_checker_button__on_clicked",
+           "u_repeat_float_field__on_changed",
+           "v_repeat_float_field__on_changed",
+           "unfolding_tools_window",
+           "unfolding_tools"]
 
 __interfaces__ = ["print_components_occupation_as_uv_dims",
-                "print_components_occupation_as_mari_patches",
-                "print_components_uvs_center_as_uv_dims",
-                "print_components_uvs_center_as_mari_patch",
-                "assign_mari_shaders_on_selected_objects",
-                "assign_mari_preview_textures",
-                "unfolding_tools"]
+                  "print_components_occupation_as_mari_patches",
+                  "print_components_uvs_center_as_uv_dims",
+                  "print_components_uvs_center_as_mari_patch",
+                  "assign_mari_shaders_on_selected_objects",
+                  "assign_mari_preview_textures",
+                  "unfolding_tools"]
 
 RESOURCES_DIRECTORY = os.path.join(os.path.dirname("__file__" in locals() and __file__ or ""), "../resources")
 CHECKER_IMAGE = "images/Checker.jpg"
@@ -98,6 +98,7 @@ CHECKER_IMAGE = "images/Checker.jpg"
 DEFAULT_SCALE_COVERAGE = 0.98
 
 MARI_NAME_FORMAT = "_%s"
+
 
 def stacks_handler(object):
     """
@@ -122,12 +123,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def anchor_selection(object):
     """
@@ -154,6 +157,7 @@ def anchor_selection(object):
 
     return function
 
+
 def get_first_item(iterable, default=None):
     """
     Returns the first item of given iterable.
@@ -171,6 +175,7 @@ def get_first_item(iterable, default=None):
 
     for item in iterable:
         return item
+
 
 def get_shapes(object, full_path=False, no_intermediate=True):
     """
@@ -193,6 +198,7 @@ def get_shapes(object, full_path=False, no_intermediate=True):
 
     return object_shapes
 
+
 def get_node(node):
     """
     Returns given node if it exists or **None**.
@@ -207,6 +213,7 @@ def get_node(node):
         return cmds.ls(node, l=True)[0]
     except:
         pass
+
 
 def is_geometry(object):
     """
@@ -223,6 +230,7 @@ def is_geometry(object):
     else:
         return False
 
+
 def get_connections(node):
     """
     Returns the connections of given node.
@@ -235,6 +243,7 @@ def get_connections(node):
 
     connections = cmds.listConnections(node, c=True)
     return [(connections[i + 1], connections[i]) for i in range(0, len(connections), 2)]
+
 
 def get_attached_shaders(object):
     """
@@ -260,6 +269,7 @@ def get_attached_shaders(object):
 
     return (get_first_item(shader),)
 
+
 def get_uvs_from_components(components, flatten=True):
     """
     Returns the uvs from given components.
@@ -277,6 +287,7 @@ def get_uvs_from_components(components, flatten=True):
         if not re.search(pattern, component):
             return cmds.ls(cmds.polyListComponentConversion(components, toUV=True), fl=flatten)
     return components
+
 
 def get_faces_per_patches(object):
     """
@@ -298,6 +309,7 @@ def get_faces_per_patches(object):
 
         faces_per_patches[patch].append(face)
     return faces_per_patches
+
 
 def get_object_uvs_area(object):
     """
@@ -325,6 +337,7 @@ def get_object_uvs_area(object):
         mesh_polygon_iterator.next()
     return uvs_area
 
+
 def get_component_uv_dims(component):
     """
     Returns the UVDims of the given component.
@@ -338,6 +351,7 @@ def get_component_uv_dims(component):
     u, v = cmds.polyEditUV(component, q=True, uValue=True, vValue=True)
     return int(u), int(v)
 
+
 def get_mari_patch_from_uv_dims(uv_dims):
     """
     Returns the Mari patch of the given component from UVDims.
@@ -350,6 +364,7 @@ def get_mari_patch_from_uv_dims(uv_dims):
 
     u_dim, v_dim = uv_dims
     return 1000 + u_dim + 1 + v_dim * 10
+
 
 def get_components_uv_dims(components):
     """
@@ -368,6 +383,7 @@ def get_components_uv_dims(components):
         uv_dims.append((uv, (u_dim, v_dim)))
     return uv_dims
 
+
 def get_components_mari_patches(components):
     """
     Returns given components Mari patches.
@@ -384,6 +400,7 @@ def get_components_mari_patches(components):
         mari_patches.append((uv, get_mari_patch_from_uv_dims(uv_dims)))
     return mari_patches
 
+
 def get_components_occupation_as_uv_dims(components):
     """
     Returns given components occupation as UVDims.
@@ -396,6 +413,7 @@ def get_components_occupation_as_uv_dims(components):
 
     shells = get_components_uv_dims(components)
     return tuple(set((shell[1] for shell in shells)))
+
 
 def get_components_occupation_as_mari_patches(components):
     """
@@ -410,6 +428,7 @@ def get_components_occupation_as_mari_patches(components):
     mari_patches = get_components_mari_patches(components)
     return tuple(set((patch[1] for patch in mari_patches)))
 
+
 def print_components_occupation_as_uv_dims():
     """
     Prints selected components occupation as UVDims.
@@ -418,6 +437,7 @@ def print_components_occupation_as_uv_dims():
     selection = cmds.ls(sl=True, l=True)
     selection and pprint.pprint(sorted(get_components_occupation_as_uv_dims(selection)))
 
+
 def print_components_occupation_as_mari_patches():
     """
     Prints selected components occupation as Mari patches.
@@ -425,6 +445,7 @@ def print_components_occupation_as_mari_patches():
 
     selection = cmds.ls(sl=True, l=True)
     selection and pprint.pprint(sorted(get_components_occupation_as_mari_patches(selection)))
+
 
 def get_components_bounding_box(components):
     """
@@ -446,6 +467,7 @@ def get_components_bounding_box(components):
         v_max = max(v, v_max)
     return u_min, v_min, u_max, v_max
 
+
 def get_components_uvs_center(components):
     """
     Returns given components Uvs center.
@@ -459,6 +481,7 @@ def get_components_uvs_center(components):
     u_min, v_min, u_max, v_max = get_components_bounding_box(components)
     return (u_min + u_max) / 2.0, (v_min + v_max) / 2.0
 
+
 def print_components_uvs_center_as_uv_dims():
     """
     Prints selected components Uvs center as UVDims
@@ -467,13 +490,16 @@ def print_components_uvs_center_as_uv_dims():
     selection = cmds.ls(sl=True, l=True)
     selection and pprint.pprint(tuple([int(value) for value in get_components_uvs_center(selection)]))
 
+
 def print_components_uvs_center_as_mari_patch():
     """
     Prints selected components Uvs center as Mari Patch.
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and pprint.pprint(get_mari_patch_from_uv_dims((int(value) for value in get_components_uvs_center(selection))))
+    selection and pprint.pprint(get_mari_patch_from_uv_dims(
+        (int(value) for value in get_components_uvs_center(selection))))
+
 
 @stacks_handler
 def scale_components_uvs(components, su=1, sv=1):
@@ -499,6 +525,7 @@ def scale_components_uvs(components, su=1, sv=1):
     cmds.polyEditUV(uvs, pu=u_center, pv=v_center, su=su, sv=sv)
     return True
 
+
 @stacks_handler
 def center_components_uvs(components):
     """
@@ -516,6 +543,7 @@ def center_components_uvs(components):
     u_target_center, v_target_center = math.floor(u_center), math.floor(v_center)
     cmds.polyEditUV(uvs, u=u_target_center - u_center + 0.5, v=v_target_center - v_center + 0.5)
     return True
+
 
 @stacks_handler
 def scale_center_components_uvs(components, coverage=DEFAULT_SCALE_COVERAGE):
@@ -539,6 +567,7 @@ def scale_center_components_uvs(components, coverage=DEFAULT_SCALE_COVERAGE):
     cmds.polyEditUV(uvs, pu=u_target_center + 0.5, pv=v_target_center + 0.5, su=scale_factor, sv=scale_factor)
     return True
 
+
 @stacks_handler
 def rotate_components_uvs(components, value, clock_wise=True):
     """
@@ -558,8 +587,9 @@ def rotate_components_uvs(components, value, clock_wise=True):
     u_center, v_center = get_components_uvs_center(uvs)
     if not clock_wise:
         value = -value
-    cmds.polyEditUV(uvs, pu=u_center, pv=v_center, a= -value)
+    cmds.polyEditUV(uvs, pu=u_center, pv=v_center, a=-value)
     return True
+
 
 @stacks_handler
 @anchor_selection
@@ -583,6 +613,7 @@ def poly_rotate_components_uvs(components, value, clock_wise=True):
     mel.eval("polyRotateUvs %s" % value)
     return True
 
+
 @stacks_handler
 def move_components_uvs(components, u=0, v=0):
     """
@@ -602,6 +633,7 @@ def move_components_uvs(components, u=0, v=0):
     cmds.polyEditUV(uvs, u=u, v=v)
     return True
 
+
 @stacks_handler
 def mirror_components_uvs(components, horizontal=True):
     """
@@ -618,9 +650,9 @@ def mirror_components_uvs(components, horizontal=True):
     uvs = get_uvs_from_components(components)
     u_center, v_center = (math.floor(value) for value in get_components_uvs_center(uvs))
     if horizontal:
-        cmds.polyEditUV(uvs, pu=u_center + 0.5, pv=v_center + 0.5, su= -1)
+        cmds.polyEditUV(uvs, pu=u_center + 0.5, pv=v_center + 0.5, su=-1)
     else:
-        cmds.polyEditUV(uvs, pu=u_center + 0.5, pv=v_center + 0.5, sv= -1)
+        cmds.polyEditUV(uvs, pu=u_center + 0.5, pv=v_center + 0.5, sv=-1)
     return True
 
 
@@ -671,6 +703,7 @@ def stack_objects_uvs(objects, alignement="center", horizontal=True, margin=0):
         cmds.polyEditUV(uvs, u=offset_u, v=offset_v)
     return True
 
+
 @stacks_handler
 def prescale_uvs_shells(object):
     """
@@ -701,6 +734,7 @@ def prescale_uvs_shells(object):
     scale_components_uvs(uvs, su=scale_factor, sv=scale_factor)
     return True
 
+
 @stacks_handler
 def auto_ratio_uvs_areas(objects):
     """
@@ -726,6 +760,7 @@ def auto_ratio_uvs_areas(objects):
         scale_components_uvs(object, su=scale_factor, sv=scale_factor)
     return True
 
+
 def get_connections(node):
     """
     Returns the connections of given node.
@@ -738,6 +773,7 @@ def get_connections(node):
 
     connections = cmds.listConnections(node, c=True)
     return [(connections[i + 1], connections[i]) for i in range(0, len(connections), 2)]
+
 
 def get_attached_shaders(object):
     """
@@ -763,6 +799,7 @@ def get_attached_shaders(object):
 
     return (get_first_item(shader),)
 
+
 @stacks_handler
 def add_uvs_checker(objects, u_repeats=4, v_repeats=4):
     """
@@ -786,17 +823,23 @@ def add_uvs_checker(objects, u_repeats=4, v_repeats=4):
                     continue
 
             file = cmds.shadingNode("file", asTexture=True)
-            cmds.setAttr("{0}.fileTextureName".format(file), os.path.normpath(os.path.join(RESOURCES_DIRECTORY, CHECKER_IMAGE)), type="string")
+            cmds.setAttr("{0}.fileTextureName".format(file), os.path.normpath(
+                os.path.join(RESOURCES_DIRECTORY, CHECKER_IMAGE)), type="string")
             place_2d_texture = cmds.shadingNode("place2dTexture", asUtility=True)
             cmds.setAttr("{0}.repeatU".format(place_2d_texture), u_repeats)
             cmds.setAttr("{0}.repeatV".format(place_2d_texture), v_repeats)
-            for uv_attribute in ("coverage", "translateFrame", "rotateFrame", "mirrorU", "mirrorV", "stagger", "wrapU", "wrapV" , "repeatUV" , "vertexUvOne" , "vertexUvTwo" , "vertexUvThree" , "vertexCameraOne", "noiseUV", "offset", "rotateUV"):
-                cmds.connectAttr("{0}.{1}".format(place_2d_texture, uv_attribute), "{0}.{1}".format(file, uv_attribute), force=True)
+            for uv_attribute in (
+                    "coverage", "translateFrame", "rotateFrame", "mirrorU", "mirrorV", "stagger", "wrapU", "wrapV",
+                    "repeatUV",
+                    "vertexUvOne", "vertexUvTwo", "vertexUvThree", "vertexCameraOne", "noiseUV", "offset", "rotateUV"):
+                cmds.connectAttr("{0}.{1}".format(place_2d_texture, uv_attribute),
+                                 "{0}.{1}".format(file, uv_attribute), force=True)
 
             cmds.connectAttr("{0}.outColor".format(file), "{0}.color".format(shader), force=True)
             cmds.rename(file, "UvsChecker_{0}_file".format(shader))
             cmds.rename(place_2d_texture, "UvsChecker_{0}_place2dTexture".format(shader))
     return True
+
 
 @stacks_handler
 def remove_uvs_checker(objects):
@@ -815,6 +858,7 @@ def remove_uvs_checker(objects):
                 "UvsChecker" in file and cmds.delete(cmds.listHistory(file))
     return True
 
+
 @stacks_handler
 def set_uvs_checker_repeats(u_repeats=None, v_repeats=None):
     """
@@ -832,6 +876,7 @@ def set_uvs_checker_repeats(u_repeats=None, v_repeats=None):
         u_repeats and cmds.setAttr("{0}.repeatU".format(file), u_repeats)
         v_repeats and cmds.setAttr("{0}.repeatV".format(file), v_repeats)
     return True
+
 
 @stacks_handler
 def get_patch_shader_tree(patch, prefix):
@@ -857,6 +902,7 @@ def get_patch_shader_tree(patch, prefix):
         shading_engine = cmds.rename(shading_engine, "{0}SG".format(name))
     return shading_engine
 
+
 @stacks_handler
 def assign_mari_shadersToObject(object, prefix):
     """
@@ -881,6 +927,7 @@ def assign_mari_shadersToObject(object, prefix):
             cmds.sets(faces, e=True, forceElement=shading_engine)
     return True
 
+
 @stacks_handler
 def assign_mari_shaders(objects, prefix):
     """
@@ -895,19 +942,22 @@ def assign_mari_shaders(objects, prefix):
     """
 
     main_progress_bar = mel.eval('$tmp = $gMainProgressBar')
-    cmds.progressBar(main_progress_bar, edit=True, beginProgress=True, isInterruptable=True, status="Assigning Mari shaders ...", maxValue=len(objects))
+    cmds.progressBar(main_progress_bar, edit=True, beginProgress=True, isInterruptable=True,
+                     status="Assigning Mari shaders ...", maxValue=len(objects))
 
     success = True
     for object in objects:
         if cmds.progressBar(main_progress_bar, query=True, isCancelled=True):
-                    break
+            break
 
-        cmds.progressBar(main_progress_bar, edit=True, status="Assigning Mari shaders to '{0}' ...".format(object), step=1)
+        cmds.progressBar(
+            main_progress_bar, edit=True, status="Assigning Mari shaders to '{0}' ...".format(object), step=1)
         success *= assign_mari_shadersToObject(object, prefix)
 
     cmds.progressBar(main_progress_bar, edit=True, endProgress=True)
 
     return success
+
 
 @stacks_handler
 def assign_mari_shaders_on_selected_objects():
@@ -922,10 +972,12 @@ def assign_mari_shaders_on_selected_objects():
     relatives = cmds.listRelatives(selection, allDescendents=True, full_path=True, type="mesh")
 
     project_name = os.path.basename(os.path.dirname(cmds.workspace(q=True, fullName=True)))
-    result = cmds.promptDialog(title="Mari Shaders Prefix", message="Enter Prefix:", text=project_name, button=["OK", "Cancel"], defaultButton="OK", cancelButton="Cancel", dismissString="Cancel")
+    result = cmds.promptDialog(title="Mari Shaders Prefix", message="Enter Prefix:", text=project_name, button=[
+        "OK", "Cancel"], defaultButton="OK", cancelButton="Cancel", dismissString="Cancel")
     if result == "OK":
         prefix = cmds.promptDialog(query=True, text=True)
         prefix and assign_mari_shaders(relatives, prefix)
+
 
 def get_mari_affixes(name):
     """
@@ -940,6 +992,7 @@ def get_mari_affixes(name):
     prefix, suffix = os.path.splitext(os.path.basename(name))
     prefix = re.match(r"([\w\.]+)\d{4}", prefix)
     return prefix.groups()[0] if prefix else "", suffix.replace(".", "")
+
 
 @stacks_handler
 def get_preview_mari_textures_branches(directory, prefix, extension, shader="lambert"):
@@ -959,7 +1012,8 @@ def get_preview_mari_textures_branches(directory, prefix, extension, shader="lam
     """
 
     for shader in filter(lambda x: re.search(r"\w+[0-9]{4}", x), cmds.ls(type=shader)):
-        texture_name = os.path.join(directory, "{0}{1}.{2}".format(prefix, re.search(r"[0-9]{4}", shader).group(0), extension))
+        texture_name = os.path.join(
+            directory, "{0}{1}.{2}".format(prefix, re.search(r"[0-9]{4}", shader).group(0), extension))
         if not os.path.exists(texture_name):
             print("'{0}' file doesn't exists!".format(texture_name))
             continue
@@ -969,6 +1023,7 @@ def get_preview_mari_textures_branches(directory, prefix, extension, shader="lam
         cmds.connectAttr("{0}.outColor".format(file_node), "{0}.color".format(shader), force=True)
         cmds.rename(file_node, "{0}_file".format(shader))
     return True
+
 
 @stacks_handler
 def assign_mari_preview_textures():
@@ -991,6 +1046,7 @@ def assign_mari_preview_textures():
     directory = os.path.dirname(file)
     return get_preview_mari_textures_branches(directory, prefix, suffix)
 
+
 @stacks_handler
 def flip_uvs_button__on_clicked(state=None):
     """
@@ -1002,6 +1058,7 @@ def flip_uvs_button__on_clicked(state=None):
 
     selection = cmds.ls(sl=True, l=True)
     selection and mirror_components_uvs(selection)
+
 
 @stacks_handler
 def move_up_uvs_button__on_clicked(state=None):
@@ -1015,6 +1072,7 @@ def move_up_uvs_button__on_clicked(state=None):
     selection = cmds.ls(sl=True, l=True)
     selection and move_components_uvs(selection, v=cmds.floatField("move_factor_floatField", q=True, value=True))
 
+
 @stacks_handler
 def flop_uvs_button__on_clicked(state=None):
     """
@@ -1027,6 +1085,7 @@ def flop_uvs_button__on_clicked(state=None):
     selection = cmds.ls(sl=True, l=True)
     selection and mirror_components_uvs(selection, horizontal=False)
 
+
 @stacks_handler
 def move_left_uvs_button__on_clicked(state=None):
     """
@@ -1037,7 +1096,8 @@ def move_left_uvs_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and move_components_uvs(selection, u= -cmds.floatField("move_factor_floatField", q=True, value=True))
+    selection and move_components_uvs(selection, u=-cmds.floatField("move_factor_floatField", q=True, value=True))
+
 
 @stacks_handler
 def fit_uvs_button__on_clicked(state=None):
@@ -1049,7 +1109,9 @@ def fit_uvs_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and scale_center_components_uvs(selection, float(cmds.intField("coverage_intField", q=True, value=True)) / 100)
+    selection and scale_center_components_uvs(
+        selection, float(cmds.intField("coverage_intField", q=True, value=True)) / 100)
+
 
 @stacks_handler
 def move_right_uvs_button__on_clicked(state=None):
@@ -1063,6 +1125,7 @@ def move_right_uvs_button__on_clicked(state=None):
     selection = cmds.ls(sl=True, l=True)
     selection and move_components_uvs(selection, u=cmds.floatField("move_factor_floatField", q=True, value=True))
 
+
 @stacks_handler
 def center_uvs_button__on_clicked(state=None):
     """
@@ -1075,6 +1138,7 @@ def center_uvs_button__on_clicked(state=None):
     selection = cmds.ls(sl=True, l=True)
     selection and center_components_uvs(selection)
 
+
 @stacks_handler
 def move_down_uvs_button__on_clicked(state=None):
     """
@@ -1085,7 +1149,8 @@ def move_down_uvs_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and move_components_uvs(selection, v= -cmds.floatField("move_factor_floatField", q=True, value=True))
+    selection and move_components_uvs(selection, v=-cmds.floatField("move_factor_floatField", q=True, value=True))
+
 
 @stacks_handler
 def scale_uvs_button__on_clicked(state=None):
@@ -1097,7 +1162,9 @@ def scale_uvs_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and scale_components_uvs(selection, su=cmds.floatField("u_scale_floatField", q=True, value=True), sv=cmds.floatField("v_scale_floatField", q=True, value=True))
+    selection and scale_components_uvs(selection, su=cmds.floatField(
+        "u_scale_floatField", q=True, value=True), sv=cmds.floatField("v_scale_floatField", q=True, value=True))
+
 
 @stacks_handler
 def rotate_counter_clock_wise_uvs_button__on_clicked(state=None):
@@ -1109,7 +1176,9 @@ def rotate_counter_clock_wise_uvs_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and poly_rotate_components_uvs(selection, cmds.floatField("rotation_floatField", q=True, value=True), clock_wise=False)
+    selection and poly_rotate_components_uvs(
+        selection, cmds.floatField("rotation_floatField", q=True, value=True), clock_wise=False)
+
 
 @stacks_handler
 def rotate_clock_wise_uvs_button__on_clicked(state=None):
@@ -1123,6 +1192,7 @@ def rotate_clock_wise_uvs_button__on_clicked(state=None):
     selection = cmds.ls(sl=True, l=True)
     selection and poly_rotate_components_uvs(selection, cmds.floatField("rotation_floatField", q=True, value=True))
 
+
 @stacks_handler
 def stack_uvs_on_u_bottom_button__on_clicked(state=None):
     """
@@ -1133,7 +1203,9 @@ def stack_uvs_on_u_bottom_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and stack_objects_uvs(selection, alignement="bottom", margin=cmds.floatField("margin_floatField", q=True, value=True))
+    selection and stack_objects_uvs(
+        selection, alignement="bottom", margin=cmds.floatField("margin_floatField", q=True, value=True))
+
 
 @stacks_handler
 def stack_uvs_on_u_center_button__on_clicked(state=None):
@@ -1145,7 +1217,9 @@ def stack_uvs_on_u_center_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and stack_objects_uvs(selection, alignement="center", margin=cmds.floatField("margin_floatField", q=True, value=True))
+    selection and stack_objects_uvs(
+        selection, alignement="center", margin=cmds.floatField("margin_floatField", q=True, value=True))
+
 
 @stacks_handler
 def stack_uvs_on_u_top_button__on_clicked(state=None):
@@ -1157,7 +1231,9 @@ def stack_uvs_on_u_top_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and stack_objects_uvs(selection, alignement="top", margin=cmds.floatField("margin_floatField", q=True, value=True))
+    selection and stack_objects_uvs(
+        selection, alignement="top", margin=cmds.floatField("margin_floatField", q=True, value=True))
+
 
 @stacks_handler
 def stack_uvs_on_v_left_button__on_clicked(state=None):
@@ -1169,7 +1245,9 @@ def stack_uvs_on_v_left_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and stack_objects_uvs(selection, alignement="left", horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
+    selection and stack_objects_uvs(
+        selection, alignement="left", horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
+
 
 @stacks_handler
 def stack_uvs_on_v_center_button__on_clicked(state=None):
@@ -1181,7 +1259,10 @@ def stack_uvs_on_v_center_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and stack_objects_uvs(selection, alignement="center", horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
+    selection and stack_objects_uvs(
+        selection, alignement="center", horizontal=False,
+        margin=cmds.floatField("margin_floatField", q=True, value=True))
+
 
 @stacks_handler
 def stack_uvs_on_v_right_button__on_clicked(state=None):
@@ -1193,7 +1274,10 @@ def stack_uvs_on_v_right_button__on_clicked(state=None):
     """
 
     selection = cmds.ls(sl=True, l=True)
-    selection and stack_objects_uvs(selection, alignement="right", horizontal=False, margin=cmds.floatField("margin_floatField", q=True, value=True))
+    selection and stack_objects_uvs(
+        selection, alignement="right", horizontal=False,
+        margin=cmds.floatField("margin_floatField", q=True, value=True))
+
 
 @stacks_handler
 def prescale_uvs_shells_button__on_clicked(state=None):
@@ -1208,6 +1292,7 @@ def prescale_uvs_shells_button__on_clicked(state=None):
     for object in selection:
         prescale_uvs_shells(object)
 
+
 @stacks_handler
 def auto_ratio_uvs_areas_button__on_clicked(state=None):
     """
@@ -1219,6 +1304,7 @@ def auto_ratio_uvs_areas_button__on_clicked(state=None):
 
     selection = cmds.ls(sl=True, l=True)
     selection and auto_ratio_uvs_areas(selection)
+
 
 @stacks_handler
 def add_uvs_checker_button__on_clicked(state=None):
@@ -1232,6 +1318,7 @@ def add_uvs_checker_button__on_clicked(state=None):
     selection = cmds.ls(sl=True, l=True)
     selection and add_uvs_checker(selection)
 
+
 @stacks_handler
 def remove_uvs_checker_button__on_clicked(state=None):
     """
@@ -1244,6 +1331,7 @@ def remove_uvs_checker_button__on_clicked(state=None):
     selection = cmds.ls(sl=True, l=True)
     selection and remove_uvs_checker(selection)
 
+
 @stacks_handler
 def u_repeat_float_field__on_changed(value=None):
     """
@@ -1254,6 +1342,7 @@ def u_repeat_float_field__on_changed(value=None):
     """
 
     set_uvs_checker_repeats(u_repeats=value)
+
 
 @stacks_handler
 def v_repeat_float_field__on_changed(value=None):
@@ -1266,6 +1355,7 @@ def v_repeat_float_field__on_changed(value=None):
 
     set_uvs_checker_repeats(v_repeats=value)
 
+
 def unfolding_tools_window():
     """
     Creates the 'Unfolding Tools' main window.
@@ -1277,8 +1367,8 @@ def unfolding_tools_window():
         cmds.deleteUI("unfolding_tools_window")
 
     cmds.window("unfolding_tools_window",
-        title="Unfolding Tools",
-        width=320)
+                title="Unfolding Tools",
+                width=320)
 
     spacing = 0
 
@@ -1321,8 +1411,8 @@ def unfolding_tools_window():
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
     cmds.text(label="Scale U / V:")
-    cmds.floatField("u_scale_floatField", minValue= -10, maxValue=10, value=1)
-    cmds.floatField("v_scale_floatField", minValue= -10, maxValue=10, value=1)
+    cmds.floatField("u_scale_floatField", minValue=-10, maxValue=10, value=1)
+    cmds.floatField("v_scale_floatField", minValue=-10, maxValue=10, value=1)
     cmds.setParent(upLevel=True)
 
     cmds.setParent(upLevel=True)
@@ -1333,14 +1423,15 @@ def unfolding_tools_window():
     cmds.columnLayout()
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
-    cmds.button("rotate_counter_clock_wise_uvs_button", label="Rotate CCWZ", command=rotate_counter_clock_wise_uvs_button__on_clicked)
+    cmds.button("rotate_counter_clock_wise_uvs_button", label="Rotate CCWZ",
+                command=rotate_counter_clock_wise_uvs_button__on_clicked)
     cmds.button(label="", enable=False)
     cmds.button("rotate_clock_wise_uvs_button", label="Rotate CWZ", command=rotate_clock_wise_uvs_button__on_clicked)
     cmds.setParent(upLevel=True)
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
     cmds.text(label="Angle:")
-    cmds.floatField("rotation_floatField", minValue= -360, maxValue=360, value=45)
+    cmds.floatField("rotation_floatField", minValue=-360, maxValue=360, value=45)
     cmds.setParent(upLevel=True)
 
     cmds.setParent(upLevel=True)
@@ -1358,7 +1449,8 @@ def unfolding_tools_window():
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
     cmds.button("align_uvs_minimum_u_button", label="Align Min. U", command=lambda state: mel.eval("alignUV 1 1 0 0;"))
-    cmds.button("straighten_uvs_button", label="Straigthen", command=lambda state: mel.eval("warning \"Not implemented yet!\";"))
+    cmds.button("straighten_uvs_button", label="Straigthen",
+                command=lambda state: mel.eval("warning \"Not implemented yet!\";"))
     cmds.button("align_uvs_maximum_u_button", label="Align Max. U", command=lambda state: mel.eval("alignUV 1 0 0 0;"))
     cmds.setParent(upLevel=True)
 
@@ -1376,15 +1468,19 @@ def unfolding_tools_window():
     cmds.columnLayout()
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
-    cmds.button("stack_uvs_on_u_bottom_button", label="Stack On U Bottom", command=stack_uvs_on_u_bottom_button__on_clicked)
-    cmds.button("stack_uvs_on_u_center_button", label="Stack On U Center", command=stack_uvs_on_u_center_button__on_clicked)
+    cmds.button("stack_uvs_on_u_bottom_button", label="Stack On U Bottom",
+                command=stack_uvs_on_u_bottom_button__on_clicked)
+    cmds.button("stack_uvs_on_u_center_button", label="Stack On U Center",
+                command=stack_uvs_on_u_center_button__on_clicked)
     cmds.button("stack_uvs_on_u_top_button", label="Stack On U Top", command=stack_uvs_on_u_top_button__on_clicked)
     cmds.setParent(upLevel=True)
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
     cmds.button("stack_uvs_on_v_left_button", label="Stack On V Left", command=stack_uvs_on_v_left_button__on_clicked)
-    cmds.button("stack_uvs_on_v_center_button", label="Stack On V Center", command=stack_uvs_on_v_center_button__on_clicked)
-    cmds.button("stack_uvs_on_v_right_button", label="Stack On V Right", command=stack_uvs_on_v_right_button__on_clicked)
+    cmds.button("stack_uvs_on_v_center_button", label="Stack On V Center",
+                command=stack_uvs_on_v_center_button__on_clicked)
+    cmds.button("stack_uvs_on_v_right_button", label="Stack On V Right",
+                command=stack_uvs_on_v_right_button__on_clicked)
     cmds.setParent(upLevel=True)
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
@@ -1413,9 +1509,11 @@ def unfolding_tools_window():
     cmds.columnLayout()
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
-    cmds.button("print_uvs_uvdims_button", label="Print UVDims", command=lambda state: print_components_occupation_as_uv_dims())
+    cmds.button("print_uvs_uvdims_button", label="Print UVDims",
+                command=lambda state: print_components_occupation_as_uv_dims())
     cmds.button(label="", enable=False)
-    cmds.button("print_uvs_mari_patches_button", label="Print Mari Patches", command=lambda state: print_components_occupation_as_mari_patches())
+    cmds.button("print_uvs_mari_patches_button", label="Print Mari Patches",
+                command=lambda state: print_components_occupation_as_mari_patches())
     cmds.setParent(upLevel=True)
 
     cmds.setParent(upLevel=True)
@@ -1433,10 +1531,11 @@ def unfolding_tools_window():
 
     cmds.rowLayout(numberOfColumns=3, columnWidth3=columnsWidth, columnAttach=columnsAttach)
     cmds.text(label="Repeat U / V:")
-    cmds.floatField("u_repeat_floatField", minValue=0.01, maxValue=256, value=4, step=0.25, changeCommand=u_repeat_float_field__on_changed)
-    cmds.floatField("v_repeat_floatField", minValue=0.01, maxValue=256, value=4, step=0.25, changeCommand=v_repeat_float_field__on_changed)
+    cmds.floatField("u_repeat_floatField", minValue=0.01, maxValue=256, value=4,
+                    step=0.25, changeCommand=u_repeat_float_field__on_changed)
+    cmds.floatField("v_repeat_floatField", minValue=0.01, maxValue=256, value=4,
+                    step=0.25, changeCommand=v_repeat_float_field__on_changed)
     cmds.setParent(upLevel=True)
-
 
     cmds.setParent(upLevel=True)
     cmds.setParent(upLevel=True)
@@ -1444,6 +1543,7 @@ def unfolding_tools_window():
     cmds.showWindow("unfolding_tools_window")
 
     cmds.windowPref(enableAll=True)
+
 
 def unfolding_tools():
     """

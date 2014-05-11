@@ -37,6 +37,7 @@ GLOB_FILTER = "tif"
 OUTPUT_FILE_FORMAT = "tif"
 SHELLS_FILTER = "u[0-9]+_v[0-9]+"
 
+
 def _get_uvs_shells_siblings(elements, filter=SHELLS_FILTER):
     """
     Gets UVs shells siblings from given elements.
@@ -58,10 +59,11 @@ def _get_uvs_shells_siblings(elements, filter=SHELLS_FILTER):
         uv_shell = search.group(0)
         name = get_splitext_basename(element)
         if uv_shell not in uvs_shells_siblings:
-            uvs_shells_siblings[uv_shell] = {name:element}
+            uvs_shells_siblings[uv_shell] = {name: element}
         else:
             uvs_shells_siblings[uv_shell][name] = element
     return uvs_shells_siblings
+
 
 def _getReadNode(name="", file=None):
     """
@@ -76,6 +78,7 @@ def _getReadNode(name="", file=None):
     """
 
     return nuke.nodes.Read(file=file, name="{0}_Read".format(name))
+
 
 def _get_merge_2_node(name="", nodes=None, use_mask=True):
     """
@@ -99,6 +102,7 @@ def _get_merge_2_node(name="", nodes=None, use_mask=True):
         merge.setInput(i, node)
     return merge
 
+
 def _get_write_node(name="", file=None, node=None):
     """
     Gets a Nuke **Write** node.
@@ -117,6 +121,7 @@ def _get_write_node(name="", file=None, node=None):
     write.setInput(0, node)
     return write
 
+
 def get_splitext_basename(path):
     """
     Gets the basename of a path without its extension.
@@ -129,6 +134,7 @@ def get_splitext_basename(path):
 
     basename = os.path.splitext(os.path.basename(os.path.normpath(path)))[0]
     return basename
+
 
 def get_uvs_shells_siblings_trees(elements, output_directory, output_fileFormat, outputPrefix=""):
     """
@@ -153,8 +159,10 @@ def get_uvs_shells_siblings_trees(elements, output_directory, output_fileFormat,
             files.append(_getReadNode(name, sibling))
 
         merge = _get_merge_2_node(shell, files, use_mask=False)
-        writes.append(_get_write_node(shell, os.path.join(output_directory, "{0}{1}.{2}".format(outputPrefix, shell, output_fileFormat)), merge))
+        writes.append(_get_write_node(
+            shell, os.path.join(output_directory, "{0}{1}.{2}".format(outputPrefix, shell, output_fileFormat)), merge))
     return writes
+
 
 def combine_images_with_uvs_shells_identifiers():
     """
@@ -164,9 +172,12 @@ def combine_images_with_uvs_shells_identifiers():
     :rtype: bool
     """
 
-    directory = nuke.getFilename("Choose a directory containing images with UVs shells identifiers to combine!", multiple=False)
-    if not directory: return
-    if not os.path.exists(directory): return
+    directory = nuke.getFilename(
+        "Choose a directory containing images with UVs shells identifiers to combine!", multiple=False)
+    if not directory:
+        return
+    if not os.path.exists(directory):
+        return
 
     directory = os.path.isfile(directory) and os.path.dirname(directory) or directory
     files = glob.glob("{0}/*{1}".format(directory, GLOB_FILTER))

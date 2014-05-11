@@ -42,6 +42,7 @@ __all__ = ["LOGGER", "MayaLoggingHandler"]
 
 LOGGER = logging.getLogger(Constants.logger)
 
+
 class MayaLoggingHandler(logging.Handler):
     """
     Defines a Maya friendly logging handler.

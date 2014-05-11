@@ -9,51 +9,52 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["DEFAULTS_HOTKEYS",
-            "TRANSFERT_SELECTION_HOTKEY",
-            "stacks_handler",
-            "get_shapes",
-            "transfert_vertices_positions_in_uvs_space",
-            "transfert_selected_objects_vertices_positions_in_uvs_space",
-            "transfert_vertices_positions_in_world_space",
-            "transfert_selected_objects_vertices_positions_in_world_space",
-            "transfert_uvs_in_topology_space",
-            "transfert_selected_objects_uvs_in_topology_space",
-            "toggle_selection_highlight",
-            "toggle_geometries_visibility",
-            "toggle_shading_override",
-            "toggle_selected_objects_shading_override",
-            "isolate_selected_objects",
-            "split_ring_middle",
-            "split_ring_middle_selected_objects",
-            "symmetrical_instance",
-            "symmetrical_instance_selected_objects",
-            "pivots_identity",
-            "pivots_identity_selected_objects",
-            "flattenHierarchy",
-            "flatten_selected_objects_hierachy",
-            "transfert_selection",
-            "transfert_selection_to_user_target",
-            "pick_target_button__on_clicked",
-            "transfert_selection_button__on_clicked",
-            "transfert_selection_to_target_window",
-            "transfert_selection_to_target"]
+           "TRANSFERT_SELECTION_HOTKEY",
+           "stacks_handler",
+           "get_shapes",
+           "transfert_vertices_positions_in_uvs_space",
+           "transfert_selected_objects_vertices_positions_in_uvs_space",
+           "transfert_vertices_positions_in_world_space",
+           "transfert_selected_objects_vertices_positions_in_world_space",
+           "transfert_uvs_in_topology_space",
+           "transfert_selected_objects_uvs_in_topology_space",
+           "toggle_selection_highlight",
+           "toggle_geometries_visibility",
+           "toggle_shading_override",
+           "toggle_selected_objects_shading_override",
+           "isolate_selected_objects",
+           "split_ring_middle",
+           "split_ring_middle_selected_objects",
+           "symmetrical_instance",
+           "symmetrical_instance_selected_objects",
+           "pivots_identity",
+           "pivots_identity_selected_objects",
+           "flattenHierarchy",
+           "flatten_selected_objects_hierachy",
+           "transfert_selection",
+           "transfert_selection_to_user_target",
+           "pick_target_button__on_clicked",
+           "transfert_selection_button__on_clicked",
+           "transfert_selection_to_target_window",
+           "transfert_selection_to_target"]
 
 __interfaces__ = ["transfert_selected_objects_vertices_positions_in_uvs_space",
-                "transfert_selected_objects_vertices_positions_in_world_space",
-                "transfert_selected_objects_uvs_in_topology_space",
-                "toggle_selection_highlight",
-                "toggle_geometries_visibility",
-                "toggle_selected_objects_shading_override",
-                "isolate_selected_objects",
-                "split_ring_middle_selected_objects",
-                "symmetrical_instance_selected_objects",
-                "pivots_identity_selected_objects",
-                "flatten_selected_objects_hierachy",
-                "transfert_selection",
-                "transfert_selection_to_target"]
+                  "transfert_selected_objects_vertices_positions_in_world_space",
+                  "transfert_selected_objects_uvs_in_topology_space",
+                  "toggle_selection_highlight",
+                  "toggle_geometries_visibility",
+                  "toggle_selected_objects_shading_override",
+                  "isolate_selected_objects",
+                  "split_ring_middle_selected_objects",
+                  "symmetrical_instance_selected_objects",
+                  "pivots_identity_selected_objects",
+                  "flatten_selected_objects_hierachy",
+                  "transfert_selection",
+                  "transfert_selection_to_target"]
 
 DEFAULTS_HOTKEYS = {}
 TRANSFERT_SELECTION_HOTKEY = "t"
+
 
 def stacks_handler(object):
     """
@@ -78,12 +79,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def get_shapes(object, full_path=False, no_intermediate=True):
     """
@@ -106,6 +109,7 @@ def get_shapes(object, full_path=False, no_intermediate=True):
 
     return object_shapes
 
+
 @stacks_handler
 def transfert_vertices_positions_in_uvs_space(targets, source):
     """
@@ -121,6 +125,7 @@ def transfert_vertices_positions_in_uvs_space(targets, source):
         cmds.transferAttributes(source, target, transferPositions=1, sampleSpace=3)
         cmds.delete(source, ch=True)
 
+
 @stacks_handler
 def transfert_selected_objects_vertices_positions_in_uvs_space():
     """
@@ -129,6 +134,7 @@ def transfert_selected_objects_vertices_positions_in_uvs_space():
 
     selection = cmds.ls(sl=True, l=True)
     selection and transfert_vertices_positions_in_uvs_space(selection[:-1], selection[-1])
+
 
 @stacks_handler
 def transfert_vertices_positions_in_world_space(targets, source, search_method=0):
@@ -147,6 +153,7 @@ def transfert_vertices_positions_in_world_space(targets, source, search_method=0
         cmds.transferAttributes(source, target, transferPositions=1, sampleSpace=0, searchMethod=3)
         cmds.delete(source, ch=True)
 
+
 @stacks_handler
 def transfert_selected_objects_vertices_positions_in_world_space():
     """
@@ -155,6 +162,7 @@ def transfert_selected_objects_vertices_positions_in_world_space():
 
     selection = cmds.ls(sl=True, l=True)
     selection and transfert_vertices_positions_in_world_space(selection[:-1], selection[-1], 0)
+
 
 @stacks_handler
 def transfert_uvs_in_topology_space(targets, source):
@@ -171,6 +179,7 @@ def transfert_uvs_in_topology_space(targets, source):
         cmds.transferAttributes(source, target, transferUvs=2, sampleSpace=5)
         cmds.delete(source, ch=True)
 
+
 @stacks_handler
 def transfert_selected_objects_uvs_in_topology_space():
     """
@@ -179,6 +188,7 @@ def transfert_selected_objects_uvs_in_topology_space():
 
     selection = cmds.ls(sl=True, l=True)
     selection and transfert_uvs_in_topology_space(selection[:-1], selection[-1])
+
 
 @stacks_handler
 def toggle_selection_highlight():
@@ -191,6 +201,7 @@ def toggle_selection_highlight():
         cmds.modelEditor(panel, e=True, sel=not cmds.modelEditor(panel, q=True, sel=True))
     except:
         pass
+
 
 @stacks_handler
 def toggle_geometries_visibility():
@@ -207,6 +218,7 @@ def toggle_geometries_visibility():
     except:
         pass
 
+
 @stacks_handler
 def toggle_shading_override(objects):
     """
@@ -221,6 +233,7 @@ def toggle_shading_override(objects):
         cmds.setAttr("{0}.overrideEnabled".format(shape), 1)
         cmds.setAttr("{0}.overrideShading".format(shape), not cmds.getAttr("{0}.overrideShading".format(shape)))
 
+
 @stacks_handler
 def toggle_selected_objects_shading_override():
     """
@@ -230,6 +243,7 @@ def toggle_selected_objects_shading_override():
     selection = cmds.ls(sl=True, l=True, type="transform")
     selection and toggle_shading_override(selection)
 
+
 @stacks_handler
 def isolate_selected_objects():
     """
@@ -238,9 +252,11 @@ def isolate_selected_objects():
 
     panel = cmds.getPanel(withFocus=True)
     try:
-        mel.eval("enableIsolateSelect {0} {1};".format(panel, str(not cmds.isolateSelect(panel, q=True, state=True)).lower()))
+        mel.eval("enableIsolateSelect {0} {1};".format(
+            panel, str(not cmds.isolateSelect(panel, q=True, state=True)).lower()))
     except:
         pass
+
 
 @stacks_handler
 def split_ring_middle(nodes):
@@ -256,6 +272,7 @@ def split_ring_middle(nodes):
             if cmds.nodeType(history_node) == "polySplitRing":
                 cmds.setAttr("{0}.weight".format(history_node), 0.5)
 
+
 @stacks_handler
 def split_ring_middle_selected_objects():
     """
@@ -264,6 +281,7 @@ def split_ring_middle_selected_objects():
 
     selection = cmds.ls(sl=True, l=True)
     selection and split_ring_middle(selection)
+
 
 @stacks_handler
 def symmetrical_instance(object):
@@ -277,6 +295,7 @@ def symmetrical_instance(object):
     instance = cmds.instance(object)
     cmds.setAttr("{0}.sx".format(object), -1)
 
+
 @stacks_handler
 def symmetrical_instance_selected_objects():
     """
@@ -286,6 +305,7 @@ def symmetrical_instance_selected_objects():
     selection = list(set(cmds.ls(sl=True, l=True, o=True)))
     for object in selection:
         symmetrical_instance(object)
+
 
 @stacks_handler
 def pivots_identity(transforms):
@@ -303,6 +323,7 @@ def pivots_identity(transforms):
         except:
             pass
 
+
 @stacks_handler
 def pivots_identity_selected_objects():
     """
@@ -311,6 +332,7 @@ def pivots_identity_selected_objects():
 
     selection = cmds.ls(sl=True, l=True, type="transform")
     selection and pivots_identity(selection)
+
 
 @stacks_handler
 def flatten_hierachy(object):
@@ -335,6 +357,7 @@ def flatten_hierachy(object):
                 cmds.delete(relative)
     return True
 
+
 @stacks_handler
 def flatten_selected_objects_hierachy():
     """
@@ -344,6 +367,7 @@ def flatten_selected_objects_hierachy():
     selection = cmds.ls(sl=True, l=True)
     for object in selection:
         flatten_hierachy(object)
+
 
 @stacks_handler
 def transfert_selection():
@@ -374,6 +398,7 @@ def transfert_selection():
         next_selection and cmds.select(next_selection)
     return True
 
+
 @stacks_handler
 def transfert_selection_to_user_target():
     """
@@ -390,6 +415,7 @@ def transfert_selection_to_user_target():
     cmds.select(source, add=True)
     return transfert_selection()
 
+
 @stacks_handler
 def pick_target_button__on_clicked(state=None):
     """
@@ -402,6 +428,7 @@ def pick_target_button__on_clicked(state=None):
     selection = cmds.ls(sl=True, l=True)
     selection and cmds.textField("target_textField", edit=True, text=selection[0])
 
+
 @stacks_handler
 def set_unset_context_hotkeys():
     """
@@ -413,8 +440,8 @@ def set_unset_context_hotkeys():
     name = "transfert_selectionNamedCommand"
     if cmds.hotkey(sequence, query=True, name=True) != name:
         print("{0} | Assigning '{1}' hotkey to '{2}' command!".format(__name__, sequence, name))
-        DEFAULTS_HOTKEYS[sequence] = {"name" : cmds.hotkey(sequence, query=True, name=True),
-                                "releaseName" : cmds.hotkey(sequence, query=True, releaseName=True)}
+        DEFAULTS_HOTKEYS[sequence] = {"name": cmds.hotkey(sequence, query=True, name=True),
+                                      "releaseName": cmds.hotkey(sequence, query=True, releaseName=True)}
 
         cmds.nameCommand(name, annotation="Transfert Selection", command=command)
         cmds.hotkey(k=sequence, rcr=True, name=name)
@@ -424,6 +451,7 @@ def set_unset_context_hotkeys():
             print("{0} | Unassigning '{1}' hotkey from '{2}' command!".format(__name__, sequence, name))
             cmds.hotkey(k=sequence, name=hotkey.get("name"), releaseName=hotkey.get("releaseName"))
     return True
+
 
 @stacks_handler
 def transfert_selection_button__on_clicked(state=None):
@@ -436,6 +464,7 @@ def transfert_selection_button__on_clicked(state=None):
 
     transfert_selection_to_user_target()
 
+
 def transfert_selection_to_target_window():
     """
     Creates the 'Transfert Selection To Target' main window.
@@ -447,14 +476,15 @@ def transfert_selection_to_target_window():
         cmds.deleteUI("transfert_selection_to_target_window")
 
     cmds.window("transfert_selection_to_target_window",
-        title="Transfert Selection To Target",
-        width=320)
+                title="Transfert Selection To Target",
+                width=320)
 
     spacing = 5
 
     cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
-    cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
+    cmds.rowLayout(numberOfColumns=3, columnWidth3=(125, 150, 130), adjustableColumn=2, columnAlign=(
+        2, "left"), columnAttach=[(1, "both", spacing), (2, "both", spacing), (3, "both", spacing)])
     cmds.text(label="Target:")
     sources_textField = cmds.textField("target_textField")
     cmds.button("pick_target_button", label="Pick Target!", command=pick_target_button__on_clicked)
@@ -462,14 +492,17 @@ def transfert_selection_to_target_window():
 
     cmds.separator(style="single")
 
-    cmds.button("transfert_selection_button", label="Transfert Selection!", command=transfert_selection_button__on_clicked)
+    cmds.button("transfert_selection_button", label="Transfert Selection!",
+                command=transfert_selection_button__on_clicked)
 
     set_unset_context_hotkeys()
-    scriptJob = cmds.scriptJob(uiDeleted=("transfert_selection_to_target_window", set_unset_context_hotkeys), runOnce=True)
+    scriptJob = cmds.scriptJob(
+        uiDeleted=("transfert_selection_to_target_window", set_unset_context_hotkeys), runOnce=True)
 
     cmds.showWindow("transfert_selection_to_target_window")
 
     cmds.windowPref(enableAll=True)
+
 
 @stacks_handler
 def transfert_selection_to_target():

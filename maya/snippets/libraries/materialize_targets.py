@@ -37,6 +37,7 @@ __all__ = ["stacks_handler",
 
 __interfaces__ = ["materialize_targets"]
 
+
 def stacks_handler(object):
     """
     Handles Maya stacks.
@@ -68,6 +69,7 @@ def stacks_handler(object):
 
     return stacks_handler_wrapper
 
+
 def pick_blend_shape_button__on_clicked(state=None):
     """
     Defines the slot triggered by **pick_blend_shape_button** button when clicked.
@@ -77,6 +79,7 @@ def pick_blend_shape_button__on_clicked(state=None):
     """
     cmds.textField("blend_shape_node_TextField", edit=True, text=cmds.ls(sl=True, l=True)[0])
 
+
 def pick_extraction_source_button__on_clicked(state=None):
     """
     Defines the slot triggered by **pick_extraction_source_button** button when clicked.
@@ -85,6 +88,7 @@ def pick_extraction_source_button__on_clicked(state=None):
     :type state: bool
     """
     cmds.textField("extractionSource_TextField", edit=True, text=cmds.ls(sl=True, l=True)[0])
+
 
 @stacks_handler
 def materialize_targets_button__on_clicked(state=None):
@@ -99,6 +103,7 @@ def materialize_targets_button__on_clicked(state=None):
 
     if blend_shapes_node != "" and duplication_source != "":
         materialize_blendshape_targets(blend_shapes_node, duplication_source)
+
 
 @stacks_handler
 def materialize_blendshape_targets(blend_shape_node, duplication_source):
@@ -125,6 +130,7 @@ def materialize_blendshape_targets(blend_shape_node, duplication_source):
             cmds.setAttr("{0}.{1}".format(blend_shape_node, target), 0)
         except:
             pass
+
 
 def materialize_targets_window():
     cmds.windowPref(enableAll=False)
@@ -164,6 +170,7 @@ def materialize_targets_window():
     cmds.showWindow("materialize_targets_window")
 
     cmds.windowPref(enableAll=True)
+
 
 def materialize_targets():
     """

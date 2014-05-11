@@ -23,8 +23,10 @@ Enter Description Here
 import sys
 
 SNIPPETS_PATH = "/usr/people/thomas-ma/Developement/Snippets/katana"
-not SNIPPETS_PATH in sys. path and sys.path.append(SNIPPETS_PATH)
+not SNIPPETS_PATH in sys.path and sys.path.append(SNIPPETS_PATH)
 
 import snippets.libraries.utilities
 
-snippets.libraries.utilities.single_shot_script_node("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/listParametersHints_Script_vLatest.katana", "listParametersHints")
+snippets.libraries.utilities.single_shot_script_node(
+    "/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/listParametersHints_Script_vLatest.katana",
+    "listParametersHints")

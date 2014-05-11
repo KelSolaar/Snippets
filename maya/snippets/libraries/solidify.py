@@ -11,21 +11,22 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["stacks_handler",
-            "get_transform",
-            "get_mvector",
-            "get_mmatrix",
-            "normalize",
-            "vector_matrix_multiplication",
-            "dot",
-            "get_average_vector",
-            "get_angle",
-            "has_border_edges",
-            "solidify_object",
-            "solidify_button__on_clicked",
-            "solidify_window",
-            "solidify"]
+           "get_transform",
+           "get_mvector",
+           "get_mmatrix",
+           "normalize",
+           "vector_matrix_multiplication",
+           "dot",
+           "get_average_vector",
+           "get_angle",
+           "has_border_edges",
+           "solidify_object",
+           "solidify_button__on_clicked",
+           "solidify_window",
+           "solidify"]
 
 __interfaces__ = ["solidify"]
+
 
 def stacks_handler(object):
     """
@@ -50,12 +51,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def get_transform(node, full_path=True):
     """
@@ -75,6 +78,7 @@ def get_transform(node, full_path=True):
         transform = parents[0]
     return transform
 
+
 def get_mvector(vector):
     """
     Returns an MVector.
@@ -86,6 +90,7 @@ def get_mvector(vector):
     """
 
     return OpenMaya.MVector(vector[0], vector[1], vector[2])
+
 
 def get_mmatrix(matrix):
     """
@@ -101,6 +106,7 @@ def get_mmatrix(matrix):
     OpenMaya.MScriptUtil.createMatrixFromList(matrix, mMatrix)
     return mMatrix
 
+
 def normalize(vector):
     """
     Returns the normalized vector.
@@ -114,6 +120,7 @@ def normalize(vector):
     mvector = get_mvector(vector)
     mvector.normalize()
     return (mvector.x, mvector.y, mvector.z)
+
 
 def vector_matrix_multiplication(vector, matrix):
     """
@@ -132,6 +139,7 @@ def vector_matrix_multiplication(vector, matrix):
     mvector = mvector * mMatrix
     return (mvector.x, mvector.y, mvector.z)
 
+
 def dot(vector_a, vector_b):
     """
     Returns the dot product between two vectors.
@@ -147,6 +155,7 @@ def dot(vector_a, vector_b):
     mvector_a = get_mvector(vector_a)
     mvector_b = get_mvector(vector_b)
     return mvector_a * mvector_b
+
 
 def get_average_vector(vectors):
     """
@@ -166,6 +175,7 @@ def get_average_vector(vectors):
         average_vector[i] = average_vector[i] / len(vectors)
     return average_vector
 
+
 def get_angle(vector_a, vector_b):
     """
     Returns the angle between two vectors.
@@ -179,6 +189,7 @@ def get_angle(vector_a, vector_b):
     """
 
     return math.degrees(math.acos(dot(vector_a, vector_b)))
+
 
 def has_border_edges(object):
     """
@@ -195,6 +206,7 @@ def has_border_edges(object):
     cmds.polySelectConstraint(m=0)
     if cmds.ls(sl=True):
         return True
+
 
 def solidify_object(object, height=1, divisions=2, history=True):
     """
@@ -215,11 +227,14 @@ def solidify_object(object, height=1, divisions=2, history=True):
         vertices = cmds.ls(cmds.polyListComponentConversion(object, toVertex=True), fl=True)
 
         barycenters = cmds.xform(vertices, q=True, t=True, ws=True)
-        barycenter = get_average_vector([(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
+        barycenter = get_average_vector(
+            [(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
 
-        normals = cmds.polyNormalPerVertex(cmds.polyListComponentConversion(object, toVertexFace=True), q=True, xyz=True)
+        normals = cmds.polyNormalPerVertex(
+            cmds.polyListComponentConversion(object, toVertexFace=True), q=True, xyz=True)
         normals = [(normals[i], normals[i + 1], normals[i + 2]) for i in range(0, len(normals), 3)]
-        average_normal = vector_matrix_multiplication(normalize(get_average_vector(normals)), cmds.xform(transform, query=True, matrix=True, worldSpace=True))
+        average_normal = vector_matrix_multiplication(
+            normalize(get_average_vector(normals)), cmds.xform(transform, query=True, matrix=True, worldSpace=True))
 
         faces_count = cmds.polyEvaluate(object, face=True)
         faces = "{0}.f[0:{1}]".format(object, faces_count - 1)
@@ -228,7 +243,7 @@ def solidify_object(object, height=1, divisions=2, history=True):
         border_edges = cmds.polyListComponentConversion(faces, te=True, bo=True)
         cmds.polyMapCut(border_edges)
         uvs = cmds.polyListComponentConversion("{0}.f[0:{1}]".format(object, faces_count - 1), toUV=1)
-        cmds.polyEditUV(uvs, u=0, v= -5)
+        cmds.polyEditUV(uvs, u=0, v=-5)
 
         extended_faces = cmds.ls(faces, fl=True)
         for i in range(divisions):
@@ -237,11 +252,13 @@ def solidify_object(object, height=1, divisions=2, history=True):
 
         border_faces = list(set(extended_faces).difference(set(cmds.ls(faces, fl=True))))
         cmds.select(border_faces)
-        cmds.polyAutoProjection(border_faces, t=barycenter, ry=get_angle((0, 0, 1), average_normal), rz=get_angle((1, 0, 0), average_normal))
+        cmds.polyAutoProjection(border_faces, t=barycenter, ry=get_angle(
+            (0, 0, 1), average_normal), rz=get_angle((1, 0, 0), average_normal))
         uvs = cmds.polyListComponentConversion(border_faces, toUV=1)
-        cmds.polyEditUV(uvs, u=0, v= -5)
+        cmds.polyEditUV(uvs, u=0, v=-5)
 
         not history and cmds.delete(object, ch=True)
+
 
 @stacks_handler
 def solidify_button__on_clicked(state=None):
@@ -253,7 +270,11 @@ def solidify_button__on_clicked(state=None):
     """
 
     for object in cmds.ls(sl=True, l=True, o=True):
-        solidify_object(object, height=cmds.floatSliderGrp("height_floatSliderGrp", q=True, v=True), divisions=cmds.intSliderGrp("divisions_intSliderGrp", q=True, v=True), history=cmds.checkBox("keep_construction_history_checkBox", q=True, v=True))
+        solidify_object(object, height=cmds.floatSliderGrp("height_floatSliderGrp", q=True, v=True),
+                        divisions=cmds.intSliderGrp(
+                            "divisions_intSliderGrp", q=True, v=True),
+                        history=cmds.checkBox("keep_construction_history_checkBox", q=True, v=True))
+
 
 def solidify_window():
     """
@@ -266,8 +287,8 @@ def solidify_window():
         cmds.deleteUI("solidify_window")
 
     cmds.window("solidify_window",
-        title="Solidify",
-        width=320)
+                title="Solidify",
+                width=320)
 
     spacing = 5
 
@@ -275,8 +296,10 @@ def solidify_window():
 
     cmds.separator(height=10, style="singleDash")
 
-    cmds.floatSliderGrp("height_floatSliderGrp", label="Height", field=True, precision=3, minValue= -10, maxValue=10, fieldMinValue= -65535, fieldMaxValue=65535, value=0.1)
-    cmds.intSliderGrp("divisions_intSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
+    cmds.floatSliderGrp("height_floatSliderGrp", label="Height", field=True, precision=3,
+                        minValue=-10, maxValue=10, fieldMinValue=-65535, fieldMaxValue=65535, value=0.1)
+    cmds.intSliderGrp("divisions_intSliderGrp", label="Divisions", field=True, minValue=0,
+                      maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
 
     cmds.separator(style="single")
 
@@ -291,6 +314,7 @@ def solidify_window():
     cmds.showWindow("solidify_window")
 
     cmds.windowPref(enableAll=True)
+
 
 def solidify():
     """

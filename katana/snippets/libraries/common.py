@@ -3,6 +3,7 @@ import re
 
 import snippets.libraries.utilities
 
+
 def reset_nodes_parameters(nodes, traverse=True):
     """
     Resets given nodes parameters.

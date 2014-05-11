@@ -33,6 +33,7 @@ __all__ = ["LOGGER", "Interfaces_QListView"]
 
 LOGGER = foundations.verbose.install_logger()
 
+
 class Interfaces_QListView(QListView):
     """
     Defines the view for modules interfaces.

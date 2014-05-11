@@ -6,6 +6,7 @@ import sys
 
 import snippets.libraries.utilities
 
+
 def get_giggle_meta_data(path):
     """
     Returns the Giggle metadata of give '.slo' file path.
@@ -24,6 +25,7 @@ def get_giggle_meta_data(path):
 
             metadata.append(line.split("\\n")[1:-1])
     return metadata
+
 
 def list_giggle_meta_data(metadata, indentation="\t"):
     """
@@ -56,6 +58,7 @@ def list_giggle_meta_data(metadata, indentation="\t"):
             entry_counter += 1
     return output
 
+
 def get_coshader_slo_file(coshader):
     """
     Returns gviven coshader '.slo' file path.
@@ -69,6 +72,7 @@ def get_coshader_slo_file(coshader):
     renderer_info = RenderingAPI.RenderPlugins.GetInfoPluginName("prman")
     plugin = RenderingAPI.RendererInfo.GetPlugin(renderer_info)
     return plugin.getRendererObjectInfo(coshader).getFullPath()
+
 
 def list_node_giggle_metadata(node):
     """
@@ -87,6 +91,7 @@ def list_node_giggle_metadata(node):
             for metadata in get_giggle_meta_data(path):
                 output += list_giggle_meta_data(metadata)
     return output
+
 
 def list_nodes_giggle_metadata(nodes, traverse=True):
     """
@@ -109,6 +114,7 @@ def list_nodes_giggle_metadata(nodes, traverse=True):
         for child_node in snippets.libraries.utilities.nodes_walker(node):
             output += list_node_giggle_metadata(child_node)
     return output
+
 
 def list_object_names():
     """

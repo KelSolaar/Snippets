@@ -9,15 +9,16 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["stacks_handler",
-            "get_active_camera",
-            "overscan_floatSliderGrp__on_value_changed",
-            "horizontal_offset_floatSliderGrp__on_value_changed",
-            "vertical_offset_floatSliderGrp__on_value_changed",
-            "reset_zoom_controls_button__on_clicked",
-            "camera_zoom_controls_window",
-            "camera_zoom_controls"]
+           "get_active_camera",
+           "overscan_floatSliderGrp__on_value_changed",
+           "horizontal_offset_floatSliderGrp__on_value_changed",
+           "vertical_offset_floatSliderGrp__on_value_changed",
+           "reset_zoom_controls_button__on_clicked",
+           "camera_zoom_controls_window",
+           "camera_zoom_controls"]
 
 __interfaces__ = ["camera_zoom_controls"]
+
 
 def stacks_handler(object):
     """
@@ -42,12 +43,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def get_active_camera():
     """
@@ -57,12 +60,13 @@ def get_active_camera():
     :rtype: str
     """
 
-    try :
+    try:
         active_panel = cmds.getPanel(withFocus=True)
         active_camera = cmds.modelPanel(active_panel, query=True, camera=True)
         return active_camera
-    except :
+    except:
         pass
+
 
 @stacks_handler
 def overscan_floatSliderGrp__on_value_changed(value):
@@ -74,12 +78,13 @@ def overscan_floatSliderGrp__on_value_changed(value):
     """
 
     active_camera = get_active_camera()
-    if active_camera != None :
+    if active_camera != None:
         current_overscan_slider_value = cmds.floatSliderGrp("overscan_floatSliderGrp", query=True, value=True)
-        try :
+        try:
             cmds.setAttr("{0}.overscan".format(active_camera), current_overscan_slider_value)
-        except :
+        except:
             print("Warning \"Current Camera \".overscan\" Attribute Is Locked !\"")
+
 
 @stacks_handler
 def horizontal_offset_floatSliderGrp__on_value_changed(value):
@@ -91,12 +96,13 @@ def horizontal_offset_floatSliderGrp__on_value_changed(value):
     """
 
     active_camera = get_active_camera()
-    if active_camera != None :
+    if active_camera != None:
         current_overscan_slider_value = cmds.floatSliderGrp("horizontal_offset_floatSliderGrp", query=True, value=True)
-        try :
+        try:
             cmds.setAttr("{0}.horizontalFilmOffset".format(active_camera), current_overscan_slider_value)
-        except :
+        except:
             print("Warning \"Current Camera \".horizontalFilmOffset\" Attribute Is Locked !\"")
+
 
 @stacks_handler
 def vertical_offset_floatSliderGrp__on_value_changed(value):
@@ -108,12 +114,13 @@ def vertical_offset_floatSliderGrp__on_value_changed(value):
     """
 
     active_camera = get_active_camera()
-    if active_camera != None :
+    if active_camera != None:
         current_overscan_slider_value = cmds.floatSliderGrp("vertical_offset_floatSliderGrp", query=True, value=True)
-        try :
+        try:
             cmds.setAttr("{0}.verticalFilmOffset".format(active_camera), current_overscan_slider_value)
-        except :
+        except:
             print("Warning \"Current Camera \".verticalFilmOffset\" Attribute Is Locked !\"")
+
 
 @stacks_handler
 def reset_zoom_controls_button__on_clicked(state=None):
@@ -128,12 +135,13 @@ def reset_zoom_controls_button__on_clicked(state=None):
     cmds.floatSliderGrp("horizontal_offset_floatSliderGrp", edit=True, value=0)
     cmds.floatSliderGrp("vertical_offset_floatSliderGrp", edit=True, value=0)
     active_camera = get_active_camera()
-    try :
+    try:
         cmds.setAttr("{0}.overscan".format(active_camera), 1)
         cmds.setAttr("{0}.horizontalFilmOffset".format(active_camera), 0)
         cmds.setAttr("{0}.verticalFilmOffset".format(active_camera), 0)
-    except :
+    except:
         pass
+
 
 def camera_zoom_controls_window():
     """
@@ -146,24 +154,31 @@ def camera_zoom_controls_window():
         cmds.deleteUI("camera_zoom_controls_window")
 
     cmds.window("camera_zoom_controls_window",
-        title="Camera Zoom Controls",
-        sizeable=True,
-        width=320)
+                title="Camera Zoom Controls",
+                sizeable=True,
+                width=320)
 
     spacing = 5
 
     cmds.columnLayout(adjustableColumn=True, rowSpacing=spacing)
 
-    cmds.floatSliderGrp("overscan_floatSliderGrp", label="Overscan", field=True, min=0.01, max=2.5, value=1, sliderStep=0.001, dragCommand=overscan_floatSliderGrp__on_value_changed)
+    cmds.floatSliderGrp("overscan_floatSliderGrp", label="Overscan", field=True, min=0.01, max=2.5,
+                        value=1, sliderStep=0.001, dragCommand=overscan_floatSliderGrp__on_value_changed)
 
-    cmds.floatSliderGrp("horizontal_offset_floatSliderGrp", label="Horizontal Offset", field=True, min= -2.5, max=2.5, value=0, sliderStep=0.001, dragCommand=horizontal_offset_floatSliderGrp__on_value_changed)
+    cmds.floatSliderGrp("horizontal_offset_floatSliderGrp", label="Horizontal Offset", field=True, min=-2.5,
+                        max=2.5, value=0, sliderStep=0.001,
+                        dragCommand=horizontal_offset_floatSliderGrp__on_value_changed)
 
-    cmds.floatSliderGrp("vertical_offset_floatSliderGrp", label="Vertical Offset", field=True, min= -2.5, max=2.5, value=0, sliderStep=0.001, dragCommand=vertical_offset_floatSliderGrp__on_value_changed)
+    cmds.floatSliderGrp("vertical_offset_floatSliderGrp", label="Vertical Offset", field=True, min=-2.5,
+                        max=2.5, value=0, sliderStep=0.001,
+                        dragCommand=vertical_offset_floatSliderGrp__on_value_changed)
 
-    cmds.button("reset_zoom_controls_button", label="Reset Zoom Controls", command=reset_zoom_controls_button__on_clicked)
+    cmds.button("reset_zoom_controls_button", label="Reset Zoom Controls",
+                command=reset_zoom_controls_button__on_clicked)
 
     cmds.showWindow("camera_zoom_controls_window")
-    cmds.windowPref(enableAll=True);
+    cmds.windowPref(enableAll=True)
+
 
 def camera_zoom_controls():
     """

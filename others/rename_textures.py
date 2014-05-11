@@ -31,15 +31,16 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["UDIM_PATTERN",
-        "PATCH_PATTERN",
-        "get_patch_from_udim",
-        "get_udim_from_patch",
-        "get_textures_names",
-        "get_command_line_parameters_parser",
-        "rename_textures"]
+           "PATCH_PATTERN",
+           "get_patch_from_udim",
+           "get_udim_from_patch",
+           "get_textures_names",
+           "get_command_line_parameters_parser",
+           "rename_textures"]
 
 UDIM_PATTERN = "u\d+_v\d+"
 PATCH_PATTERN = "\d{4,}"
+
 
 def get_patch_from_udim(udim):
     """
@@ -65,6 +66,7 @@ def get_patch_from_udim(udim):
     """
 
     return 1000 + udim[0] + 1 + udim[1] * 10
+
 
 def get_udim_from_patch(patch):
     """
@@ -92,6 +94,7 @@ def get_udim_from_patch(patch):
     u = (patch - 1000) % 10
     v = (patch - 1000) / 10
     return 9 if u == 0 else u - 1, v - 1 if u % 10 == 0 else v
+
 
 def get_textures_names(textures, input="zbrush", output="mari", prefix=None):
     """
@@ -139,8 +142,8 @@ def get_textures_names(textures, input="zbrush", output="mari", prefix=None):
         search = re.search(r"({0})".format(pattern), basename)
         if not search:
             print("'{0}' | '{1}' file doesn't match '{2}' pattern!".format(inspect.getmodulename(__file__),
-                                                                        texture,
-                                                                        input_method.title()))
+                                                                           texture,
+                                                                           input_method.title()))
             continue
 
         if input_method == "udim":
@@ -158,14 +161,16 @@ def get_textures_names(textures, input="zbrush", output="mari", prefix=None):
 
         if prefix is not None:
             path = os.path.join(os.path.dirname(texture), "{0}{1}{2}".format(prefix,
-                                                                            output_affix,
-                                                                            os.path.splitext(texture)[-1]))
+                                                                             output_affix,
+                                                                             os.path.splitext(texture)[-1]))
         else:
-            path = os.path.join(os.path.dirname(texture), re.sub(r"({0})".format(pattern), str(output_affix), basename))
+            path = os.path.join(os.path.dirname(texture), re.sub(
+                r"({0})".format(pattern), str(output_affix), basename))
 
         textures_mapping.append((texture, path))
 
     return textures_mapping
+
 
 def get_command_line_parameters_parser():
     """
@@ -176,43 +181,44 @@ def get_command_line_parameters_parser():
     """
 
     parser = optparse.OptionParser(formatter=optparse.IndentedHelpFormatter(indent_increment=2,
-                                                                        max_help_position=8,
-                                                                        width=128,
-                                                                        short_first=1),
-                                                                        add_help_option=None)
+                                                                            max_help_position=8,
+                                                                            width=128,
+                                                                            short_first=1),
+                                   add_help_option=None)
 
     parser.add_option("-h",
-                    "--help",
-                    action="help",
-                    help="'Display this help message and exit.'")
+                      "--help",
+                      action="help",
+                      help="'Display this help message and exit.'")
     parser.add_option("-i",
-                    "--input",
-                    action="store",
-                    type="string",
-                    dest="input",
-                    default="zbrush",
-                    help="'Input textures format ( mari, zbrush, mudbox )'.")
+                      "--input",
+                      action="store",
+                      type="string",
+                      dest="input",
+                      default="zbrush",
+                      help="'Input textures format ( mari, zbrush, mudbox )'.")
     parser.add_option("-o",
-                    "--output",
-                    action="store",
-                    type="string",
-                    dest="output",
-                    default="mari",
-                    help="'Output textures format ( mari, zbrush, mudbox )'.")
+                      "--output",
+                      action="store",
+                      type="string",
+                      dest="output",
+                      default="mari",
+                      help="'Output textures format ( mari, zbrush, mudbox )'.")
     parser.add_option("-n",
-                    "--name",
-                    action="store",
-                    type="string",
-                    dest="name",
-                    help="'Name prefix ( \"\" to strip name ).")
+                      "--name",
+                      action="store",
+                      type="string",
+                      dest="name",
+                      help="'Name prefix ( \"\" to strip name ).")
     parser.add_option("-p",
-                    "--preview",
-                    action="store_true",
-                    default=False,
-                    dest="preview",
-                    help="'Preview changes only.")
+                      "--preview",
+                      action="store_true",
+                      default=False,
+                      dest="preview",
+                      help="'Preview changes only.")
 
     return parser
+
 
 def rename_textures(textures, input="zbrush", output="mari", prefix=None, preview=False):
     """
@@ -238,10 +244,11 @@ def rename_textures(textures, input="zbrush", output="mari", prefix=None, previe
             continue
 
         print("'{0}' | {1} '{2}' texture to '{3}'.".format(
-        inspect.getmodulename(__file__), "Rename ('Preview')" if preview else "Rename", source, target))
+            inspect.getmodulename(__file__), "Rename ('Preview')" if preview else "Rename", source, target))
         not preview and os.rename(source, target)
 
     return True
+
 
 if __name__ == "__main__":
     if "*" in sys.argv[-1]:

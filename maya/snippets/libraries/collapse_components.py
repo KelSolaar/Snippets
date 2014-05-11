@@ -12,18 +12,19 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["stacks_handler",
-            "get_transform",
-            "get_average_vector",
-            "collapse_components",
-            "collapse_selected_components",
-            "collapse_selected_components_on_x",
-            "collapse_selected_components_on_y",
-            "collapse_selected_components_on_z"]
+           "get_transform",
+           "get_average_vector",
+           "collapse_components",
+           "collapse_selected_components",
+           "collapse_selected_components_on_x",
+           "collapse_selected_components_on_y",
+           "collapse_selected_components_on_z"]
 
 __interfaces__ = ["collapse_selected_components",
-            "collapse_selected_components_on_x",
-            "collapse_selected_components_on_y",
-            "collapse_selected_components_on_z"]
+                  "collapse_selected_components_on_x",
+                  "collapse_selected_components_on_y",
+                  "collapse_selected_components_on_z"]
+
 
 def stacks_handler(object):
     """
@@ -48,12 +49,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def get_transform(node, full_path=True):
     """
@@ -73,6 +76,7 @@ def get_transform(node, full_path=True):
         transform = parents[0]
     return transform
 
+
 def get_average_vector(vectors):
     """
     Returns the average vector from a list of vectors.
@@ -90,6 +94,7 @@ def get_average_vector(vectors):
     for i in range(3):
         average_vector[i] = average_vector[i] / len(vectors)
     return average_vector
+
 
 @stacks_handler
 def collapse_components(components, axis=("X", "Y", "Z")):
@@ -113,6 +118,7 @@ def collapse_components(components, axis=("X", "Y", "Z")):
 
         cmds.xform(vertex, ws=True, t=(x_value, y_value, z_value))
 
+
 @stacks_handler
 def collapse_selected_components():
     """
@@ -121,6 +127,7 @@ def collapse_selected_components():
 
     selection = cmds.ls(sl=True, l=True)
     selection and collapse_components(selection)
+
 
 @stacks_handler
 def collapse_selected_components_on_x():
@@ -131,6 +138,7 @@ def collapse_selected_components_on_x():
     selection = cmds.ls(sl=True, l=True)
     selection and collapse_components(selection, axis=("X",))
 
+
 @stacks_handler
 def collapse_selected_components_on_y():
     """
@@ -139,6 +147,7 @@ def collapse_selected_components_on_y():
 
     selection = cmds.ls(sl=True, l=True)
     selection and collapse_components(selection, axis=("Y",))
+
 
 @stacks_handler
 def collapse_selected_components_on_z():

@@ -11,21 +11,22 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["ALIGNEMENT_ANCHORS",
-            "stacks_handler",
-            "get_mvector",
-            "normalize",
-            "align_components_between_anchors",
-            "select_anchors_button__on_clicked",
-            "align_button__on_clicked",
-            "align_on_x_axis_button__on_clicked",
-            "align_on_y_axis_button__on_clicked",
-            "align_on_z_axis_button__on_clicked",
-            "align_components_window",
-            "align_components"]
+           "stacks_handler",
+           "get_mvector",
+           "normalize",
+           "align_components_between_anchors",
+           "select_anchors_button__on_clicked",
+           "align_button__on_clicked",
+           "align_on_x_axis_button__on_clicked",
+           "align_on_y_axis_button__on_clicked",
+           "align_on_z_axis_button__on_clicked",
+           "align_components_window",
+           "align_components"]
 
 __interfaces__ = ["align_components"]
 
 ALIGNEMENT_ANCHORS = None
+
 
 def stacks_handler(object):
     """
@@ -50,12 +51,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def get_mvector(vector):
     """
@@ -68,6 +71,7 @@ def get_mvector(vector):
     """
 
     return OpenMaya.MVector(vector[0], vector[1], vector[2])
+
 
 def normalize(vector):
     """
@@ -82,6 +86,7 @@ def normalize(vector):
     mvector = get_mvector(vector)
     mvector.normalize()
     return (mvector.x, mvector.y, mvector.z)
+
 
 @stacks_handler
 def align_components_between_anchors(anchor_a, anchor_b, components, axis=("X", "Y", "Z")):
@@ -119,6 +124,7 @@ def align_components_between_anchors(anchor_a, anchor_b, components, axis=("X", 
 
         cmds.xform(vertex, ws=True, r=True, t=(x_value, y_value, z_value))
 
+
 @stacks_handler
 def select_anchors_button__on_clicked(state=None):
     """
@@ -134,7 +140,9 @@ def select_anchors_button__on_clicked(state=None):
     if len(selection) == 2:
         ALIGNEMENT_ANCHORS = (selection[0], selection[1])
     else:
-        mel.eval("warning(\"%s | failed to retrieve anchors, you need to select exactly two objects or components!\")" % __name__)
+        mel.eval(
+            "warning(\"%s | failed to retrieve anchors, you need to select exactly two objects or components!\")" % __name__)
+
 
 @stacks_handler
 def align_button__on_clicked(state=None):
@@ -149,6 +157,7 @@ def align_button__on_clicked(state=None):
         selection = cmds.ls(sl=True, l=True)
         selection and align_components_between_anchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection)
 
+
 @stacks_handler
 def align_on_x_axis_button__on_clicked(state=None):
     """
@@ -160,7 +169,9 @@ def align_on_x_axis_button__on_clicked(state=None):
 
     if ALIGNEMENT_ANCHORS:
         selection = cmds.ls(sl=True, l=True)
-        selection and align_components_between_anchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("X"))
+        selection and align_components_between_anchors(
+            ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("X"))
+
 
 @stacks_handler
 def align_on_y_axis_button__on_clicked(state=None):
@@ -173,7 +184,9 @@ def align_on_y_axis_button__on_clicked(state=None):
 
     if ALIGNEMENT_ANCHORS:
         selection = cmds.ls(sl=True, l=True)
-        selection and align_components_between_anchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Y"))
+        selection and align_components_between_anchors(
+            ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Y"))
+
 
 @stacks_handler
 def align_on_z_axis_button__on_clicked(state=None):
@@ -186,7 +199,9 @@ def align_on_z_axis_button__on_clicked(state=None):
 
     if ALIGNEMENT_ANCHORS:
         selection = cmds.ls(sl=True, l=True)
-        selection and align_components_between_anchors(ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Z"))
+        selection and align_components_between_anchors(
+            ALIGNEMENT_ANCHORS[0], ALIGNEMENT_ANCHORS[1], selection, axis=("Z"))
+
 
 def align_components_window():
     """
@@ -199,8 +214,8 @@ def align_components_window():
         cmds.deleteUI("align_components_window")
 
     cmds.window("align_components_window",
-        title="Align Components",
-        width=320)
+                title="Align Components",
+                width=320)
 
     spacing = 5
 
@@ -221,6 +236,7 @@ def align_components_window():
     cmds.showWindow("align_components_window")
 
     cmds.windowPref(enableAll=True)
+
 
 @stacks_handler
 def align_components():

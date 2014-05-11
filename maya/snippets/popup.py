@@ -63,6 +63,7 @@ else:
     snippets.ui.common.message_box("Error", "Error", error)
     raise Exception(error)
 
+
 class Popup(Ui_Popup_Type, Ui_Popup_Setup):
     """
     Defines the simple Maya Interfaces loader widget.
@@ -181,7 +182,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "model"))
+            "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "model"))
 
     @model.deleter
     @foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
@@ -191,7 +192,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "model"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "model"))
 
     def show(self):
         """
@@ -326,7 +327,7 @@ class Popup(Ui_Popup_Type, Ui_Popup_Setup):
         method = interface.attribute
 
         LOGGER.info("{0} | Executing '{1}' Interface from '{2}' Module!".format(self.__class__.__name__,
-                                                                            method,
-                                                                            module.name))
+                                                                                method,
+                                                                                module.name))
         module.import_.__dict__[method]()
         return True

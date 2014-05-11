@@ -38,18 +38,19 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["unpack_default",
-    "fill_paint_buffer",
-    "project_color",
-    "project_black",
-    "project_white",
-    "get_selected_patches",
-    "display_selected_patches",
-    "get_patches_from_sequence",
-    "select_patches",
-    "select_input_patches",
-    "playblast_time_range",
-    "write_uvs_masks",
-    "export_uvs_masks"]
+           "fill_paint_buffer",
+           "project_color",
+           "project_black",
+           "project_white",
+           "get_selected_patches",
+           "display_selected_patches",
+           "get_patches_from_sequence",
+           "select_patches",
+           "select_input_patches",
+           "playblast_time_range",
+           "write_uvs_masks",
+           "export_uvs_masks"]
+
 
 def unpack_default(data, length=3, default=None):
     """
@@ -67,6 +68,7 @@ def unpack_default(data, length=3, default=None):
 
     return itertools.islice(itertools.chain(iter(data), itertools.repeat(default)), length)
 
+
 def fill_paint_buffer(color):
     """
     Fills the paint buffer with given color.
@@ -83,6 +85,7 @@ def fill_paint_buffer(color):
     paint_buffer.setPaint(image)
     return True
 
+
 def project_color(color):
     """
     Projects the given color.
@@ -97,6 +100,7 @@ def project_color(color):
         mari.canvases.paintBuffer().bakeAndClear()
         return True
 
+
 def project_black():
     """
     Projects black color.
@@ -105,7 +109,8 @@ def project_black():
     :rtype: bool
     """
 
-    return project_color(QColor(0, 0, 0,255))
+    return project_color(QColor(0, 0, 0, 255))
+
 
 def project_white():
     """
@@ -115,7 +120,8 @@ def project_white():
     :rtype: bool
     """
 
-    return project_color(QColor(255, 255, 255,255))
+    return project_color(QColor(255, 255, 255, 255))
+
 
 def get_selected_patches():
     """
@@ -127,9 +133,10 @@ def get_selected_patches():
 
     patches = []
     for patch in mari.geo.current().patches():
-            if patch.isSelected():
+        if patch.isSelected():
             patches.append(patch.name())
     return sorted(patches)
+
 
 def display_selected_patches():
     """
@@ -142,8 +149,10 @@ def display_selected_patches():
     patches = get_selected_patches()
     print "%s | Current object: '%s'" % (inspect.getmodulename(__file__), mari.geo.current().name())
     print "%s | Selected patches: '%s'" % (inspect.getmodulename(__file__), patches)
-    mari.utils.misc.message("Current object: '%s'\nSelected patches: '%s'" % (mari.geo.current().name(), ", ".join(patches)), title="Current Object Selected Patches")
+    mari.utils.misc.message("Current object: '%s'\nSelected patches: '%s'" %
+                            (mari.geo.current().name(), ", ".join(patches)), title="Current Object Selected Patches")
     return True
+
 
 def get_patches_from_sequence(sequence):
     """
@@ -166,6 +175,7 @@ def get_patches_from_sequence(sequence):
             patches.extend(range(int(start), int(end) + 1, int(step)))
     return patches
 
+
 def select_patches(patches):
     """
     Selects given patches.
@@ -176,11 +186,12 @@ def select_patches(patches):
     :rtype: bool
     """
 
-    patches	= [str(patch) for patch in patches]
+    patches = [str(patch) for patch in patches]
     for patch in mari.geo.current().patches():
         patch.setSelected(patch.name() in patches)
 
     return True
+
 
 def select_input_patches():
     """
@@ -192,7 +203,8 @@ def select_input_patches():
 
     sequence = QInputDialog.getText(None, "Select Patches", "Patches Sequences:")
     if sequence:
-            return select_patches(get_patches_from_sequence(sequence))
+        return select_patches(get_patches_from_sequence(sequence))
+
 
 def playblast_time_range():
     """
@@ -215,11 +227,12 @@ def playblast_time_range():
         mari.actions.find('/Mari/Canvas/Take Screenshot').trigger()
         mari.clock.stepForward()
         mari.app.processEvents()
-        #mari.app.stepProgress()
-    #mari.app.stopProcessing()
+        # mari.app.stepProgress()
+    # mari.app.stopProcessing()
     mari.clock.setFrame(current_frame)
 
     return True
+
 
 def write_uvs_masks(directory):
     """
@@ -247,6 +260,7 @@ def write_uvs_masks(directory):
     # mari.app.stopProcessing()
     return True
 
+
 def export_uvs_masks():
     """
     Exports UVs masks.
@@ -255,17 +269,23 @@ def export_uvs_masks():
     :rtype: bool
     """
 
-    return write_uvs_masks(QFileDialog.getExistingDirectory(None, "Select Output Directory",))
+    return write_uvs_masks(QFileDialog.getExistingDirectory(None, "Select Output Directory", ))
 
 
-mari.menus.addAction(mari.actions.create("Show Selected Patches ...", "import common;reload(common);common.display_selected_patches()"), "MainWindow/&MPC/")
-mari.menus.addAction(mari.actions.create("Select Input Patches ...", "import common;reload(common);common.select_input_patches()"), "MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create(
+    "Show Selected Patches ...", "import common;reload(common);common.display_selected_patches()"), "MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create(
+    "Select Input Patches ...", "import common;reload(common);common.select_input_patches()"), "MainWindow/&MPC/")
 mari.menus.addSeparator("MainWindow/&MPC/")
-mari.menus.addAction(mari.actions.create("Export UVs Masks ...", "import common;reload(common);common.export_uvs_masks()"), "MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create(
+    "Export UVs Masks ...", "import common;reload(common);common.export_uvs_masks()"), "MainWindow/&MPC/")
 mari.menus.addSeparator("MainWindow/&MPC/")
-mari.menus.addAction(mari.actions.create("Playblast Time Range ...", "import common;reload(common);common.playblast_time_range()"), "MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create(
+    "Playblast Time Range ...", "import common;reload(common);common.playblast_time_range()"), "MainWindow/&MPC/")
 mari.menus.addSeparator("MainWindow/&MPC/")
-mari.menus.addAction(mari.actions.create("Project Black", "import common;reload(common);common.project_black()"), "MainWindow/&MPC/")
-mari.menus.addAction(mari.actions.create("Project White", "import common;reload(common);common.project_white()"), "MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create(
+    "Project Black", "import common;reload(common);common.project_black()"), "MainWindow/&MPC/")
+mari.menus.addAction(mari.actions.create(
+    "Project White", "import common;reload(common);common.project_white()"), "MainWindow/&MPC/")
 mari.menus.addSeparator("MainWindow/&MPC/")
 mari.menus.addAction(mari.actions.create("Clear History Queue ...", "mari.history.clear()"), "MainWindow/&MPC/")

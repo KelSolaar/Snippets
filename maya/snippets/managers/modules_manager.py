@@ -46,6 +46,7 @@ __all__ = ["LOGGER", "Module", "ModulesManager"]
 
 LOGGER = foundations.verbose.install_logger()
 
+
 class Module(object):
     """
     Defines the **Module** class.
@@ -95,7 +96,7 @@ class Module(object):
 
         if value is not None:
             assert type(value) is unicode, "'{0}' Attribute: '{1}' type is not 'unicode'!".format("name",
-                                                                                                                value)
+                                                                                                  value)
         self.__name = value
 
     @name.deleter
@@ -130,7 +131,7 @@ class Module(object):
 
         if value is not None:
             assert type(value) is unicode, "'{0}' Attribute: '{1}' type is not 'unicode'!".format("path",
-                                                                                                                value)
+                                                                                                  value)
             assert os.path.exists(value), "'{0}' Attribute: '{1}' directory doesn't exists!".format("path", value)
         self.__paths = value
 
@@ -208,6 +209,7 @@ class Module(object):
 
         raise foundations.exceptions.ProgrammingError("'{0}' Attribute is not deletable!".format("interfaces"))
 
+
 class ModulesManager(object):
     """
     Defines the **ModulesManager** class.
@@ -252,7 +254,8 @@ class ModulesManager(object):
         """
 
         if value is not None:
-            assert type(value) in (tuple, list), "'{0}' Attribute: '{1}' type is not 'tuple' or 'list'!".format("paths", value)
+            assert type(value) in (
+                tuple, list), "'{0}' Attribute: '{1}' type is not 'tuple' or 'list'!".format("paths", value)
             for path in value:
                 assert os.path.exists(path), "'{0}' Attribute: '{1}' directory doesn't exists!".format("paths", value)
         self.__paths = value
@@ -322,7 +325,7 @@ class ModulesManager(object):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "library_extension"))
+            "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "library_extension"))
 
     @library_extension.deleter
     @foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
@@ -332,7 +335,7 @@ class ModulesManager(object):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "library_extension"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "library_extension"))
 
     def __getitem__(self, name):
         """
@@ -405,7 +408,7 @@ class ModulesManager(object):
 
         if name in self:
             raise foundations.exceptions.ProgrammingError("{0} | '{1}' module is already registered!".format(
-            self.__class__.__name__, name))
+                self.__class__.__name__, name))
 
         self.__modules[name] = Module(name=name, path=os.path.dirname(path))
         return True
@@ -423,9 +426,9 @@ class ModulesManager(object):
 
         if not name in self:
             raise foundations.exceptions.ProgrammingError("{0} | '{1}' module is not registered!".format(
-            self.__class__.__name__, name))
+                self.__class__.__name__, name))
 
-        del(self.__modules[name])
+        del (self.__modules[name])
         return True
 
     def register_modules(self):
@@ -436,7 +439,8 @@ class ModulesManager(object):
         """
 
         for directory in self.__paths:
-            for path in foundations.walkers.files_walker(directory, filters_in=(r"\.{0}$".format(self.__library_extension),)):
+            for path in foundations.walkers.files_walker(directory,
+                                                         filters_in=(r"\.{0}$".format(self.__library_extension),)):
                 self.register_module(foundations.strings.get_splitext_basename(path), path)
         return True
 
@@ -454,7 +458,7 @@ class ModulesManager(object):
             sys.path.append(module.path)
 
         if module.name in sys.modules:
-            del(sys.modules[module.name])
+            del (sys.modules[module.name])
 
         module.import_ = __import__(module.name)
 
@@ -466,7 +470,7 @@ class ModulesManager(object):
         interfaces = [interface for interface in module.import_.__interfaces__ if hasattr(module.import_, interface)]
         if interfaces:
             LOGGER.info("{0} | Registering '{1}' Interfaces from '{2}' Module!".format(self.__class__.__name__,
-                                                                                        interfaces, module.name))
+                                                                                       interfaces, module.name))
             module.interfaces = interfaces
             return True
 

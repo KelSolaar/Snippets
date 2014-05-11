@@ -27,12 +27,13 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["stacks_handler",
-            "weight_floatSliderGrp__on_value_changed",
-            "set_weight",
-            "activate_blendshapes_window",
-            "activate_blendshapes"]
+           "weight_floatSliderGrp__on_value_changed",
+           "set_weight",
+           "activate_blendshapes_window",
+           "activate_blendshapes"]
 
 __interfaces__ = ["activate_blendshapes"]
+
 
 def stacks_handler(object):
     """
@@ -57,12 +58,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def weight_floatSliderGrp__on_value_changed(value):
     """
@@ -74,6 +77,7 @@ def weight_floatSliderGrp__on_value_changed(value):
 
     set_weight(cmds.floatSliderGrp("weight_floatSliderGrp", query=True, value=True))
 
+
 def set_weight(value):
     """
     Activates every first blendshape node slot in the scene.
@@ -83,13 +87,14 @@ def set_weight(value):
     """
 
     blend_shapes_nodes = cmds.ls(type="blendShape")
-    for blend_shapes_node in blend_shapes_nodes :
+    for blend_shapes_node in blend_shapes_nodes:
         targets = cmds.listAttr("{0}.w".format(blend_shapes_node), m=True)
         for target in targets:
             try:
                 cmds.setAttr("{0}.{1}".format(blend_shapes_node, target), value)
             except:
                 pass
+
 
 def activate_blendshapes_window():
     """
@@ -102,8 +107,8 @@ def activate_blendshapes_window():
         cmds.deleteUI("activate_blendshapes_window")
 
     cmds.window("activate_blendshapes_window",
-        title="Activate Blendshapes",
-        width=320)
+                title="Activate Blendshapes",
+                width=320)
 
     spacing = 5
 
@@ -111,13 +116,17 @@ def activate_blendshapes_window():
 
     cmds.separator(height=10, style="singleDash")
 
-    cmds.floatSliderGrp("weight_floatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0, fieldMaxValue=1, sliderStep=0.01, value=0, changeCommand=weight_floatSliderGrp__on_value_changed, dragCommand=weight_floatSliderGrp__on_value_changed)
+    cmds.floatSliderGrp("weight_floatSliderGrp", label="Weight", field=True, minValue=0, maxValue=1, fieldMinValue=0,
+                        fieldMaxValue=1,
+                        sliderStep=0.01, value=0, changeCommand=weight_floatSliderGrp__on_value_changed,
+                        dragCommand=weight_floatSliderGrp__on_value_changed)
 
     cmds.separator(height=10, style="singleDash")
 
     cmds.showWindow("activate_blendshapes_window")
 
     cmds.windowPref(enableAll=True)
+
 
 def activate_blendshapes():
     """

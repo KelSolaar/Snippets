@@ -11,17 +11,18 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["stacks_handler",
-            "get_transform",
-            "get_mvector",
-            "get_mmatrix",
-            "normalize",
-            "vector_matrix_multiplication",
-            "dot",
-            "get_average_vector",
-            "make_components_planar",
-            "make_selected_components_planar"]
+           "get_transform",
+           "get_mvector",
+           "get_mmatrix",
+           "normalize",
+           "vector_matrix_multiplication",
+           "dot",
+           "get_average_vector",
+           "make_components_planar",
+           "make_selected_components_planar"]
 
 __interfaces__ = ["make_selected_components_planar"]
+
 
 def stacks_handler(object):
     """
@@ -46,12 +47,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def get_transform(node, full_path=True):
     """
@@ -71,6 +74,7 @@ def get_transform(node, full_path=True):
         transform = parents[0]
     return transform
 
+
 def get_mvector(vector):
     """
     Returns an MVector.
@@ -82,6 +86,7 @@ def get_mvector(vector):
     """
 
     return OpenMaya.MVector(vector[0], vector[1], vector[2])
+
 
 def get_mmatrix(matrix):
     """
@@ -97,6 +102,7 @@ def get_mmatrix(matrix):
     OpenMaya.MScriptUtil.createMatrixFromList(matrix, mmatrix)
     return mmatrix
 
+
 def normalize(vector):
     """
     Returns the normalized vector.
@@ -110,6 +116,7 @@ def normalize(vector):
     mvector = get_mvector(vector)
     mvector.normalize()
     return (mvector.x, mvector.y, mvector.z)
+
 
 def vector_matrix_multiplication(vector, matrix):
     """
@@ -128,6 +135,7 @@ def vector_matrix_multiplication(vector, matrix):
     mvector = mvector * mmatrix
     return (mvector.x, mvector.y, mvector.z)
 
+
 def dot(vector_a, vector_b):
     """
     Returns the dot product between two vectors.
@@ -143,6 +151,7 @@ def dot(vector_a, vector_b):
     mvector_a = get_mvector(vector_a)
     mvector_b = get_mvector(vector_b)
     return mvector_a * mvector_b
+
 
 def get_average_vector(vectors):
     """
@@ -162,6 +171,7 @@ def get_average_vector(vectors):
         average_vector[i] = average_vector[i] / len(vectors)
     return average_vector
 
+
 @stacks_handler
 def make_components_planar(components):
     """
@@ -177,18 +187,24 @@ def make_components_planar(components):
         vertices = cmds.ls(cmds.polyListComponentConversion(components, toVertex=True), fl=True)
 
         barycenters = cmds.xform(vertices, q=True, t=True, ws=True)
-        barycenter = get_average_vector([(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
+        barycenter = get_average_vector(
+            [(barycenters[i], barycenters[i + 1], barycenters[i + 2]) for i in range(0, len(barycenters), 3)])
 
-        normals = [float(normal) for data in cmds.polyInfo(cmds.polyListComponentConversion(components, toFace=True), faceNormals=True) for normal in data.split()[2:5]]
+        normals = [float(normal) for data in cmds.polyInfo(
+            cmds.polyListComponentConversion(components, toFace=True), faceNormals=True) for normal in
+                   data.split()[2:5]]
         normals = [(normals[i], normals[i + 1], normals[i + 2]) for i in range(0, len(normals), 3)]
-        average_normal = vector_matrix_multiplication(normalize(get_average_vector(normals)), cmds.xform(transform, query=True, matrix=True, worldSpace=True))
+        average_normal = vector_matrix_multiplication(
+            normalize(get_average_vector(normals)), cmds.xform(transform, query=True, matrix=True, worldSpace=True))
 
         offset = -dot(average_normal, barycenter)
 
         for vertex in vertices:
             position = cmds.xform(vertex, q=True, t=True, ws=True)
             distance = -(dot(average_normal, position) + offset)
-            cmds.xform(vertex, r=True, t=(average_normal[0] * distance, average_normal[1] * distance, average_normal[2] * distance))
+            cmds.xform(vertex, r=True, t=(
+                average_normal[0] * distance, average_normal[1] * distance, average_normal[2] * distance))
+
 
 @stacks_handler
 def make_selected_components_planar():

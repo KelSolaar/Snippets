@@ -28,6 +28,7 @@ import os
 import foundations.globals.constants
 from snippets.globals.constants import Constants
 
+
 def _override_dependencies_globals():
     """
     Overrides dependencies globals.
@@ -38,6 +39,7 @@ def _override_dependencies_globals():
 
     foundations.globals.constants.Constants.logger = Constants.logger
     return True
+
 
 _override_dependencies_globals()
 
@@ -62,6 +64,7 @@ del logging.root.handlers[:]
 
 foundations.verbose.get_logging_console_handler()
 
+
 def _set_modules_manager():
     """
     Sets the global modules manager instance.
@@ -70,6 +73,7 @@ def _set_modules_manager():
     if not isinstance(RuntimeGlobals.modules_manager, ModulesManager):
         RuntimeGlobals.modules_manager = ModulesManager([RuntimeGlobals.libraries_directory])
         RuntimeGlobals.modules_manager.register_all()
+
 
 def run():
     """

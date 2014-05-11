@@ -36,6 +36,7 @@ __all__ = ["LOGGER", "Active_QLabel"]
 
 LOGGER = foundations.verbose.install_logger()
 
+
 class Active_QLabel(QLabel):
     """
     Defines a `QLabel <http://doc.qt.nokia.com/qlabel.html>`_ subclass providing
@@ -67,12 +68,12 @@ class Active_QLabel(QLabel):
     """
 
     def __init__(self,
-                parent=None,
-                default_pixmap=None,
-                hover_pixmap=None,
-                active_pixmap=None,
-                checkable=False,
-                checked=False):
+                 parent=None,
+                 default_pixmap=None,
+                 hover_pixmap=None,
+                 active_pixmap=None,
+                 checkable=False,
+                 checked=False):
         """
         Initializes the class.
 
@@ -136,7 +137,8 @@ class Active_QLabel(QLabel):
         """
 
         if value is not None:
-            assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("default_pixmap", value)
+            assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format(
+                "default_pixmap", value)
         self.__default_pixmap = value
 
     @default_pixmap.deleter
@@ -147,7 +149,7 @@ class Active_QLabel(QLabel):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "default_pixmap"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "default_pixmap"))
 
     @property
     def hover_pixmap(self):
@@ -171,7 +173,8 @@ class Active_QLabel(QLabel):
         """
 
         if value is not None:
-            assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("hover_pixmap", value)
+            assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format(
+                "hover_pixmap", value)
         self.__hover_pixmap = value
 
     @hover_pixmap.deleter
@@ -182,7 +185,7 @@ class Active_QLabel(QLabel):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "hover_pixmap"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "hover_pixmap"))
 
     @property
     def active_pixmap(self):
@@ -206,7 +209,8 @@ class Active_QLabel(QLabel):
         """
 
         if value is not None:
-            assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format("active_pixmap", value)
+            assert type(value) is QPixmap, "'{0}' attribute: '{1}' type is not 'QPixmap'!".format(
+                "active_pixmap", value)
         self.__active_pixmap = value
 
     @active_pixmap.deleter
@@ -217,7 +221,7 @@ class Active_QLabel(QLabel):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "active_pixmap"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "active_pixmap"))
 
     @property
     def checkable(self):
@@ -252,7 +256,7 @@ class Active_QLabel(QLabel):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "checkable"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "checkable"))
 
     @property
     def checked(self):
@@ -287,7 +291,7 @@ class Active_QLabel(QLabel):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "checked"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "checked"))
 
     @property
     def menu(self):
@@ -311,7 +315,7 @@ class Active_QLabel(QLabel):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "menu"))
+            "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "menu"))
 
     @menu.deleter
     @foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
@@ -321,7 +325,7 @@ class Active_QLabel(QLabel):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "menu"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "menu"))
 
     def enterEvent(self, event):
         """

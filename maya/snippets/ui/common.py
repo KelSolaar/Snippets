@@ -43,6 +43,7 @@ __status__ = "Production"
 
 LOGGER = foundations.verbose.install_logger()
 
+
 def get_resource_path(name):
     """
     Returns the resource file path matching the given name.
@@ -61,6 +62,7 @@ def get_resource_path(name):
         LOGGER.debug("> '{0}' resource path: '{1}'.".format(name, path))
         return path
 
+
 def parents_walker(object):
     """
     Defines a generator used to retrieve the chain of parents of the given :class:`QObject` instance.
@@ -74,6 +76,7 @@ def parents_walker(object):
         object = object.parent()
         yield object
 
+
 def get_maya_window():
     """
     Returns Maya window as QObject.
@@ -84,6 +87,7 @@ def get_maya_window():
 
     pointer = OpenMayaUI.MQtUtil.mainWindow()
     return sip.wrapinstance(long(pointer), QObject)
+
 
 def message_box(message_type, title, message):
     """
@@ -127,6 +131,7 @@ def message_box(message_type, title, message):
 
     message_box.exec_()
 
+
 def center_widget_on_screen(widget):
     """
     Centers given Widget middle of the screen.
@@ -135,7 +140,9 @@ def center_widget_on_screen(widget):
     :type widget: QWidget
     """
 
-    widget.move(QApplication.desktop().width() / 2 - widget.width() / 2, QApplication.desktop().height() / 2 - widget.height() / 2)
+    widget.move(QApplication.desktop().width() / 2 - widget.width() / 2,
+                QApplication.desktop().height() / 2 - widget.height() / 2)
+
 
 def resize_widget(widget, size_x, size_y):
     """

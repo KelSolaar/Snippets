@@ -10,17 +10,26 @@ __status__ = "Production"
 
 __all__ = ["randomize_translations", "randomize_rotations", "randomize_scales"]
 
+
 def randomize_translations(objects, randomRange=15):
     for object in objects:
-        cmds.setAttr("{0}.tx".format(object), cmds.getAttr("{0}.tx".format(object)) + random.randrange(-1, 1) * (random.random() * randomRange))
-        cmds.setAttr("{0}.ty".format(object), cmds.getAttr("{0}.ty".format(object)) + random.randrange(-1, 1) * (random.random() * randomRange))
-        cmds.setAttr("{0}.tz".format(object), cmds.getAttr("{0}.tz".format(object)) + random.randrange(-1, 1) * (random.random() * randomRange))
+        cmds.setAttr("{0}.tx".format(object), cmds.getAttr("{0}.tx".format(object)) +
+                                              random.randrange(-1, 1) * (random.random() * randomRange))
+        cmds.setAttr("{0}.ty".format(object), cmds.getAttr("{0}.ty".format(object)) +
+                                              random.randrange(-1, 1) * (random.random() * randomRange))
+        cmds.setAttr("{0}.tz".format(object), cmds.getAttr("{0}.tz".format(object)) +
+                                              random.randrange(-1, 1) * (random.random() * randomRange))
+
 
 def randomize_rotations(objects, randomRange=5):
     for object in objects:
-        cmds.setAttr("{0}.rx".format(object), cmds.getAttr("{0}.rx".format(object)) + random.randrange(-1, 1) * (random.random() * randomRange))
-        cmds.setAttr("{0}.ry".format(object), cmds.getAttr("{0}.ry".format(object)) + random.randrange(-1, 1) * (random.random() * randomRange))
-        cmds.setAttr("{0}.rz".format(object), cmds.getAttr("{0}.rz".format(object)) + random.randrange(-1, 1) * (random.random() * randomRange))
+        cmds.setAttr("{0}.rx".format(object), cmds.getAttr("{0}.rx".format(object)) +
+                                              random.randrange(-1, 1) * (random.random() * randomRange))
+        cmds.setAttr("{0}.ry".format(object), cmds.getAttr("{0}.ry".format(object)) +
+                                              random.randrange(-1, 1) * (random.random() * randomRange))
+        cmds.setAttr("{0}.rz".format(object), cmds.getAttr("{0}.rz".format(object)) +
+                                              random.randrange(-1, 1) * (random.random() * randomRange))
+
 
 def randomize_scales(objects, randomRange=2):
     for object in objects:

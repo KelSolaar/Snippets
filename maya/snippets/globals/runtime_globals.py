@@ -29,6 +29,7 @@ __status__ = "Production"
 
 __all__ = ["RuntimeGlobals"]
 
+
 class RuntimeGlobals():
     """
     Defines the runtime globals class.

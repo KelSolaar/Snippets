@@ -35,11 +35,12 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["LOGGER",
-            "Categorie",
-            "Interface",
-            "InterfacesModel"]
+           "Categorie",
+           "Interface",
+           "InterfacesModel"]
 
 LOGGER = foundations.verbose.install_logger()
+
 
 class Categorie(foundations.data_structures.Structure):
     """
@@ -56,6 +57,7 @@ class Categorie(foundations.data_structures.Structure):
 
         foundations.data_structures.Structure.__init__(self, **kwargs)
 
+
 class Interface(foundations.data_structures.Structure):
     """
     This is the **Interface** class.
@@ -70,6 +72,7 @@ class Interface(foundations.data_structures.Structure):
         """
 
         foundations.data_structures.Structure.__init__(self, **kwargs)
+
 
 class InterfacesModel(QAbstractListModel):
     """
@@ -118,7 +121,8 @@ class InterfacesModel(QAbstractListModel):
         if value is not None:
             assert type(value) is list, "'{0}' attribute: '{1}' type is not 'list'!".format("interfaces", value)
             for element in value:
-                assert type(element) is Interface, "'{0}' attribute: '{1}' type is not 'Interface'!".format("interfaces", element)
+                assert type(element) is Interface, "'{0}' attribute: '{1}' type is not 'Interface'!".format(
+                    "interfaces", element)
         # TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.
         self.modelAboutToBeReset.emit()
         self.__interfaces = value
@@ -133,7 +137,7 @@ class InterfacesModel(QAbstractListModel):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "interfaces"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "interfaces"))
 
     def __getitem__(self, name):
         """
@@ -305,8 +309,9 @@ class InterfacesModel(QAbstractListModel):
 
         name = interface.name
         if name in self:
-            raise foundations.exceptions.ProgrammingError("{0} | An interface with '{1}' name is already registered!".format(
-            self.__class__.__name__, name))
+            raise foundations.exceptions.ProgrammingError(
+                "{0} | An interface with '{1}' name is already registered!".format(
+                    self.__class__.__name__, name))
 
         LOGGER.debug("> Registering '{0}' interface.".format(name))
 
@@ -328,7 +333,7 @@ class InterfacesModel(QAbstractListModel):
 
         if not name in self:
             raise foundations.exceptions.ProgrammingError("{0} | Interface with '{1}' name isn't registered!".format(
-            self.__class__.__name__, name))
+                self.__class__.__name__, name))
 
         LOGGER.debug("> Unregistering '{0}' interface.".format(name))
 
@@ -336,7 +341,7 @@ class InterfacesModel(QAbstractListModel):
             if not interface.name == name:
                 continue
 
-            del(self.__interfaces[i])
+            del (self.__interfaces[i])
             self.__unregister_categorie(name)
             self.sort()
             return True

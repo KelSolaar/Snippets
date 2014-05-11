@@ -8,11 +8,12 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["stacks_handler",
-            "get_shapes",
-            "snap_objects_on_support",
-            "snap_selected_objects_on_support"]
+           "get_shapes",
+           "snap_objects_on_support",
+           "snap_selected_objects_on_support"]
 
 __interfaces__ = ["snap_selected_objects_on_support"]
+
 
 def stacks_handler(object):
     """
@@ -37,12 +38,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def get_shapes(object, full_path=False, no_intermediate=True):
     """
@@ -64,6 +67,7 @@ def get_shapes(object, full_path=False, no_intermediate=True):
         object_shapes = shapes
 
     return object_shapes
+
 
 @stacks_handler
 def snap_objects_on_support(objects, support):
@@ -91,11 +95,12 @@ def snap_objects_on_support(objects, support):
 
         cmds.select(object)
         cmds.move(cmds.getAttr("{0}.positionX".format(nearest_point_on_mesh)),
-                cmds.getAttr("{0}.positionY".format(nearest_point_on_mesh)),
-                cmds.getAttr("{0}.positionZ".format(nearest_point_on_mesh)),
-                rpr=True)
+                  cmds.getAttr("{0}.positionY".format(nearest_point_on_mesh)),
+                  cmds.getAttr("{0}.positionZ".format(nearest_point_on_mesh)),
+                  rpr=True)
 
     cmds.delete(nearestPointOnMesh)
+
 
 @stacks_handler
 def snap_selected_objects_on_support():

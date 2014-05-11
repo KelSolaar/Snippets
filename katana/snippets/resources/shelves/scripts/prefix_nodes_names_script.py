@@ -23,8 +23,9 @@ Prefix Nodes Names
 import sys
 
 SNIPPETS_PATH = "/usr/people/thomas-ma/Developement/Snippets/katana"
-not SNIPPETS_PATH in sys. path and sys.path.append(SNIPPETS_PATH)
+not SNIPPETS_PATH in sys.path and sys.path.append(SNIPPETS_PATH)
 
 import snippets.libraries.utilities
 
-snippets.libraries.utilities.import_script_node("/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/prefix_nodes_names_Script_vLatest.katana")
+snippets.libraries.utilities.import_script_node(
+    "/usr/people/thomas-ma/Developement/Snippets/katana/snippets/resources/recipes/prefix_nodes_names_Script_vLatest.katana")

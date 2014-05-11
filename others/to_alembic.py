@@ -42,6 +42,7 @@ __status__ = "Production"
 
 __all__ = ["ascendants_walker", "get_root", "to_alembic", "get_command_line_parameters"]
 
+
 def ascendants_walker(path, visitor=None):
     """
     Returns the parents of given Dag path.
@@ -64,6 +65,7 @@ def ascendants_walker(path, visitor=None):
         for value in ascendants_walker(parent):
             yield value
 
+
 def get_root(path):
     """
     Returns the root path of given Dag path.
@@ -76,6 +78,7 @@ def get_root(path):
 
     parents = list(ascendants_walker(path))
     return parents[-1] if parents else path
+
 
 def to_alembic(parameters, arguments):
     """
@@ -98,7 +101,8 @@ def to_alembic(parameters, arguments):
         sys.stderr.write("!> {0} | '{1}' file doesn't exists'!\n".format(inspect.getmodulename(__file__), input_file))
         return
 
-    output_file = os.path.abspath(parameters.output_file if parameters.output_file else re.sub(r"\.\w+$", ".abc", input_file))
+    output_file = os.path.abspath(
+        parameters.output_file if parameters.output_file else re.sub(r"\.\w+$", ".abc", input_file))
 
     export_all = parameters.export_all
 
@@ -106,7 +110,8 @@ def to_alembic(parameters, arguments):
     try:
         frame_in, frame_out = frame_range.split("-")
     except ValueError:
-        sys.stderr.write("!> {0} | The frame range format could not be determined!\n".format(inspect.getmodulename(__file__)))
+        sys.stderr.write("!> {0} | The frame range format could not be determined!\n".format(
+            inspect.getmodulename(__file__)))
         return
 
     not cmds.pluginInfo("AbcExport", q=True, loaded=True) and cmds.loadPlugin("AbcExport")
@@ -126,9 +131,11 @@ def to_alembic(parameters, arguments):
         root_flags = " ".join(["-root {0}".format(root_node) for root_node in root_nodes])
         job_command = "-frameRange {0} {1} -uvWrite {2} -file {3}".format(frame_in, frame_out, root_flags, output_file)
 
-    sys.stderr.write("{0} | Exporting to 'Alembic' with following job command: '{1}'\n".format(inspect.getmodulename(__file__), job_command))
+    sys.stderr.write("{0} | Exporting to 'Alembic' with following job command: '{1}'\n".format(
+        inspect.getmodulename(__file__), job_command))
     cmds.AbcExport(j=job_command)
     return True
+
 
 def get_command_line_parameters(argv):
     """
@@ -142,17 +149,21 @@ def get_command_line_parameters(argv):
 
     argv = argv or sys.argv[1:]
 
-    parser = optparse.OptionParser(formatter=optparse.IndentedHelpFormatter (indent_increment=2, max_help_position=8, width=128, short_first=1), add_help_option=None)
+    parser = optparse.OptionParser(formatter=optparse.IndentedHelpFormatter(
+        indent_increment=2, max_help_position=8, width=128, short_first=1), add_help_option=None)
 
     parser.add_option("-h", "--help", action="help", help="'Display this help message and exit.'")
     parser.add_option("-i", "--input_file", action="store", type="string", dest="input_file", help="'Input file.")
     parser.add_option("-o", "--output_file", action="store", type="string", dest="output_file", help="'Output file.")
-    parser.add_option("-a", "--export_all", action="store_true", dest="export_all", default=False, help="Export all scene.")
-    parser.add_option("-r", "--frameRange", action="store", type="string", dest="frameRange", default="1-5", help="Frame range ( '1-5' ).")
+    parser.add_option("-a", "--export_all", action="store_true",
+                      dest="export_all", default=False, help="Export all scene.")
+    parser.add_option("-r", "--frameRange", action="store", type="string",
+                      dest="frameRange", default="1-5", help="Frame range ( '1-5' ).")
 
     parameters, args = parser.parse_args(argv)
 
     return parameters, args
+
 
 if __name__ == "__main__":
     parameters, arguments = get_command_line_parameters(sys.argv)

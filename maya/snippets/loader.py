@@ -67,6 +67,7 @@ else:
     snippets.ui.common.message_box("Error", "Error", error)
     raise Exception(error)
 
+
 class Loader(Ui_Loader_Type, Ui_Loader_Setup):
     """
     Defines the complex Maya Interfaces loader widget.
@@ -190,7 +191,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "model"))
+            "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "model"))
 
     @model.deleter
     @foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
@@ -200,7 +201,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "model"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "model"))
 
     @property
     def view(self):
@@ -224,7 +225,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "view"))
+            "{0} | '{1}' attribute is read only!".format(self.__class__.__name__, "view"))
 
     @view.deleter
     @foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
@@ -234,7 +235,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
         """
 
         raise foundations.exceptions.ProgrammingError(
-        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "view"))
+            "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "view"))
 
     @property
     def default_text(self):
@@ -355,7 +356,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
         self.__view_add_actions()
 
         self.Snippets_Loader_Logo_label.setPixmap(QPixmap(os.path.join(RuntimeGlobals.resources_directory,
-                                                                    UiConstants.snippets_loader_logo)))
+                                                                       UiConstants.snippets_loader_logo)))
 
         self.Informations_textBrowser.setText(self.__default_text)
 
@@ -396,7 +397,7 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
             return
 
         self.edit_file(interface.module.import_.__file__.replace(
-        Constants.library_compiled_extension, Constants.library_extension))
+            Constants.library_compiled_extension, Constants.library_extension))
 
     def __view_exploreSnippetFolderAction(self, checked):
         """
@@ -473,15 +474,15 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
                     <b>Documentation:</b> {9}
                     </p>
                     """.format(interface.name,
-                        interface.module.name,
-                        os.path.normpath(interface.module.import_.__file__),
-                        self.get_method_name(interface.attribute),
-                        interface.attribute,
-                        arguments.args,
-                        arguments.defaults,
-                        arguments.varargs,
-                        arguments.keywords,
-                        interface.module.import_.__dict__[interface.attribute].__doc__)
+                               interface.module.name,
+                               os.path.normpath(interface.module.import_.__file__),
+                               self.get_method_name(interface.attribute),
+                               interface.attribute,
+                               arguments.args,
+                               arguments.defaults,
+                               arguments.varargs,
+                               arguments.keywords,
+                               interface.module.import_.__dict__[interface.attribute].__doc__)
         else:
             content = self.__default_text
 
@@ -576,8 +577,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
         method = interface.attribute
 
         LOGGER.info("{0} | Executing '{1}' Interface from '{2}' Module!".format(self.__class__.__name__,
-                                                                            method,
-                                                                            module.name))
+                                                                                method,
+                                                                                module.name))
         module.import_.__dict__[method]()
         return True
 
@@ -610,7 +611,8 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
                     try:
                         for path in paths:
                             if os.path.exists(os.path.join(path, editor)):
-                                LOGGER.info("{0} | Launching '{1}' text editor with '{2}'.".format(self.__class__.__name__, editor, file))
+                                LOGGER.info("{0} | Launching '{1}' text editor with '{2}'.".format(
+                                    self.__class__.__name__, editor, file))
                                 edit_command = "\"{0}\" \"{1}\"".format(editor, file)
                                 editor_found = True
                                 raise StopIteration
@@ -653,9 +655,10 @@ class Loader(Ui_Loader_Type, Ui_Loader_Setup):
                     try:
                         for path in paths:
                             if os.path.exists(os.path.join(path, browser)):
-                                LOGGER.info("{0} | Launching '{1}' file browser with '{1}'.".format(self.__class__.__name__,
-                                                                                                    browser,
-                                                                                                    directory))
+                                LOGGER.info(
+                                    "{0} | Launching '{1}' file browser with '{1}'.".format(self.__class__.__name__,
+                                                                                            browser,
+                                                                                            directory))
                                 browser_command = "\"{0}\" \"{1}\"".format(browser, directory)
                                 browser_found = True
                                 raise StopIteration

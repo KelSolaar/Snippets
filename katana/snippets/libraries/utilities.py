@@ -5,6 +5,7 @@ import ast
 import os
 import re
 
+
 def console_print(*args):
     """
     Prints given message to KatanaConsole.
@@ -14,6 +15,7 @@ def console_print(*args):
     """
 
     UI4.App.Tabs.FindTopTab("Python").printMessage(" ".join(map(str, args)))
+
 
 def list_renderer_object_names(renderer):
     """
@@ -29,7 +31,8 @@ def list_renderer_object_names(renderer):
     plugin = RenderingAPI.RendererInfo.GetPlugin(renderer_info)
     return plugin.getRendererObjectNames()
 
-def list_node(node, indentation="\t", tab_level= -1):
+
+def list_node(node, indentation="\t", tab_level=-1):
     """
     Lists the current node and its children.
 
@@ -53,7 +56,7 @@ def list_node(node, indentation="\t", tab_level= -1):
 
     output += "|----'{0}'\n".format(node.getName())
 
-    if hasattr(node,attribute):
+    if hasattr(node, attribute):
         for child in getattr(node, attribute)() or []:
             if child is None:
                 continue
@@ -62,6 +65,7 @@ def list_node(node, indentation="\t", tab_level= -1):
 
     tab_level -= 1
     return output
+
 
 def list_hints_parameters(node, output_as_tree=False, indentation="\t", time=0):
     """
@@ -93,7 +97,8 @@ def list_hints_parameters(node, output_as_tree=False, indentation="\t", time=0):
                 if not hints.get(group):
                     hints[group] = []
 
-                hints[group].append((node.getName(), parameter.getParent().getName(), value.get("dstName", "Undefined")))
+                hints[group].append(
+                    (node.getName(), parameter.getParent().getName(), value.get("dstName", "Undefined")))
 
         for group, children in sorted(hints.items()):
             output += "{0}:\n".format(group)
@@ -112,6 +117,7 @@ def list_hints_parameters(node, output_as_tree=False, indentation="\t", time=0):
                     output += "{0}{1}: {2}\n".format(indentation, name.title(), hint)
                 output += "\n"
     return output
+
 
 def nodes_walker(node, ascendants=False):
     """
@@ -150,7 +156,9 @@ def nodes_walker(node, ascendants=False):
 
             yield sub_element
 
+
 parameters_walker = nodes_walker
+
 
 def filter_node_parameters(node, pattern=r".*", flags=0):
     """
@@ -166,8 +174,9 @@ def filter_node_parameters(node, pattern=r".*", flags=0):
     :rtype: bool
     """
 
-    return [parameter for parameter in parameters_walker(node.getParameters()) \
-    if re.search(pattern, parameter.getName(), flags)]
+    return [parameter for parameter in parameters_walker(node.getParameters())
+            if re.search(pattern, parameter.getName(), flags)]
+
 
 def reset_node_parameters(node, pattern=r".*", flags=0):
     """
@@ -186,6 +195,7 @@ def reset_node_parameters(node, pattern=r".*", flags=0):
     for parameter in filter_node_parameters(node, pattern, flags):
         parameter.setUseNodeDefault(True)
     return True
+
 
 def import_script_node(path):
     """
@@ -208,6 +218,7 @@ def import_script_node(path):
         NodegraphAPI.SetNodeEdited(node, False)
     NodegraphAPI.SetNodeEdited(script_node, True)
     return script_node
+
 
 def single_shot_script_node(path, parameter):
     """

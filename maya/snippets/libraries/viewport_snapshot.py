@@ -11,6 +11,7 @@ __all__ = ["stacks_handler", "viewport_snapshot"]
 
 __interfaces__ = ["viewport_snapshot"]
 
+
 def stacks_handler(object):
     """
     Handles Maya stacks.
@@ -34,12 +35,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 def viewport_snapshot():
     """

@@ -29,6 +29,7 @@ __status__ = "Production"
 
 __all__ = ["UiConstants"]
 
+
 class UiConstants():
     """
     Defines the ui constants class.

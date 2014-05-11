@@ -3,8 +3,9 @@ import re
 
 import snippets.libraries.utilities
 
-NODES_NAMES_MAPPING_TABLE = {"ArnoldShadingNode" : "ArnoldSN",
-                            "PrmanShadingNode" : "PrmanSN"}
+NODES_NAMES_MAPPING_TABLE = {"ArnoldShadingNode": "ArnoldSN",
+                             "PrmanShadingNode": "PrmanSN"}
+
 
 def get_default_node_name(node, mapping_table=NODES_NAMES_MAPPING_TABLE):
     """
@@ -26,6 +27,7 @@ def get_default_node_name(node, mapping_table=NODES_NAMES_MAPPING_TABLE):
     else:
         return name
 
+
 def set_node_name(node, name):
     """
     Sets given node name.
@@ -45,6 +47,7 @@ def set_node_name(node, name):
         node.getParameter("name").setValue(node.getName(), 0)
 
     return True
+
 
 def set_node_names(nodes, prefix, mapping_table=NODES_NAMES_MAPPING_TABLE, traverse=True):
     """
@@ -70,6 +73,7 @@ def set_node_names(nodes, prefix, mapping_table=NODES_NAMES_MAPPING_TABLE, trave
         for child_node in snippets.libraries.utilities.nodes_walker(node):
             set_node_name(child_node, "{0}{1}".format(prefix, get_default_node_name(child_node, mapping_table)))
     return True
+
 
 def search_and_replace_nodes_names(nodes, search_pattern, replacement_pattern, flags=0, traverse=True):
     """
@@ -99,6 +103,7 @@ def search_and_replace_nodes_names(nodes, search_pattern, replacement_pattern, f
             set_node_name(child_node, re.sub(search_pattern, replacement_pattern, child_node.getName(), flags))
     return True
 
+
 def remove_nodes_names_trailing_numbers(nodes, traverse=True):
     """
     Removes given nodes names trailing numbers.
@@ -112,6 +117,7 @@ def remove_nodes_names_trailing_numbers(nodes, traverse=True):
     """
 
     return search_and_replace_nodes_names(nodes, r"\d+$", "", traverse=traverse)
+
 
 def prefix_nodes_names(nodes, prefix, traverse=True):
     """
@@ -127,7 +133,9 @@ def prefix_nodes_names(nodes, prefix, traverse=True):
     :rtype: bool
     """
 
-    return search_and_replace_nodes_names(nodes, r".*", lambda x: "{0}{1}".format(prefix, x.group(0)), traverse=traverse)
+    return search_and_replace_nodes_names(nodes, r".*", lambda x: "{0}{1}".format(prefix, x.group(0)),
+                                          traverse=traverse)
+
 
 def search_and_replace_hints_parameter(parameter, search_pattern, replacement_pattern, flags=0, time=0, keys=None):
     """
@@ -161,7 +169,9 @@ def search_and_replace_hints_parameter(parameter, search_pattern, replacement_pa
     parameter.setValue(str(data), time)
     return True
 
-def search_and_replace_hints_parameters(nodes, search_pattern, replacement_pattern, flags=0, time=0, keys=None, traverse=True):
+
+def search_and_replace_hints_parameters(nodes, search_pattern, replacement_pattern, flags=0, time=0, keys=None,
+                                        traverse=True):
     """
     Search and replace given nodes hints parameters.
 

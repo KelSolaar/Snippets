@@ -10,15 +10,16 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["stacks_handler",
-            "unfold_band_uvs",
-            "unfold_band_button__on_clicked",
-            "unfold_band_window",
-            "unfold_band",
-            "unfold_tube",
-            "unfold_tube_using_selected_edges"]
+           "unfold_band_uvs",
+           "unfold_band_button__on_clicked",
+           "unfold_band_window",
+           "unfold_band",
+           "unfold_tube",
+           "unfold_tube_using_selected_edges"]
 
 __interfaces__ = ["unfold_band",
-                "unfold_tube_using_selected_edges"]
+                  "unfold_tube_using_selected_edges"]
+
 
 def stacks_handler(object):
     """
@@ -43,12 +44,14 @@ def stacks_handler(object):
         cmds.undoInfo(closeChunk=True)
         # Maya produces a weird command error if not wrapped here.
         try:
-            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(__name__, __name__, object.__name__), addCommandLabel=object.__name__)
+            cmds.repeatLast(addCommand="python(\"import {0}; {1}.{2}()\")".format(
+                __name__, __name__, object.__name__), addCommandLabel=object.__name__)
         except:
             pass
         return value
 
     return stacks_handler_wrapper
+
 
 @stacks_handler
 def unfold_band_uvs(object, divisions=1, history=True):
@@ -85,6 +88,7 @@ def unfold_band_uvs(object, divisions=1, history=True):
 
     not history and cmds.delete(object, ch=True)
 
+
 @stacks_handler
 def unfold_band_button__on_clicked(state=None):
     """
@@ -95,7 +99,9 @@ def unfold_band_button__on_clicked(state=None):
     """
 
     for object in cmds.ls(sl=True, l=True, o=True):
-        unfold_band_uvs(object, divisions=cmds.intSliderGrp("divisions_intSliderGrp", q=True, v=True), history=cmds.checkBox("keep_construction_history_checkBox", q=True, v=True))
+        unfold_band_uvs(object, divisions=cmds.intSliderGrp("divisions_intSliderGrp", q=True, v=True),
+                        history=cmds.checkBox("keep_construction_history_checkBox", q=True, v=True))
+
 
 def unfold_band_window():
     """
@@ -108,8 +114,8 @@ def unfold_band_window():
         cmds.deleteUI("unfold_band_window")
 
     cmds.window("unfold_band_window",
-        title="Unfold Band",
-        width=384)
+                title="Unfold Band",
+                width=384)
 
     spacing = 5
 
@@ -117,7 +123,8 @@ def unfold_band_window():
 
     cmds.separator(height=10, style="singleDash")
 
-    cmds.intSliderGrp("divisions_intSliderGrp", label="Divisions", field=True, minValue=0, maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
+    cmds.intSliderGrp("divisions_intSliderGrp", label="Divisions", field=True, minValue=0,
+                      maxValue=10, fieldMinValue=0, fieldMaxValue=65535, value=2)
 
     cmds.separator(style="single")
 
@@ -133,12 +140,14 @@ def unfold_band_window():
 
     cmds.windowPref(enableAll=True)
 
+
 def unfold_band():
     """
     Launches the 'Unfold Band' main window.
     """
 
     unfold_band_window()
+
 
 @stacks_handler
 def unfold_tube(seams_edges, history=False):
@@ -163,6 +172,7 @@ def unfold_tube(seams_edges, history=False):
     cmds.polyMapSewMove(list(set(edges).difference(seams_edges)), ch=True)
 
     not history and cmds.delete(object, ch=True)
+
 
 @stacks_handler
 def unfold_tube_using_selected_edges():
