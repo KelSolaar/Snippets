@@ -1,7 +1,7 @@
 """
 NAME: startSocketServer_script
 ICON: icon.png
-DROP_TYPES: 
+DROP_TYPES:
 SCOPE:
 Starts Katana SocketServer.
 

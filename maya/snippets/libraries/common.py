@@ -11,10 +11,10 @@
 **Common.py**
 
 **Platform:**
-	Windows, Linux, Mac Os X.
+    Windows, Linux, Mac Os X.
 
 **Description:**
-	Common functions Module.
+    Common functions Module.
 
 **Others:**
 
@@ -43,30 +43,30 @@ __all__ = ["LOGGER", "MayaLoggingHandler"]
 LOGGER = logging.getLogger(Constants.logger)
 
 class MayaLoggingHandler(logging.Handler):
-	"""
-	Defines a Maya friendly logging handler.
-	"""
+    """
+    Defines a Maya friendly logging handler.
+    """
 
-	def emit(self, record):
-		"""
-		Emits the given record.
+    def emit(self, record):
+        """
+        Emits the given record.
 
-		:param record: Record.
-		:type record: str
-		"""
+        :param record: Record.
+        :type record: str
+        """
 
-		if record.levelno > logging.INFO:
-			message = record.getMessage()
-		else:
-			message = self.format(record)
+        if record.levelno > logging.INFO:
+            message = record.getMessage()
+        else:
+            message = self.format(record)
 
-		if record.levelno > logging.ERROR:
-			OpenMaya.MGlobal.displayError(message)
-		elif record.levelno > logging.WARNING:
-			OpenMaya.MGlobal.displayError(message)
-		elif record.levelno > logging.INFO:
-			OpenMaya.MGlobal.displayWarning(message)
-		elif record.levelno <= logging.DEBUG:
-			OpenMaya.MGlobal.displayInfo(message)
-		else:
-			OpenMaya.MGlobal.displayInfo(message)
+        if record.levelno > logging.ERROR:
+            OpenMaya.MGlobal.displayError(message)
+        elif record.levelno > logging.WARNING:
+            OpenMaya.MGlobal.displayError(message)
+        elif record.levelno > logging.INFO:
+            OpenMaya.MGlobal.displayWarning(message)
+        elif record.levelno <= logging.DEBUG:
+            OpenMaya.MGlobal.displayInfo(message)
+        else:
+            OpenMaya.MGlobal.displayInfo(message)

@@ -5,10 +5,10 @@
 **models.py**
 
 **Platform:**
-	Windows, Linux, Mac Os X.
+    Windows, Linux, Mac Os X.
 
 **Description:**
-	Defines the :class:`snippets.loader.Loader` class Models.
+    Defines the :class:`snippets.loader.Loader` class Models.
 
 **Others:**
 
@@ -35,308 +35,308 @@ __email__ = "thomas.mansencal@gmail.com"
 __status__ = "Production"
 
 __all__ = ["LOGGER",
-			"Categorie",
-			"Interface",
-			"InterfacesModel"]
+            "Categorie",
+            "Interface",
+            "InterfacesModel"]
 
 LOGGER = foundations.verbose.install_logger()
 
 class Categorie(foundations.data_structures.Structure):
-	"""
-	This is the **Interface** class.
-	"""
+    """
+    This is the **Interface** class.
+    """
 
-	def __init__(self, **kwargs):
-		"""
-		Initializes the class.
+    def __init__(self, **kwargs):
+        """
+        Initializes the class.
 
-		:param kwargs: name.
-		:type kwargs: dict
-		"""
+        :param kwargs: name.
+        :type kwargs: dict
+        """
 
-		foundations.data_structures.Structure.__init__(self, **kwargs)
+        foundations.data_structures.Structure.__init__(self, **kwargs)
 
 class Interface(foundations.data_structures.Structure):
-	"""
-	This is the **Interface** class.
-	"""
+    """
+    This is the **Interface** class.
+    """
 
-	def __init__(self, **kwargs):
-		"""
-		Initializes the class.
+    def __init__(self, **kwargs):
+        """
+        Initializes the class.
 
-		:param kwargs: name, attribute, module.
-		:type kwargs: dict
-		"""
+        :param kwargs: name, attribute, module.
+        :type kwargs: dict
+        """
 
-		foundations.data_structures.Structure.__init__(self, **kwargs)
+        foundations.data_structures.Structure.__init__(self, **kwargs)
 
 class InterfacesModel(QAbstractListModel):
-	"""
-	Defines a `QAbstractListModel <http://doc.qt.nokia.com/qabstractListmodel.html>`_ subclass.
-	"""
+    """
+    Defines a `QAbstractListModel <http://doc.qt.nokia.com/qabstractListmodel.html>`_ subclass.
+    """
 
-	def __init__(self, parent=None, interfaces=None):
-		"""
-		Initializes the class.
+    def __init__(self, parent=None, interfaces=None):
+        """
+        Initializes the class.
 
-		:param parent: Parent object.
-		:type parent: QObject
-		:param interfaces: InterfacesModel.
-		:type interfaces: list
-		"""
+        :param parent: Parent object.
+        :type parent: QObject
+        :param interfaces: InterfacesModel.
+        :type interfaces: list
+        """
 
-		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
+        LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
 
-		QAbstractListModel.__init__(self, parent)
+        QAbstractListModel.__init__(self, parent)
 
-		# --- Setting class attributes. ---
-		self.__interfaces = []
-		self.interfaces = interfaces or self.__interfaces
+        # --- Setting class attributes. ---
+        self.__interfaces = []
+        self.interfaces = interfaces or self.__interfaces
 
-	@property
-	def interfaces(self):
-		"""
-		Property for **self.__interfaces** attribute.
+    @property
+    def interfaces(self):
+        """
+        Property for **self.__interfaces** attribute.
 
-		:return: self.__interfaces.
-		:rtype: list
-		"""
+        :return: self.__interfaces.
+        :rtype: list
+        """
 
-		return self.__interfaces
+        return self.__interfaces
 
-	@interfaces.setter
-	@foundations.exceptions.handle_exceptions(AssertionError)
-	def interfaces(self, value):
-		"""
-		Setter for **self.__interfaces** attribute.
+    @interfaces.setter
+    @foundations.exceptions.handle_exceptions(AssertionError)
+    def interfaces(self, value):
+        """
+        Setter for **self.__interfaces** attribute.
 
-		:param value: Attribute value.
-		:type value: list
-		"""
+        :param value: Attribute value.
+        :type value: list
+        """
 
-		if value is not None:
-			assert type(value) is list, "'{0}' attribute: '{1}' type is not 'list'!".format("interfaces", value)
-			for element in value:
-				assert type(element) is Interface, "'{0}' attribute: '{1}' type is not 'Interface'!".format("interfaces", element)
-		# TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.	
-		self.modelAboutToBeReset.emit()
-		self.__interfaces = value
-		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
-		self.modelReset.emit()
+        if value is not None:
+            assert type(value) is list, "'{0}' attribute: '{1}' type is not 'list'!".format("interfaces", value)
+            for element in value:
+                assert type(element) is Interface, "'{0}' attribute: '{1}' type is not 'Interface'!".format("interfaces", element)
+        # TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.
+        self.modelAboutToBeReset.emit()
+        self.__interfaces = value
+        # TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
+        self.modelReset.emit()
 
-	@interfaces.deleter
-	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
-	def interfaces(self):
-		"""
-		Deleter for **self.__interfaces** attribute.
-		"""
+    @interfaces.deleter
+    @foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+    def interfaces(self):
+        """
+        Deleter for **self.__interfaces** attribute.
+        """
 
-		raise foundations.exceptions.ProgrammingError(
-		"{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "interfaces"))
+        raise foundations.exceptions.ProgrammingError(
+        "{0} | '{1}' attribute is not deletable!".format(self.__class__.__name__, "interfaces"))
 
-	def __getitem__(self, name):
-		"""
-		Reimplements the :meth:`object.__getitem__` method.
-		
-		:param name: Item name.
-		:type name: str
-		:return: Item.
-		:rtype: Interface
-		"""
+    def __getitem__(self, name):
+        """
+        Reimplements the :meth:`object.__getitem__` method.
 
-		for item in self.__interfaces:
-			if item.name == name:
-				return item
+        :param name: Item name.
+        :type name: str
+        :return: Item.
+        :rtype: Interface
+        """
 
-	def __iter__(self):
-		"""
-		Reimplements the :meth:`object.__iter__` method.
+        for item in self.__interfaces:
+            if item.name == name:
+                return item
 
-		:return: Interfaces iterator.
-		:rtype: object
-		"""
+    def __iter__(self):
+        """
+        Reimplements the :meth:`object.__iter__` method.
 
-		return iter(self.__interfaces)
+        :return: Interfaces iterator.
+        :rtype: object
+        """
 
-	def __reversed__(self):
-		"""
-		Reimplements the :meth:`object.__reversed__` method.
+        return iter(self.__interfaces)
 
-		:return: Reverse interfaces iterator.
-		:rtype: object
-		"""
+    def __reversed__(self):
+        """
+        Reimplements the :meth:`object.__reversed__` method.
 
-		return reversed(self.__interfaces)
+        :return: Reverse interfaces iterator.
+        :rtype: object
+        """
 
-	def __contains__(self, name):
-		"""
-		Reimplements the :meth:`object.__contains__` method.
+        return reversed(self.__interfaces)
 
-		:param name: Item name.
-		:type name: str
-		:return: Item existence.
-		:rtype: bool
-		"""
+    def __contains__(self, name):
+        """
+        Reimplements the :meth:`object.__contains__` method.
 
-		return self[name] and True or False
+        :param name: Item name.
+        :type name: str
+        :return: Item existence.
+        :rtype: bool
+        """
 
-	def __len__(self):
-		"""
-		Reimplements the :meth:`object.__len__` method.
+        return self[name] and True or False
 
-		:return: Interfaces count.
-		:rtype: int
-		"""
+    def __len__(self):
+        """
+        Reimplements the :meth:`object.__len__` method.
 
-		return len(self.__interfaces)
+        :return: Interfaces count.
+        :rtype: int
+        """
 
-	def rowCount(self, parent=QModelIndex()):
-		"""
-		Reimplements the :meth:`QAbstractListModel.rowCount` method.
+        return len(self.__interfaces)
 
-		:param parent: Parent.
-		:type parent: QModelIndex
-		:return: Row count.
-		:rtype: int
-		"""
+    def rowCount(self, parent=QModelIndex()):
+        """
+        Reimplements the :meth:`QAbstractListModel.rowCount` method.
 
-		return len(self.__interfaces)
+        :param parent: Parent.
+        :type parent: QModelIndex
+        :return: Row count.
+        :rtype: int
+        """
 
-	def data(self, index, role=Qt.DisplayRole):
-		"""
-		Reimplements the :meth:`QAbstractListModel.data` method.
+        return len(self.__interfaces)
 
-		:param index: Index.
-		:type index: QModelIndex
-		:param role: Role.
-		:type role: int
-		:return: Data.
-		:rtype: QVariant
-		"""
+    def data(self, index, role=Qt.DisplayRole):
+        """
+        Reimplements the :meth:`QAbstractListModel.data` method.
 
-		if not index.isValid():
-			return QVariant()
+        :param index: Index.
+        :type index: QModelIndex
+        :param role: Role.
+        :type role: int
+        :return: Data.
+        :rtype: QVariant
+        """
 
-		if role == Qt.DisplayRole:
-			return QVariant(self.__interfaces[index.row()].name)
-		return QVariant()
+        if not index.isValid():
+            return QVariant()
 
-	def clear(self):
-		"""
-		Clears the Model.
-		
-		:return: Method success.
-		:rtype: bool
-		"""
+        if role == Qt.DisplayRole:
+            return QVariant(self.__interfaces[index.row()].name)
+        return QVariant()
 
-		# TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.
-		self.modelAboutToBeReset.emit()
-		self.__interfaces = []
-		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
-		self.modelReset.emit()
+    def clear(self):
+        """
+        Clears the Model.
 
-	def sort(self, order=Qt.AscendingOrder):
-		"""
-		Sorts the Model interfaces.
-		
-		:param order: Order. ( Qt.SortOrder )
-		:return: Method success.
-		:rtype: bool
-		"""
+        :return: Method success.
+        :rtype: bool
+        """
 
-		# TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.
-		self.modelAboutToBeReset.emit()
-		self.__interfaces = sorted(self.__interfaces, key=lambda x: (x.name), reverse=order)
-		# TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
-		self.modelReset.emit()
+        # TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.
+        self.modelAboutToBeReset.emit()
+        self.__interfaces = []
+        # TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
+        self.modelReset.emit()
 
-	def get_interface(self, index):
-		"""
-		Returns the interface with given index.
-		
-		:param index: Interface index.
-		:type index: QModelIndex
-		:return: Interface.
-		:rtype: Interface
-		"""
+    def sort(self, order=Qt.AscendingOrder):
+        """
+        Sorts the Model interfaces.
 
-		return self.__interfaces[index.row()]
+        :param order: Order. ( Qt.SortOrder )
+        :return: Method success.
+        :rtype: bool
+        """
 
-	def __register_categorie(self, categorie):
-		"""
-		Registers given categorie.
+        # TODO: Rollback to beginResetModel() whenever MPC changes it's PyQt version.
+        self.modelAboutToBeReset.emit()
+        self.__interfaces = sorted(self.__interfaces, key=lambda x: (x.name), reverse=order)
+        # TODO: Rollback to endResetModel () whenever MPC changes it's PyQt version.
+        self.modelReset.emit()
 
-		:param categorie: Categorie name.
-		:type categorie: str
-		"""
+    def get_interface(self, index):
+        """
+        Returns the interface with given index.
 
-		name = categorie[0]
-		if not name in self:
-			self.__interfaces.append(Categorie(name=name))
+        :param index: Interface index.
+        :type index: QModelIndex
+        :return: Interface.
+        :rtype: Interface
+        """
 
-	def __unregister_categorie(self, name):
-		"""
-		Unregisters categorie with given name.
+        return self.__interfaces[index.row()]
 
-		:param categorie: Categorie name.
-		:type categorie: str
-		"""
+    def __register_categorie(self, categorie):
+        """
+        Registers given categorie.
 
-		name = name[0]
-		count = 0
-		for item in reversed(self):
-			if item.name.startswith(name):
-				count += 1
+        :param categorie: Categorie name.
+        :type categorie: str
+        """
 
-			if item.name == name and count == 1:
-				self.__interfaces.remove(self[name])
+        name = categorie[0]
+        if not name in self:
+            self.__interfaces.append(Categorie(name=name))
 
-	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
-	def register_interface(self, interface):
-		"""
-		Registers given interface.
-		
-		:param interface: Interface to register.
-		:type interface: Interface
-		:return: Method success.
-		:rtype: bool
-		"""
+    def __unregister_categorie(self, name):
+        """
+        Unregisters categorie with given name.
 
-		name = interface.name
-		if name in self:
-			raise foundations.exceptions.ProgrammingError("{0} | An interface with '{1}' name is already registered!".format(
-			self.__class__.__name__, name))
+        :param categorie: Categorie name.
+        :type categorie: str
+        """
 
-		LOGGER.debug("> Registering '{0}' interface.".format(name))
+        name = name[0]
+        count = 0
+        for item in reversed(self):
+            if item.name.startswith(name):
+                count += 1
 
-		self.__interfaces.append(interface)
-		self.__register_categorie(name)
-		self.sort()
-		return True
+            if item.name == name and count == 1:
+                self.__interfaces.remove(self[name])
 
-	@foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
-	def unregister_interface(self, name):
-		"""
-		Unregisters interface with given name.
-		
-		:param name: Interface to unregister.
-		:type name: str
-		:return: Method success.
-		:rtype: bool
-		"""
+    @foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+    def register_interface(self, interface):
+        """
+        Registers given interface.
 
-		if not name in self:
-			raise foundations.exceptions.ProgrammingError("{0} | Interface with '{1}' name isn't registered!".format(
-			self.__class__.__name__, name))
+        :param interface: Interface to register.
+        :type interface: Interface
+        :return: Method success.
+        :rtype: bool
+        """
 
-		LOGGER.debug("> Unregistering '{0}' interface.".format(name))
+        name = interface.name
+        if name in self:
+            raise foundations.exceptions.ProgrammingError("{0} | An interface with '{1}' name is already registered!".format(
+            self.__class__.__name__, name))
 
-		for i, interface in enumerate(self):
-			if not interface.name == name:
-				continue
+        LOGGER.debug("> Registering '{0}' interface.".format(name))
 
-			del(self.__interfaces[i])
-			self.__unregister_categorie(name)
-			self.sort()
-			return True
+        self.__interfaces.append(interface)
+        self.__register_categorie(name)
+        self.sort()
+        return True
+
+    @foundations.exceptions.handle_exceptions(foundations.exceptions.ProgrammingError)
+    def unregister_interface(self, name):
+        """
+        Unregisters interface with given name.
+
+        :param name: Interface to unregister.
+        :type name: str
+        :return: Method success.
+        :rtype: bool
+        """
+
+        if not name in self:
+            raise foundations.exceptions.ProgrammingError("{0} | Interface with '{1}' name isn't registered!".format(
+            self.__class__.__name__, name))
+
+        LOGGER.debug("> Unregistering '{0}' interface.".format(name))
+
+        for i, interface in enumerate(self):
+            if not interface.name == name:
+                continue
+
+            del(self.__interfaces[i])
+            self.__unregister_categorie(name)
+            self.sort()
+            return True

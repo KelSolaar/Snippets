@@ -11,10 +11,10 @@
 **loader.py**
 
 **Platform:**
-	Windows, Linux, Mac Os X.
+    Windows, Linux, Mac Os X.
 
 **Description:**
-	Engine module.
+    Engine module.
 
 **Others:**
 
@@ -29,15 +29,15 @@ import foundations.globals.constants
 from snippets.globals.constants import Constants
 
 def _override_dependencies_globals():
-	"""
-	Overrides dependencies globals.
+    """
+    Overrides dependencies globals.
 
-	:return: Definition success.
-	:rtype: bool
-	"""
+    :return: Definition success.
+    :rtype: bool
+    """
 
-	foundations.globals.constants.Constants.logger = Constants.logger
-	return True
+    foundations.globals.constants.Constants.logger = Constants.logger
+    return True
 
 _override_dependencies_globals()
 
@@ -63,23 +63,23 @@ del logging.root.handlers[:]
 foundations.verbose.get_logging_console_handler()
 
 def _set_modules_manager():
-	"""
-	Sets the global modules manager instance.
-	"""
+    """
+    Sets the global modules manager instance.
+    """
 
-	if not isinstance(RuntimeGlobals.modules_manager, ModulesManager):
-		RuntimeGlobals.modules_manager = ModulesManager([RuntimeGlobals.libraries_directory])
-		RuntimeGlobals.modules_manager.register_all()
+    if not isinstance(RuntimeGlobals.modules_manager, ModulesManager):
+        RuntimeGlobals.modules_manager = ModulesManager([RuntimeGlobals.libraries_directory])
+        RuntimeGlobals.modules_manager.register_all()
 
 def run():
-	"""
-	Starts the Application.
+    """
+    Starts the Application.
 
-	:return: Definition success.
-	:rtype: bool
-	"""
+    :return: Definition success.
+    :rtype: bool
+    """
 
-	RuntimeGlobals.libraries_directory = os.path.join(os.path.dirname(__file__), Constants.libraries_directory)
-	RuntimeGlobals.resources_directory = os.path.join(os.path.dirname(__file__), Constants.resources_directory)
+    RuntimeGlobals.libraries_directory = os.path.join(os.path.dirname(__file__), Constants.libraries_directory)
+    RuntimeGlobals.resources_directory = os.path.join(os.path.dirname(__file__), Constants.resources_directory)
 
-	_set_modules_manager()
+    _set_modules_manager()

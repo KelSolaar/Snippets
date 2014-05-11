@@ -1,7 +1,7 @@
 """
 NAME: list_nodes_giggle_metadata_Script
 ICON: icon.png
-DROP_TYPES: 
+DROP_TYPES:
 SCOPE:
 Enter Description Here
 

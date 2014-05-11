@@ -11,10 +11,10 @@
 **ui_constants.py**
 
 **Platform:**
-	Windows, Linux, Mac Os X.
+    Windows, Linux, Mac Os X.
 
 **Description:**
-	Snippets constants Module.
+    Snippets constants Module.
 
 **Others:**
 
@@ -30,11 +30,11 @@ __status__ = "Production"
 __all__ = ["UiConstants"]
 
 class UiConstants():
-	"""
-	Defines the ui constants class.
-	"""
+    """
+    Defines the ui constants class.
+    """
 
-	loader_ui_file = "Loader.ui"
-	popup_ui_file = "Popup.ui"
+    loader_ui_file = "Loader.ui"
+    popup_ui_file = "Popup.ui"
 
-	snippets_loader_logo = "images/Snippets_Loader_Logo.png"
+    snippets_loader_logo = "images/Snippets_Loader_Logo.png"

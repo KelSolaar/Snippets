@@ -5,10 +5,10 @@
 **views.py**
 
 **Platform:**
-	Windows, Linux, Mac Os X.
+    Windows, Linux, Mac Os X.
 
 **Description:**
-	Defines the :class:`snippets.loader.Loader` class Views.
+    Defines the :class:`snippets.loader.Loader` class Views.
 
 **Others:**
 
@@ -34,21 +34,21 @@ __all__ = ["LOGGER", "Interfaces_QListView"]
 LOGGER = foundations.verbose.install_logger()
 
 class Interfaces_QListView(QListView):
-	"""
-	Defines the view for modules interfaces.
-	"""
+    """
+    Defines the view for modules interfaces.
+    """
 
-	def __init__(self, parent=None, model=None):
-		"""
-		Initializes the class.
+    def __init__(self, parent=None, model=None):
+        """
+        Initializes the class.
 
-		:param parent: Object parent.
-		:type parent: QObject
-		"""
+        :param parent: Object parent.
+        :type parent: QObject
+        """
 
-		LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
+        LOGGER.debug("> Initializing '{0}()' class.".format(self.__class__.__name__))
 
-		QListView.__init__(self, parent)
+        QListView.__init__(self, parent)
 
-		# --- Setting class attributes. ---
-		self.setModel(model)
+        # --- Setting class attributes. ---
+        self.setModel(model)

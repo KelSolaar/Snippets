@@ -11,10 +11,10 @@
 **runtime_globals.py**
 
 **Platform:**
-	Windows, Linux, Mac Os X.
+    Windows, Linux, Mac Os X.
 
 **Description:**
-	Snippets runtime globals Module.
+    Snippets runtime globals Module.
 
 **Others:**
 
@@ -30,16 +30,16 @@ __status__ = "Production"
 __all__ = ["RuntimeGlobals"]
 
 class RuntimeGlobals():
-	"""
-	Defines the runtime globals class.
-	"""
+    """
+    Defines the runtime globals class.
+    """
 
-	loader_ui_file = None
-	popup_ui_file = None
+    loader_ui_file = None
+    popup_ui_file = None
 
-	modules_manager = None
+    modules_manager = None
 
-	libraries_directory = None
-	resources_directory = None
+    libraries_directory = None
+    resources_directory = None
 
-	popup_pattern = None
+    popup_pattern = None

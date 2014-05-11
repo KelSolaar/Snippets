@@ -1,7 +1,7 @@
 """
 NAME: search_and_replace_hints_parameters_Script
 ICON: icon.png
-DROP_TYPES: 
+DROP_TYPES:
 SCOPE:
 Enter Description Here
 

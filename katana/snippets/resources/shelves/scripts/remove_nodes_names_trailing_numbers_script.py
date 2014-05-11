@@ -1,7 +1,7 @@
 """
 NAME: remove_nodes_names_trailing_numbers_Script
 ICON: icon.png
-DROP_TYPES: 
+DROP_TYPES:
 SCOPE:
 Enter Description Here
 

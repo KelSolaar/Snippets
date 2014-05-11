@@ -1,7 +1,7 @@
 """
 NAME: prefix_nodes_names_Script
 ICON: icon.png
-DROP_TYPES: 
+DROP_TYPES:
 SCOPE:
 Prefix Nodes Names
 

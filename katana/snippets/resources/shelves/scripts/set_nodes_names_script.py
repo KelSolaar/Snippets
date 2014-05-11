@@ -1,7 +1,7 @@
 """
 NAME: setNodesNames_Script
 ICON: icon.png
-DROP_TYPES: 
+DROP_TYPES:
 SCOPE:
 Enter Description Here
 

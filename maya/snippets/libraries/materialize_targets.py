@@ -5,10 +5,10 @@
 **materialize_targets.py**
 
 **Platform:**
-	Windows, Linux, Mac Os X.
+    Windows, Linux, Mac Os X.
 
 **Description:**
-	Materializes blendshape node targets.
+    Materializes blendshape node targets.
 
 **Others:**
 
